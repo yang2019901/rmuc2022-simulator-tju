@@ -4,22 +4,12 @@ using UnityEngine;
 
 public class child1 : parent
 {
-    public float health;
-
+    public float t2;
     void Start()
     {
-        health = 2;
+        t2 = 2f;
+        Debug.Log("t1: " + t1);
+        Debug.Log("t2: " + t2);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    public override void TakeDamage()
-    {
-        Debug.Log("this is in child1");
-        health --;
-        Debug.Log(health);
-    }
 }

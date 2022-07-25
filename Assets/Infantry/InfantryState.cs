@@ -29,18 +29,8 @@ public class InfantryState : RobotState {
     public override void TakeDamage(GameObject hitter, GameObject armor_hit, GameObject bullet) {
         /* Requirement: make sure that small bullet's name contains "17mm" && big bullet's contains "42mm" */
         int damage = bullet.name.Contains("17mm") ? 10 : 100;
-
-        /* take account of hitter rune buff */
-        RuneBuff hitter_buff = BattleField.singleton.GetRuneBuff(hitter.GetComponent<BasicState>().armor_color);
-        if (hitter_buff == RuneBuff.Junior)
-            damage = Mathf.RoundToInt(1.5f * damage);
-        else if (hitter_buff == RuneBuff.Senior)
-            damage = 2 * damage;
-
-        /* take account of hittee rune buff */
-        if (BattleField.singleton.GetRuneBuff(this.armor_color) == RuneBuff.Senior)
-            damage /= 2;
-
+        damage = Mathf.RoundToInt( damage * (hitter.GetComponent<RobotState>().B_atk + 1) 
+            * Mathf.Max(1-this.GetComponent<RobotState>().B_dfc, 0) );
         blood_left -= damage;
 
         Debug.Log("current blood: " + blood_left);

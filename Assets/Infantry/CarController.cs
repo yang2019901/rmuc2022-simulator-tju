@@ -104,7 +104,7 @@ public class CarController : MonoBehaviour
         {
             GameObject bullet = getBullet();
             bullet.transform.position = bullet_start.position;
-            bullet.GetComponent<Rigidbody>().velocity = bullet_start.forward * 30 ;
+            bullet.GetComponent<Rigidbody>().velocity = bullet_start.forward * 30;
             bullet.GetComponent<Bullet>().hitter = this.name;
             last_fire = Time.time;
         }

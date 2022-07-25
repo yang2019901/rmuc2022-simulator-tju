@@ -18,10 +18,12 @@ public abstract class RobotState : BasicState {
     public int power;
     public int blood;
     public int blood_left;
+
     /* Buff */
     /* damage = damage * (1 + hitter.B_atk) * max(1-hittee.B_dfc, 0) */
     public float B_atk = 0; // attack buff. Ex: rune_junior => B_atk += 0.5; rune_senior => B_atd += 1
     public float B_dfc = 0; // defence buff. Ex: rune_senior => B_dfc += 0.5
+    /* heat -= cool_down * B_cd */
     public float B_cd = 0;
     public float B_pow = 0;
 }

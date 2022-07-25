@@ -67,14 +67,10 @@ public class BattleField : MonoBehaviour {
         yield return new WaitForSeconds(45);
         rune.rune_state_blue.SetActiveState(Activation.Idle);
         rune.rune_state_red.SetActiveState(Activation.Idle);
+        /* right then, rune.activated is true => no spinning, no light */
         yield return new WaitForSeconds(30);
         /* reset rune */
         rune.Reset();
-    }
-
-
-    public RuneBuff GetRuneBuff(ArmorColor armor_color) {
-        return armor_color == ArmorColor.Red ? rune_buff_red : rune_buff_blue;
     }
 
 

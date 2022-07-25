@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class parent : MonoBehaviour
 {
-    public abstract void TakeDamage();
+    public float t1;
 }

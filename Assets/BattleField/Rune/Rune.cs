@@ -78,7 +78,6 @@ public class Rune : MonoBehaviour {
     /* Reset Activation State to false and spin params to a new set of values */
     public void Reset() {
         this.activated = false;
-
         this.t = 0;
         this.a = Random.Range(0.78f, 1.045f);
         this.w = Random.Range(1.884f, 2f);
