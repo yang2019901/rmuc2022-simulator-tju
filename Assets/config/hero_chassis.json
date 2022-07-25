@@ -1,0 +1,34 @@
+{
+    "init_mode": {
+        "blood": 150,
+        "power": 50
+    },
+    "power++": {
+        "level1": {
+            "blood": 200,
+            "power": 70
+        },
+        "level2": {
+            "blood": 250,
+            "power": 90
+        },
+        "level3": {
+            "blood": 300,
+            "power": 120
+        }
+    },
+    "blood++": {
+        "level1": {
+            "blood": 250,
+            "power": 55
+        },
+        "level2": {
+            "blood": 350,
+            "power": 60
+        },
+        "level3": {
+            "blood": 450,
+            "power": 65
+        }
+    }
+}

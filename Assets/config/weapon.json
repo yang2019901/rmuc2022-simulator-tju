@@ -1,0 +1,101 @@
+{
+    "17mm": {
+        "init_mode": {
+            "heat_limit": 50,
+            "cool_down": 10,
+            "shoot_speed": 15
+        },
+        "heat_limit++": {
+            "level1": {
+                "heat_limit": 150,
+                "cool_down": 15,
+                "shoot_speed": 15
+            },
+            "level2": {
+                "heat_limit": 280,
+                "cool_down": 25,
+                "shoot_speed": 15
+            },
+            "level3": {
+                "heat_limit": 400,
+                "cool_down": 35,
+                "shoot_speed": 15
+            }
+        },
+        "cool_down++": {
+            "level1": {
+                "heat_limit": 50,
+                "cool_down": 40,
+                "shoot_speed": 15
+            },
+            "level2": {
+                "heat_limit": 100,
+                "cool_down": 60,
+                "shoot_speed": 18
+            },
+            "level3": {
+                "heat_limit": 150,
+                "cool_down": 80,
+                "shoot_speed": 18
+            }
+        },
+        "shoot_speed++": {
+            "level1": {
+                "heat_limit": 75,
+                "cool_down": 15,
+                "shoot_speed": 30
+            },
+            "level2": {
+                "heat_limit": 150,
+                "cool_down": 25,
+                "shoot_speed": 30
+            },
+            "level3": {
+                "heat_limit": 200,
+                "cool_down": 35,
+                "shoot_speed": 30
+            }
+        }
+    },
+    "42mm": {
+        "init_mode": {
+            "heat_limit": 100,
+            "cool_down": 20,
+            "shoot_speed": 10
+        },
+        "heat_limit++": {
+            "level1": {
+                "heat_limit": 200,
+                "cool_down": 40,
+                "shoot_speed": 10
+            },
+            "level2": {
+                "heat_limit": 350,
+                "cool_down": 80,
+                "shoot_speed": 10
+            },
+            "level3": {
+                "heat_limit": 500,
+                "cool_down": 120,
+                "shoot_speed": 10
+            }
+        },
+        "shoot_speed++": {
+            "level1": {
+                "heat_limit": 100,
+                "cool_down": 20,
+                "shoot_speed": 16
+            },
+            "level2": {
+                "heat_limit": 200,
+                "cool_down": 60,
+                "shoot_speed": 16
+            },
+            "level3": {
+                "heat_limit": 300,
+                "cool_down": 100,
+                "shoot_speed": 16
+            }
+        }
+    }
+}

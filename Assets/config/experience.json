@@ -1,0 +1,37 @@
+{
+    "infantry": {
+        "level1": {
+            "have": 25,
+            "need": 30
+        },
+        "level2": {
+            "have": 50,
+            "need": 60
+        },
+        "level3": {
+            "have": 75
+        }
+    },
+    "hero": {
+        "level1": {
+            "have": 75,
+            "need": 60
+        },
+        "level2": {
+            "have": 100,
+            "need": 140
+        },
+        "level3": {
+            "have": 150
+        }
+    },
+    "guard": {
+        "have": 75
+    },
+    "engineer": {
+        "have": 50
+    },
+    "outpost": {
+        "have": 50
+    }
+}
