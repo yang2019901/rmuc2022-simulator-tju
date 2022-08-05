@@ -58,11 +58,11 @@ public class BattleField : MonoBehaviour {
         if (armor_color == ArmorColor.Red) {
             Debug.Log("Team Red activates Rune");
             foreach (RobotState robot in robo_red)
-                robot.B_atk += atk_up;
+                robot.li_B_atk.Add(atk_up);
         } else {
             Debug.Log("Team Blue activates Rune");
             foreach (RobotState robot in robo_blue)
-                robot.B_atk += atk_up;
+                robot.li_B_atk.Add(atk_up);
         }
         yield return new WaitForSeconds(45);
         rune.rune_state_blue.SetActiveState(Activation.Idle);

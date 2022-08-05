@@ -44,7 +44,6 @@ public class ArmorController : MonoBehaviour {
         bs.TakeDamage(hitter, this.gameObject, bullet);
     }
 
-
     public void SetLight(bool turn_on) {
         light_bar_left.GetComponent<Renderer>().sharedMaterial = turn_on ? _light : AssetManager.singleton.light_off;
         light_bar_right.GetComponent<Renderer>().sharedMaterial = turn_on ? _light : AssetManager.singleton.light_off;

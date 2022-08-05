@@ -26,9 +26,10 @@ public class RuneState : BasicState {
         _light = (armor_color == ArmorColor.Red) ? AssetManager.singleton.light_red : AssetManager.singleton.light_blue;
         foreach (RuneBlade blade in GetComponentsInChildren<RuneBlade>()) {
             blades.Add(blade);
+            blade.SetBladeLight(RuneLight.All_off);
             blades_hit.Add(-1);
         }
-
+        rune_center.GetComponent<Renderer>().sharedMaterial = AssetManager.singleton.light_off;
         activate_state = Activation.Idle;
     }
 
