@@ -26,17 +26,20 @@ public abstract class Buff {
 
 /* Buff of Revive */
 public class B_Revive : Buff {
-    float rate;
-    public void Enable(Collider col, float revive_rate) {
+    public override void Enable(Collider col) {
         /* add buff - Revive */
-        if (!en)
-            rate = revive_rate;
+        if (!en) {
+            robot.li_B_rev.Add(0.05f);
+            robot.UpdateBuff();
+        }
         base.Enable(col);
     }
 
     public void Disable() {
         if (!en)
             return;
+        robot.li_B_rev.Remove(0.05f);
+        robot.UpdateBuff();
         en = false;
     }
 
@@ -44,9 +47,6 @@ public class B_Revive : Buff {
         /* no buff */
         if (!en)
             return;
-        /* have buff - revive */
-        robot.blood_left += Mathf.CeilToInt(robot.blood * rate);
-        robot.blood_left = robot.blood_left < robot.blood ? robot.blood_left : robot.blood;
         /* deal with timer */
         timer -= Time.fixedDeltaTime;
         if (timer <= 0)
@@ -245,7 +245,7 @@ public class B_Snipe : Buff {
     public override void Enable(Collider col) {
         if (!en) {
             /* add buff - Snipe */
-            /* TODO */
+            ((HeroState)robot).sniping = true;
         }
         base.Enable(col);
     }
@@ -254,7 +254,7 @@ public class B_Snipe : Buff {
         if (!en)
             return;
         /* remove buff - Snipe */
-        /* TODO */
+        ((HeroState)robot).sniping = false;
         en = false;
     }
 
