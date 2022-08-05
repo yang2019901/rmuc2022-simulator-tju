@@ -13,7 +13,7 @@ public class TowerState : BasicState
     private int blood_left;
     private ArmorController[] acs;
 
-    void Start()
+    public virtual void Start()
     {
         blood_left = blood;
         acs = GetComponentsInChildren<ArmorController>();

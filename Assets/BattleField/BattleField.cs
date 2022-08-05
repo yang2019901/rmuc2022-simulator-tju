@@ -5,10 +5,10 @@ using UnityEngine;
 public class BattleField : MonoBehaviour {
     public static BattleField singleton { get; private set; }
 
-    public Outpost outpost_blue;
-    public Outpost outpost_red;
-    public Base base_blue;
-    public Base base_red;
+    public OutpostState outpost_blue;
+    public OutpostState outpost_red;
+    public BaseState base_blue;
+    public BaseState base_red;
     public Rune rune;
     public RobotState[] robo_red;
     public RobotState[] robo_blue;
@@ -44,10 +44,12 @@ public class BattleField : MonoBehaviour {
 
     public void Kill(GameObject hitter, GameObject hittee) {
         Debug.Log(hitter.name + " slays " + hittee.name);
-        if (hittee == outpost_blue)
-            base_blue.OpenShells(true);
-        else if (hittee == outpost_red)
-            base_red.OpenShells(true);
+        if (hittee == outpost_blue.gameObject)
+            base_blue.GetComponent<Base>().OpenShells(true);
+        else if (hittee == outpost_red.gameObject) {
+            Debug.Log("base red open shells");
+            base_red.GetComponent<Base>().OpenShells(true);
+        }
     }
 
 

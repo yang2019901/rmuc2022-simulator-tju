@@ -6,32 +6,37 @@ using UnityEngine;
 public abstract class Buff {
     /* make sure Update() is called in FixedUpdate() */
     public abstract void Update();
-    public virtual void Enable() {
+    public virtual void Enable(Collider collider) {
         timer = 2;
         en = true;
+        col = collider;
     }
-    public abstract void Disable();
-    public void reset() {
-        timer = 2;
-    }
-    public virtual void init(RobotState robot_state) {
+    public virtual void init(RobotState robot_state, string my_color, string enemy_color) {
         robot = robot_state;
+        my_color_s = my_color;
+        enemy_color_s = enemy_color;
     }
     public float timer;
     public bool en;
     public RobotState robot;
+    protected Collider col;
+    protected string my_color_s;
+    protected string enemy_color_s;
 }
 
 /* Buff of Revive */
 public class B_Revive : Buff {
     float rate;
-    public void Enable(float revive_rate) {
-        base.Enable();
+    public void Enable(Collider col, float revive_rate) {
         /* add buff - Revive */
-        rate = revive_rate;
+        if (!en)
+            rate = revive_rate;
+        base.Enable(col);
     }
 
-    public override void Disable() {
+    public void Disable() {
+        if (!en)
+            return;
         en = false;
     }
 
@@ -51,15 +56,28 @@ public class B_Revive : Buff {
 
 /* Buff of Base */
 public class B_Base : Buff {
-    public override void Enable() {
-        base.Enable();
-        /* add buff - Base */
-        robot.li_B_dfc.Add(0.5f);
-        robot.li_B_cd.Add(3f);
-        robot.UpdateBuff();
+    public BaseState base_state;
+    public override void init(RobotState robot_state, string my_color, string enemy_color) {
+        base.init(robot_state, my_color, enemy_color);
+        base_state = (robot.armor_color == ArmorColor.Red) ? BattleField.singleton.base_red
+            : BattleField.singleton.base_blue;
     }
 
-    public override void Disable() {
+    public override void Enable(Collider col) {
+        if (!en) {
+            Debug.Log("add base buff");
+            /* add buff - Base */
+            robot.li_B_dfc.Add(0.5f);
+            robot.li_B_cd.Add(3f);
+            robot.UpdateBuff();
+        }
+        base.Enable(col);
+    }
+
+    public void Disable() {
+        if (!en)
+            return;
+        Debug.Log("remove base buff");
         /* remove buff - Base */
         robot.li_B_dfc.Remove(0.5f);
         robot.li_B_cd.Remove(3f);
@@ -80,14 +98,21 @@ public class B_Base : Buff {
 
 /* Buff of High Ground */
 public class B_HighGnd : Buff {
-    public override void Enable() {
-        base.Enable();
-        /* add buff - HighGnd */
-        robot.li_B_cd.Add(5f);
-        robot.UpdateBuff();
+    public override void Enable(Collider col) {
+        if (!en) {
+            /* add buff - HighGnd */
+            robot.li_B_cd.Add(5f);
+            robot.UpdateBuff();
+        }
+        base.Enable(col);
     }
 
-    public override void Disable() {
+    public void Disable() {
+        if (!en)
+            return;
+        /* release high ground control */
+        col.name += enemy_color_s;
+        /* remove buff - HighGnd */
         robot.li_B_cd.Remove(5f);
         robot.UpdateBuff();
         en = false;
@@ -107,21 +132,25 @@ public class B_HighGnd : Buff {
 /* Buff of Rune Activation Spot */
 public class B_RuneActiv : Buff {
     RuneState rune_state;
-    public override void init(RobotState robot_state) {
-        robot = robot_state;
+    public override void init(RobotState robot_state, string my_color, string enemy_color) {
+        base.init(robot_state, my_color, enemy_color);
         Rune rune = BattleField.singleton.rune;
         rune_state = (robot.armor_color == ArmorColor.Red) ? rune.rune_state_red : rune.rune_state_blue;
     }
 
-    public override void Enable() {
-        base.Enable();
-        /* add buff - HighGnd */
-        robot.li_B_cd.Add(5f);
-        robot.UpdateBuff();
-        rune_state.SetActiveState(Activation.Hitting);
+    public override void Enable(Collider col) {
+        if (!en) {
+            /* add buff - HighGnd */
+            robot.li_B_cd.Add(5f);
+            robot.UpdateBuff();
+            rune_state.SetActiveState(Activation.Hitting);
+        }
+        base.Enable(col);
     }
 
-    public override void Disable() {
+    public void Disable() {
+        if (!en)
+            return;
         robot.li_B_cd.Remove(5f);
         robot.UpdateBuff();
         en = false;
@@ -141,14 +170,25 @@ public class B_RuneActiv : Buff {
 
 /* Buff of Outpost */
 public class B_Outpost : Buff {
-    public override void Enable() {
-        base.Enable();
-        /* add buff - outpost */
-        robot.li_B_cd.Add(5f);
-        robot.UpdateBuff();
+    public OutpostState outpost_state;
+    public override void init(RobotState robot_state, string my_color, string enemy_color) {
+        base.init(robot_state, my_color, enemy_color);
+        outpost_state = (robot.armor_color == ArmorColor.Red) ? BattleField.singleton.outpost_red
+            : BattleField.singleton.outpost_blue;
     }
 
-    public override void Disable() {
+    public override void Enable(Collider col) {
+        if (!en) {
+            /* add buff - outpost */
+            robot.li_B_cd.Add(5f);
+            robot.UpdateBuff();
+        }
+        base.Enable(col);
+    }
+
+    public void Disable() {
+        if (!en)
+            return;
         /* remove buff - outpost */
         robot.li_B_cd.Remove(5f);
         robot.UpdateBuff();
@@ -168,15 +208,21 @@ public class B_Outpost : Buff {
 
 /* Buff of Island */
 public class B_Island : Buff {
-    public override void Enable() {
-        base.Enable();
-        /* add buff - island */
-        robot.li_B_dfc.Add(0.5f);
-        robot.UpdateBuff();
+    public override void Enable(Collider col) {
+        if (!en) {
+            /* add buff - Island */
+            robot.li_B_dfc.Add(0.5f);
+            robot.UpdateBuff();
+        }
+        base.Enable(col);
     }
 
-    public override void Disable() {
-        /* remove buff - island */
+    public void Disable() {
+        if (!en)
+            return;
+        /* release high ground control */
+        col.name += enemy_color_s;
+        /* remove buff - Island */
         robot.li_B_cd.Remove(0.5f);
         robot.UpdateBuff();
         en = false;
@@ -196,13 +242,17 @@ public class B_Island : Buff {
 /* Buff of Snipe */
 /* TODO: Add HeroState.cs */
 public class B_Snipe : Buff {
-    public override void Enable() {
-        base.Enable();
-        /* add buff - Snipe */
-        /* TODO */
+    public override void Enable(Collider col) {
+        if (!en) {
+            /* add buff - Snipe */
+            /* TODO */
+        }
+        base.Enable(col);
     }
 
-    public override void Disable() {
+    public void Disable() {
+        if (!en)
+            return;
         /* remove buff - Snipe */
         /* TODO */
         en = false;
@@ -221,8 +271,9 @@ public class B_Snipe : Buff {
 
 /* Buff of Leap */
 public class B_Leap : Buff {
-    public override void Enable() {
-        base.Enable();
+    public override void Enable(Collider col) {
+        en = true;
+        timer = 20;
         /* add buff - Leap */
         robot.li_B_dfc.Add(0.5f);
         robot.li_B_cd.Add(3f);
@@ -230,7 +281,9 @@ public class B_Leap : Buff {
         robot.UpdateBuff();
     }
 
-    public override void Disable() {
+    public void Disable() {
+        if (!en)
+            return;
         /* remove buff - Leap */
         robot.li_B_dfc.Remove(0.5f);
         robot.li_B_cd.Remove(3f);
@@ -252,8 +305,12 @@ public class B_Leap : Buff {
 public class BuffManager : MonoBehaviour {
     private RobotState robot;
     private Dictionary<string, Buff> buffs;
-    private string color_s;
 
+    float timer_rune;
+    float timer_leap;
+    string tag_leap;
+    string my_color_s;
+    string enemy_color_s;
     const string rev = "B_Revive";
     const string bas = "B_Base";
     const string gnd = "B_HighGnd";
@@ -275,46 +332,76 @@ public class BuffManager : MonoBehaviour {
             { snp, new B_Snipe() },
             { lea, new B_Leap() }
         };
+        my_color_s = robot.armor_color == ArmorColor.Red ? "red" : "blue";
+        enemy_color_s = robot.armor_color == ArmorColor.Blue ? "red" : "blue";
         foreach (Buff tmp in buffs.Values) {
-            tmp.init(robot);
+            tmp.init(robot, my_color_s, enemy_color_s);
         }
-        color_s = robot.armor_color == ArmorColor.Red ? "red" : "blue";
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         foreach (Buff tmp in buffs.Values) {
             tmp.Update();
         }
     }
 
     void OnTriggerEnter(Collider col) {
+        Debug.Log("enter buff_gnd: " + col.name);
+        if (col.name.Contains(run)) {
+            timer_rune = Time.time;
+        } else if (col.name.Contains(lea)) {
+            if (Time.time - timer_leap >= 10 || Time.time - timer_leap < 0)
+                return;
+            if (col.name.Contains("end") && col.name.Contains(tag_leap)) {
+                buffs[lea].Enable(col);
+            }
+        }
+    }
+
+    void OnTriggerStay(Collider col) {
         char sep = ' ';
         string prefix = col.name.Split(sep)[0];
-        Debug.Log("enter buff_gnd: " + col.name);
         switch (prefix) {
             case rev:
-                if (col.name.Contains(color_s))
-                    buffs[rev].Enable();
+                if (col.name.Contains(my_color_s))
+                    buffs[rev].Enable(col);
                 break;
             case bas:
-                if (col.name.Contains(color_s))
-                    buffs[bas].Enable();
+                if (col.name.Contains(my_color_s)) {
+                    BaseState tmp = ((B_Base)buffs[bas]).base_state;
+                    if (tmp.active && tmp.buff_active)
+                        buffs[bas].Enable(col);
+                }
                 break;
             case gnd:
-                if (col.name.Contains(color_s)){
-                    buffs[gnd].Enable();
+                if (col.name.Contains(my_color_s)) {
+                    buffs[gnd].Enable(col);
                     /* take over the high ground => change its name so that enemy can't share the buff */
-                    col.name = gnd + sep + color_s;
+                    col.name.Replace(enemy_color_s, "");
                 }
                 break;
             case run:
+                if (Time.time - timer_rune > 3 && col.name.Contains(my_color_s))
+                    buffs[run].Enable(col);
                 break;
             case pst:
+                if (col.name.Contains(my_color_s)) {
+                    OutpostState tmp = ((B_Outpost)buffs[pst]).outpost_state;
+                    if (tmp.active && tmp.buff_active)
+                        buffs[pst].Enable(col);
+                }
                 break;
             case lnd:
+                if (col.name.Contains(my_color_s) && robot.gameObject.name.Contains("engineer")) {
+                    buffs[lnd].Enable(col);
+                    /* take over the high ground => change its name so that enemy can't share the buff */
+                    col.name.Replace(enemy_color_s, "");
+                }
                 break;
             case snp:
+                if (col.name.Contains(my_color_s) && robot.gameObject.name.Contains("Hero")) {
+                    buffs[snp].Enable(col);
+                }
                 break;
             case lea:
                 break;
@@ -324,43 +411,14 @@ public class BuffManager : MonoBehaviour {
         }
     }
 
-    void OnTriggerStay(Collider col) {
-
-    }
-
     void OnTriggerExit(Collider col) {
         char sep = ' ';
         string prefix = col.name.Split(sep)[0];
         Debug.Log("leave buff_gnd: " + col.name);
-        switch (prefix) {
-            case rev:
-                if (col.name.Contains(color_s))
-                    buffs[rev].Disable();
-                break;
-            case bas:
-                if (col.name.Contains(color_s))
-                    buffs[bas].Disable();
-                break;
-            case gnd:
-                if (col.name.Contains(color_s)){
-                    buffs[gnd].Disable();
-                    /* take over the high ground => change its name so that enemy can't share the buff */
-                    col.name = gnd + sep + color_s;
-                }
-                break;
-            case run:
-                break;
-            case pst:
-                break;
-            case lnd:
-                break;
-            case snp:
-                break;
-            case lea:
-                break;
-            default:
-                Debug.Log(col.name);
-                break;
+
+        if (prefix == lea && col.name.Contains("start")) {
+            timer_leap = Time.time;
+            tag_leap = col.name.Split(sep)[1];
         }
     }
 }
