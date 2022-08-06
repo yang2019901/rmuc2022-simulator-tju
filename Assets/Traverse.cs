@@ -72,7 +72,7 @@ public class Traverse : MonoBehaviour
         Renderer tmp = child.GetComponent<MeshRenderer>();
         if (tmp == null)
             return ;
-        if (tmp.sharedMaterial.name == "Material_2")
+        if (tmp.sharedMaterial.name == "Material_8")
         {
             Debug.Log("replace");
             tmp.sharedMaterial = new_mat;

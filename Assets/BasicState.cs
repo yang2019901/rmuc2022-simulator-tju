@@ -10,6 +10,8 @@ public abstract class BasicState : MonoBehaviour {
 
 public abstract class RobotState : BasicState {
     public bool survival = true;  // whether this robot survives
+
+
     /* weapon params */
     public int heat_limit;
     public int cool_down;
@@ -18,6 +20,7 @@ public abstract class RobotState : BasicState {
     public int power;
     public int blood;
     public int blood_left;
+
 
     /* Buff */
     /* damage = damage * (1 + hitter.B_atk) * max(1-hittee.B_dfc, 0) */
@@ -33,14 +36,33 @@ public abstract class RobotState : BasicState {
         B_cd = Mathf.Max(li_B_cd.ToArray());
         B_rev = Mathf.Max(li_B_rev.ToArray());
     }
-    public void Revive() {
+
+    float timer_rev = 0f;
+    private void Revive() {
         blood_left += Mathf.RoundToInt(blood * B_rev);
         blood_left = blood_left < blood ? blood_left : blood;
+        // Debug.Log("blood: " + blood_left + "/" + blood);
     }
+
     public List<float> li_B_atk = new List<float> { 0 }; // attack buff. Ex: rune_junior => B_atk.Add(0.5); rune_senior => B_atd.Add(1)
     public List<float> li_B_dfc = new List<float> { 0 }; // defence buff. Ex: rune_senior => B_dfc.Add(0.5)
     public List<float> li_B_cd = new List<float> { 0 };
     public List<float> li_B_rev = new List<float> { 0 };
+
+
+    /* for visual effects */
+    public virtual void Start() {
+        GetUserPref();
+        Configure();
+        this.acs = GetComponentsInChildren<ArmorController>();
+        this.blood_left = this.blood;
+    }
+    public virtual void Update() {
+        if (Time.time - timer_rev >= 1f) {
+            timer_rev = Time.time;
+            Revive();
+        }
+    }
 
     ArmorController[] acs;
     public override void TakeDamage(GameObject hitter, GameObject armor_hit, GameObject bullet) {
@@ -59,13 +81,8 @@ public abstract class RobotState : BasicState {
             BattleField.singleton.Kill(hitter, this.gameObject);
         } else
             StartCoroutine("ArmorsBlink", 0.1f);
-    }
 
-    public virtual void Start() {
-        GetUserPref();
-        Configure();
-        this.acs = GetComponentsInChildren<ArmorController>();
-        this.blood_left = this.blood;
+        SetBloodBars();
     }
 
     private IEnumerator ArmorsBlink(float interval) {
@@ -74,6 +91,14 @@ public abstract class RobotState : BasicState {
         yield return new WaitForSeconds(interval);
         foreach (ArmorController ac in acs)
             ac.SetLight(true);
+    }
+
+    public GameObject[] blood_bars;
+    private void SetBloodBars() {
+        Vector3 scale = new Vector3(1, 1, (float)blood_left / blood);
+        foreach (GameObject bb in blood_bars) {
+            bb.transform.localScale = scale;
+        }
     }
 
     public abstract void GetUserPref();

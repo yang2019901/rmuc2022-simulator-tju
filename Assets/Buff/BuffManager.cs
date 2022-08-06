@@ -399,7 +399,7 @@ public class BuffManager : MonoBehaviour {
                 }
                 break;
             case snp:
-                if (col.name.Contains(my_color_s) && robot.gameObject.name.Contains("Hero")) {
+                if (col.name.Contains(my_color_s) && robot.gameObject.name.Contains("hero")) {
                     buffs[snp].Enable(col);
                 }
                 break;

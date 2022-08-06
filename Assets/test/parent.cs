@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class parent : MonoBehaviour
 {
-    public float t1;
+    public abstract void fuck();
 }

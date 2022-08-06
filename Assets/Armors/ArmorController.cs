@@ -40,7 +40,7 @@ public class ArmorController : MonoBehaviour {
             return;
 
         /* find hitter */
-        GameObject hitter = GameObject.Find(bullet.GetComponent<Bullet>().hitter);
+        GameObject hitter = bullet.GetComponent<Bullet>().hitter;
         bs.TakeDamage(hitter, this.gameObject, bullet);
     }
 

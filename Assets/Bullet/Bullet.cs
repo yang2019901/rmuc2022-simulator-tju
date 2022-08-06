@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public string hitter;
+    public GameObject hitter;
     
     void Update()
     {
