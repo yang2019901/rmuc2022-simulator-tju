@@ -65,7 +65,6 @@ public class B_Base : Buff {
 
     public override void Enable(Collider col) {
         if (!en) {
-            Debug.Log("add base buff");
             /* add buff - Base */
             robot.li_B_dfc.Add(0.5f);
             robot.li_B_cd.Add(3f);
@@ -77,7 +76,6 @@ public class B_Base : Buff {
     public void Disable() {
         if (!en)
             return;
-        Debug.Log("remove base buff");
         /* remove buff - Base */
         robot.li_B_dfc.Remove(0.5f);
         robot.li_B_cd.Remove(3f);
@@ -307,6 +305,7 @@ public class BuffManager : MonoBehaviour {
     private Dictionary<string, Buff> buffs;
 
     float timer_rune;
+    bool leaping;
     float timer_leap;
     string tag_leap;
     string my_color_s;
@@ -337,6 +336,7 @@ public class BuffManager : MonoBehaviour {
         foreach (Buff tmp in buffs.Values) {
             tmp.init(robot, my_color_s, enemy_color_s);
         }
+        leaping = false;
     }
 
     void FixedUpdate() {
@@ -346,14 +346,15 @@ public class BuffManager : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider col) {
-        Debug.Log("enter buff_gnd: " + col.name);
+        // Debug.Log("enter buff_gnd: " + col.name);
         if (col.name.Contains(run)) {
             timer_rune = Time.time;
         } else if (col.name.Contains(lea)) {
-            if (Time.time - timer_leap >= 10 || Time.time - timer_leap < 0)
+            if (!leaping || Time.time - timer_leap >= 10 || Time.time - timer_leap < 0)
                 return;
             if (col.name.Contains("end") && col.name.Contains(tag_leap)) {
                 buffs[lea].Enable(col);
+                leaping = false;
             }
         }
     }
@@ -377,7 +378,7 @@ public class BuffManager : MonoBehaviour {
                 if (col.name.Contains(my_color_s)) {
                     buffs[gnd].Enable(col);
                     /* take over the high ground => change its name so that enemy can't share the buff */
-                    col.name.Replace(enemy_color_s, "");
+                    col.name = col.name.Replace(enemy_color_s, "");
                 }
                 break;
             case run:
@@ -395,7 +396,7 @@ public class BuffManager : MonoBehaviour {
                 if (col.name.Contains(my_color_s) && robot.gameObject.name.Contains("engineer")) {
                     buffs[lnd].Enable(col);
                     /* take over the high ground => change its name so that enemy can't share the buff */
-                    col.name.Replace(enemy_color_s, "");
+                    col.name = col.name.Replace(enemy_color_s, "");
                 }
                 break;
             case snp:
@@ -414,9 +415,10 @@ public class BuffManager : MonoBehaviour {
     void OnTriggerExit(Collider col) {
         char sep = ' ';
         string prefix = col.name.Split(sep)[0];
-        Debug.Log("leave buff_gnd: " + col.name);
+        // Debug.Log("leave buff_gnd: " + col.name);
 
         if (prefix == lea && col.name.Contains("start")) {
+            leaping = true;
             timer_leap = Time.time;
             tag_leap = col.name.Split(sep)[1];
         }

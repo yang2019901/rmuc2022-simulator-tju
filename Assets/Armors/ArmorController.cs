@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class ArmorController : MonoBehaviour {
     public bool enable = true;
-    public GameObject light_bar_left;
-    public GameObject light_bar_right;
+    public GameObject[] light_bars;
 
     /* cache */
     private Material _light;
@@ -31,13 +30,19 @@ public class ArmorController : MonoBehaviour {
             return;
         /* Decide whether this is a successful hit */
         Vector3 v_rel_local = this.transform.InverseTransformVector(collision.relativeVelocity);
-        /* only bullet coms from outside can be detect, aka, velocity_vertical > 0 */
-        float velocity_vertical = -v_rel_local.x;
         Debug.Log(v_rel_local);
+        /* only bullet coms from outside can be detect, aka, velocity_vertical > 0 */
         /* also, velocity_vertical shouldn't be too small. Otherwise, it's a bad hit */
-        if ((bullet.name.Contains("17mm") && velocity_vertical < 12)
-            || (bullet.name.Contains("42mm") && velocity_vertical < 8))
-            return;
+        if (this.gameObject.name.ToLower().Contains("triangle")) {
+            float velocity_vertical = v_rel_local.y;
+            if (bullet.name.Contains("17mm") || (bullet.name.Contains("42mm") && velocity_vertical < 6))
+                return;
+        } else {
+            float velocity_vertical = -v_rel_local.x;
+            if ((bullet.name.Contains("17mm") && velocity_vertical < 12)
+                || (bullet.name.Contains("42mm") && velocity_vertical < 8))
+                return;
+        }
 
         /* find hitter */
         GameObject hitter = bullet.GetComponent<Bullet>().hitter;
@@ -45,8 +50,8 @@ public class ArmorController : MonoBehaviour {
     }
 
     public void SetLight(bool turn_on) {
-        light_bar_left.GetComponent<Renderer>().sharedMaterial = turn_on ? _light : AssetManager.singleton.light_off;
-        light_bar_right.GetComponent<Renderer>().sharedMaterial = turn_on ? _light : AssetManager.singleton.light_off;
+        foreach (GameObject tmp in light_bars)
+            tmp.GetComponent<Renderer>().sharedMaterial = turn_on ? _light : AssetManager.singleton.light_off;
         return;
     }
 

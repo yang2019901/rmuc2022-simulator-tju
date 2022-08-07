@@ -24,12 +24,12 @@ public abstract class RobotState : BasicState {
 
     /* Buff */
     /* damage = damage * (1 + hitter.B_atk) * max(1-hittee.B_dfc, 0) */
-    public float B_atk = 0;
-    public float B_dfc = 0;
+    public float B_atk;
+    public float B_dfc;
     /* heat -= cool_down * B_cd */
-    public float B_cd = 0;
-    public float B_pow = 0;
-    public float B_rev = 0;
+    public float B_cd;
+    public float B_pow;
+    public float B_rev;
     public void UpdateBuff() {
         B_atk = Mathf.Max(li_B_atk.ToArray());
         B_dfc = Mathf.Max(li_B_dfc.ToArray());
@@ -44,14 +44,19 @@ public abstract class RobotState : BasicState {
         // Debug.Log("blood: " + blood_left + "/" + blood);
     }
 
-    public List<float> li_B_atk = new List<float> { 0 }; // attack buff. Ex: rune_junior => B_atk.Add(0.5); rune_senior => B_atd.Add(1)
-    public List<float> li_B_dfc = new List<float> { 0 }; // defence buff. Ex: rune_senior => B_dfc.Add(0.5)
-    public List<float> li_B_cd = new List<float> { 0 };
-    public List<float> li_B_rev = new List<float> { 0 };
+    public List<float> li_B_atk; // attack buff. Ex: rune_junior => B_atk.Add(0.5); rune_senior => B_atd.Add(1)
+    public List<float> li_B_dfc; // defence buff. Ex: rune_senior => B_dfc.Add(0.5)
+    public List<float> li_B_cd;
+    public List<float> li_B_rev;
 
 
     /* for visual effects */
     public virtual void Start() {
+        li_B_atk = new List<float> { 0 };
+        li_B_dfc = new List<float> { 0 };
+        li_B_cd  = new List<float> { 1 };
+        li_B_rev = new List<float> { 0 };
+        UpdateBuff();
         GetUserPref();
         Configure();
         this.acs = GetComponentsInChildren<ArmorController>();

@@ -20,7 +20,13 @@ public class TowerState : BasicState {
 
     public override void TakeDamage(GameObject hitter, GameObject armor_hit, GameObject bullet) {
         /* Requirement: make sure that small bullet's name contains "17mm" && big bullet's contains "42mm" */
-        int damage = bullet.name.Contains("17mm") ? 5 : 200;
+        int damage;
+        if (armor_hit.name.ToLower().Contains("triangle")) {
+            damage = bullet.name.Contains("17mm") ? 0 : 300;
+            Debug.LogWarning("hit triangle armor");
+        }
+        else
+            damage = bullet.name.Contains("17mm") ? 5 : 200;
         damage = Mathf.RoundToInt(damage * (hitter.GetComponent<RobotState>().B_atk + 1));
         blood_left -= damage;
 
