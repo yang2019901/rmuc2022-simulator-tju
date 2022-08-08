@@ -141,8 +141,8 @@ public class B_RuneActiv : Buff {
             /* add buff - HighGnd */
             robot.li_B_cd.Add(5f);
             robot.UpdateBuff();
-            rune_state.SetActiveState(Activation.Hitting);
         }
+        rune_state.SetActiveState(Activation.Hitting);
         base.Enable(col);
     }
 
@@ -347,7 +347,7 @@ public class BuffManager : MonoBehaviour {
 
     void OnTriggerEnter(Collider col) {
         // Debug.Log("enter buff_gnd: " + col.name);
-        if (col.name.Contains(run)) {
+        if (col.name.Contains(run) && !buffs[run].en) {
             timer_rune = Time.time;
         } else if (col.name.Contains(lea)) {
             if (!leaping || Time.time - timer_leap >= 10 || Time.time - timer_leap < 0)

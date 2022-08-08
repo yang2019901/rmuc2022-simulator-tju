@@ -12,6 +12,7 @@ public class CarController : MonoBehaviour {
     [Header("chassis")]
     public Transform chassis;
     public Transform[] wheels;
+    [Header("order: FL-FR-BR-BL")]
     public WheelCollider[] wheelColliders;
 
     [Header("Weapon")]
@@ -29,8 +30,8 @@ public class CarController : MonoBehaviour {
 
     void Start() {
         _rigid = GetComponent<Rigidbody>();
-        Cursor.lockState = CursorLockMode.Locked;
         _rigid.centerOfMass = centerOfMass;
+        Cursor.lockState = CursorLockMode.Locked;
 
         if (this.gameObject.name.Contains("infantry"))
             getBullet = BulletPool.singleton.GetSmallBullet;
@@ -61,11 +62,8 @@ public class CarController : MonoBehaviour {
 
         /* Rotate wheels and move the car */
         if (Mathf.Abs(h) > 1e-3 || Mathf.Abs(v) > 1e-3) {
-            float dir = Mathf.Rad2Deg * Mathf.Atan2(h, v);
-            foreach (Transform wheel in wheels)
-                wheel.transform.localEulerAngles = new Vector3(0, dir, 0);
+            float steer_ang = Mathf.Rad2Deg * Mathf.Atan2(h, v);
             /* get remainder, make sure steer_ang is in [-360, 360] */
-            float steer_ang = (dir + chassis.localEulerAngles.y) % 360;
             foreach (WheelCollider wc in wheelColliders) {
                 /* steerAngle will CLAMP angle to [-360, 360] */
                 wc.steerAngle = steer_ang;
@@ -73,27 +71,41 @@ public class CarController : MonoBehaviour {
             }
         } else {
             foreach (WheelCollider wc in wheelColliders) {
-                wc.steerAngle = chassis.localEulerAngles.y;
+                wc.steerAngle = 0f;
                 wc.motorTorque = 0f;
             }
         }
 
+
+
+        /* make chassis follow turret(aka, yaw) */
+        float d_ang = -Mathf.DeltaAngle(yaw_ang, chassis.eulerAngles.y);
+        /* TODO: use PID controller */
+        float torque = 0.2f * d_ang;
+        for (int i = 0; i < wheel_num; i++) {
+            float ang1 = wheelColliders[i].steerAngle * Mathf.Deg2Rad;
+            float ang2 = (45 + 90 * i) % 360 * Mathf.Deg2Rad;
+            Vector2 f1 = wheelColliders[i].motorTorque * new Vector2(Mathf.Cos(ang1), Mathf.Sin(ang1));
+            Vector2 f2 = torque * new Vector2(Mathf.Cos(ang2), Mathf.Sin(ang2));
+            Vector2 f_all = f1 + f2;
+            wheelColliders[i].steerAngle = Mathf.Rad2Deg * Mathf.Atan2(f_all.y, f_all.x);
+            wheelColliders[i].motorTorque = f_all.magnitude;
+            /* rotate the visual model */
+            wheels[i].transform.localEulerAngles = new Vector3(0, wheelColliders[i].steerAngle, 0);
+        }
+    }
+
+    void Update() {
         /* Get look dir from user input */
         float mouseX = 3 * Input.GetAxis("Mouse X");
         float mouseY = 2 * Input.GetAxis("Mouse Y");
         pitch_ang -= mouseY;
         pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
         yaw_ang += mouseX;
-
         /* Rotate Transform "yaw" & "pitch" */
         pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
-        yaw.localEulerAngles = new Vector3(0, yaw_ang, 0);
-
-        /* make chassis follow turret(aka, yaw) */
-        Vector3 rotation = 3 * Vector3.Cross(chassis.forward, yaw.forward);
-        chassis.transform.Rotate(rotation, Space.World);
+        yaw.eulerAngles = new Vector3(chassis.eulerAngles.x, yaw_ang, chassis.eulerAngles.z);
     }
-
 
     void Shoot() {
         bool is_fire = Input.GetMouseButton(0);
