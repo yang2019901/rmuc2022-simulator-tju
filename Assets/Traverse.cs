@@ -16,7 +16,7 @@ public class Traverse : MonoBehaviour
             // AddMC(child);
             // ResetConvex(child);
             // AddMC(child);
-            ReplaceMaterial(child, AssetManager.singleton.light_blue);
+            ReplaceMaterial(child, AssetManager.singleton.light_red);
         }
         // DestroyImmediate(this.GetComponent<Traverse>());
     }
@@ -72,7 +72,7 @@ public class Traverse : MonoBehaviour
         Renderer tmp = child.GetComponent<MeshRenderer>();
         if (tmp == null)
             return ;
-        if (tmp.sharedMaterial.name == "Material_29")
+        if (tmp.sharedMaterial.name.ToLower() == "nolight")
         {
             Debug.Log("replace");
             tmp.sharedMaterial = new_mat;

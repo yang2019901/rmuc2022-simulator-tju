@@ -32,6 +32,7 @@ public class BattleField : MonoBehaviour {
 
     void Start() {
         t_start = Time.time;
+        rune.Init();
     }
 
 

@@ -11,10 +11,10 @@ public class Rune : MonoBehaviour {
 
 
     public bool activated { get; private set; }
-    private const int jun_sta = 10;    // rune_junior starts
-    private const int jun_end = 30;   // rune_junior ends
-    private const int sen_sta = 40;   // rune_senior starts
-    private const int sen_end = 60;   // rune_senior ends
+    private const int jun_sta = 60;    // rune_junior starts
+    private const int jun_end = 120;   // rune_junior ends
+    private const int sen_sta = 240;   // rune_senior starts
+    private const int sen_end = 420;   // rune_senior ends
     private RuneBuff rune_buff;
     private float a, w, t;
     private int sgn;
