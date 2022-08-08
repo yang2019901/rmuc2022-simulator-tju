@@ -11,15 +11,23 @@ public class Rune : MonoBehaviour {
 
 
     public bool activated { get; private set; }
-    private const int jun_sta = 60;    // rune_junior starts
-    private const int jun_end = 120;   // rune_junior ends
-    private const int sen_sta = 240;   // rune_senior starts
-    private const int sen_end = 420;   // rune_senior ends
+    private const int jun_sta = 10;    // rune_junior starts
+    private const int jun_end = 30;   // rune_junior ends
+    private const int sen_sta = 40;   // rune_senior starts
+    private const int sen_end = 60;   // rune_senior ends
     private RuneBuff rune_buff;
     private float a, w, t;
     private int sgn;
 
-    void Start() {
+
+    /** use Init() instead of Start() to init instance of Rune, 
+        so that instances of Rune, RuneState and RuneBlade are initialized in certain and correct order.
+        
+        Otherwise, maybe RuneBlade is initialized before RuneState, thereby causing null sharedMaterial of Renderer
+     */
+    public void Init() {
+        rune_state_red.Init();
+        rune_state_blue.Init();
         rune_state_red.SetActiveState(Activation.Idle);
         rune_state_blue.SetActiveState(Activation.Idle);
         sgn = Random.Range(0, 1) > 0.5 ? 1 : -1;
