@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 /* code will be executed in editor, therefore, component will be added to object persistantly */
 [ExecuteInEditMode]
@@ -16,7 +17,8 @@ public class Traverse : MonoBehaviour
             // AddMC(child);
             // ResetConvex(child);
             // AddMC(child);
-            ReplaceMaterial(child, AssetManager.singleton.light_red);
+            // ReplaceMaterial(child, AssetManager.singleton.light_red);
+            DeleteNI(child);
         }
         // DestroyImmediate(this.GetComponent<Traverse>());
     }
@@ -77,5 +79,15 @@ public class Traverse : MonoBehaviour
             Debug.Log("replace");
             tmp.sharedMaterial = new_mat;
         }
+    }
+
+    void DeleteNI(Transform child)
+    {
+        if (GetComponent<NetworkIdentity>() != null) {
+            Debug.Log(child.name);
+            DestroyImmediate(GetComponent<NetworkTransform>());
+            DestroyImmediate(GetComponent<NetworkIdentity>());
+        }
+
     }
 }

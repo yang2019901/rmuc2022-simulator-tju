@@ -43,22 +43,21 @@ public class CarController : MonoBehaviour {
         robot_state = GetComponent<RobotState>();
     }
 
-    void FixedUpdate() {
-        Move();
-        Shoot();
-    }
-
     void Update() {
         SetCursor();
-        /* Get look dir from user input */
-        float mouseX = 3 * Input.GetAxis("Mouse X");
-        float mouseY = 2 * Input.GetAxis("Mouse Y");
-        pitch_ang -= mouseY;
-        pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
-        yaw_ang += mouseX;
-        /* Rotate Transform "yaw" & "pitch" */
-        pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
-        yaw.eulerAngles = new Vector3(chassis.eulerAngles.x, yaw_ang, chassis.eulerAngles.z);
+        if (robot_state.survival) {
+            Move();
+            Look();
+            Shoot();
+        }
+    }
+
+
+    void SetCursor() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None
+                : CursorLockMode.Locked;
+        }
     }
 
 
@@ -90,8 +89,6 @@ public class CarController : MonoBehaviour {
             }
         }
 
-
-
         /* make chassis follow turret(aka, yaw) */
         float d_ang = -Mathf.DeltaAngle(yaw_ang, chassis.eulerAngles.y);
         /* TODO: use PID controller */
@@ -109,6 +106,20 @@ public class CarController : MonoBehaviour {
         }
     }
 
+
+    void Look() {
+        /* Get look dir from user input */
+        float mouseX = 3 * Input.GetAxis("Mouse X");
+        float mouseY = 2 * Input.GetAxis("Mouse Y");
+        pitch_ang -= mouseY;
+        pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
+        yaw_ang += mouseX;
+        /* Rotate Transform "yaw" & "pitch" */
+        pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
+        yaw.eulerAngles = new Vector3(chassis.eulerAngles.x, yaw_ang, chassis.eulerAngles.z);
+    }
+
+
     void Shoot() {
         bool is_fire = Input.GetMouseButton(0);
         if (is_fire && Time.time - last_fire > 0.15) {
@@ -120,10 +131,4 @@ public class CarController : MonoBehaviour {
         }
     }
 
-    void SetCursor() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None 
-                : CursorLockMode.Locked;
-        }
-    }
 }
