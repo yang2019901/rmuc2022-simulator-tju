@@ -5,6 +5,9 @@ using UnityEngine;
 public enum RuneLight { All_off, All_on, Center_on }
 
 public class RuneBlade : MonoBehaviour {
+    /* for sync */
+    public RuneLight blade_light;
+
     public GameObject[] flank_lightbars;
     public GameObject[] central_lightbars;
 
@@ -39,6 +42,7 @@ public class RuneBlade : MonoBehaviour {
                     bar.GetComponent<Renderer>().sharedMaterial = light_on;
                 break;
         }
+        blade_light = state;
         return;
     }
 }

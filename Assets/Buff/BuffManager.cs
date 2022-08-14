@@ -370,7 +370,7 @@ public class BuffManager : MonoBehaviour {
             case bas:
                 if (col.name.Contains(my_color_s)) {
                     BaseState tmp = ((B_Base)buffs[bas]).base_state;
-                    if (tmp.active && tmp.buff_active)
+                    if (tmp.survival && tmp.buff_active)
                         buffs[bas].Enable(col);
                 }
                 break;
@@ -388,7 +388,7 @@ public class BuffManager : MonoBehaviour {
             case pst:
                 if (col.name.Contains(my_color_s)) {
                     OutpostState tmp = ((B_Outpost)buffs[pst]).outpost_state;
-                    if (tmp.active && tmp.buff_active)
+                    if (tmp.survival && tmp.buff_active)
                         buffs[pst].Enable(col);
                 }
                 break;

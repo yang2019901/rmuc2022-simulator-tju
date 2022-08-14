@@ -106,6 +106,18 @@ public abstract class RobotState : BasicState {
         }
     }
 
+    public RobotSync Pull() {
+        RobotSync tmp = new RobotSync();
+        tmp.blood_left = this.blood_left;
+        tmp.survival = this.survival;
+        return tmp;
+    }
+
+    public void Push(RobotSync robot_sync) {
+        this.blood_left = robot_sync.blood_left;
+        this.survival = robot_sync.survival;
+    }
+
     public abstract void GetUserPref();
     public abstract void Configure();
 }

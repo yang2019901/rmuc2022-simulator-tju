@@ -7,9 +7,10 @@ public class TowerState : BasicState {
     public GameObject[] blood_bars;
 
     public int blood;
-    public bool active = true;
+    public bool survival = true;
+    /* for sync */
+    public int blood_left;
     /* Cache */
-    private int blood_left;
     private ArmorController[] acs;
 
     public virtual void Start() {
@@ -36,16 +37,16 @@ public class TowerState : BasicState {
             blood_left = 0;
             foreach (ArmorController ac in acs)
                 ac.Disable();
-            this.active = false;
+            this.survival = false;
             BattleField.singleton.Kill(hitter, this.gameObject);
         } else
-            StartCoroutine("ArmorsBlink", 0.1f);
+            StartCoroutine(this.ArmorsBlink(0.1f));
 
         SetBloodBars();
     }
 
 
-    private IEnumerator ArmorsBlink(float interval) {
+    public IEnumerator ArmorsBlink(float interval) {
         foreach (ArmorController ac in acs)
             ac.SetLight(false);
         yield return new WaitForSeconds(interval);
@@ -54,7 +55,7 @@ public class TowerState : BasicState {
     }
 
 
-    private void SetBloodBars() {
+    public void SetBloodBars() {
         Vector3 scale = new Vector3(1, 1, (float)blood_left / blood);
         foreach (GameObject bb in blood_bars) {
             bb.transform.localScale = scale;

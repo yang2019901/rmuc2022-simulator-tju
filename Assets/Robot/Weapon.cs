@@ -2,20 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Caliber {_17mm, _42mm}
+
 public class Weapon : MonoBehaviour {
     /* turret params */
     public int shoot_speed;
     public int cool_down;
     public int heat_limit;
     private int heat;
+    Caliber caliber;
 
-    // Start is called before the first frame update
     void Start() {
-
+        if (this.name.ToLower().Contains("infantry"))
+            caliber = Caliber._17mm;
+        else if (this.name.ToLower().Contains("hero"))
+            caliber = Caliber._42mm;
+        else
+            Debug.LogError("wrong car name receive by Weapon.cs: " + this.name);
     }
 
-    // Update is called once per frame
-    void Update() {
-
+    public GameObject GetBullet() {
+        return caliber == Caliber._17mm ? BulletPool.singleton.GetSmallBullet()
+            : BulletPool.singleton.GetBigBullet();
     }
 }

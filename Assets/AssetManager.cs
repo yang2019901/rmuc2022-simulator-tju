@@ -4,7 +4,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-public enum ArmorColor {Red, Blue}
+public enum ArmorColor {Red=0, Blue=1}
 
 public class AssetManager : MonoBehaviour {
     public static AssetManager singleton { get; private set; }

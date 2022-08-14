@@ -15,7 +15,7 @@ public class Outpost : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (_state.active)
+        if (_state.survival)
         {
             OutpostSpin();
         }

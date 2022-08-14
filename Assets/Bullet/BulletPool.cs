@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 /* Singleton */
-public class BulletPool : MonoBehaviour {
+public class BulletPool : NetworkBehaviour {
     /* singleton, used to get */
     public static BulletPool singleton { get; private set; }
     public GameObject smallbullet_t;
@@ -16,7 +17,7 @@ public class BulletPool : MonoBehaviour {
     private List<GameObject> bigbullet_idle;
     private List<GameObject> bigbullet_busy;
 
-    void Awake() {
+    public override void OnStartServer() {
         smallbullet_busy = new List<GameObject>();
         smallbullet_idle = new List<GameObject>();
         bigbullet_busy = new List<GameObject>();
@@ -31,12 +32,14 @@ public class BulletPool : MonoBehaviour {
             GameObject tmp = (GameObject)Instantiate(smallbullet_t);
             tmp.SetActive(false);
             smallbullet_idle.Add(tmp);
+            // NetworkServer.Spawn(tmp);
         }
 
         for (int i = 0; i < 100; i++) {
             GameObject tmp = (GameObject)Instantiate(bigbullet_t);
             tmp.SetActive(false);
             bigbullet_idle.Add(tmp);
+            // NetworkServer.Spawn(tmp);
         }
     }
 

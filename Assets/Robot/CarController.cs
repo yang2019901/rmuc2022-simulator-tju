@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class CarController : MonoBehaviour {
+public class CarController : NetworkBehaviour {
     [Header("Kinematic")]
     public Rigidbody _rigid;
     public Vector3 centerOfMass;
@@ -17,33 +18,46 @@ public class CarController : MonoBehaviour {
 
     [Header("Weapon")]
     public Transform bullet_start;
+    [Header("View")]
+    public Transform robot_cam;
 
     private float last_fire = 0;
     private float pitch_ang = 0;
     private float pitch_min = -20;
     private float pitch_max = 40;
     private float yaw_ang = 0;
-    private delegate GameObject GetBullet();
-    private GetBullet getBullet;
+    private Weapon weapon;
     private RobotState robot_state;
 
+    public override void OnStartClient() {
+        base.OnStartClient();
+        if (isLocalPlayer) {
+            Transform tmp = Camera.main.transform;
+            tmp.parent = robot_cam;
+            tmp.rotation = robot_cam.rotation;
+            tmp.position = robot_cam.position;
+        }
+    }
+
+    public override void OnStopClient() {
+        base.OnStopClient();
+        if (isLocalPlayer) {
+            Camera.main.transform.parent = null;
+        }
+    }
 
     void Start() {
         _rigid = GetComponent<Rigidbody>();
         _rigid.centerOfMass = centerOfMass;
         Cursor.lockState = CursorLockMode.Locked;
-
-        if (this.gameObject.name.Contains("infantry"))
-            getBullet = BulletPool.singleton.GetSmallBullet;
-        else if (this.gameObject.name.Contains("hero"))
-            getBullet = BulletPool.singleton.GetBigBullet;
-        else
-            Debug.LogError("wrong car name: " + this.gameObject.name);
-
         robot_state = GetComponent<RobotState>();
+        weapon = GetComponent<Weapon>();
     }
 
     void Update() {
+        if (!isLocalPlayer)
+            return;
+
         SetCursor();
         if (robot_state.survival) {
             Move();
@@ -123,12 +137,17 @@ public class CarController : MonoBehaviour {
     void Shoot() {
         bool is_fire = Input.GetMouseButton(0);
         if (is_fire && Time.time - last_fire > 0.15) {
-            GameObject bullet = getBullet();
-            bullet.transform.position = bullet_start.position;
-            bullet.GetComponent<Rigidbody>().velocity = bullet_start.forward * 18;
-            bullet.GetComponent<Bullet>().hitter = this.gameObject;
+            CmdShoot(bullet_start.position, bullet_start.forward * 18);
             last_fire = Time.time;
         }
+    }
+    [Command]
+    void CmdShoot(Vector3 pos, Vector3 vel) {
+        GameObject bullet = BulletPool.singleton.GetSmallBullet();
+        bullet.transform.position = pos;
+        bullet.GetComponent<Rigidbody>().velocity = vel;
+        bullet.GetComponent<Bullet>().hitter = this.gameObject;
+        NetworkServer.Spawn(bullet);
     }
 
 }

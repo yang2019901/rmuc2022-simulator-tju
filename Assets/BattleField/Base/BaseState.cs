@@ -35,6 +35,22 @@ public class BaseState : TowerState {
             base.TakeDamage(hitter, armor_hit, bullet);
     }
 
+    public BaseSync Pull() {
+        BaseSync tmp = new BaseSync();
+        tmp.blood_left = this.blood_left;
+        tmp.survival = this.survival;
+        return tmp;
+    }
+
+    public void Push(BaseSync base_sync) {
+        if (this.blood_left != base_sync.blood_left) {
+            this.blood_left = base_sync.blood_left;
+            this.SetBloodBars();
+            StartCoroutine(this.ArmorsBlink(0.1f));
+        }
+        this.survival = base_sync.survival;
+    }
+
     // Update is called once per frame
     void Update() {
 

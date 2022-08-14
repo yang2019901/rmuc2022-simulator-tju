@@ -12,9 +12,10 @@ public class RuneState : BasicState {
     public GameObject rune_center;
 
     /* Cache */
+    private bool center_light;
     private List<RuneBlade> blades = new List<RuneBlade>();
-    /* -1: not hit; 0: hitting; 1: hit  */
-    private List<int> blades_hit = new List<int>();
+    /* All_off: not hit; Center_on: hitting; All_on: hit  */
+    private List<RuneLight> blades_hit = new List<RuneLight>();
     private Material _light;
     /* when timer_hit > max_hit_time, blade will shift to another one */
     private const float max_hit_time = 2.5f;
@@ -28,7 +29,7 @@ public class RuneState : BasicState {
             blades.Add(blade);
             blade.Init();
             blade.SetBladeLight(RuneLight.All_off);
-            blades_hit.Add(-1);
+            blades_hit.Add(RuneLight.All_off);
         }
         rune_center.GetComponent<Renderer>().sharedMaterial = AssetManager.singleton.light_off;
         activate_state = Activation.Idle;
@@ -42,10 +43,11 @@ public class RuneState : BasicState {
                     break;
                 for (int i = 0; i < blades.Count; i++) {
                     blades[i].SetBladeLight(RuneLight.All_off);
-                    blades_hit[i] = -1;
+                    blades_hit[i] = RuneLight.All_off;
                 }
                 rune_center.GetComponent<Renderer>().sharedMaterial = AssetManager.singleton.light_off;
                 activate_state = new_state;
+                center_light = false;
                 break;
 
             case Activation.Ready:
@@ -53,17 +55,19 @@ public class RuneState : BasicState {
                     rune_center.GetComponent<Renderer>().sharedMaterial = _light;
                     activate_state = new_state;
                 }
+                center_light = true;
                 break;
 
             case Activation.Hitting:
                 if (activate_state == Activation.Ready) {
                     /* pick a blade as new target armor to hit */
                     idx_target = GetRandBladeIdx();
-                    blades_hit[idx_target] = 0;
+                    blades_hit[idx_target] = RuneLight.Center_on;
                     blades[idx_target].SetBladeLight(RuneLight.Center_on);
                     timer_hit = 0;
                     activate_state = new_state;
                 }
+                center_light = true;
                 break;
 
             default:
@@ -77,7 +81,7 @@ public class RuneState : BasicState {
     int GetRandBladeIdx() {
         List<int> indexes_not_hit = new List<int>();
         for (int i = 0; i < blades_hit.Count; i++) {
-            if (blades_hit[i] == -1)
+            if (blades_hit[i] == RuneLight.All_off)
                 indexes_not_hit.Add(i);
         }
         if (indexes_not_hit.Count == 0)
@@ -92,7 +96,7 @@ public class RuneState : BasicState {
             return;
         RuneBlade blade_hit = armor_hit.GetComponentInParent<RuneBlade>();
         if (blade_hit == blades[idx_target]) {
-            blades_hit[idx_target] = 1;
+            blades_hit[idx_target] = RuneLight.All_on;
             blades[idx_target].SetBladeLight(RuneLight.All_on);
 
             /* pick another blade as new target */
@@ -102,7 +106,7 @@ public class RuneState : BasicState {
                 this.activate_state = Activation.Activated;
                 GetComponentInParent<Rune>().ActivateRune(armor_color);
             } else {
-                blades_hit[idx_target] = 0;
+                blades_hit[idx_target] = RuneLight.Center_on;
                 blades[idx_target].SetBladeLight(RuneLight.Center_on);
                 /* reset timer_hit */
                 timer_hit = 0;
@@ -111,11 +115,11 @@ public class RuneState : BasicState {
             /* set all elements of "blades_hit" to not_hit */
             for (int i = 0; i < blades.Count; i++) {
                 blades[i].SetBladeLight(RuneLight.All_off);
-                blades_hit[i] = -1;
+                blades_hit[i] = RuneLight.All_off;
             }
             /* repick a blade as new target armor to hit */
             idx_target = GetRandBladeIdx();
-            blades_hit[idx_target] = 0;
+            blades_hit[idx_target] = RuneLight.Center_on;
             blades[idx_target].SetBladeLight(RuneLight.Center_on);
             timer_hit = 0;
         }
@@ -128,16 +132,32 @@ public class RuneState : BasicState {
             if (timer_hit >= max_hit_time) {
                 /* set all elements of "blades_hit" to not_hit */
                 for (int i = 0; i < blades.Count; i++) {
+                    blades_hit[i] = RuneLight.All_off;
                     blades[i].SetBladeLight(RuneLight.All_off);
-                    blades_hit[i] = -1;
                 }
                 /* repick a blade as new target armor to hit */
                 idx_target = GetRandBladeIdx();
-                blades_hit[idx_target] = 0;
+                blades_hit[idx_target] = RuneLight.Center_on;
                 blades[idx_target].SetBladeLight(RuneLight.Center_on);
                 timer_hit = 0;
             }
             timer_hit += Time.deltaTime;
         }
+    }
+
+    public RuneSync Pull() {
+        RuneSync tmp = new RuneSync();
+        tmp.center_light = this.center_light;
+        tmp.blades_light = new RuneLight[blades.Count];
+        for (int i = 0; i < blades.Count; i++)
+            tmp.blades_light[i] = blades[i].blade_light;
+        return tmp;
+    }
+
+    public void Push(RuneSync rune_sync) {
+        rune_center.GetComponent<Renderer>().sharedMaterial = rune_sync.center_light ?
+            _light : AssetManager.singleton.light_off;
+        for (int i = 0; i < blades.Count; i++)
+            blades[i].SetBladeLight(rune_sync.blades_light[i]);
     }
 }
