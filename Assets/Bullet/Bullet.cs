@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class Bullet : MonoBehaviour
+public class Bullet : NetworkBehaviour
 {
     public GameObject hitter;
     
     void Update()
     {
+        if (!isServer)
+            return ;
         if (!BattleField.singleton.OnField(this.gameObject))
         {
             BulletPool.singleton.RemoveBullet(this.gameObject);
@@ -23,11 +26,13 @@ public class Bullet : MonoBehaviour
     /* requirement: bullet need to be continous dynamic */
     void OnCollisionEnter(Collision collision)
     {
+        if (!isServer)
+            return ;
         ArmorController ac = collision.collider.GetComponent<ArmorController>();
         if (ac != null)
         {
             ac.TakeHit(collision, this.gameObject);
         }
-        StartCoroutine("RemoveBullet");
+        StartCoroutine(RemoveBullet());
     }
 }

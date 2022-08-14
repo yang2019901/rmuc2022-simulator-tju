@@ -115,6 +115,7 @@ public abstract class RobotState : BasicState {
 
     public void Push(RobotSync robot_sync) {
         this.blood_left = robot_sync.blood_left;
+        this.SetBloodBars();
         this.survival = robot_sync.survival;
     }
 

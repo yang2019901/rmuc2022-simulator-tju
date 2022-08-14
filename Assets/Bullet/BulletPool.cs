@@ -32,14 +32,12 @@ public class BulletPool : NetworkBehaviour {
             GameObject tmp = (GameObject)Instantiate(smallbullet_t);
             tmp.SetActive(false);
             smallbullet_idle.Add(tmp);
-            // NetworkServer.Spawn(tmp);
         }
 
         for (int i = 0; i < 100; i++) {
             GameObject tmp = (GameObject)Instantiate(bigbullet_t);
             tmp.SetActive(false);
             bigbullet_idle.Add(tmp);
-            // NetworkServer.Spawn(tmp);
         }
     }
 
@@ -75,7 +73,7 @@ public class BulletPool : NetworkBehaviour {
             Destroy(bullet.GetComponent<Rigidbody>());
             return;
         }
-
+        NetworkServer.UnSpawn(bullet);
         if (bullet.name.Contains("17mm")) {
             smallbullet_busy.Remove(bullet);
             bullet.SetActive(false);
