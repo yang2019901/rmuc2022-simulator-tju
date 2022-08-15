@@ -137,7 +137,7 @@ public class CarController : NetworkBehaviour {
     void Shoot() {
         bool is_fire = Input.GetMouseButton(0);
         if (is_fire && Time.time - last_fire > 0.15) {
-            CmdShoot(bullet_start.position, bullet_start.forward * 18);
+            CmdShoot(bullet_start.position, bullet_start.forward * 18 + _rigid.velocity);
             last_fire = Time.time;
         }
     }
