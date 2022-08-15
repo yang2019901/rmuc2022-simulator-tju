@@ -143,11 +143,9 @@ public class CarController : NetworkBehaviour {
     }
     [Command]
     void CmdShoot(Vector3 pos, Vector3 vel) {
-        GameObject bullet = BulletPool.singleton.GetSmallBullet();
+        GameObject bullet = weapon.GetBullet();
         bullet.transform.position = pos;
         bullet.GetComponent<Rigidbody>().velocity = vel;
         bullet.GetComponent<Bullet>().hitter = this.gameObject;
-        NetworkServer.Spawn(bullet);
     }
-
 }

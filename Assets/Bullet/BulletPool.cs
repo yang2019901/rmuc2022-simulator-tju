@@ -18,16 +18,17 @@ public class BulletPool : NetworkBehaviour {
     private List<GameObject> bigbullet_busy;
 
     public override void OnStartServer() {
-        smallbullet_busy = new List<GameObject>();
-        smallbullet_idle = new List<GameObject>();
-        bigbullet_busy = new List<GameObject>();
-        bigbullet_idle = new List<GameObject>();
+        base.OnStartServer();
         if (singleton == null) {
             singleton = this;
             DontDestroyOnLoad(this);
         } else {
             Destroy(this);
         }
+        smallbullet_busy = new List<GameObject>();
+        smallbullet_idle = new List<GameObject>();
+        bigbullet_busy = new List<GameObject>();
+        bigbullet_idle = new List<GameObject>();
         for (int i = 0; i < 400; i++) {
             GameObject tmp = (GameObject)Instantiate(smallbullet_t);
             tmp.SetActive(false);
@@ -50,6 +51,7 @@ public class BulletPool : NetworkBehaviour {
             tmp = (GameObject)Instantiate(smallbullet_t);
         tmp.SetActive(true);
         smallbullet_busy.Add(tmp);
+        NetworkServer.Spawn(tmp);
         return tmp;
     }
 
@@ -62,6 +64,7 @@ public class BulletPool : NetworkBehaviour {
             tmp = (GameObject)Instantiate(bigbullet_t);
         tmp.SetActive(true);
         bigbullet_busy.Add(tmp);
+        NetworkServer.Spawn(tmp);
         return tmp;
     }
 

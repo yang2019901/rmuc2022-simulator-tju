@@ -54,8 +54,8 @@ public class RuneState : BasicState {
                 if (activate_state == Activation.Idle) {
                     rune_center.GetComponent<Renderer>().sharedMaterial = _light;
                     activate_state = new_state;
+                    center_light = true;
                 }
-                center_light = true;
                 break;
 
             case Activation.Hitting:
@@ -66,8 +66,8 @@ public class RuneState : BasicState {
                     blades[idx_target].SetBladeLight(RuneLight.Center_on);
                     timer_hit = 0;
                     activate_state = new_state;
+                    center_light = true;
                 }
-                center_light = true;
                 break;
 
             default:
