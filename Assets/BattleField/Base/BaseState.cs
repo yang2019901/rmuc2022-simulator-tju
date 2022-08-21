@@ -43,7 +43,7 @@ public class BaseState : TowerState {
     }
 
     public void Push(BaseSync base_sync) {
-        if (this.blood_left != base_sync.blood_left) {
+        if (this.blood_left > base_sync.blood_left) {
             this.blood_left = base_sync.blood_left;
             this.SetBloodBars();
             StartCoroutine(this.ArmorsBlink(0.1f));

@@ -8,7 +8,7 @@ public class DataManager : NetworkBehaviour
 {
     public static DataManager singleton;
     /* data will be sync between server and client, for UI effect */
-    SyncDictionary<string, int> connId_robot;
+    public readonly SyncDictionary<string, int> connId_robot;
 
     void Awake() {
         if (singleton == null) {

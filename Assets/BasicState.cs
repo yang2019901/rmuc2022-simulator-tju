@@ -130,9 +130,17 @@ public class RobotState : BasicState {
     }
 
     public void Push(RobotSync robot_sync) {
-        this.blood_left = robot_sync.blood_left;
-        this.SetBloodBars();
+        if (this.blood_left > robot_sync.blood_left) {
+            this.blood_left = robot_sync.blood_left;
+            this.SetBloodBars();
+            if (blood_left <= 0)
+                foreach (ArmorController ac in acs)
+                    ac.Disable();
+            else
+                StartCoroutine(this.ArmorsBlink(0.1f));
+        }
         this.survival = robot_sync.survival;
+        return;
     }
 
     public virtual void GetUserPref() {}

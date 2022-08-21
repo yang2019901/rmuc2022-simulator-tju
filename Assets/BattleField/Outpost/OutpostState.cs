@@ -20,7 +20,7 @@ public class OutpostState : TowerState
     }
 
     public void Push(OutpostSync outpost_sync) {
-        if (this.blood_left != outpost_sync.blood_left) {
+        if (this.blood_left > outpost_sync.blood_left) {
             this.blood_left = outpost_sync.blood_left;
             this.SetBloodBars();
             StartCoroutine(this.ArmorsBlink(0.1f));

@@ -34,25 +34,24 @@ public struct RobotSync {
 
 public class SyncNode : NetworkBehaviour {
     [SyncVar]
-    public Vector3 rune_rot = new Vector3();
+    private Vector3 rune_rot = new Vector3();
     [SyncVar]
-    public RuneSync rune_sync_red = new RuneSync();
+    private RuneSync rune_sync_red = new RuneSync();
     [SyncVar]
-    public RuneSync rune_sync_blue = new RuneSync();
+    private RuneSync rune_sync_blue = new RuneSync();
 
     [SyncVar]
-    public OutpostSync otpt_sync_red = new OutpostSync();
+    private OutpostSync otpt_sync_red = new OutpostSync();
     [SyncVar]
-    public OutpostSync otpt_sync_blue = new OutpostSync();
+    private OutpostSync otpt_sync_blue = new OutpostSync();
 
     [SyncVar]
-    public BaseSync base_sync_red = new BaseSync();
+    private BaseSync base_sync_red = new BaseSync();
     [SyncVar]
-    public BaseSync base_sync_blue = new BaseSync();
+    private BaseSync base_sync_blue = new BaseSync();
 
-    // public readonly SyncList<RobotSync> robo_sync_red = new SyncList<RobotSync>();
-    // public readonly SyncList<RobotSync> robo_sync_blue = new SyncList<RobotSync>();
-    public readonly SyncList<RobotSync> robo_sync_all = new SyncList<RobotSync>();
+    /* Note: SyncList can and only can be modify in Server */
+    private readonly SyncList<RobotSync> robo_sync_all = new SyncList<RobotSync>();
 
     /****************** alias ****************/
     Rune rune;
@@ -71,8 +70,9 @@ public class SyncNode : NetworkBehaviour {
         base_red = BattleField.singleton.base_red;
         base_blue = BattleField.singleton.base_blue;
         robo_all = BattleField.singleton.robo_all;
-        for (int i = 0; i < robo_all.Count; i++)
-            robo_sync_all.Add(new RobotSync());
+        if (isServer)
+            for (int i = 0; i < robo_all.Count; i++)
+                robo_sync_all.Add(new RobotSync());
     }
 
     /* use LateUpdate() to ensure users see these */
@@ -106,7 +106,7 @@ public class SyncNode : NetworkBehaviour {
             base_red.Push(base_sync_red);
             base_blue.Push(base_sync_blue);
             /* client pulls robots appearence from sync info */
-            for (int i = 0; i < robo_sync_all.Count; i++) {
+            for (int i = 0; i < robo_all.Count; i++) {
                 robo_all[i].Push(robo_sync_all[i]);
             }
         }
