@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class BattleField : MonoBehaviour {
+public class BattleField : NetworkBehaviour {
     public static BattleField singleton { get; private set; }
 
     public OutpostState outpost_blue;
@@ -10,6 +11,7 @@ public class BattleField : MonoBehaviour {
     public BaseState base_blue;
     public BaseState base_red;
     public Rune rune;
+    /* hero engineer infantry1 infantry2 */
     public RobotState[] robo_red;
     public RobotState[] robo_blue;
 
@@ -20,6 +22,14 @@ public class BattleField : MonoBehaviour {
 
     private float t_start;
 
+    public override void OnStartServer() {
+        base.OnStartServer();
+        /* create robots */
+        for (int i = 0; i < robo_red.Length; i++)
+            robo_red[i].SetArmorColor(ArmorColor.Red);
+        for (int i = 0; i < robo_blue.Length; i++)
+            robo_blue[i].SetArmorColor(ArmorColor.Blue);
+    }
 
     void Awake() {
         if (singleton == null) {

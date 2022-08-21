@@ -31,4 +31,8 @@ public class HeroState : RobotState {
         this.cool_down = tmp["cool_down"].ToObject<int>();
         this.shoot_speed = tmp["shoot_speed"].ToObject<int>();
     }
+
+    public override void Update() {
+        base.Update();
+    }
 }

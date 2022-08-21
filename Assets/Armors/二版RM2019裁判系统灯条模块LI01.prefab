@@ -815,7 +815,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enable: 1
-  light_bars: []
+  light_bars:
+  - {fileID: 2312674620961302035}
+  - {fileID: 2312674621339644672}
 --- !u!1 &2312674622759542013
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ using Mirror;
 [ExecuteInEditMode]
 public class Traverse : MonoBehaviour
 {
+    public Material mat;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +17,9 @@ public class Traverse : MonoBehaviour
 
             // AddMC(child);
             // ResetConvex(child);
-            // AddMC(child);
-            // ReplaceMaterial(child, AssetManager.singleton.light_red);
-            DeleteNI(child);
+            // DeleteMC(child);
+            ReplaceMaterial(child, mat);
+            // DeleteNI(child);
         }
         // DestroyImmediate(this.GetComponent<Traverse>());
     }
@@ -74,7 +75,8 @@ public class Traverse : MonoBehaviour
         Renderer tmp = child.GetComponent<MeshRenderer>();
         if (tmp == null)
             return ;
-        if (tmp.sharedMaterial.name.ToLower() == "nolight")
+        if (tmp.sharedMaterial.name.ToLower().Contains("material_10"))
+        // if (child.name.Contains("轨") && !child.name.Contains("板"))
         {
             Debug.Log("replace");
             tmp.sharedMaterial = new_mat;
