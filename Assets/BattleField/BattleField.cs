@@ -14,6 +14,7 @@ public class BattleField : NetworkBehaviour {
     /* hero engineer infantry1 infantry2 */
     public RobotState[] robo_red;
     public RobotState[] robo_blue;
+    public List<RobotState> robo_all;
 
     [Header("boundary")]
     private int x_half_length = 16;
@@ -22,14 +23,14 @@ public class BattleField : NetworkBehaviour {
 
     private float t_start;
 
-    public override void OnStartServer() {
-        base.OnStartServer();
-        /* create robots */
-        for (int i = 0; i < robo_red.Length; i++)
-            robo_red[i].SetArmorColor(ArmorColor.Red);
-        for (int i = 0; i < robo_blue.Length; i++)
-            robo_blue[i].SetArmorColor(ArmorColor.Blue);
-    }
+    // public override void OnStartServer() {
+    //     base.OnStartServer();
+    //     /* create robots */
+    //     for (int i = 0; i < robo_red.Length; i++)
+    //         robo_red[i].SetArmorColor(ArmorColor.Red);
+    //     for (int i = 0; i < robo_blue.Length; i++)
+    //         robo_blue[i].SetArmorColor(ArmorColor.Blue);
+    // }
 
     void Awake() {
         if (singleton == null) {
@@ -37,6 +38,8 @@ public class BattleField : NetworkBehaviour {
             DontDestroyOnLoad(this);
         } else
             Destroy(this);
+        robo_all.AddRange(robo_red);
+        robo_all.AddRange(robo_blue);
     }
 
 

@@ -143,7 +143,7 @@ public class RobotController : NetworkBehaviour {
         }
     }
     [Command]
-    void CmdShoot(Vector3 pos, Vector3 vel) {
+    public void CmdShoot(Vector3 pos, Vector3 vel) {
         GameObject bullet = weapon.GetBullet();
         bullet.transform.position = pos;
         bullet.GetComponent<Rigidbody>().velocity = vel;
