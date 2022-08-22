@@ -23,7 +23,7 @@ public class RobotController : NetworkBehaviour {
 
     private float last_fire = 0;
     private float pitch_ang = 0;
-    private float pitch_min = -20;
+    private float pitch_min = -30;
     private float pitch_max = 40;
     private float yaw_ang = 0;
     private Weapon weapon;

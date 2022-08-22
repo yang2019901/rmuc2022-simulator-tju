@@ -95,8 +95,9 @@ public class RobotState : BasicState {
 
         Debug.Log("current blood: " + blood_left);
 
-        if (blood_left <= 0) {
-            blood_left = 0;
+        if (this.blood_left <= 0) {
+            this.blood_left = 0;
+            this.survival = false;
             foreach (ArmorController ac in acs)
                 ac.Disable();
             BattleField.singleton.Kill(hitter, this.gameObject);
@@ -130,16 +131,16 @@ public class RobotState : BasicState {
     }
 
     public void Push(RobotSync robot_sync) {
+        this.survival = robot_sync.survival;
         if (this.blood_left > robot_sync.blood_left) {
             this.blood_left = robot_sync.blood_left;
             this.SetBloodBars();
-            if (blood_left <= 0)
+            if (this.survival)
                 foreach (ArmorController ac in acs)
                     ac.Disable();
             else
                 StartCoroutine(this.ArmorsBlink(0.1f));
         }
-        this.survival = robot_sync.survival;
         return;
     }
 
