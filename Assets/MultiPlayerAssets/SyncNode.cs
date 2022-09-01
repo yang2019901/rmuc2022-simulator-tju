@@ -47,7 +47,7 @@ public class SyncNode : NetworkBehaviour {
 
     [SyncVar]
     private BaseSync base_sync_red = new BaseSync();
-    [SyncVar]
+    [SyncVar] 
     private BaseSync base_sync_blue = new BaseSync();
 
     /* Note: SyncList can and only can be modify in Server */
