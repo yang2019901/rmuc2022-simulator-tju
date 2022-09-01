@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
+using TMPro;
 
 /* handle all UI-related events and call corresponding functions in other scripts */
 public class MainMenu : MonoBehaviour {
     public BattleNetworkManager net_man;
 
-    public GameObject Menu_player_mode;
+    [Header("info")]
     public GameObject Menu_player_info;
+    public TMP_InputField input_info;
+    [Header("mode")]
+    public GameObject Menu_player_mode;
     [Header("option")]
     public GameObject Menu_player_opt;
-    public InputField input_addr;
+    public TMP_InputField input_addr;
     [Header("lobby")]
     public GameObject Menu_player_lobby;
     public Button[] buttons;
