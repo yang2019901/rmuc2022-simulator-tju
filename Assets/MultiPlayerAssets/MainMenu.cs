@@ -21,6 +21,7 @@ namespace RMUC_UI {
         public TMP_InputField input_addr;
         [Header("lobby")]
         public GameObject Menu_player_lobby;
+        public GameObject btn_ready;
         [Header("robot names")]
         [Tooltip("set in Inspector and corresponding to avatar")]
         public List<string> ava_tags;
@@ -71,7 +72,6 @@ namespace RMUC_UI {
     #endif
         }
 
-         
         /** under the hood : button click -> TakeAvatar --mes--> (server PC) OnApplyAvatar
             @player_sync: tells which tab is clicked
          */
@@ -94,6 +94,10 @@ namespace RMUC_UI {
         }
 
         public void SetPlayerOpt() {
+            if (NetworkServer.active)
+                net_man.StopServer();
+            else if (NetworkClient.active)
+                net_man.StopClient();
             DisableAllMenu();
             Menu_player_opt.SetActive(true);
         }

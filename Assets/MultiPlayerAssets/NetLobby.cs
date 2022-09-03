@@ -8,7 +8,7 @@ namespace RMUC_UI {
         public int connId;          // connId of the player
         public string player_name;  // the nickname that player inputs before enterring lobby
         public bool owning_robot;   // whether taking a robot
-        public string robo_name;   // name of robot taken by the player, must be one of mainmenu.robo_names;
+        public string ava_tag;   // name of robot taken by the player, must be one of mainmenu.robo_names;
         public bool ready;          // whether ready to start after taking robot
     }
     /// <summary>
@@ -31,7 +31,7 @@ namespace RMUC_UI {
 
         /// <summary>
         /// Network Variables:
-        private readonly SyncList<PlayerSync> player_sync_all = new SyncList<PlayerSync>();
+        public readonly SyncList<PlayerSync> player_sync_all = new SyncList<PlayerSync>();
         [SyncVar]
         public int owner_connId; // lobby owner
         [SyncVar]
@@ -56,7 +56,7 @@ namespace RMUC_UI {
 
         [Server]
         public void OnApplyAvatar(NetworkConnectionToClient conn, AvatarMessage mes) {
-            bool is_avatar_taken = (-1 != player_sync_all.FindIndex(i => i.owning_robot && i.robo_name == mes.robot_s));
+            bool is_avatar_taken = (-1 != player_sync_all.FindIndex(i => i.owning_robot && i.ava_tag == mes.robot_s));
             if (is_avatar_taken)
                 Debug.Log("server: the robot is taken!");
             else {
@@ -66,7 +66,7 @@ namespace RMUC_UI {
                 tmp.player_name = mes.player_name;
                 tmp.owning_robot = true;
                 tmp.ready = true;
-                tmp.robo_name = mes.robot_s;
+                tmp.ava_tag = mes.robot_s;
                 /* find player info => 
                     case1: the player just join and hasn't been added to player_sync_all.
                     case2: the player has been added.
@@ -87,16 +87,18 @@ namespace RMUC_UI {
                 @newval: newly-added object (PlayerSync) 
                 @index: newval's index in synclist
             */
-            /* step 1: reset  */
-            if (oldval.robo_name != null) {
-                int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag==oldval.robo_name);
+            /* step 1: reset old avatar */
+            if (oldval.ava_tag != null) {
+                int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag == oldval.ava_tag);
                 mainmenu.avatars[avaIdx].ResetAvatarTab();
             }
             /* step 2: set corresponding AvatarTab according to newval  */
-            if (newval.robo_name != null) {
-                int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag==newval.robo_name);
+            if (newval.ava_tag != null) {
+                int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag == newval.ava_tag);
                 mainmenu.avatars[avaIdx].SetAvatarTab(newval);
             }
+            /* log in every client */
+            Debug.Log("avatar change!");
         }
     }
 }
