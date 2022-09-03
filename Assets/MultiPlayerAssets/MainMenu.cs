@@ -29,6 +29,8 @@ namespace RMUC_UI {
         void Start() {
             /* set first menu to be player info menu */
             SetPlayerInfo();
+            /* set default player name as computer name */
+            input_info.text = System.Environment.GetEnvironmentVariable("ComputerName");
         }
 
         /* start host -> go to lobby -> lobby behaviour -> start game */
@@ -51,7 +53,7 @@ namespace RMUC_UI {
         }
 
         public void CreateLobby() {
-            net_man.networkAddress = input_addr.text;
+            net_man.networkAddress = "localhost";
             Debug.Log(net_man.networkAddress);
             net_man.StartHost();
             SetPlayerLobby();
@@ -69,13 +71,15 @@ namespace RMUC_UI {
     #endif
         }
 
-        public void TakeRobot(AvatarTab player_sync) {
-            Debug.Log("press button");
+         
+        /** under the hood : button click -> TakeAvatar --mes--> (server PC) OnApplyAvatar
+            @player_sync: tells which tab is clicked
+         */
+        public void TakeAvatar(AvatarTab player_sync) {
             int idx = this.avatars.FindIndex(ava => ava==player_sync);
-            Debug.Log("cmd take robot");
             NetLobby.AvatarMessage mes = new NetLobby.AvatarMessage(
-                this.ava_tags[idx], NetworkClient.connection.connectionId, input_info.text);
-            net_lob.ApplyAvatar(mes);
+                this.ava_tags[idx], input_info.text);
+            NetworkClient.Send<NetLobby.AvatarMessage>(mes);
         }
 
         /// <summary> switch to another menu

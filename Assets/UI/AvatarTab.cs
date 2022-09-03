@@ -11,7 +11,7 @@ namespace RMUC_UI {
 
         public void SetReady(bool ready) {
             img_ready.SetActive(ready);
-            img_index.SetActive(ready);
+            img_index.SetActive(!ready);
         }
 
         public void SetOwner(string owner) {
@@ -23,6 +23,11 @@ namespace RMUC_UI {
                 Debug.LogError("Damn! RoboTag receive player_state that owns no robot. Program goes wrong");
             SetOwner(player_state.player_name);
             SetReady(player_state.ready);
+        }
+
+        public void ResetAvatarTab() {
+            this.SetReady(false);
+            SetOwner("");
         }
     }
 }

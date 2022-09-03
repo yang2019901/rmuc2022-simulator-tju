@@ -16,71 +16,86 @@ namespace RMUC_UI {
     /// @Style: Event/Call style
     /// </summary>
     public class NetLobby : NetworkBehaviour {
-        /* nested struct declaration => Netlobby.AvatarMessage instead of AvatarMessage */
+        /** Tip: nested struct declaration => Netlobby.AvatarMessage instead of AvatarMessage.
+            direction: client -> server
+         */
         public struct AvatarMessage : NetworkMessage {
             public string robot_s;
-            public int connId;
             public string player_name;
             /* construct function with params */
-            public AvatarMessage(string robot_s, int connId, string player_name) {
+            public AvatarMessage(string robot_s, string player_name) {
                 this.robot_s = robot_s;
-                this.connId = connId;
                 this.player_name = player_name;
             }
         }
 
         /// <summary>
         /// Network Variables:
-        public readonly SyncList<PlayerSync> player_sync_all = new SyncList<PlayerSync>();
+        private readonly SyncList<PlayerSync> player_sync_all = new SyncList<PlayerSync>();
         [SyncVar]
         public int owner_connId; // lobby owner
         [SyncVar]
         public bool allow_join;
         /// </summary> 
 
-
         /// <summary>
         /// Local Variables
         public MainMenu mainmenu;
         /// </summary>
-        
-        public void ApplyAvatar(AvatarMessage mes) {
-            bool is_avatar_taken = (-1 == player_sync_all.FindIndex(i => i.owning_robot && i.robo_name==mes.robot_s));
+
+        public override void OnStartClient() {
+            base.OnStartClient();
+            player_sync_all.Callback += OnPlayerSyncChanged;
+        }
+        public override void OnStartServer() {
+            base.OnStartServer();
+            /** ApplyAvatar => Action<AvatarMessage>, 
+                which tells me that usage of ApplyAvatar should be declared as ApplyAvatar(AvatarMessage mes) */
+            NetworkServer.RegisterHandler<AvatarMessage>(OnApplyAvatar);
+        }
+
+        [Server]
+        public void OnApplyAvatar(NetworkConnectionToClient conn, AvatarMessage mes) {
+            bool is_avatar_taken = (-1 != player_sync_all.FindIndex(i => i.owning_robot && i.robo_name == mes.robot_s));
             if (is_avatar_taken)
                 Debug.Log("server: the robot is taken!");
             else {
                 /* make a new PlayerStateSync */
                 PlayerSync tmp = new PlayerSync();
-                tmp.connId = mes.connId;
+                tmp.connId = conn.connectionId;
                 tmp.player_name = mes.player_name;
                 tmp.owning_robot = true;
                 tmp.ready = true;
                 tmp.robo_name = mes.robot_s;
-                /* find player info */
-                int idx = player_sync_all.FindIndex(i => i.connId == mes.connId);
-                if (idx == -1)
+                /* find player info => 
+                    case1: the player just join and hasn't been added to player_sync_all.
+                    case2: the player has been added.
+                */
+                Debug.Log("start to find index");
+                int idx = player_sync_all.FindIndex(i => i.connId == conn.connectionId);
+                if (idx == -1) {
                     player_sync_all.Add(tmp);
-                else
+                } else
                     player_sync_all[idx] = tmp;
             }
         }
 
-        public override void OnStartClient() {
-            base.OnStartClient();
-            player_sync_all.Callback += OnPlayerSyncChanged;
-            /** ApplyAvatar => Action<AvatarMessage>, 
-                which tells me that usage of ApplyAvatar should be declared as ApplyAvatar(AvatarMessage mes) */
-            NetworkClient.RegisterHandler<AvatarMessage>(ApplyAvatar);
-        }
-
+        [Client]
         void OnPlayerSyncChanged(SyncList<PlayerSync>.Operation op, int index, PlayerSync oldval, PlayerSync newval) {
-            Debug.Log(string.Format("index: {}, oldval: {}, newval: {}", index, oldval, newval));
-            /* go over player_sync_all, get every robot that has an owner and set mainmenu.robo_tag  */
-            for (int i = 0; i < player_sync_all.Count; i++) {
-                if (player_sync_all[i].owning_robot) {
-                    int idx = mainmenu.ava_tags.FindIndex(name => name==player_sync_all[i].robo_name);
-                    mainmenu.avatars[i].SetAvatarTab(player_sync_all[i]);
-                }
+            /* if a new value is added to synclist, then 
+                @oldval: new PlayerSync()
+                @newval: newly-added object (PlayerSync) 
+                @index: newval's index in synclist
+            */
+            /* step 1: reset  */
+            if (oldval.robo_name != null) {
+                int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag==oldval.robo_name);
+                mainmenu.avatars[avaIdx].ResetAvatarTab();
+            }
+            /* step 2: set corresponding AvatarTab according to newval  */
+            if (newval.robo_name != null) {
+                int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag==newval.robo_name);
+                mainmenu.avatars[avaIdx].SetAvatarTab(newval);
             }
         }
     }
