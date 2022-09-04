@@ -16,6 +16,7 @@ namespace RMUC_UI {
     /// @Style: Event/Call style
     /// </summary>
     public class NetLobby : NetworkBehaviour {
+        const string NULLAVA = null;
         /** Tip: nested struct declaration => Netlobby.AvatarMessage instead of AvatarMessage.
             direction: client -> server
          */
@@ -50,10 +51,17 @@ namespace RMUC_UI {
         public override void OnStartClient() {
             base.OnStartClient();
             playerSyncs.Callback += OnPlayerSyncChanged;
-            /* when first joining, init AvaTabs as playerSyncs */
+            /* when first joining, 1. send fake AvaMes to register
+                2. init AvaTabs as playerSyncs */
+            AvatarMessage fake_ava_mes = new AvatarMessage(NULLAVA, mainmenu.input_info.text);
+            NetworkClient.Send<AvatarMessage>(fake_ava_mes);
             foreach (PlayerSync tmp in playerSyncs) {
-                int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag==tmp.ava_tag);
-                mainmenu.avatars[avaIdx].SetAvatarTab(tmp);
+                /* all clients has a corresponding PlayerSync, 
+                    yet it's possible that not every client owns avatar */
+                if (tmp.owning_ava) {
+                    int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag==tmp.ava_tag);
+                    mainmenu.avatars[avaIdx].SetAvatarTab(tmp);
+                }
             }
         }
 
@@ -80,6 +88,9 @@ namespace RMUC_UI {
         /* OnApplyAvatar():
             1. registers the PlayerSync when a client PC first apply avatar
             2. ensures that any registered client only has one corresponding PlayerSync
+           Therefore, Inspite of real take-avatar mes, you can send fake mes:
+            1. to register in playerSyncs
+            2. to give up owning avatar
         */
         [Server]
         public void OnApplyAvatar(NetworkConnectionToClient conn, AvatarMessage mes) {
@@ -91,19 +102,23 @@ namespace RMUC_UI {
                 PlayerSync tmp = new PlayerSync();
                 tmp.connId = conn.connectionId;
                 tmp.player_name = mes.player_name;
-                tmp.owning_ava = true;
-                tmp.ready = true;
-                tmp.ava_tag = mes.robot_s;
-                /* find player info => 
-                    case1: the player just join and hasn't been added to player_sync_all.
-                    case2: the player has been added.
-                */
-                Debug.Log("start to find index");
-                int idx = playerSyncs.FindIndex(i => i.connId == conn.connectionId);
-                if (idx == -1) {
-                    playerSyncs.Add(tmp);
-                } else
+                bool fake_mes = mainmenu.ava_tags.Contains(mes.robot_s);
+                if (fake_mes) {
+                    tmp.owning_ava = true;
+                    tmp.ready = true;
+                    tmp.ava_tag = mes.robot_s;
+                    int idx = playerSyncs.FindIndex(i => i.connId == conn.connectionId);
                     playerSyncs[idx] = tmp;
+                } else {
+                    tmp.owning_ava = false;
+                    tmp.ready = false;
+                    tmp.ava_tag = NULLAVA;
+                    int idx = playerSyncs.FindIndex(i => i.connId == conn.connectionId);
+                    if (idx == -1)
+                        playerSyncs.Add(tmp);
+                    else
+                        playerSyncs[idx] = tmp;
+                }
             }
         }
 
@@ -147,7 +162,7 @@ namespace RMUC_UI {
                 mainmenu.SetButtonReady();
             }
             /* log in every client */
-            Debug.Log("avatar change!");
+            Debug.Log("playerSyncs changed!");
         }
     }
 }

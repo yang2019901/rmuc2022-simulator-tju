@@ -112,6 +112,8 @@ namespace RMUC_UI {
         }
         public void SetPlayerLobby() {
             DisableAllMenu();
+            foreach (AvatarTab avaTab in this.avatars)
+                avaTab.ResetAvatarTab();
             /* Don't use NI_obj.SetActive() in client PC. Otherwise, NI_obj won't be spawned properly */
             if (NetworkServer.active)
                 Menu_player_lobby.SetActive(true);
@@ -148,10 +150,10 @@ namespace RMUC_UI {
 
             if (this.ava_ready) {
                 TMP_Text btn_txt = btn_ready.GetComponentInChildren<TMP_Text>();
-                btn_txt.text = "<color=#DCDD00>Cancel Ready</color>"; // yellow text
+                btn_txt.text = "<color=#DCDD00><Cancel Ready></color>"; // yellow text
             } else {
                 TMP_Text btn_txt = btn_ready.GetComponentInChildren<TMP_Text>();
-                btn_txt.text = "<color=#28DD00>Ready</color>"; // green text
+                btn_txt.text = "<color=#28DD00><Ready></color>"; // green text
             }
         }
     }
