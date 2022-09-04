@@ -34,6 +34,7 @@ namespace RMUC_UI {
             SetPlayerInfo();
             /* set default player name as computer name */
             input_info.text = System.Environment.GetEnvironmentVariable("ComputerName");
+            input_addr.text = "localhost";
         }
 
         /* start host -> go to lobby -> lobby behaviour -> start game */
@@ -111,7 +112,9 @@ namespace RMUC_UI {
         }
         public void SetPlayerLobby() {
             DisableAllMenu();
-            Menu_player_lobby.SetActive(true);
+            /* Don't use NI_obj.SetActive() in client PC. Otherwise, NI_obj won't be spawned properly */
+            if (NetworkServer.active)
+                Menu_player_lobby.SetActive(true);
             owning_ava = false;
             ava_ready = false;
             SetButtonReady();

@@ -50,9 +50,16 @@ namespace RMUC_UI {
         public override void OnStartClient() {
             base.OnStartClient();
             playerSyncs.Callback += OnPlayerSyncChanged;
+            /* when first joining, init AvaTabs as playerSyncs */
+            foreach (PlayerSync tmp in playerSyncs) {
+                int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag==tmp.ava_tag);
+                mainmenu.avatars[avaIdx].SetAvatarTab(tmp);
+            }
         }
+
         public override void OnStartServer() {
             base.OnStartServer();
+            /* clear playerSyncs, otherwise, previous items are there */
             playerSyncs.Reset();
             /** ApplyAvatar => Action<AvatarMessage>, 
                 which tells me that usage of ApplyAvatar should be declared as ApplyAvatar(AvatarMessage mes) */
@@ -60,6 +67,20 @@ namespace RMUC_UI {
             NetworkServer.RegisterHandler<AvaStateMessage>(OnInvAvaReady);
         }
 
+        [Server]
+        public void OnPlayerLeave(NetworkConnectionToClient conn) {
+            int connId = conn.connectionId;
+            int syncIdx = playerSyncs.FindIndex(i=>i.connId==connId);
+            if (syncIdx == -1)
+                return ;
+            else
+                playerSyncs.RemoveAt(syncIdx);
+        }
+
+        /* OnApplyAvatar():
+            1. registers the PlayerSync when a client PC first apply avatar
+            2. ensures that any registered client only has one corresponding PlayerSync
+        */
         [Server]
         public void OnApplyAvatar(NetworkConnectionToClient conn, AvatarMessage mes) {
             bool is_avatar_taken = (-1 != playerSyncs.FindIndex(i => i.owning_ava && i.ava_tag == mes.robot_s));
