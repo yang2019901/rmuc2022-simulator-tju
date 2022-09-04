@@ -22,6 +22,8 @@ namespace RMUC_UI {
         [Header("lobby")]
         public GameObject Menu_player_lobby;
         public GameObject btn_ready;
+        public bool owning_ava = false;
+        public bool ava_ready = false;
         [Header("robot names")]
         [Tooltip("set in Inspector and corresponding to avatar")]
         public List<string> ava_tags;
@@ -65,21 +67,33 @@ namespace RMUC_UI {
         }
 
         public void Quit() {
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-    #else
+#else
         Application.Quit();
-    #endif
+#endif
         }
 
         /** under the hood : button click -> TakeAvatar --mes--> (server PC) OnApplyAvatar
             @player_sync: tells which tab is clicked
          */
         public void TakeAvatar(AvatarTab player_sync) {
-            int idx = this.avatars.FindIndex(ava => ava==player_sync);
+            // TODO: Judge double click to give up owning (owning that avatar and click that avatar again)
+
+
+
+            int idx = this.avatars.FindIndex(ava => ava == player_sync);
             NetLobby.AvatarMessage mes = new NetLobby.AvatarMessage(
                 this.ava_tags[idx], input_info.text);
             NetworkClient.Send<NetLobby.AvatarMessage>(mes);
+        }
+
+        public void InvReady() {
+            if (!owning_ava)
+                return;
+            NetLobby.AvaStateMessage mes = new NetLobby.AvaStateMessage();
+            mes.ready = !this.ava_ready;
+            NetworkClient.Send<NetLobby.AvaStateMessage>(mes);
         }
 
         /// <summary> switch to another menu
@@ -87,24 +101,20 @@ namespace RMUC_UI {
             DisableAllMenu();
             Menu_player_info.SetActive(true);
         }
-
         public void SetPlayerMode() {
             DisableAllMenu();
             Menu_player_mode.SetActive(true);
         }
-
         public void SetPlayerOpt() {
-            if (NetworkServer.active)
-                net_man.StopServer();
-            else if (NetworkClient.active)
-                net_man.StopClient();
             DisableAllMenu();
             Menu_player_opt.SetActive(true);
         }
-
         public void SetPlayerLobby() {
             DisableAllMenu();
             Menu_player_lobby.SetActive(true);
+            owning_ava = false;
+            ava_ready = false;
+            SetButtonReady();
         }
         /// <summary>
         /// (wrap-up) set all menus to be inactive (obviously, it's invisible, too)
@@ -116,5 +126,30 @@ namespace RMUC_UI {
             Menu_player_lobby.SetActive(false);
         }
         /// </summary>
+
+        public void LeaveLobby() {
+            if (NetworkServer.active && NetworkClient.active)
+                net_man.StopHost();
+            else if (NetworkClient.active)
+                net_man.StopClient();
+            else
+                net_man.StopServer();
+            SetPlayerOpt();
+        }
+
+        public void SetButtonReady() {
+            if (this.owning_ava)
+                btn_ready.SetActive(true);
+            else
+                btn_ready.SetActive(false);
+
+            if (this.ava_ready) {
+                TMP_Text btn_txt = btn_ready.GetComponentInChildren<TMP_Text>();
+                btn_txt.text = "<color=#DCDD00>Cancel Ready</color>"; // yellow text
+            } else {
+                TMP_Text btn_txt = btn_ready.GetComponentInChildren<TMP_Text>();
+                btn_txt.text = "<color=#28DD00>Ready</color>"; // green text
+            }
+        }
     }
 }

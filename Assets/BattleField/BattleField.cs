@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class BattleField : NetworkBehaviour {
+public class BattleField : MonoBehaviour {
     public static BattleField singleton { get; private set; }
 
     public OutpostState outpost_blue;
@@ -23,6 +23,9 @@ public class BattleField : NetworkBehaviour {
 
     private float t_start;
 
+    /* priority (with NetworkIdentity): Instantiate > Awake() > OnStartServer() (obviously, iff in server PC) 
+        ----Spawn----> OnStartClient() (obviously, iff in client PC) > Start()    
+    */
     void Awake() {
         if (singleton == null) {
             singleton = this;

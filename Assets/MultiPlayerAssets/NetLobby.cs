@@ -7,7 +7,7 @@ namespace RMUC_UI {
     public struct PlayerSync {
         public int connId;          // connId of the player
         public string player_name;  // the nickname that player inputs before enterring lobby
-        public bool owning_robot;   // whether taking a robot
+        public bool owning_ava;   // whether taking a robot
         public string ava_tag;   // name of robot taken by the player, must be one of mainmenu.robo_names;
         public bool ready;          // whether ready to start after taking robot
     }
@@ -29,9 +29,13 @@ namespace RMUC_UI {
             }
         }
 
+        public struct AvaStateMessage : NetworkMessage {
+            public bool ready;
+        }
+
         /// <summary>
         /// Network Variables:
-        public readonly SyncList<PlayerSync> player_sync_all = new SyncList<PlayerSync>();
+        public readonly SyncList<PlayerSync> playerSyncs = new SyncList<PlayerSync>();
         [SyncVar]
         public int owner_connId; // lobby owner
         [SyncVar]
@@ -45,18 +49,20 @@ namespace RMUC_UI {
 
         public override void OnStartClient() {
             base.OnStartClient();
-            player_sync_all.Callback += OnPlayerSyncChanged;
+            playerSyncs.Callback += OnPlayerSyncChanged;
         }
         public override void OnStartServer() {
             base.OnStartServer();
+            playerSyncs.Reset();
             /** ApplyAvatar => Action<AvatarMessage>, 
                 which tells me that usage of ApplyAvatar should be declared as ApplyAvatar(AvatarMessage mes) */
             NetworkServer.RegisterHandler<AvatarMessage>(OnApplyAvatar);
+            NetworkServer.RegisterHandler<AvaStateMessage>(OnInvAvaReady);
         }
 
         [Server]
         public void OnApplyAvatar(NetworkConnectionToClient conn, AvatarMessage mes) {
-            bool is_avatar_taken = (-1 != player_sync_all.FindIndex(i => i.owning_robot && i.ava_tag == mes.robot_s));
+            bool is_avatar_taken = (-1 != playerSyncs.FindIndex(i => i.owning_ava && i.ava_tag == mes.robot_s));
             if (is_avatar_taken)
                 Debug.Log("server: the robot is taken!");
             else {
@@ -64,7 +70,7 @@ namespace RMUC_UI {
                 PlayerSync tmp = new PlayerSync();
                 tmp.connId = conn.connectionId;
                 tmp.player_name = mes.player_name;
-                tmp.owning_robot = true;
+                tmp.owning_ava = true;
                 tmp.ready = true;
                 tmp.ava_tag = mes.robot_s;
                 /* find player info => 
@@ -72,12 +78,28 @@ namespace RMUC_UI {
                     case2: the player has been added.
                 */
                 Debug.Log("start to find index");
-                int idx = player_sync_all.FindIndex(i => i.connId == conn.connectionId);
+                int idx = playerSyncs.FindIndex(i => i.connId == conn.connectionId);
                 if (idx == -1) {
-                    player_sync_all.Add(tmp);
+                    playerSyncs.Add(tmp);
                 } else
-                    player_sync_all[idx] = tmp;
+                    playerSyncs[idx] = tmp;
             }
+        }
+
+        [Server]
+        public void OnInvAvaReady(NetworkConnectionToClient conn, AvaStateMessage mes) {
+            int id_cli = conn.connectionId;
+            int syncIdx = playerSyncs.FindIndex(i => i.connId == id_cli);
+            if (syncIdx == -1) {
+                Debug.Log("A client PC owning no avatar trys to change avatar state");
+                return;
+            } else {
+                PlayerSync ps = new PlayerSync();
+                ps = playerSyncs[syncIdx];
+                ps.ready = mes.ready;
+                playerSyncs[syncIdx] = ps;
+            }
+            return;
         }
 
         [Client]
@@ -96,6 +118,12 @@ namespace RMUC_UI {
             if (newval.ava_tag != null) {
                 int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag == newval.ava_tag);
                 mainmenu.avatars[avaIdx].SetAvatarTab(newval);
+            }
+            int syncIdx = this.playerSyncs.FindIndex(p => p.connId == NetworkClient.connection.connectionId);
+            if (syncIdx != -1) {
+                mainmenu.owning_ava = playerSyncs[syncIdx].owning_ava;
+                mainmenu.ava_ready = playerSyncs[syncIdx].ready;
+                mainmenu.SetButtonReady();
             }
             /* log in every client */
             Debug.Log("avatar change!");

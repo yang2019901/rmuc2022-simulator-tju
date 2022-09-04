@@ -20,7 +20,7 @@ namespace RMUC_UI {
         }
 
         public void SetAvatarTab(PlayerSync player_state) {
-            if (!player_state.owning_robot)
+            if (!player_state.owning_ava)
                 Debug.LogError("Damn! RoboTag receive player_state that owns no robot. Program goes wrong");
             /* local player takes that avatar */
             if (player_state.connId == Mirror.NetworkClient.connection.connectionId) {
