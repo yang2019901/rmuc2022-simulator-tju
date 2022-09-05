@@ -4,12 +4,22 @@ using UnityEngine;
 using Mirror;
 
 namespace RMUC_UI {
+    [System.Serializable]
     public struct PlayerSync {
-        public int connId;          // connId of the player
+        public int connId;          // connId of the player, but only can be used by server because client don't know its connid on server;
+        public int hash_lob;        // identify which client's lobby
         public string player_name;  // the nickname that player inputs before enterring lobby
         public bool owning_ava;   // whether taking a robot
         public string ava_tag;   // name of robot taken by the player, must be one of mainmenu.robo_names;
         public bool ready;          // whether ready to start after taking robot
+        PlayerSync(int connId, int hash_lob, string player_name, bool owning_ava, string ava_tag, bool ready) {
+            this.connId = connId;
+            this.hash_lob = hash_lob;
+            this.player_name = player_name;
+            this.owning_ava = owning_ava;
+            this.ava_tag = ava_tag;
+            this.ready = ready;
+        }
     }
     /// <summary>
     /// @Orientation: define visual state and sync them; also do RPC
@@ -17,16 +27,19 @@ namespace RMUC_UI {
     /// </summary>
     public class NetLobby : NetworkBehaviour {
         const string NULLAVA = null;
+        public int hash_lob;
         /** Tip: nested struct declaration => Netlobby.AvatarMessage instead of AvatarMessage.
             direction: client -> server
          */
         public struct AvatarMessage : NetworkMessage {
             public string robot_s;
             public string player_name;
+            public int hash_lob;
             /* construct function with params */
-            public AvatarMessage(string robot_s, string player_name) {
+            public AvatarMessage(string robot_s, string player_name, int hash_lob) {
                 this.robot_s = robot_s;
                 this.player_name = player_name;
+                this.hash_lob = hash_lob;
             }
         }
 
@@ -53,16 +66,18 @@ namespace RMUC_UI {
             playerSyncs.Callback += OnPlayerSyncChanged;
             /* when first joining, 1. send fake AvaMes to register
                 2. init AvaTabs as playerSyncs */
-            AvatarMessage fake_ava_mes = new AvatarMessage(NULLAVA, mainmenu.input_info.text);
+            AvatarMessage fake_ava_mes = new AvatarMessage(NULLAVA, mainmenu.input_info.text, this.hash_lob);
             NetworkClient.Send<AvatarMessage>(fake_ava_mes);
             foreach (PlayerSync tmp in playerSyncs) {
                 /* all clients has a corresponding PlayerSync, 
                     yet it's possible that not every client owns avatar */
                 if (tmp.owning_ava) {
-                    int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag==tmp.ava_tag);
+                    int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag == tmp.ava_tag);
                     mainmenu.avatars[avaIdx].SetAvatarTab(tmp);
                 }
             }
+            /* time variant number, the probability that two clients have the same hash_lob is 1/2^32 */
+            hash_lob = Random.Range(int.MinValue, int.MaxValue);
         }
 
         public override void OnStartServer() {
@@ -78,9 +93,9 @@ namespace RMUC_UI {
         [Server]
         public void OnPlayerLeave(NetworkConnectionToClient conn) {
             int connId = conn.connectionId;
-            int syncIdx = playerSyncs.FindIndex(i=>i.connId==connId);
+            int syncIdx = playerSyncs.FindIndex(i => i.connId == connId);
             if (syncIdx == -1)
-                return ;
+                return;
             else
                 playerSyncs.RemoveAt(syncIdx);
         }
@@ -102,6 +117,7 @@ namespace RMUC_UI {
                 PlayerSync tmp = new PlayerSync();
                 tmp.connId = conn.connectionId;
                 tmp.player_name = mes.player_name;
+                tmp.hash_lob = mes.hash_lob;
                 bool fake_mes = mainmenu.ava_tags.Contains(mes.robot_s);
                 if (fake_mes) {
                     tmp.owning_ava = true;
@@ -155,7 +171,7 @@ namespace RMUC_UI {
                 int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag == newval.ava_tag);
                 mainmenu.avatars[avaIdx].SetAvatarTab(newval);
             }
-            int syncIdx = this.playerSyncs.FindIndex(p => p.connId == NetworkClient.connection.connectionId);
+            int syncIdx = this.playerSyncs.FindIndex(p => p.hash_lob == this.hash_lob);
             if (syncIdx != -1) {
                 mainmenu.owning_ava = playerSyncs[syncIdx].owning_ava;
                 mainmenu.ava_ready = playerSyncs[syncIdx].ready;

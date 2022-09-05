@@ -85,7 +85,7 @@ namespace RMUC_UI {
 
             int idx = this.avatars.FindIndex(ava => ava == player_sync);
             NetLobby.AvatarMessage mes = new NetLobby.AvatarMessage(
-                this.ava_tags[idx], input_info.text);
+                this.ava_tags[idx], this.input_info.text, net_lob.hash_lob);
             NetworkClient.Send<NetLobby.AvatarMessage>(mes);
         }
 
@@ -133,6 +133,7 @@ namespace RMUC_UI {
         /// </summary>
 
         public void LeaveLobby() {
+            Debug.Log("networkclient.connection.connectionId: " + NetworkClient.connection.connectionId);
             if (NetworkServer.active && NetworkClient.active)
                 net_man.StopHost();
             else if (NetworkClient.active)
