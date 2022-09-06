@@ -23,7 +23,7 @@ namespace RMUC_UI {
             if (!player_state.owning_ava)
                 Debug.LogError("Damn! RoboTag receive player_state that owns no robot. Program goes wrong");
             /* local player takes that avatar */
-            if (player_state.hash_lob == GetComponentInParent<NetLobby>().hash_lob) {
+            if (player_state.connId == GetComponentInParent<NetLobby>().uid) {
                 /* 0 in {0} is necessary and indicates to insert params[0] here */
                 player_state.player_name = string.Format("<color={0}>{1}</color>", Golden, player_state.player_name);
             }

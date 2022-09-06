@@ -79,13 +79,14 @@ namespace RMUC_UI {
             @player_sync: tells which tab is clicked
          */
         public void TakeAvatar(AvatarTab player_sync) {
-            // TODO: Judge double click to give up owning (owning that avatar and click that avatar again)
-
-
-
+            /* get to know which AvatarTab player clicked */
             int idx = this.avatars.FindIndex(ava => ava == player_sync);
             NetLobby.AvatarMessage mes = new NetLobby.AvatarMessage(
-                this.ava_tags[idx], this.input_info.text, net_lob.hash_lob);
+                this.ava_tags[idx], this.input_info.text);
+            /* judge whether user click his avatar. If so, give up taking that avatar */
+            PlayerSync ps = net_lob.playerSyncs.Find(i => i.connId == net_lob.uid);
+            if (ps.owning_ava && ps.ava_tag == this.ava_tags[idx])
+                mes.robot_s = NetLobby.NULLAVA;
             NetworkClient.Send<NetLobby.AvatarMessage>(mes);
         }
 
