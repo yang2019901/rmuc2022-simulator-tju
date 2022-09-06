@@ -19,13 +19,18 @@ namespace RMUC_UI {
             this.ready = ready;
         }
     }
+    
+    
     /// <summary>
     /// @Orientation: define visual state and sync them; also do RPC
     /// @Style: Event/Call style
     /// </summary>
     public class NetLobby : NetworkBehaviour {
         public const string NULLAVA = null;
+        public BattleNetworkManager net_man;
+        [HideInInspector]
         public int uid;     // unique identifier for each client
+
         /** Tip: nested struct declaration => Netlobby.AvatarMessage instead of AvatarMessage.
             direction: client -> server
          */
@@ -42,7 +47,6 @@ namespace RMUC_UI {
         public struct AvaStateMessage : NetworkMessage {
             public bool ready;
         }
-
         /* used to tell client about its connId in server PC's scene */
         public struct ClientIdMessage : NetworkMessage {
             public int connId_onserver; // client PC's id on server scene
@@ -50,13 +54,21 @@ namespace RMUC_UI {
                 this.connId_onserver = connId_onserver;
             }
         }
+        /* sent by lobby owner to tell server to start the game */
+        public struct StartGameMessage : NetworkMessage {
+            public bool start;
+            public StartGameMessage(bool start) {
+                this.start = start;
+            }
+        }
+
 
         /// <summary>
         /// Network Variables:
         public readonly SyncList<PlayerSync> playerSyncs = new SyncList<PlayerSync>();
-        [SyncVar]
-        public int owner_connId; // lobby owner
-        [SyncVar]
+        [SyncVar] [HideInInspector]
+        public int owner_uid; // lobby owner
+        [SyncVar] [HideInInspector]
         public bool allow_join;
         /// </summary> 
 
@@ -67,6 +79,7 @@ namespace RMUC_UI {
 
         public override void OnStartClient() {
             base.OnStartClient();
+
             /* when first joining, 1. send fake AvaMes to register
                 2. init AvaTabs as playerSyncs */
             AvatarMessage fake_ava_mes = new AvatarMessage(NULLAVA, mainmenu.input_info.text);
@@ -79,6 +92,16 @@ namespace RMUC_UI {
                     mainmenu.avatars[avaIdx].SetAvatarTab(tmp);
                 }
             }
+            /* first client is owner */
+            this.owner_uid = this.playerSyncs[0].connId;
+        }
+
+        public override void OnStopClient() {
+            base.OnStopClient();
+
+            /* update owner id */
+            if (this.playerSyncs.Count > 0)
+                this.owner_uid = this.playerSyncs[0].connId;
         }
 
         [Server]
@@ -144,6 +167,14 @@ namespace RMUC_UI {
             return;
         }
 
+        [Server]
+        public void OnStartGame(NetworkConnectionToClient conn, StartGameMessage mes) {
+            this.playerSyncs.CopyTo(net_man.playerSyncs);
+            if (mes.start)
+                net_man.ServerChangeScene(net_man.bat_field);
+            Debug.Log("change scene");
+        }
+
         [Client]
         public void OnPlayerSyncChanged(SyncList<PlayerSync>.Operation op, int index, PlayerSync oldval, PlayerSync newval) {
             /* if a new value is added to synclist, then 
@@ -167,8 +198,8 @@ namespace RMUC_UI {
                 mainmenu.ava_ready = playerSyncs[syncIdx].ready;
                 mainmenu.SetButtonReady();
             }
-            /* log in every client */
-            Debug.Log("playerSyncs changed!");
+            // /* log in every client */
+            // Debug.Log("playerSyncs changed!");
         }
 
         [Client]

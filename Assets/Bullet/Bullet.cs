@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 
 public class Bullet : NetworkBehaviour {
+    [HideInInspector]
     public GameObject hitter;
 
     void Update() {

@@ -31,7 +31,7 @@ public class RobotController : NetworkBehaviour {
 
     public override void OnStartClient() {
         base.OnStartClient();
-        if (isLocalPlayer) {
+        if (hasAuthority) {
             Transform tmp = Camera.main.transform;
             tmp.parent = robot_cam;
             tmp.rotation = robot_cam.rotation;
@@ -41,7 +41,7 @@ public class RobotController : NetworkBehaviour {
 
     public override void OnStopClient() {
         base.OnStopClient();
-        if (isLocalPlayer) {
+        if (hasAuthority) {
             Camera.main.transform.parent = null;
         }
     }
@@ -55,7 +55,7 @@ public class RobotController : NetworkBehaviour {
     }
 
     void Update() {
-        if (!isLocalPlayer)
+        if (!hasAuthority)
             return;
 
         SetCursor();
