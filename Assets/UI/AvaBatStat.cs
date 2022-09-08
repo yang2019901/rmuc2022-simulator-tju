@@ -7,38 +7,38 @@ namespace RMUC_UI {
     public enum AvaStat { Dead = 0, Survival = 1, Defensive = 2, Invulnerable = 3 };
 
     public class AvaBatStat : MonoBehaviour {
-        public Image level;
+        public Image img_level;
         public BloodBar bld_bar;
-        public int currblood;
-        bool survival;
-        public int maxblood;
+        
+        public Sprite[] bld_masks;
         public Sprite[] img_lv;
         public Sprite[] img_lv_dead;
 
-        public void SetMaxBlood(int maxblood) {
+        bool survival;
+        int currblood;
+        int maxblood;
+        int level;
 
-        }
-
-        // /* set avatar's current blood and automatically set its survival */
-        // public void SetCurrBlood() {
-        //     bld_bar.SetBlood((float)currblood / maxblood);
-        //     this.survival = currblood > 0;
-        // }
-
-        public void SetLevel(int lv) {
-            if (survival)
-                this.level.sprite = img_lv[lv];
-            else
-                this.level.sprite = img_lv_dead[lv];
-        }
-
-        public void SetState(AvaStat ava_stat) {
-
+        int MaxbldToIdx(int maxblood) {
+            return maxblood <= 500 ? maxblood / 50 - 1 : 10; 
         }
 
         public void Push(RoboSync robo_sync) {
+            if (this.currblood != robo_sync.currblood) {
+                bld_bar.SetBlood(((float)robo_sync.currblood) / robo_sync.maxblood);
+            }
+            if (this.maxblood != robo_sync.maxblood) {
+                int idx = MaxbldToIdx(robo_sync.maxblood);
+                bld_bar.GetComponent<Image>().sprite = bld_masks[idx];
+            }
+            if (this.survival != robo_sync.survival || this.level != robo_sync.level) {
+                this.img_level.sprite = robo_sync.survival ? img_lv[robo_sync.level] 
+                    : img_lv_dead[robo_sync.level];
+            }
+            this.maxblood = robo_sync.maxblood;
             this.currblood = robo_sync.currblood;
             this.survival = robo_sync.survival;
+            this.level = robo_sync.level;
         }
     }
 

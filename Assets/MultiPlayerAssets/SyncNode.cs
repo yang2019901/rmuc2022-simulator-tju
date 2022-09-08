@@ -33,6 +33,7 @@ public struct RoboSync {
     public int maxblood;
     /* set RMUC_UI.AvaBatStat */
     public int level;
+    public RMUC_UI.AvaStat ava_stat;
 }
 
 public class SyncNode : NetworkBehaviour {
