@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class RobotController : NetworkBehaviour {
+public class RoboController : NetworkBehaviour {
     [Header("Kinematic")]
     public Rigidbody _rigid;
     public Vector3 centerOfMass;
@@ -19,7 +19,7 @@ public class RobotController : NetworkBehaviour {
     [Header("Weapon")]
     public Transform bullet_start;
     [Header("View")]
-    public Transform robot_cam;
+    public Transform robo_cam;
 
     private float last_fire = 0;
     private float pitch_ang = 0;
@@ -27,15 +27,15 @@ public class RobotController : NetworkBehaviour {
     private float pitch_max = 40;
     private float yaw_ang = 0;
     private Weapon weapon;
-    private RobotState robot_state;
+    private RoboState robo_state;
 
     public override void OnStartClient() {
         base.OnStartClient();
         if (hasAuthority) {
             Transform tmp = Camera.main.transform;
-            tmp.parent = robot_cam;
-            tmp.rotation = robot_cam.rotation;
-            tmp.position = robot_cam.position;
+            tmp.parent = robo_cam;
+            tmp.rotation = robo_cam.rotation;
+            tmp.position = robo_cam.position;
         }
     }
 
@@ -50,7 +50,7 @@ public class RobotController : NetworkBehaviour {
         _rigid = GetComponent<Rigidbody>();
         _rigid.centerOfMass = centerOfMass;
         Cursor.lockState = CursorLockMode.Locked;
-        robot_state = GetComponent<RobotState>();
+        robo_state = GetComponent<RoboState>();
         weapon = GetComponent<Weapon>();
     }
 
@@ -59,7 +59,7 @@ public class RobotController : NetworkBehaviour {
             return;
 
         SetCursor();
-        if (robot_state.survival) {
+        if (robo_state.survival) {
             Move();
             Look();
             Shoot();
@@ -79,7 +79,7 @@ public class RobotController : NetworkBehaviour {
         /* Manage Power */
         int wheel_num = 4;
         float efficiency = 0.6f;
-        float wheel_power_single = robot_state.power * efficiency / wheel_num;
+        float wheel_power_single = robo_state.power * efficiency / wheel_num;
 
         /* Get move direction from user input */
         float h = Input.GetAxis("Horizontal");

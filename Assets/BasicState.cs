@@ -21,11 +21,11 @@ public abstract class BasicState : MonoBehaviour {
 }
 
 
-public class RobotState : BasicState {
+public class RoboState : BasicState {
     public bool survival = true;  // whether this robot survives
 
     /** calculated by algorithm automatically
-     *  they are initialized by RobotState.Configure() and updated by UpdateBuff() or BuffManager.cs
+     *  they are initialized by RoboState.Configure() and updated by UpdateBuff() or BuffManager.cs
      */
 
     /* weapon params */
@@ -34,8 +34,8 @@ public class RobotState : BasicState {
     public int shoot_speed;
     /* chassis params */
     public int power;
-    public int blood;
-    public int blood_left;
+    public int maxblood;
+    public int currblood;
 
 
     /* Buff */
@@ -55,9 +55,9 @@ public class RobotState : BasicState {
 
     float timer_rev = 0f;
     private void Revive() {
-        blood_left += Mathf.RoundToInt(blood * B_rev);
-        blood_left = blood_left < blood ? blood_left : blood;
-        // Debug.Log("blood: " + blood_left + "/" + blood);
+        currblood += Mathf.RoundToInt(maxblood * B_rev);
+        currblood = currblood < maxblood ? currblood : maxblood;
+        // Debug.Log("blood: " + currblood + "/" + maxblood);
     }
 
     public List<float> li_B_atk; // attack buff. Ex: rune_junior => B_atk.Add(0.5); rune_senior => B_atd.Add(1)
@@ -76,7 +76,7 @@ public class RobotState : BasicState {
         GetUserPref();
         Configure();
         this.acs = GetComponentsInChildren<ArmorController>();
-        this.blood_left = this.blood;
+        this.currblood = this.maxblood;
     }
     public virtual void Update() {
         if (Time.time - timer_rev >= 1f) {
@@ -89,14 +89,14 @@ public class RobotState : BasicState {
     public override void TakeDamage(GameObject hitter, GameObject armor_hit, GameObject bullet) {
         /* Requirement: make sure that small bullet's name contains "17mm" && big bullet's contains "42mm" */
         int damage = bullet.name.Contains("17mm") ? 10 : 100;
-        damage = Mathf.RoundToInt(damage * (hitter.GetComponent<RobotState>().B_atk + 1)
-            * Mathf.Max(1 - this.GetComponent<RobotState>().B_dfc, 0));
-        blood_left -= damage;
+        damage = Mathf.RoundToInt(damage * (hitter.GetComponent<RoboState>().B_atk + 1)
+            * Mathf.Max(1 - this.GetComponent<RoboState>().B_dfc, 0));
+        currblood -= damage;
 
-        Debug.Log("current blood: " + blood_left);
+        Debug.Log("current blood: " + currblood);
 
-        if (this.blood_left <= 0) {
-            this.blood_left = 0;
+        if (this.currblood <= 0) {
+            this.currblood = 0;
             this.survival = false;
             foreach (ArmorController ac in acs)
                 ac.Disable();
@@ -117,25 +117,26 @@ public class RobotState : BasicState {
 
     public GameObject[] blood_bars;
     private void SetBloodBars() {
-        Vector3 scale = new Vector3(1, 1, (float)blood_left / blood);
+        Vector3 scale = new Vector3(1, 1, (float)currblood / maxblood);
         foreach (GameObject bb in blood_bars) {
             bb.transform.localScale = scale;
         }
     }
 
-    public RobotSync Pull() {
-        RobotSync tmp = new RobotSync();
-        tmp.blood_left = this.blood_left;
+    public virtual RoboSync Pull() {
+        RoboSync tmp = new RoboSync();
+        tmp.currblood = this.currblood;
+        tmp.maxblood = this.maxblood;
         tmp.survival = this.survival;
         return tmp;
     }
 
-    public void Push(RobotSync robot_sync) {
-        this.survival = robot_sync.survival;
-        if (this.blood_left > robot_sync.blood_left) {
-            this.blood_left = robot_sync.blood_left;
+    public virtual void Push(RoboSync robo_sync) {
+        this.survival = robo_sync.survival;
+        if (this.currblood > robo_sync.currblood) {
+            this.currblood = robo_sync.currblood;
             this.SetBloodBars();
-            if (this.survival)
+            if (!this.survival)
                 foreach (ArmorController ac in acs)
                     ac.Disable();
             else

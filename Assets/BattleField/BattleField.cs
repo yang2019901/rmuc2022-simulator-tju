@@ -12,9 +12,9 @@ public class BattleField : MonoBehaviour {
     public BaseState base_red;
     public Rune rune;
     /* hero engineer infantry1 infantry2 */
-    public RobotState[] robo_red;
-    public RobotState[] robo_blue;
-    public List<RobotState> robo_all = new List<RobotState>();
+    public RoboState[] robo_red;
+    public RoboState[] robo_blue;
+    public List<RoboState> robo_all = new List<RoboState>();
 
     [Header("boundary")]
     private int x_half_length = 16;
@@ -67,11 +67,11 @@ public class BattleField : MonoBehaviour {
         float atk_up = rune_buff == RuneBuff.Junior ? 0.5f : 1f;
         if (armor_color == ArmorColor.Red) {
             Debug.Log("Team Red activates Rune");
-            foreach (RobotState robot in robo_red)
+            foreach (RoboState robot in robo_red)
                 robot.li_B_atk.Add(atk_up);
         } else {
             Debug.Log("Team Blue activates Rune");
-            foreach (RobotState robot in robo_blue)
+            foreach (RoboState robot in robo_blue)
                 robot.li_B_atk.Add(atk_up);
         }
         yield return new WaitForSeconds(45);

@@ -37,14 +37,14 @@ public class BaseState : TowerState {
 
     public BaseSync Pull() {
         BaseSync tmp = new BaseSync();
-        tmp.blood_left = this.blood_left;
+        tmp.currblood = this.currblood;
         tmp.survival = this.survival;
         return tmp;
     }
 
     public void Push(BaseSync base_sync) {
-        if (this.blood_left > base_sync.blood_left) {
-            this.blood_left = base_sync.blood_left;
+        if (this.currblood > base_sync.currblood) {
+            this.currblood = base_sync.currblood;
             this.SetBloodBars();
             StartCoroutine(this.ArmorsBlink(0.1f));
         }

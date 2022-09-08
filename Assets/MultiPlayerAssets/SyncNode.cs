@@ -16,20 +16,23 @@ public struct OutpostSync {
     /* set base animation */
     public bool survival;
     /* set blood bar and armor blinking */
-    public int blood_left;
+    public int currblood;
 }
 
 public struct BaseSync {
     public bool survival;
     /* set blood bar and armor blinking */
-    public int blood_left;
+    public int currblood;
 }
 
-public struct RobotSync {
+public struct RoboSync {
     /* whether user input works */
     public bool survival;
     /* set blood bar and armor blinking */
-    public int blood_left;
+    public int currblood;
+    public int maxblood;
+    /* set RMUC_UI.AvaBatStat */
+    public int level;
 }
 
 public class SyncNode : NetworkBehaviour {
@@ -51,7 +54,7 @@ public class SyncNode : NetworkBehaviour {
     private BaseSync base_sync_blue = new BaseSync();
 
     /* Note: SyncList can and only can be modify in Server */
-    private readonly SyncList<RobotSync> robo_sync_all = new SyncList<RobotSync>();
+    private readonly SyncList<RoboSync> robo_sync_all = new SyncList<RoboSync>();
 
     /****************** alias ****************/
     Rune rune;
@@ -60,7 +63,7 @@ public class SyncNode : NetworkBehaviour {
     BaseState base_red;
     BaseState base_blue;
     /* when sync, robo_red has no difference with robo_blue */
-    List<RobotState> robo_all;
+    List<RoboState> robo_all;
 
     void Start() {
         /* battlefield is initialized in Awake period, which justify following assignment */
@@ -72,7 +75,7 @@ public class SyncNode : NetworkBehaviour {
         robo_all = BattleField.singleton.robo_all;
         if (isServer)
             for (int i = 0; i < robo_all.Count; i++)
-                robo_sync_all.Add(new RobotSync());
+                robo_sync_all.Add(new RoboSync());
     }
 
     /* use LateUpdate() to ensure users see these */

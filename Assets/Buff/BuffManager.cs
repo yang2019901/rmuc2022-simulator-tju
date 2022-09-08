@@ -11,14 +11,14 @@ public abstract class Buff {
         en = true;
         col = collider;
     }
-    public virtual void init(RobotState robot_state, string my_color, string enemy_color) {
-        robot = robot_state;
+    public virtual void init(RoboState robo_state, string my_color, string enemy_color) {
+        robot = robo_state;
         my_color_s = my_color;
         enemy_color_s = enemy_color;
     }
     public float timer;
     public bool en;
-    public RobotState robot;
+    public RoboState robot;
     protected Collider col;
     protected string my_color_s;
     protected string enemy_color_s;
@@ -57,7 +57,7 @@ public class B_Revive : Buff {
 /* Buff of Base */
 public class B_Base : Buff {
     public BaseState base_state;
-    public override void init(RobotState robot_state, string my_color, string enemy_color) {
+    public override void init(RoboState robot_state, string my_color, string enemy_color) {
         base.init(robot_state, my_color, enemy_color);
         base_state = (robot.armor_color == ArmorColor.Red) ? BattleField.singleton.base_red
             : BattleField.singleton.base_blue;
@@ -130,7 +130,7 @@ public class B_Upland : Buff {
 /* Buff of Rune Activation Spot */
 public class B_RuneActiv : Buff {
     RuneState rune_state;
-    public override void init(RobotState robot_state, string my_color, string enemy_color) {
+    public override void init(RoboState robot_state, string my_color, string enemy_color) {
         base.init(robot_state, my_color, enemy_color);
         Rune rune = BattleField.singleton.rune;
         rune_state = (robot.armor_color == ArmorColor.Red) ? rune.rune_state_red : rune.rune_state_blue;
@@ -169,8 +169,8 @@ public class B_RuneActiv : Buff {
 /* Buff of Outpost */
 public class B_Outpost : Buff {
     public OutpostState outpost_state;
-    public override void init(RobotState robot_state, string my_color, string enemy_color) {
-        base.init(robot_state, my_color, enemy_color);
+    public override void init(RoboState robo_state, string my_color, string enemy_color) {
+        base.init(robo_state, my_color, enemy_color);
         outpost_state = (robot.armor_color == ArmorColor.Red) ? BattleField.singleton.outpost_red
             : BattleField.singleton.outpost_blue;
     }
@@ -301,7 +301,7 @@ public class B_Leap : Buff {
 }
 
 public class BuffManager : MonoBehaviour {
-    private RobotState robot;
+    private RoboState robot;
     private Dictionary<string, Buff> buffs;
 
     float timer_rune;
@@ -320,7 +320,7 @@ public class BuffManager : MonoBehaviour {
     const string lea = "B_Leap";
 
     void Start() {
-        robot = GetComponentInParent<RobotState>();
+        robot = GetComponentInParent<RoboState>();
         buffs = new Dictionary<string, Buff> {
             { rev, new B_Revive() },
             { bas, new B_Base() },

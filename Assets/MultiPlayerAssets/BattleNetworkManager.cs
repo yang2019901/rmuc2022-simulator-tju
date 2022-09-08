@@ -61,7 +61,7 @@ public class BattleNetworkManager : NetworkManager {
         Debug.Log(sceneName + " has been loaded");
 
         /* BattleField having been loaded, assign robot instance to avatar owner */
-        foreach (RobotState robot in BattleField.singleton.robo_red) {
+        foreach (RoboState robot in BattleField.singleton.robo_red) {
             int syncIdx = playerSyncs.FindIndex(i => i.ava_tag == robot.name);
             if (syncIdx == -1)
                 Debug.Log("no player takes " + robot.name);
@@ -71,7 +71,7 @@ public class BattleNetworkManager : NetworkManager {
                 Debug.Log(playerSyncs[syncIdx].player_name + " takes " + robot.name);
             }
         }
-        foreach (RobotState robot in BattleField.singleton.robo_blue) {
+        foreach (RoboState robot in BattleField.singleton.robo_blue) {
             int syncIdx = playerSyncs.FindIndex(i => i.ava_tag == robot.name);
             if (syncIdx == -1)
                 Debug.Log("no player takes " + robot.name);
