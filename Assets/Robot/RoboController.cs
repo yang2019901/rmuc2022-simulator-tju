@@ -5,7 +5,6 @@ using Mirror;
 
 public class RoboController : NetworkBehaviour {
     [Header("Kinematic")]
-    public Rigidbody chassis;
     public Vector3 centerOfMass;
     [Header("turret")]
     public Transform yaw;
@@ -20,6 +19,7 @@ public class RoboController : NetworkBehaviour {
     [Header("View")]
     public Transform robo_cam;
 
+    private Rigidbody _rigid;
     private float last_fire = 0;
     private float pitch_ang = 0;
     private float pitch_min = -30;
@@ -46,7 +46,8 @@ public class RoboController : NetworkBehaviour {
     }
 
     void Start() {
-        chassis.centerOfMass = centerOfMass;
+        _rigid = GetComponent<Rigidbody>();
+        _rigid.centerOfMass = centerOfMass;
         Cursor.lockState = CursorLockMode.Locked;
         robo_state = GetComponent<RoboState>();
         weapon = GetComponent<Weapon>();
@@ -82,7 +83,7 @@ public class RoboController : NetworkBehaviour {
         /* Get move direction from user input */
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-        Vector3 mov_dir = h * chassis.transform.right + v * chassis.transform.forward;
+        Vector3 mov_dir = h * _rigid.transform.right + v * _rigid.transform.forward;
         mov_dir.Normalize();
 
         /* Rotate wheels and move the car */
@@ -102,7 +103,7 @@ public class RoboController : NetworkBehaviour {
         }
 
         /* make chassis follow turret(aka, yaw) */
-        float d_ang = -Mathf.DeltaAngle(yaw_ang, chassis.transform.eulerAngles.y);
+        float d_ang = -Mathf.DeltaAngle(yaw_ang, _rigid.transform.eulerAngles.y);
         /* TODO: use PID controller */
         float torque = 0.2f * d_ang;
         for (int i = 0; i < wheel_num; i++) {
@@ -129,15 +130,15 @@ public class RoboController : NetworkBehaviour {
         yaw_ang += mouseX;
         /* Rotate Transform "yaw" & "pitch" */
         pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
-        yaw.Rotate(chassis.transform.up, mouseX);
-        Debug.Log("yaw rotate : " + mouseX);
+        yaw.eulerAngles = new Vector3(0, yaw_ang, 0);
+        yaw.localEulerAngles = new Vector3(0, yaw.localEulerAngles.y, 0);
     }
 
 
     void Shoot() {
         bool is_fire = Input.GetMouseButton(0);
         if (is_fire && Time.time - last_fire > 0.15) {
-            CmdShoot(bullet_start.position, bullet_start.forward * 18 + chassis.velocity);
+            CmdShoot(bullet_start.position, bullet_start.forward * 18 + _rigid.velocity);
             last_fire = Time.time;
         }
     }

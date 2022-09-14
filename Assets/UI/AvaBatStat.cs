@@ -25,6 +25,16 @@ namespace RMUC_UI {
         int level = -1;
         int bull_num = -1;
 
+        void Start() {
+            if (img_lv != null)
+                img_lv.gameObject.SetActive(true);
+            if (img_ava != null)
+                img_ava.gameObject.SetActive(true);
+            if (txt_bullnum != null)
+                txt_bullnum.gameObject.SetActive(true);
+            if (bld_bar != null)
+                bld_bar.gameObject.SetActive(true);
+        }
 
         public void Push(RoboSync robo_sync) {
             if (this.currblood != robo_sync.currblood) {
