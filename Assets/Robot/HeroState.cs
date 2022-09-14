@@ -7,7 +7,8 @@ public class HeroState : RoboState {
     private string chassis_pref; // chassis preference: "power++", "maxblood++", "init_mode"
     private string weapon_pref; // weapon preference: "shoot_speed++" "heat_limit++"
     private string level_s; // level info: "level1", "level2", "level3"
-    public int level;
+    private int level;
+    private int bull_num;
 
     /* get user's preference of chassis and weapon from GUI */
     public override void GetUserPref() {
@@ -36,12 +37,14 @@ public class HeroState : RoboState {
     public override RoboSync Pull() {
         RoboSync rs = base.Pull();
         rs.level = this.level;
+        rs.bull_num = this.bull_num;
         return rs;
     }
 
     public override void Push(RoboSync robo_sync) {
         base.Push(robo_sync);
         this.level = robo_sync.level;
+        this.bull_num = robo_sync.bull_num;
     }
 
     public override void Update() {

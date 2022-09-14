@@ -109,12 +109,19 @@ public class RoboState : BasicState {
         RoboSync tmp = new RoboSync();
         tmp.currblood = this.currblood;
         tmp.maxblood = this.maxblood;
-        tmp.survival = this.survival;
+        if (!this.survival)
+            tmp.ava_stat = RMUC_UI.AvaStat.Dead;
+        else if (Mathf.Approximately(this.B_dfc, 1))
+            tmp.ava_stat = RMUC_UI.AvaStat.Invulnerable;
+        else if (!Mathf.Approximately(this.B_dfc, 0))
+            tmp.ava_stat = RMUC_UI.AvaStat.Defensive;
+        else
+            tmp.ava_stat = RMUC_UI.AvaStat.Survival;
         return tmp;
     }
 
     public virtual void Push(RoboSync robo_sync) {
-        this.survival = robo_sync.survival;
+        this.survival = robo_sync.ava_stat != RMUC_UI.AvaStat.Dead;
         if (this.currblood > robo_sync.currblood) {
             this.currblood = robo_sync.currblood;
             this.SetBloodBars();

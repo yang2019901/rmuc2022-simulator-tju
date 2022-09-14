@@ -2,26 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace RMUC_UI {
     public enum AvaStat { Dead = 0, Survival = 1, Defensive = 2, Invulnerable = 3 };
 
     public class AvaBatStat : MonoBehaviour {
-        public Image img_level;
         public BloodBar bld_bar;
+        public Image img_lv;
+        public Image img_ava;
+        public TMP_Text txt_bullnum;
         
         public Sprite[] bld_masks;
-        public Sprite[] img_lv;
-        public Sprite[] img_lv_dead;
+        public Sprite[] imgs_lv;
+        public Sprite[] imgs_lv_dead;
+        [Header("dead-survival-defensive-invulnerable")]
+        public Sprite[] imgs_ava;
 
-        bool survival;
-        int currblood;
-        int maxblood;
-        int level;
+        AvaStat ava_stat;
+        int currblood = -1;
+        int maxblood = -1;
+        int level = -1;
+        int bull_num = -1;
 
-        int MaxbldToIdx(int maxblood) {
-            return maxblood <= 500 ? maxblood / 50 - 1 : 10; 
-        }
 
         public void Push(RoboSync robo_sync) {
             if (this.currblood != robo_sync.currblood) {
@@ -31,15 +34,33 @@ namespace RMUC_UI {
                 int idx = MaxbldToIdx(robo_sync.maxblood);
                 bld_bar.GetComponent<Image>().sprite = bld_masks[idx];
             }
-            if (this.survival != robo_sync.survival || this.level != robo_sync.level) {
-                this.img_level.sprite = robo_sync.survival ? img_lv[robo_sync.level] 
-                    : img_lv_dead[robo_sync.level];
+            if (img_lv != null) {
+                if (this.ava_stat != robo_sync.ava_stat || this.level != robo_sync.level) {
+                    this.img_lv.sprite = robo_sync.ava_stat != AvaStat.Dead ? imgs_lv[robo_sync.level] 
+                        : imgs_lv_dead[robo_sync.level];
+                }
+                if (this.ava_stat != robo_sync.ava_stat)
+                    img_ava.sprite = imgs_ava[(int)robo_sync.ava_stat];
+
+            }
+            if (this.bull_num != robo_sync.bull_num) {
+                if (robo_sync.bull_num == 0)
+                    txt_bullnum.text = "<color=#FF0707>0</color>";
+                else
+                    txt_bullnum.text = robo_sync.bull_num.ToString();
             }
             this.maxblood = robo_sync.maxblood;
             this.currblood = robo_sync.currblood;
-            this.survival = robo_sync.survival;
+            this.ava_stat = robo_sync.ava_stat;
             this.level = robo_sync.level;
+            this.bull_num = robo_sync.bull_num;
+        }        
+        
+
+        int MaxbldToIdx(int maxblood) {
+            return maxblood <= 500 ? maxblood/50 - 1 : 10; 
         }
+
     }
 
 }

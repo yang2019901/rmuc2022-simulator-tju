@@ -74,6 +74,10 @@ public class BulletPool : NetworkBehaviour {
             /* Due to the need of visual effect, bullet will not be recycled
                however, component<rigidbody> will be removed to avoid unnecessary calculation */
             Destroy(bullet.GetComponent<Rigidbody>());
+            Destroy(bullet.GetComponent<Bullet>());
+            Destroy(bullet.GetComponent<NetworkTransform>());
+            Destroy(bullet.GetComponent<NetworkIdentity>());
+            Destroy(bullet.GetComponent<Collider>());
             return;
         }
         NetworkServer.UnSpawn(bullet);

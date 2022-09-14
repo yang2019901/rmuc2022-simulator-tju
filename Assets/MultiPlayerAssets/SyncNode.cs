@@ -26,14 +26,14 @@ public struct BaseSync {
 }
 
 public struct RoboSync {
-    /* whether user input works */
-    public bool survival;
+    /* survival, dead, defence up or invulnerable */
+    public RMUC_UI.AvaStat ava_stat;
     /* set blood bar and armor blinking */
     public int currblood;
     public int maxblood;
     /* set RMUC_UI.AvaBatStat */
     public int level;
-    public RMUC_UI.AvaStat ava_stat;
+    public int bull_num;
 }
 
 public class SyncNode : NetworkBehaviour {

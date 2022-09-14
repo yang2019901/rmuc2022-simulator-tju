@@ -7,11 +7,12 @@ public class BloodBar : MonoBehaviour {
     public GameObject bar_blood;
     public RectTransform bld_full;   // full blood's pixel position
     public RectTransform bld_empty;     // empty blood's pixel position
+    
+    public GameObject bar_golden;
     [Header("For Base and Guard")]
     public GameObject bar_shield;
     public RectTransform shd_full;   // full shield's pixel position
     public RectTransform shd_empty;     // empty shield's pixel position
-    public GameObject bar_golden;
     [Header("For Robot")]
     public GameObject bar_green;
 
