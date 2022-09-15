@@ -18,7 +18,7 @@ public class RoboState : BasicState {
     public int power;
     public int maxblood;
     public int currblood;
-    public List<Buff> robo_buff;
+    public List<Buff> robo_buff = new List<Buff>();
 
     /* Buff */
     /* damage = damage * (1 + hitter.B_atk) * max(1-hittee.B_dfc, 0) */
@@ -80,6 +80,7 @@ public class RoboState : BasicState {
         li_B_dfc = new List<float> { 0 };
         li_B_cd = new List<float> { 1 };
         li_B_rev = new List<float> { 0 };
+        li_B_rbn = new List<int> { 0 };
         UpdateBuff();
         GetUserPref();
         Configure();

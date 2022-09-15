@@ -11,11 +11,15 @@ public abstract class Buff {
         timer = 2;
         en = true;
         col = collider;
+        robot.robo_buff.Add(this);
     }
     public virtual void init(RoboState robo_state, string my_color, string enemy_color) {
         robot = robo_state;
         my_color_s = my_color;
         enemy_color_s = enemy_color;
+    }
+    public virtual void Disable() {
+        robot.robo_buff.Remove(this);
     }
     public float timer;
     public bool en;
@@ -39,7 +43,8 @@ public class B_Revive : Buff {
         base.Enable(col);
     }
 
-    public void Disable() {
+    public override void Disable() {
+        base.Disable();
         if (!en)
             return;
         robot.li_B_rev.Remove(0.05f);
@@ -77,7 +82,8 @@ public class B_Base : Buff {
         base.Enable(col);
     }
 
-    public void Disable() {
+    public override void Disable() {
+        base.Disable();
         if (!en)
             return;
         /* remove buff - Base */
@@ -109,7 +115,8 @@ public class B_Upland : Buff {
         base.Enable(col);
     }
 
-    public void Disable() {
+    public override void Disable() {
+        base.Disable();
         if (!en)
             return;
         /* release high ground control */
@@ -150,7 +157,8 @@ public class B_RuneActiv : Buff {
         base.Enable(col);
     }
 
-    public void Disable() {
+    public override void Disable() {
+        base.Disable();
         if (!en)
             return;
         robot.li_B_cd.Remove(5f);
@@ -188,7 +196,8 @@ public class B_Outpost : Buff {
         base.Enable(col);
     }
 
-    public void Disable() {
+    public override void Disable() {
+        base.Disable();
         if (!en)
             return;
         /* remove buff - outpost */
@@ -219,7 +228,8 @@ public class B_Island : Buff {
         base.Enable(col);
     }
 
-    public void Disable() {
+    public override void Disable() {
+        base.Disable();
         if (!en)
             return;
         /* release high ground control */
@@ -252,7 +262,8 @@ public class B_Snipe : Buff {
         base.Enable(col);
     }
 
-    public void Disable() {
+    public override void Disable() {
+        base.Disable();
         if (!en)
             return;
         /* remove buff - Snipe */
@@ -283,7 +294,8 @@ public class B_Leap : Buff {
         robot.UpdateBuff();
     }
 
-    public void Disable() {
+    public override void Disable() {
+        base.Disable();
         if (!en)
             return;
         /* remove buff - Leap */
@@ -350,12 +362,6 @@ public class BuffManager : MonoBehaviour {
     void FixedUpdate() {
         foreach (Buff tmp in buffs.Values) {
             tmp.Update();
-            if (robot != null) {
-                if (tmp.en)
-                    robot.robo_buff.Add(tmp);
-                else
-                    robot.robo_buff.Remove(tmp);
-            }
         }
     }
 
