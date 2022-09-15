@@ -5,6 +5,7 @@ using UnityEngine;
 /* use abstract class and function to provide general calling form */
 public abstract class Buff {
     /* make sure Update() is called in FixedUpdate() */
+    public string tag;
     public abstract void Update();
     public virtual void Enable(Collider collider) {
         timer = 2;
@@ -18,13 +19,16 @@ public abstract class Buff {
     }
     public float timer;
     public bool en;
-    public RoboState robot;
+    protected RoboState robot;
     protected Collider col;
     protected string my_color_s;
     protected string enemy_color_s;
 }
 
-/* Buff of Revive */
+/* Buff of Revive 
+    Note: engineer's self-reviving buff will not be considered here 
+    because it's designed to deal with ground buff
+*/
 public class B_Revive : Buff {
     public override void Enable(Collider col) {
         /* add buff - Revive */
@@ -300,6 +304,17 @@ public class B_Leap : Buff {
     }
 }
 
+public class BuffType {
+    public const string rev = "B_Revive";
+    public const string bas = "B_Base";
+    public const string uld = "B_Upland";
+    public const string run = "B_RuneActiv";
+    public const string pst = "B_Outpost";
+    public const string ild = "B_Island";
+    public const string snp = "B_Snipe";
+    public const string lea = "B_Leap";
+}
+
 public class BuffManager : MonoBehaviour {
     private RoboState robot;
     private Dictionary<string, Buff> buffs;
@@ -310,31 +325,24 @@ public class BuffManager : MonoBehaviour {
     string tag_leap;
     string my_color_s;
     string enemy_color_s;
-    const string rev = "B_Revive";
-    const string bas = "B_Base";
-    const string uld = "B_Upland";
-    const string run = "B_RuneActiv";
-    const string pst = "B_Outpost";
-    const string ild = "B_Island";
-    const string snp = "B_Snipe";
-    const string lea = "B_Leap";
 
     void Start() {
         robot = GetComponentInParent<RoboState>();
         buffs = new Dictionary<string, Buff> {
-            { rev, new B_Revive() },
-            { bas, new B_Base() },
-            { uld, new B_Upland() },
-            { run, new B_RuneActiv() },
-            { pst, new B_Outpost() },
-            { ild, new B_Island() },
-            { snp, new B_Snipe() },
-            { lea, new B_Leap() }
+            { BuffType.rev, new B_Revive() },
+            { BuffType.bas, new B_Base() },
+            { BuffType.uld, new B_Upland() },
+            { BuffType.run, new B_RuneActiv() },
+            { BuffType.pst, new B_Outpost() },
+            { BuffType.ild, new B_Island() },
+            { BuffType.snp, new B_Snipe() },
+            { BuffType.lea, new B_Leap() }
         };
         my_color_s = robot.armor_color == ArmorColor.Red ? "red" : "blue";
         enemy_color_s = robot.armor_color == ArmorColor.Blue ? "red" : "blue";
-        foreach (Buff tmp in buffs.Values) {
-            tmp.init(robot, my_color_s, enemy_color_s);
+        foreach (string key in buffs.Keys) {
+            buffs[key].tag = key;
+            buffs[key].init(robot, my_color_s, enemy_color_s);
         }
         leaping = false;
     }
@@ -342,18 +350,22 @@ public class BuffManager : MonoBehaviour {
     void FixedUpdate() {
         foreach (Buff tmp in buffs.Values) {
             tmp.Update();
+            if (tmp.en)
+                robot.robo_buff.Add(tmp);
+            else
+                robot.robo_buff.Remove(tmp);
         }
     }
 
     void OnTriggerEnter(Collider col) {
         // Debug.Log("enter buff_uld: " + col.name);
-        if (col.name.Contains(run) && !buffs[run].en) {
+        if (col.name.Contains(BuffType.run) && !buffs[BuffType.run].en) {
             timer_rune = Time.time;
-        } else if (col.name.Contains(lea)) {
+        } else if (col.name.Contains(BuffType.lea)) {
             if (!leaping || Time.time - timer_leap >= 10 || Time.time - timer_leap < 0)
                 return;
             if (col.name.Contains("end") && col.name.Contains(tag_leap)) {
-                buffs[lea].Enable(col);
+                buffs[BuffType.lea].Enable(col);
                 leaping = false;
             }
         }
@@ -363,48 +375,48 @@ public class BuffManager : MonoBehaviour {
         char sep = ' ';
         string prefix = col.name.Split(sep)[0];
         switch (prefix) {
-            case rev:
+            case BuffType.rev:
                 if (col.name.Contains(my_color_s))
-                    buffs[rev].Enable(col);
+                    buffs[BuffType.rev].Enable(col);
                 break;
-            case bas:
+            case BuffType.bas:
                 if (col.name.Contains(my_color_s)) {
-                    BaseState tmp = ((B_Base)buffs[bas]).base_state;
+                    BaseState tmp = ((B_Base)buffs[BuffType.bas]).base_state;
                     if (tmp.survival && tmp.buff_active)
-                        buffs[bas].Enable(col);
+                        buffs[BuffType.bas].Enable(col);
                 }
                 break;
-            case uld:
+            case BuffType.uld:
                 if (col.name.Contains(my_color_s)) {
-                    buffs[uld].Enable(col);
+                    buffs[BuffType.uld].Enable(col);
                     /* take over the high ground => change its name so that enemy can't share the buff */
                     col.name = col.name.Replace(enemy_color_s, "");
                 }
                 break;
-            case run:
+            case BuffType.run:
                 if (Time.time - timer_rune > 3 && col.name.Contains(my_color_s))
-                    buffs[run].Enable(col);
+                    buffs[BuffType.run].Enable(col);
                 break;
-            case pst:
+            case BuffType.pst:
                 if (col.name.Contains(my_color_s)) {
-                    OutpostState tmp = ((B_Outpost)buffs[pst]).outpost_state;
+                    OutpostState tmp = ((B_Outpost)buffs[BuffType.pst]).outpost_state;
                     if (tmp.survival && tmp.buff_active)
-                        buffs[pst].Enable(col);
+                        buffs[BuffType.pst].Enable(col);
                 }
                 break;
-            case ild:
+            case BuffType.ild:
                 if (col.name.Contains(my_color_s) && robot.gameObject.name.Contains("engineer")) {
-                    buffs[ild].Enable(col);
+                    buffs[BuffType.ild].Enable(col);
                     /* take over the high ground => change its name so that enemy can't share the buff */
                     col.name = col.name.Replace(enemy_color_s, "");
                 }
                 break;
-            case snp:
+            case BuffType.snp:
                 if (col.name.Contains(my_color_s) && robot.gameObject.name.Contains("hero")) {
-                    buffs[snp].Enable(col);
+                    buffs[BuffType.snp].Enable(col);
                 }
                 break;
-            case lea:
+            case BuffType.lea:
                 break;
             default:
                 Debug.Log(col.name);
@@ -417,7 +429,7 @@ public class BuffManager : MonoBehaviour {
         string prefix = col.name.Split(sep)[0];
         // Debug.Log("leave buff_uld: " + col.name);
 
-        if (prefix == lea && col.name.Contains("start")) {
+        if (prefix == BuffType.lea && col.name.Contains("start")) {
             leaping = true;
             timer_leap = Time.time;
             tag_leap = col.name.Split(sep)[1];

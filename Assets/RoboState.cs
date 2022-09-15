@@ -18,7 +18,7 @@ public class RoboState : BasicState {
     public int power;
     public int maxblood;
     public int currblood;
-
+    public List<Buff> robo_buff;
 
     /* Buff */
     /* damage = damage * (1 + hitter.B_atk) * max(1-hittee.B_dfc, 0) */
@@ -28,31 +28,57 @@ public class RoboState : BasicState {
     public float B_cd;
     public float B_pow;
     public float B_rev;
+    public int B_rbn; // B_reborn: 2 if supply_spot; 1 if recover_card or self-reviving of engineer 
     public void UpdateBuff() {
         B_atk = Mathf.Max(li_B_atk.ToArray());
         B_dfc = Mathf.Max(li_B_dfc.ToArray());
         B_cd = Mathf.Max(li_B_cd.ToArray());
         B_rev = Mathf.Max(li_B_rev.ToArray());
+        B_rbn = Mathf.Max(li_B_rbn.ToArray());
     }
 
     float timer_rev = 0f;
+    int rbn_req;
+    int rbn = 0;
     private void Revive() {
-        currblood += Mathf.RoundToInt(maxblood * B_rev);
-        currblood = currblood < maxblood ? currblood : maxblood;
+        if (this.survival) {
+            if (B_rev != 0 && Time.time - timer_rev > 1 && currblood < maxblood) {
+                currblood += Mathf.RoundToInt(maxblood * B_rev);
+                currblood = currblood < maxblood ? currblood : maxblood;
+                timer_rev = Time.time;
+            }
+        } else {
+            if (Time.time - timer_rev >= 1) {
+                rbn += B_rbn;
+                timer_rev = Time.time;
+                Debug.Log(string.Format("current reborn point: {0}/{1}", rbn, rbn_req));
+            }
+            if (rbn >= rbn_req)
+                StartCoroutine(this.Reborn());
+        }
         // Debug.Log("blood: " + currblood + "/" + maxblood);
+    }
+    IEnumerator Reborn() {
+        rbn = 0;
+        this.survival = true;
+        this.B_dfc = 1;
+        yield return new WaitForSeconds(10);
+        UpdateBuff();
+        yield break;
     }
 
     public List<float> li_B_atk; // attack buff. Ex: rune_junior => B_atk.Add(0.5); rune_senior => B_atd.Add(1)
     public List<float> li_B_dfc; // defence buff. Ex: rune_senior => B_dfc.Add(0.5)
     public List<float> li_B_cd;
     public List<float> li_B_rev;
+    public List<int> li_B_rbn;
 
 
     /* for visual effects */
     public virtual void Start() {
         li_B_atk = new List<float> { 0 };
         li_B_dfc = new List<float> { 0 };
-        li_B_cd  = new List<float> { 1 };
+        li_B_cd = new List<float> { 1 };
         li_B_rev = new List<float> { 0 };
         UpdateBuff();
         GetUserPref();
@@ -80,6 +106,7 @@ public class RoboState : BasicState {
         if (this.currblood <= 0) {
             this.currblood = 0;
             this.survival = false;
+            this.rbn_req += 10;
             foreach (ArmorController ac in acs)
                 ac.Disable();
             BattleField.singleton.Kill(hitter, this.gameObject);
@@ -134,6 +161,6 @@ public class RoboState : BasicState {
         return;
     }
 
-    public virtual void GetUserPref() {}
-    public virtual void Configure() {}
+    public virtual void GetUserPref() { }
+    public virtual void Configure() { }
 }
