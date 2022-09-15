@@ -8,11 +8,16 @@ public class BattleNetworkManager : NetworkManager {
     public RMUC_UI.NetLobby net_lob;
     public RMUC_UI.MainMenu mainmenu;
     [Scene]
-    public string bat_field;
-
+    public string scn_field;
+    [Scene]
+    public string scn_lobby;
     /* used to transfer data when scene loads */
     [HideInInspector]
     public List<RMUC_UI.PlayerSync> playerSyncs = new List<RMUC_UI.PlayerSync>();
+
+    bool ScnCmp(string scn_runtime, string scn_asset) {
+        return scn_asset.Contains(scn_runtime);
+    }
 
     public override void OnStartServer() {
         base.OnStartServer();
@@ -50,9 +55,16 @@ public class BattleNetworkManager : NetworkManager {
     /* called on that client when a client is disconnected */
     public override void OnClientDisconnect() {
         base.OnClientDisconnect();
-        if (SceneManager.GetActiveScene().name == bat_field) {
+        Debug.Log("disconnect from server");
+        string scn_name = SceneManager.GetActiveScene().name;
+        if (ScnCmp(scn_name, scn_lobby)) {
             net_lob.playerSyncs.Callback -= net_lob.OnPlayerSyncChanged;
             mainmenu.SetPlayerOpt();
+        }
+        else if (ScnCmp(scn_name, scn_field)) {
+            SceneManager.LoadScene(scn_lobby);
+            this.net_lob = FindObjectOfType<RMUC_UI.NetLobby>();
+            this.mainmenu = FindObjectOfType<RMUC_UI.MainMenu>();
         }
     }
 
@@ -81,11 +93,6 @@ public class BattleNetworkManager : NetworkManager {
                 Debug.Log(playerSyncs[syncIdx].player_name + " takes " + robot.name);
             }
         }
-    }
-
-    public override void OnClientSceneChanged() {
-        base.OnClientSceneChanged();
-        
     }
 
 }

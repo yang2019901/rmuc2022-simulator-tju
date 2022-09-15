@@ -350,10 +350,12 @@ public class BuffManager : MonoBehaviour {
     void FixedUpdate() {
         foreach (Buff tmp in buffs.Values) {
             tmp.Update();
-            if (tmp.en)
-                robot.robo_buff.Add(tmp);
-            else
-                robot.robo_buff.Remove(tmp);
+            if (robot != null) {
+                if (tmp.en)
+                    robot.robo_buff.Add(tmp);
+                else
+                    robot.robo_buff.Remove(tmp);
+            }
         }
     }
 

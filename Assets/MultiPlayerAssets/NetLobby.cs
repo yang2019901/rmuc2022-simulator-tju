@@ -171,7 +171,7 @@ namespace RMUC_UI {
         public void OnStartGame(NetworkConnectionToClient conn, StartGameMessage mes) {
             this.playerSyncs.CopyTo(net_man.playerSyncs);
             if (mes.start)
-                net_man.ServerChangeScene(net_man.bat_field);
+                net_man.ServerChangeScene(net_man.scn_field);
             Debug.Log("change scene");
         }
 

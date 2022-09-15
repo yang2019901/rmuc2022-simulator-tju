@@ -86,6 +86,7 @@ namespace RMUC_UI {
             Menu_player_mode.SetActive(true);
         }
         public void SetPlayerOpt() {
+            Debug.Log("change to player opt");
             DisableAllMenu();
             Menu_player_opt.SetActive(true);
         }
@@ -148,7 +149,8 @@ namespace RMUC_UI {
                 net_man.StopClient();
             else
                 net_man.StopServer();
-            SetPlayerOpt();
+            // OnClientDisconnect will take care of loading scene
+            // SetPlayerOpt();
         }
 
         public void SetButtonReady() {

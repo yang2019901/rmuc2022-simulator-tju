@@ -24,5 +24,6 @@ public class Weapon : MonoBehaviour {
     public GameObject GetBullet() {
         return caliber == Caliber._17mm ? BulletPool.singleton.GetSmallBullet()
             : BulletPool.singleton.GetBigBullet();
+        
     }
 }
