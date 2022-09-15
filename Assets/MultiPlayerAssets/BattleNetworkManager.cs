@@ -19,6 +19,9 @@ public class BattleNetworkManager : NetworkManager {
         return scn_asset.Contains(scn_runtime);
     }
 
+    bool isScnLobby() => ScnCmp(SceneManager.GetActiveScene().name, scn_lobby);
+    bool isScnField() => ScnCmp(SceneManager.GetActiveScene().name, scn_field);
+
     public override void OnStartServer() {
         base.OnStartServer();
         NetworkServer.RegisterHandler<RMUC_UI.NetLobby.AvatarMessage>(net_lob.OnApplyAvatar);
@@ -27,7 +30,34 @@ public class BattleNetworkManager : NetworkManager {
         /* clear playerSyncs, otherwise, previous items are there */
         net_lob.playerSyncs.Reset();
     }
-   
+
+
+    /* called on that client when a client is disconnected */
+    public override void OnClientDisconnect() {
+        base.OnClientDisconnect();
+        Debug.Log("client: stop client");
+        if (isScnLobby()) {
+            net_lob.playerSyncs.Callback -= net_lob.OnPlayerSyncChanged;
+            mainmenu.SetPlayerOpt();
+        } else if (isScnField()) {
+            SceneManager.LoadScene(scn_lobby);
+            this.net_lob = FindObjectOfType<RMUC_UI.NetLobby>();
+            this.mainmenu = FindObjectOfType<RMUC_UI.MainMenu>();
+        }
+    }
+
+
+    public override void OnStopServer() {
+        base.OnStopServer();
+        Debug.Log("server: stop server");
+        if (isScnField()) {
+            SceneManager.LoadScene(scn_lobby);
+            this.net_lob = FindObjectOfType<RMUC_UI.NetLobby>();
+            this.mainmenu = FindObjectOfType<RMUC_UI.MainMenu>();
+        }
+    }
+
+
     /* called on server when a client is connected to server */
     /// <summary>
     /// here is to verify
@@ -42,9 +72,10 @@ public class BattleNetworkManager : NetworkManager {
     public override void OnServerDisconnect(NetworkConnectionToClient conn) {
         base.OnServerDisconnect(conn);
         Debug.Log("Hey, there! A client disconnects. ConnId: " + conn.connectionId);
-        net_lob.OnPlayerLeave(conn);
+        if (isScnLobby())
+            net_lob.OnPlayerLeave(conn);
     }
- 
+
     public override void OnClientConnect() {
         base.OnClientConnect();
         net_lob.playerSyncs.Callback += net_lob.OnPlayerSyncChanged;
@@ -52,45 +83,32 @@ public class BattleNetworkManager : NetworkManager {
         Debug.Log("register handler in net_man");
     }
 
-    /* called on that client when a client is disconnected */
-    public override void OnClientDisconnect() {
-        base.OnClientDisconnect();
-        Debug.Log("disconnect from server");
-        string scn_name = SceneManager.GetActiveScene().name;
-        if (ScnCmp(scn_name, scn_lobby)) {
-            net_lob.playerSyncs.Callback -= net_lob.OnPlayerSyncChanged;
-            mainmenu.SetPlayerOpt();
-        }
-        else if (ScnCmp(scn_name, scn_field)) {
-            SceneManager.LoadScene(scn_lobby);
-            this.net_lob = FindObjectOfType<RMUC_UI.NetLobby>();
-            this.mainmenu = FindObjectOfType<RMUC_UI.MainMenu>();
-        }
-    }
+
 
     public override void OnServerSceneChanged(string sceneName) {
         base.OnServerSceneChanged(sceneName);
         Debug.Log(sceneName + " has been loaded");
-
-        /* BattleField having been loaded, assign robot instance to avatar owner */
-        foreach (RoboState robot in BattleField.singleton.robo_red) {
-            int syncIdx = playerSyncs.FindIndex(i => i.ava_tag == robot.name);
-            if (syncIdx == -1)
-                Debug.Log("no player takes " + robot.name);
-            else {
-                NetworkConnectionToClient connToClient = NetworkServer.connections[playerSyncs[syncIdx].connId];
-                robot.GetComponent<NetworkIdentity>().AssignClientAuthority(connToClient);
-                Debug.Log(playerSyncs[syncIdx].player_name + " takes " + robot.name);
+        if (isScnField()) {
+            /* BattleField having been loaded, assign robot instance to avatar owner */
+            foreach (RoboState robot in BattleField.singleton.robo_red) {
+                int syncIdx = playerSyncs.FindIndex(i => i.ava_tag == robot.name);
+                if (syncIdx == -1)
+                    Debug.Log("no player takes " + robot.name);
+                else {
+                    NetworkConnectionToClient connToClient = NetworkServer.connections[playerSyncs[syncIdx].connId];
+                    robot.GetComponent<NetworkIdentity>().AssignClientAuthority(connToClient);
+                    Debug.Log(playerSyncs[syncIdx].player_name + " takes " + robot.name);
+                }
             }
-        }
-        foreach (RoboState robot in BattleField.singleton.robo_blue) {
-            int syncIdx = playerSyncs.FindIndex(i => i.ava_tag == robot.name);
-            if (syncIdx == -1)
-                Debug.Log("no player takes " + robot.name);
-            else {
-                NetworkConnectionToClient connToClient = NetworkServer.connections[playerSyncs[syncIdx].connId];
-                robot.GetComponent<NetworkIdentity>().AssignClientAuthority(connToClient);
-                Debug.Log(playerSyncs[syncIdx].player_name + " takes " + robot.name);
+            foreach (RoboState robot in BattleField.singleton.robo_blue) {
+                int syncIdx = playerSyncs.FindIndex(i => i.ava_tag == robot.name);
+                if (syncIdx == -1)
+                    Debug.Log("no player takes " + robot.name);
+                else {
+                    NetworkConnectionToClient connToClient = NetworkServer.connections[playerSyncs[syncIdx].connId];
+                    robot.GetComponent<NetworkIdentity>().AssignClientAuthority(connToClient);
+                    Debug.Log(playerSyncs[syncIdx].player_name + " takes " + robot.name);
+                }
             }
         }
     }

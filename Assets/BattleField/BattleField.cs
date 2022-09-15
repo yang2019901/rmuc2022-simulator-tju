@@ -29,7 +29,6 @@ public class BattleField : MonoBehaviour {
     void Awake() {
         if (singleton == null) {
             singleton = this;
-            DontDestroyOnLoad(this);
         } else
             Destroy(this);
         robo_all.AddRange(robo_red);
@@ -40,6 +39,7 @@ public class BattleField : MonoBehaviour {
     void Start() {
         t_start = Time.time;
         rune.Init();
+        Debug.Log("rune init");
     }
 
 

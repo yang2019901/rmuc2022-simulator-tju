@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Mirror;
 
 public class RoboState : BasicState {
     public bool survival = true;  // whether this robot survives
@@ -40,6 +40,7 @@ public class RoboState : BasicState {
     float timer_rev = 0f;
     int rbn_req;
     int rbn = 0;
+    // revive per second
     private void Revive() {
         if (this.survival) {
             if (B_rev != 0 && Time.time - timer_rev > 1 && currblood < maxblood) {
@@ -88,10 +89,8 @@ public class RoboState : BasicState {
         this.currblood = this.maxblood;
     }
     public virtual void Update() {
-        if (Time.time - timer_rev >= 1f) {
-            timer_rev = Time.time;
+        if (NetworkServer.active)
             Revive();
-        }
     }
 
     ArmorController[] acs;
