@@ -37,23 +37,24 @@ namespace RMUC_UI {
         }
 
         public void Push(RoboSync robo_sync) {
-            if (this.currblood != robo_sync.currblood) {
-                bld_bar.SetBlood(((float)robo_sync.currblood) / robo_sync.maxblood);
+            if (this.ava_stat != robo_sync.ava_stat)
+                img_ava.sprite = imgs_ava[(int)robo_sync.ava_stat];
+            if (robo_sync.has_blood && this.bld_bar != null) {
+                if (this.currblood != robo_sync.currblood) {
+                    bld_bar.SetBlood(((float)robo_sync.currblood) / robo_sync.maxblood);
+                }
+                if (this.maxblood != robo_sync.maxblood) {
+                    int idx = MaxbldToIdx(robo_sync.maxblood);
+                    bld_bar.SetMask(bld_masks[idx]);
+                }
             }
-            if (this.maxblood != robo_sync.maxblood) {
-                int idx = MaxbldToIdx(robo_sync.maxblood);
-                bld_bar.GetComponent<Image>().sprite = bld_masks[idx];
-            }
-            if (img_lv != null) {
+            if (robo_sync.has_level && img_lv != null) {
                 if (this.ava_stat != robo_sync.ava_stat || this.level != robo_sync.level) {
                     this.img_lv.sprite = robo_sync.ava_stat != AvaStat.Dead ? imgs_lv[robo_sync.level] 
                         : imgs_lv_dead[robo_sync.level];
                 }
-                if (this.ava_stat != robo_sync.ava_stat)
-                    img_ava.sprite = imgs_ava[(int)robo_sync.ava_stat];
-
             }
-            if (this.bull_num != robo_sync.bull_num) {
+            if (robo_sync.has_bull && this.bull_num != robo_sync.bull_num) {
                 if (robo_sync.bull_num == 0)
                     txt_bullnum.text = "<color=#FF0707>0</color>";
                 else
@@ -64,7 +65,7 @@ namespace RMUC_UI {
             this.ava_stat = robo_sync.ava_stat;
             this.level = robo_sync.level;
             this.bull_num = robo_sync.bull_num;
-        }        
+        }
         
 
         int MaxbldToIdx(int maxblood) {

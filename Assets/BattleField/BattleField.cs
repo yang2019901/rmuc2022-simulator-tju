@@ -6,6 +6,7 @@ using Mirror;
 public class BattleField : MonoBehaviour {
     public static BattleField singleton { get; private set; }
 
+    public BattleUI bat_ui;
     public OutpostState outpost_blue;
     public OutpostState outpost_red;
     public BaseState base_blue;
@@ -16,7 +17,6 @@ public class BattleField : MonoBehaviour {
     public RoboState[] robo_blue;
     public List<RoboState> robo_all = new List<RoboState>();
 
-    [Header("boundary")]
     private int x_half_length = 16;
     private int y_half_length = 10;
     private int z_half_length = 10;

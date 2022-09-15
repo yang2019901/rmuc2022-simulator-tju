@@ -29,10 +29,13 @@ public struct RoboSync {
     /* survival, dead, defence up or invulnerable */
     public RMUC_UI.AvaStat ava_stat;
     /* set blood bar and armor blinking */
+    public bool has_blood;
     public int currblood;
     public int maxblood;
     /* set RMUC_UI.AvaBatStat */
+    public bool has_level;
     public int level;
+    public bool has_bull;
     public int bull_num;
 }
 
@@ -56,6 +59,7 @@ public class SyncNode : NetworkBehaviour {
 
     /* Note: SyncList can and only can be modify in Server */
     private readonly SyncList<RoboSync> robo_sync_all = new SyncList<RoboSync>();
+
 
     /****************** alias ****************/
     Rune rune;
@@ -113,6 +117,7 @@ public class SyncNode : NetworkBehaviour {
             for (int i = 0; i < robo_all.Count; i++) {
                 robo_all[i].Push(robo_sync_all[i]);
             }
+            BattleField.singleton.bat_ui.Push(robo_sync_all);
         }
    }
 }

@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BloodBar : MonoBehaviour {
     [Header("blood bar")]
+    public GameObject mask;
     public GameObject bar_blood;
     public RectTransform bld_full;   // full blood's pixel position
     public RectTransform bld_empty;     // empty blood's pixel position
@@ -35,6 +37,10 @@ public class BloodBar : MonoBehaviour {
             bar_golden.SetActive(false);
         if (bar_green != null)
             bar_green.SetActive(false);
+    }
+
+    public void SetMask(Sprite newmask) {
+        this.mask.GetComponent<Image>().sprite = newmask;
     }
 
     // /* add a golden cover */

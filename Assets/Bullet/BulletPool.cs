@@ -76,8 +76,8 @@ public class BulletPool : NetworkBehaviour {
             Destroy(bullet.GetComponent<Rigidbody>());
             Destroy(bullet.GetComponent<Bullet>());
             Destroy(bullet.GetComponent<NetworkTransform>());
-            Destroy(bullet.GetComponent<NetworkIdentity>());
             Destroy(bullet.GetComponent<Collider>());
+            // Destroy(bullet.GetComponent<NetworkIdentity>());
             return;
         }
         NetworkServer.UnSpawn(bullet);

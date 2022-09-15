@@ -30,7 +30,6 @@ public class ArmorController : MonoBehaviour {
             return;
         /* Decide whether this is a successful hit */
         Vector3 v_rel_local = this.transform.InverseTransformVector(collision.relativeVelocity);
-        Debug.Log(v_rel_local);
         /* only bullet coms from outside can be detect, aka, velocity_vertical > 0 */
         /* also, velocity_vertical shouldn't be too small. Otherwise, it's a bad hit */
         if (this.gameObject.name.ToLower().Contains("triangle")) {
