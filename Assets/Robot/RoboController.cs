@@ -42,6 +42,7 @@ public class RoboController : NetworkBehaviour {
         base.OnStopClient();
         if (hasAuthority) {
             Camera.main.transform.parent = null;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 

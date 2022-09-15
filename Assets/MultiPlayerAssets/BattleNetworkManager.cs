@@ -33,16 +33,15 @@ public class BattleNetworkManager : NetworkManager {
 
 
     /* called on that client when a client is disconnected */
-    public override void OnClientDisconnect() {
-        base.OnClientDisconnect();
+    public override void OnStopClient() {
+        base.OnStopClient();
         Debug.Log("client: stop client");
         if (isScnLobby()) {
             net_lob.playerSyncs.Callback -= net_lob.OnPlayerSyncChanged;
             mainmenu.SetPlayerOpt();
         } else if (isScnField()) {
             SceneManager.LoadScene(scn_lobby);
-            this.net_lob = FindObjectOfType<RMUC_UI.NetLobby>();
-            this.mainmenu = FindObjectOfType<RMUC_UI.MainMenu>();
+            Destroy(this.gameObject);
         }
     }
 
@@ -52,8 +51,7 @@ public class BattleNetworkManager : NetworkManager {
         Debug.Log("server: stop server");
         if (isScnField()) {
             SceneManager.LoadScene(scn_lobby);
-            this.net_lob = FindObjectOfType<RMUC_UI.NetLobby>();
-            this.mainmenu = FindObjectOfType<RMUC_UI.MainMenu>();
+            Destroy(this.gameObject);
         }
     }
 
