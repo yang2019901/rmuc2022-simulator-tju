@@ -52,7 +52,8 @@ public class RoboController : NetworkBehaviour {
         Cursor.lockState = CursorLockMode.Locked;
         robo_state = GetComponent<RoboState>();
         weapon = GetComponent<Weapon>();
-        yaw_ang = yaw.eulerAngles.y;
+        if (yaw != null)
+            yaw_ang = yaw.eulerAngles.y;
     }
 
     void Update() {

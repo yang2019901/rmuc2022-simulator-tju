@@ -53,7 +53,7 @@ public class BaseState : TowerState {
         tmp.currblood = this.currblood;
         tmp.survival = this.survival;
         tmp.shield = this.shield;
-        tmp.invincible = this.invul;
+        tmp.invul = this.invul;
         return tmp;
     }
 
@@ -65,7 +65,7 @@ public class BaseState : TowerState {
         }
         this.survival = base_sync.survival;
         this.shield = base_sync.shield;
-        this.invul = base_sync.invincible;
+        this.invul = base_sync.invul;
     }
 
     public void SetInvulLight(bool on) {

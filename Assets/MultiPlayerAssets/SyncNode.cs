@@ -22,7 +22,7 @@ public struct OutpostSync {
 
 public struct BaseSync {
     public bool survival;
-    public bool invincible;
+    public bool invul;
     public int shield;
     /* set blood bar and armor blinking */
     public int currblood;
@@ -40,6 +40,17 @@ public struct RoboSync {
     public int level;
     public bool has_bull;
     public int bull_num;
+}
+
+public struct UISync {
+    public SyncList<RoboSync> robots;
+    public BaseSync basebar_r;
+    public BaseSync basebar_b;
+    public UISync(SyncList<RoboSync> roboSyncs, BaseSync base_sync_red, BaseSync base_sync_blue) {
+        this.robots = roboSyncs;
+        this.basebar_r = base_sync_red;
+        this.basebar_b = base_sync_blue;
+    }
 }
 
 public class SyncNode : NetworkBehaviour {
@@ -120,7 +131,7 @@ public class SyncNode : NetworkBehaviour {
             for (int i = 0; i < robo_all.Count; i++) {
                 robo_all[i].Push(robo_sync_all[i]);
             }
-            BattleField.singleton.bat_ui.Push(robo_sync_all);
+            BattleField.singleton.bat_ui.Push(new UISync(robo_sync_all, base_sync_red, base_sync_blue));
         }
    }
 }
