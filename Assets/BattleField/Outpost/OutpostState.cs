@@ -41,14 +41,20 @@ public class OutpostState : TowerState
     }
 
     public void Push(OutpostSync outpost_sync) {
-        if (this.invul)
-            foreach (ArmorController ac in acs)
-                ac.SetLight(AssetManager.singleton.light_purple);
-        else if (this.currblood > outpost_sync.currblood) {
+        /* in client PC, Start() will set armors to purple */
+        if (this.currblood > outpost_sync.currblood) {
             this.currblood = outpost_sync.currblood;
             this.SetBloodBars();
-            StartCoroutine(this.ArmorsBlink(0.1f));
+            if (!outpost_sync.survival)
+                foreach (ArmorController ac in acs)
+                    ac.Disable();
+            else
+                StartCoroutine(this.ArmorsBlink(0.1f));
         }
+        if (this.survival && !outpost_sync.survival) {
+            BattleField.singleton.Kill(BattleField.singleton.gameObject, this.gameObject);
+        }
+        /* update local survival. Otherwise, negedge of survival won't be detected */
         this.survival = outpost_sync.survival;
         this.GetComponent<Outpost>().armors_outpost.localEulerAngles = outpost_sync.rot;
     }

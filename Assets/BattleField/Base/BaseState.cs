@@ -61,8 +61,14 @@ public class BaseState : TowerState {
         if (this.currblood > base_sync.currblood) {
             this.currblood = base_sync.currblood;
             this.SetBloodBars();
-            StartCoroutine(this.ArmorsBlink(0.1f));
+            if (!base_sync.survival)
+                foreach (ArmorController ac in acs)
+                    ac.Disable();
+            else
+                StartCoroutine(this.ArmorsBlink(0.1f));
         }
+        if (this.invul && !base_sync.invul)
+            SetInvulLight(false);
         this.survival = base_sync.survival;
         this.shield = base_sync.shield;
         this.invul = base_sync.invul;

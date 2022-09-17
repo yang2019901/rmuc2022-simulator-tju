@@ -158,7 +158,6 @@ public class RoboState : BasicState {
     }
 
     public virtual void Push(RoboSync robo_sync) {
-        this.survival = robo_sync.bat_stat!=BatStat.Dead;
         if (!this.survival && robo_sync.bat_stat!=BatStat.Dead) {
             Debug.Log(string.Format("{0} reborns", this.gameObject.name));
             foreach (ArmorController ac in acs)
@@ -168,12 +167,13 @@ public class RoboState : BasicState {
         if (this.currblood > robo_sync.currblood) {
             this.currblood = robo_sync.currblood;
             this.SetBloodBars();
-            if (!this.survival)
+            if (robo_sync.bat_stat == BatStat.Dead)
                 foreach (ArmorController ac in acs)
                     ac.Disable();
             else
                 StartCoroutine(this.ArmorsBlink(0.1f));
         }
+        this.survival = robo_sync.bat_stat!=BatStat.Dead;
         return;
     }
 
