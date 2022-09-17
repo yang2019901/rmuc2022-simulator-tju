@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+// for robot, "Defensive" means B_dfc > 0; for base, "Defensive" means shield > 0;
+// for outpost, it is illegal
+public enum BatStat { Dead = 0, Survival = 1, Defensive = 2, Invulnerable = 3 };
 namespace RMUC_UI {
-    public enum AvaStat { Dead = 0, Survival = 1, Defensive = 2, Invulnerable = 3 };
 
     public class AvaBatStat : MonoBehaviour {
         public BloodBar bld_bar;
@@ -19,7 +21,7 @@ namespace RMUC_UI {
         [Header("dead-survival-defensive-invulnerable")]
         public Sprite[] imgs_ava;
 
-        AvaStat ava_stat;
+        BatStat bat_stat;
         int currblood = -1;
         int maxblood = -1;
         int level = -1;
@@ -37,8 +39,8 @@ namespace RMUC_UI {
         }
 
         public void Push(RoboSync robo_sync) {
-            if (this.ava_stat != robo_sync.ava_stat)
-                img_ava.sprite = imgs_ava[(int)robo_sync.ava_stat];
+            if (this.bat_stat != robo_sync.bat_stat)
+                img_ava.sprite = imgs_ava[(int)robo_sync.bat_stat];
             if (robo_sync.has_blood && this.bld_bar != null) {
                 if (this.currblood != robo_sync.currblood) {
                     bld_bar.SetBlood(((float)robo_sync.currblood) / robo_sync.maxblood);
@@ -49,8 +51,8 @@ namespace RMUC_UI {
                 }
             }
             if (robo_sync.has_level && img_lv != null) {
-                if (this.ava_stat != robo_sync.ava_stat || this.level != robo_sync.level) {
-                    this.img_lv.sprite = robo_sync.ava_stat != AvaStat.Dead ? imgs_lv[robo_sync.level] 
+                if (this.bat_stat != robo_sync.bat_stat || this.level != robo_sync.level) {
+                    this.img_lv.sprite = robo_sync.bat_stat != BatStat.Dead ? imgs_lv[robo_sync.level] 
                         : imgs_lv_dead[robo_sync.level];
                 }
             }
@@ -62,7 +64,7 @@ namespace RMUC_UI {
             }
             this.maxblood = robo_sync.maxblood;
             this.currblood = robo_sync.currblood;
-            this.ava_stat = robo_sync.ava_stat;
+            this.bat_stat = robo_sync.bat_stat;
             this.level = robo_sync.level;
             this.bull_num = robo_sync.bull_num;
         }

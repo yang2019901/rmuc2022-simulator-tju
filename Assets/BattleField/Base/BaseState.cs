@@ -4,13 +4,22 @@ using UnityEngine;
 
 public class BaseState : TowerState {
     public bool buff_active;
-    private float last_snipe = -10f;
+    public bool invul;  // whether base is invulnerable
+    public int shield;
+    float last_snipe = -10f;
+
+
     public override void Start() {
         base.Start();
-        buff_active = true;
+        this.buff_active = true;
+        this.shield = 0;
+        this.invul = true;
+        SetInvulLight(true);
     }
 
     public override void TakeDamage(GameObject hitter, GameObject armor_hit, GameObject bullet) {
+        if (this.invul)
+            return ;
         if (hitter.name.ToLower().Contains("hero")) {
             HeroState hero = hitter.GetComponent<HeroState>();
             if (hero == null)
@@ -33,12 +42,18 @@ public class BaseState : TowerState {
                 base.TakeDamage(hitter, armor_hit, bullet);
         } else
             base.TakeDamage(hitter, armor_hit, bullet);
+        if (shield + currblood >= maxblood) {
+            shield = shield + currblood - maxblood;
+            currblood = maxblood;
+        }
     }
 
     public BaseSync Pull() {
         BaseSync tmp = new BaseSync();
         tmp.currblood = this.currblood;
         tmp.survival = this.survival;
+        tmp.shield = this.shield;
+        tmp.invincible = this.invul;
         return tmp;
     }
 
@@ -49,10 +64,16 @@ public class BaseState : TowerState {
             StartCoroutine(this.ArmorsBlink(0.1f));
         }
         this.survival = base_sync.survival;
+        this.shield = base_sync.shield;
+        this.invul = base_sync.invincible;
     }
 
-    // Update is called once per frame
-    void Update() {
-
-    }
+    public void SetInvulLight(bool on) {
+        if (on)
+            foreach (ArmorController ac in acs)
+                ac.SetLight(AssetManager.singleton.light_purple);
+        else
+            foreach (ArmorController ac in acs)
+                ac.SetLight(true);
+    } 
 }

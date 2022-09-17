@@ -15,19 +15,22 @@ public struct OutpostSync {
     public Vector3 rot;
     /* set base animation */
     public bool survival;
+    public bool invul;
     /* set blood bar and armor blinking */
     public int currblood;
 }
 
 public struct BaseSync {
     public bool survival;
+    public bool invincible;
+    public int shield;
     /* set blood bar and armor blinking */
     public int currblood;
 }
 
 public struct RoboSync {
     /* survival, dead, defence up or invulnerable */
-    public RMUC_UI.AvaStat ava_stat;
+    public BatStat bat_stat;
     /* set blood bar and armor blinking */
     public bool has_blood;
     public int currblood;

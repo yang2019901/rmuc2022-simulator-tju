@@ -11,7 +11,7 @@ public class TowerState : BasicState {
     /* for sync */
     public int currblood;
     /* Cache */
-    private ArmorController[] acs;
+    protected ArmorController[] acs;
 
     public virtual void Start() {
         currblood = maxblood;

@@ -52,11 +52,17 @@ public class BattleField : MonoBehaviour {
 
     public void Kill(GameObject hitter, GameObject hittee) {
         Debug.Log(hitter.name + " slays " + hittee.name);
-        if (hittee == outpost_blue.gameObject)
+        if (hittee == outpost_blue.gameObject) {
             base_blue.GetComponent<Base>().OpenShells(true);
+            base_blue.invul = false;
+            base_blue.SetInvulLight(false);
+            // base_blue.shield = 500;
+        }
         else if (hittee == outpost_red.gameObject) {
-            Debug.Log("base red open shells");
             base_red.GetComponent<Base>().OpenShells(true);
+            base_red.invul = false;
+            base_blue.SetInvulLight(false);
+            // base_blue.shield = 500;
         }
     }
 

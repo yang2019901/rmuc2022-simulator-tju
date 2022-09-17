@@ -6,16 +6,16 @@ public class Outpost : MonoBehaviour
 {
     public Transform armors_outpost;
     
-    private TowerState _state;
+    private OutpostState _state;
 
     void Start()
     {
-        _state = GetComponent<TowerState>();
+        _state = GetComponent<OutpostState>();
     }
 
     void FixedUpdate()
     {
-        if (_state.survival)
+        if (!_state.invul && _state.survival)
         {
             OutpostSpin();
         }

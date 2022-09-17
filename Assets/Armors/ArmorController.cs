@@ -54,6 +54,12 @@ public class ArmorController : MonoBehaviour {
         return;
     }
 
+    public void SetLight(Material mat) {
+        foreach (GameObject tmp in light_bars)
+            tmp.GetComponent<Renderer>().sharedMaterial = mat;
+        return;
+    }
+
     public void Enable() {
         this.enable = true;
         this.SetLight(true);

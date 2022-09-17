@@ -11,6 +11,7 @@ public class AssetManager : MonoBehaviour {
 
     public Material light_red;
     public Material light_blue;
+    public Material light_purple;
     public Material light_off;
 
     public TextAsset f_infantry_chassis;

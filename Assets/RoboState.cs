@@ -46,6 +46,7 @@ public class RoboState : BasicState {
             if (B_rev != 0 && Time.time - timer_rev > 1 && currblood < maxblood) {
                 currblood += Mathf.RoundToInt(maxblood * B_rev);
                 currblood = currblood < maxblood ? currblood : maxblood;
+                SetBloodBars();
                 timer_rev = Time.time;
             }
         } else {
@@ -61,9 +62,18 @@ public class RoboState : BasicState {
     }
     IEnumerator Reborn() {
         rbn = 0;
+        /* by rule, recover currblood to 20% */
+        this.currblood = maxblood / 5;
         this.survival = true;
+        /* set host's visual effect */
+        Debug.Log(string.Format("{0} reborns", this.gameObject.name));
+        foreach (ArmorController ac in acs)
+            ac.Enable();
+        SetBloodBars();
+        /* delay 10 sec invincible */
         this.B_dfc = 1;
         yield return new WaitForSeconds(10);
+        /* cancel invincible buff */
         UpdateBuff();
         yield break;
     }
@@ -137,18 +147,24 @@ public class RoboState : BasicState {
         tmp.currblood = this.currblood;
         tmp.maxblood = this.maxblood;
         if (!this.survival)
-            tmp.ava_stat = RMUC_UI.AvaStat.Dead;
+            tmp.bat_stat = BatStat.Dead;
         else if (Mathf.Approximately(this.B_dfc, 1))
-            tmp.ava_stat = RMUC_UI.AvaStat.Invulnerable;
+            tmp.bat_stat = BatStat.Invulnerable;
         else if (!Mathf.Approximately(this.B_dfc, 0))
-            tmp.ava_stat = RMUC_UI.AvaStat.Defensive;
+            tmp.bat_stat = BatStat.Defensive;
         else
-            tmp.ava_stat = RMUC_UI.AvaStat.Survival;
+            tmp.bat_stat = BatStat.Survival;
         return tmp;
     }
 
     public virtual void Push(RoboSync robo_sync) {
-        this.survival = robo_sync.ava_stat != RMUC_UI.AvaStat.Dead;
+        this.survival = robo_sync.bat_stat!=BatStat.Dead;
+        if (!this.survival && robo_sync.bat_stat!=BatStat.Dead) {
+            Debug.Log(string.Format("{0} reborns", this.gameObject.name));
+            foreach (ArmorController ac in acs)
+                ac.Enable();
+            SetBloodBars();
+        }
         if (this.currblood > robo_sync.currblood) {
             this.currblood = robo_sync.currblood;
             this.SetBloodBars();

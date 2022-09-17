@@ -11,7 +11,7 @@ public class EngineerState : RoboState
 {
     public override RoboSync Pull() {
         RoboSync rs = base.Pull();
-        // Debug.Log("actual survival: " + this.survival + " pull survival: " + rs.ava_stat);
+        // Debug.Log("actual survival: " + this.survival + " pull survival: " + rs.bat_stat);
         rs.has_blood = true;
         rs.has_bull = false;
         rs.has_level = false;

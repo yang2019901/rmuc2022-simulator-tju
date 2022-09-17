@@ -42,6 +42,7 @@ public class B_Revive : Buff {
         /* add buff - Revive */
         if (!en) {
             robot.li_B_rev.Add(0.05f);
+            robot.li_B_rbn.Add(2);
             robot.UpdateBuff();
         }
         base.Enable(col);
@@ -52,6 +53,7 @@ public class B_Revive : Buff {
         if (!en)
             return;
         robot.li_B_rev.Remove(0.05f);
+        robot.li_B_rbn.Remove(2);
         robot.UpdateBuff();
         en = false;
     }
