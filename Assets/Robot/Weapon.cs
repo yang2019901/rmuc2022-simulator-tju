@@ -6,9 +6,9 @@ public enum Caliber {_17mm, _42mm}
 
 public class Weapon : MonoBehaviour {
     /* turret params */
-    public int shoot_speed;
-    public int cool_down;
-    public int heat_limit;
+    public int bullspd;
+    public int cooldown;
+    public int maxheat;
     private int heat;
     Caliber caliber;
 

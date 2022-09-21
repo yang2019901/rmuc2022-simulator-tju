@@ -1,100 +1,100 @@
 {
     "17mm": {
         "init_mode": {
-            "heat_limit": 50,
-            "cool_down": 10,
-            "shoot_speed": 15
+            "maxheat": 50,
+            "cooldown": 10,
+            "bullspd": 15
         },
-        "heat_limit++": {
+        "maxheat++": {
             "level1": {
-                "heat_limit": 150,
-                "cool_down": 15,
-                "shoot_speed": 15
+                "maxheat": 150,
+                "cooldown": 15,
+                "bullspd": 15
             },
             "level2": {
-                "heat_limit": 280,
-                "cool_down": 25,
-                "shoot_speed": 15
+                "maxheat": 280,
+                "cooldown": 25,
+                "bullspd": 15
             },
             "level3": {
-                "heat_limit": 400,
-                "cool_down": 35,
-                "shoot_speed": 15
+                "maxheat": 400,
+                "cooldown": 35,
+                "bullspd": 15
             }
         },
-        "cool_down++": {
+        "cooldown++": {
             "level1": {
-                "heat_limit": 50,
-                "cool_down": 40,
-                "shoot_speed": 15
+                "maxheat": 50,
+                "cooldown": 40,
+                "bullspd": 15
             },
             "level2": {
-                "heat_limit": 100,
-                "cool_down": 60,
-                "shoot_speed": 18
+                "maxheat": 100,
+                "cooldown": 60,
+                "bullspd": 18
             },
             "level3": {
-                "heat_limit": 150,
-                "cool_down": 80,
-                "shoot_speed": 18
+                "maxheat": 150,
+                "cooldown": 80,
+                "bullspd": 18
             }
         },
-        "shoot_speed++": {
+        "bullspd++": {
             "level1": {
-                "heat_limit": 75,
-                "cool_down": 15,
-                "shoot_speed": 30
+                "maxheat": 75,
+                "cooldown": 15,
+                "bullspd": 30
             },
             "level2": {
-                "heat_limit": 150,
-                "cool_down": 25,
-                "shoot_speed": 30
+                "maxheat": 150,
+                "cooldown": 25,
+                "bullspd": 30
             },
             "level3": {
-                "heat_limit": 200,
-                "cool_down": 35,
-                "shoot_speed": 30
+                "maxheat": 200,
+                "cooldown": 35,
+                "bullspd": 30
             }
         }
     },
     "42mm": {
         "init_mode": {
-            "heat_limit": 100,
-            "cool_down": 20,
-            "shoot_speed": 10
+            "maxheat": 100,
+            "cooldown": 20,
+            "bullspd": 10
         },
-        "heat_limit++": {
+        "maxheat++": {
             "level1": {
-                "heat_limit": 200,
-                "cool_down": 40,
-                "shoot_speed": 10
+                "maxheat": 200,
+                "cooldown": 40,
+                "bullspd": 10
             },
             "level2": {
-                "heat_limit": 350,
-                "cool_down": 80,
-                "shoot_speed": 10
+                "maxheat": 350,
+                "cooldown": 80,
+                "bullspd": 10
             },
             "level3": {
-                "heat_limit": 500,
-                "cool_down": 120,
-                "shoot_speed": 10
+                "maxheat": 500,
+                "cooldown": 120,
+                "bullspd": 10
             }
         },
-        "shoot_speed++": {
+        "bullspd++": {
             "level1": {
-                "heat_limit": 100,
-                "cool_down": 20,
-                "shoot_speed": 16
+                "maxheat": 100,
+                "cooldown": 20,
+                "bullspd": 16
             },
             "level2": {
-                "heat_limit": 200,
-                "cool_down": 60,
-                "shoot_speed": 16
+                "maxheat": 200,
+                "cooldown": 60,
+                "bullspd": 16
             },
             "level3": {
-                "heat_limit": 300,
-                "cool_down": 100,
-                "shoot_speed": 16
+                "maxheat": 300,
+                "cooldown": 100,
+                "bullspd": 16
             }
         }
     }

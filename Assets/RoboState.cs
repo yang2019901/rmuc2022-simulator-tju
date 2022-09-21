@@ -11,9 +11,9 @@ public class RoboState : BasicState {
      */
 
     /* weapon params */
-    public int heat_limit;
-    public int cool_down;
-    public int shoot_speed;
+    public int maxheat;
+    public int cooldown;
+    public int bullspd;
     /* chassis params */
     public int power;
     public int maxblood;
@@ -24,7 +24,7 @@ public class RoboState : BasicState {
     /* damage = damage * (1 + hitter.B_atk) * max(1-hittee.B_dfc, 0) */
     public float B_atk;
     public float B_dfc;
-    /* heat -= cool_down * B_cd */
+    /* heat -= cooldown * B_cd */
     public float B_cd;
     public float B_pow;
     public float B_rev;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class HeroState : RoboState {
     public bool sniping = false;
     private string chassis_pref; // chassis preference: "power++", "maxblood++", "init_mode"
-    private string weapon_pref; // weapon preference: "shoot_speed++" "heat_limit++"
+    private string weapon_pref; // weapon preference: "bullspd++" "maxheat++"
     private string level_s; // level info: "level1", "level2", "level3"
     private int level;
     private int bull_num;
@@ -14,7 +14,7 @@ public class HeroState : RoboState {
     public override void GetUserPref() {
         // TODO
         this.chassis_pref = "power++";
-        this.weapon_pref = "shoot_speed++";
+        this.weapon_pref = "bullspd++";
         this.level_s = "level1";
     }
 
@@ -29,9 +29,9 @@ public class HeroState : RoboState {
         tmp = AssetManager.singleton.weapon["42mm"][this.weapon_pref];
         if (this.weapon_pref != "init_mode")
             tmp = tmp[this.level_s];
-        this.heat_limit = tmp["heat_limit"].ToObject<int>();
-        this.cool_down = tmp["cool_down"].ToObject<int>();
-        this.shoot_speed = tmp["shoot_speed"].ToObject<int>();
+        this.maxheat = tmp["maxheat"].ToObject<int>();
+        this.cooldown = tmp["cooldown"].ToObject<int>();
+        this.bullspd = tmp["bullspd"].ToObject<int>();
     }
 
     public override RoboSync Pull() {
