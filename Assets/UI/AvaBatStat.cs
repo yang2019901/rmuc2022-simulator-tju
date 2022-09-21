@@ -34,8 +34,21 @@ namespace RMUC_UI {
                 img_ava.gameObject.SetActive(true);
             if (txt_bullnum != null)
                 txt_bullnum.gameObject.SetActive(true);
-            if (bld_bar != null)
+            if (bld_bar != null) {
                 bld_bar.gameObject.SetActive(true);
+                bld_bar.Reset();
+            }
+        }
+
+
+        public void Push(OutpostSync otpt_sync) {
+            /* no need to set survival, because it won't make difference to outpost UI */
+            if (otpt_sync.currblood != this.currblood) {
+                bld_bar.SetBlood(otpt_sync.currblood / 1500f);
+                this.currblood = otpt_sync.currblood;
+                Debug.Log("outpost currblood: " + this.currblood);
+            }
+            bld_bar.SetInvulState(otpt_sync.invul);
         }
 
         public void Push(RoboSync robo_sync) {
@@ -47,7 +60,10 @@ namespace RMUC_UI {
                 }
                 if (this.maxblood != robo_sync.maxblood) {
                     int idx = MaxbldToIdx(robo_sync.maxblood);
-                    bld_bar.SetMask(bld_masks[idx]);
+                    if (bld_masks.Length > idx)
+                        bld_bar.SetMask(bld_masks[idx]);
+                    else
+                        Debug.Log("No alternative mask");
                 }
             }
             if (robo_sync.has_level && img_lv != null) {
@@ -68,8 +84,6 @@ namespace RMUC_UI {
             this.level = robo_sync.level;
             this.bull_num = robo_sync.bull_num;
         }
-        
-
         int MaxbldToIdx(int maxblood) {
             return maxblood <= 500 ? maxblood/50 - 1 : 10; 
         }

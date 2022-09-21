@@ -44,12 +44,16 @@ public struct RoboSync {
 
 public struct UISync {
     public SyncList<RoboSync> robots;
-    public BaseSync basebar_r;
-    public BaseSync basebar_b;
-    public UISync(SyncList<RoboSync> roboSyncs, BaseSync base_sync_red, BaseSync base_sync_blue) {
+    public BaseSync bs_r;
+    public BaseSync bs_b;
+    public OutpostSync os_r;
+    public OutpostSync os_b;
+    public UISync(SyncList<RoboSync> roboSyncs, BaseSync bs_r, BaseSync bs_b, OutpostSync os_r, OutpostSync os_b) {
         this.robots = roboSyncs;
-        this.basebar_r = base_sync_red;
-        this.basebar_b = base_sync_blue;
+        this.bs_r = bs_r;
+        this.bs_b = bs_b;
+        this.os_r = os_r;
+        this.os_b = os_b;
     }
 }
 
@@ -131,7 +135,8 @@ public class SyncNode : NetworkBehaviour {
             for (int i = 0; i < robo_all.Count; i++) {
                 robo_all[i].Push(robo_sync_all[i]);
             }
-            BattleField.singleton.bat_ui.Push(new UISync(robo_sync_all, base_sync_red, base_sync_blue));
+            BattleField.singleton.bat_ui.Push(new UISync(robo_sync_all, base_sync_red, base_sync_blue, 
+                otpt_sync_red, otpt_sync_blue));
         }
    }
 }
