@@ -19,8 +19,8 @@ public class BattleNetworkManager : NetworkManager {
         return scn_asset.Contains(scn_runtime);
     }
 
-    bool isScnLobby() => ScnCmp(SceneManager.GetActiveScene().name, scn_lobby);
-    bool isScnField() => ScnCmp(SceneManager.GetActiveScene().name, scn_field);
+    public bool isScnLobby() => ScnCmp(SceneManager.GetActiveScene().name, scn_lobby);
+    public bool isScnField() => ScnCmp(SceneManager.GetActiveScene().name, scn_field);
 
     public override void OnStartServer() {
         base.OnStartServer();

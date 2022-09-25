@@ -7,7 +7,14 @@ public class InfantryState : RoboState {
     private string weapon_pref; // weapon preference: "bullspd++" "maxheat++" "cooldown++"
     private string level_s; // level info: "level1", "level2", "level3"
     private int level;
-    private int bull_num;
+    Weapon wpn;
+
+    public override void Start() {
+        base.Start();
+        wpn = GetComponent<Weapon>();
+        wpn.Reset();
+    }
+
 
     /* get user's preference of chassis and weapon from GUI */
     public override void GetUserPref() {
@@ -36,16 +43,10 @@ public class InfantryState : RoboState {
     public override RoboSync Pull() {
         RoboSync rs = base.Pull();
         rs.has_blood = true;
-        rs.has_bull = true;
+        rs.has_wpn = true;
         rs.has_level = true;
         rs.level = this.level;
-        rs.bull_num = this.bull_num;
+        rs.bull_num = wpn.bull_num;
         return rs;
-    }
-
-    public override void Push(RoboSync robo_sync) {
-        base.Push(robo_sync);
-        this.level = robo_sync.level;
-        this.bull_num = robo_sync.bull_num;
     }
 }

@@ -13,7 +13,7 @@ public class EngineerState : RoboState
         RoboSync rs = base.Pull();
         // Debug.Log("actual survival: " + this.survival + " pull survival: " + rs.bat_stat);
         rs.has_blood = true;
-        rs.has_bull = false;
+        rs.has_wpn = false;
         rs.has_level = false;
         rs.maxblood = this.maxblood;
         return rs;

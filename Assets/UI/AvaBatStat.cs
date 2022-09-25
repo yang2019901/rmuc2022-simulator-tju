@@ -72,11 +72,12 @@ namespace RMUC_UI {
                         : imgs_lv_dead[robo_sync.level];
                 }
             }
-            if (robo_sync.has_bull && this.bull_num != robo_sync.bull_num) {
-                if (robo_sync.bull_num == 0)
-                    txt_bullnum.text = "<color=#FF0707>0</color>";
-                else
-                    txt_bullnum.text = robo_sync.bull_num.ToString();
+            if (robo_sync.has_wpn) {
+                if (this.bull_num != robo_sync.bull_num)
+                    if (robo_sync.bull_num == 0)
+                        txt_bullnum.text = "<color=#FF0707>0</color>";
+                    else
+                        txt_bullnum.text = robo_sync.bull_num.ToString();
             }
             this.maxblood = robo_sync.maxblood;
             this.currblood = robo_sync.currblood;

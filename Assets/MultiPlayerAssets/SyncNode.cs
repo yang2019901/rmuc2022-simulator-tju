@@ -38,8 +38,9 @@ public struct RoboSync {
     /* set RMUC_UI.AvaBatStat */
     public bool has_level;
     public int level;
-    public bool has_bull;
+    public bool has_wpn;
     public int bull_num;
+    public int currheat;
 }
 
 public struct UISync {
@@ -78,6 +79,8 @@ public class SyncNode : NetworkBehaviour {
     /* Note: SyncList can and only can be modify in Server */
     private readonly SyncList<RoboSync> robo_sync_all = new SyncList<RoboSync>();
 
+    [SyncVar]
+    private bool ready_push = false;
 
     /****************** alias ****************/
     Rune rune;
@@ -118,9 +121,13 @@ public class SyncNode : NetworkBehaviour {
             for (int i = 0; i < robo_sync_all.Count; i++) {
                 robo_sync_all[i] = robo_all[i].Pull();
             }
+            ready_push = true;
         }
  
-        if (isClient) {
+        // Note: When battlefield is first loaded, push() may be called in client PC earlier 
+        //       than pull() in server PC
+        //       which will raise error of null reference in client PC
+        if (isClient && ready_push) {
             /* client pulls rune appearence from sync info */
             rune.rotator_rune.localEulerAngles = rune_rot;
             rune.rune_state_red.Push(rune_sync_red);

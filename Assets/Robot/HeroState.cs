@@ -37,7 +37,7 @@ public class HeroState : RoboState {
     public override RoboSync Pull() {
         RoboSync rs = base.Pull();
         rs.has_blood = true;
-        rs.has_bull = true;
+        rs.has_wpn = true;
         rs.has_level = true;
         rs.level = this.level;
         rs.bull_num = this.bull_num;

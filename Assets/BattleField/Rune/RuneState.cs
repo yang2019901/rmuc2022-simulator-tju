@@ -155,12 +155,15 @@ public class RuneState : BasicState {
     }
 
     public void Push(RuneSync rune_sync) {
+        // if (rune_sync.blades_light == null) {
+        //     Debug.LogError("rune_sync is null");
+        //     return ;
+        // }
         rune_center.GetComponent<Renderer>().sharedMaterial = rune_sync.center_light ?
             _light : AssetManager.singleton.light_off;
-        if (rune_sync.blades_light.Length != 5)
-            Debug.LogWarning("rune_sync received by rune_state doesn't have five blades");
+        // if (rune_sync.blades_light.Length != 5)
+        //     Debug.LogWarning("rune_sync received by rune_state doesn't have five blades");
         for (int i = 0; i < blades.Count; i++) {
-            // Debug.Log(string.Format("blade {0}'s center light: {1}", i, rune_sync.center_light));
             blades[i].SetBladeLight(rune_sync.blades_light[i]);
         }
     }

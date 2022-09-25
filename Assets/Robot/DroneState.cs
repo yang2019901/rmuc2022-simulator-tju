@@ -8,7 +8,7 @@ public class DroneState : RoboState
         RoboSync rs = base.Pull();
         rs.has_blood = false;
         rs.has_level = false;
-        rs.has_bull = true;
+        rs.has_wpn = true;
         return rs;
     }
 }

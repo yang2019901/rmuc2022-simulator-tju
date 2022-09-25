@@ -25,7 +25,7 @@ public class RoboController : NetworkBehaviour {
     private float pitch_min = -30;
     private float pitch_max = 40;
     private float yaw_ang = 0;
-    private Weapon weapon;
+    private Weapon wpn;
     private RoboState robo_state;
 
     public override void OnStartClient() {
@@ -51,7 +51,7 @@ public class RoboController : NetworkBehaviour {
         _rigid.centerOfMass = centerOfMass;
         Cursor.lockState = CursorLockMode.Locked;
         robo_state = GetComponent<RoboState>();
-        weapon = GetComponent<Weapon>();
+        wpn = GetComponent<Weapon>();
         if (yaw != null)
             yaw_ang = yaw.eulerAngles.y;
     }
@@ -64,6 +64,7 @@ public class RoboController : NetworkBehaviour {
         if (robo_state.survival) {
             Move();
             Look();
+            Supply();
             Shoot();
         }
     }
@@ -138,6 +139,22 @@ public class RoboController : NetworkBehaviour {
     }
 
 
+    void Supply() {
+        if (Input.GetKeyDown(KeyCode.O) && gameObject.name.ToLower().Contains("infantry")) {
+            CmdSupply(50);
+        }
+        else if (Input.GetKeyDown(KeyCode.I) && gameObject.name.ToLower().Contains("hero")) {
+            CmdSupply(5);
+        }
+        Debug.Log("current ammo: " + this.wpn.bull_num);
+    }
+    [Command]
+    public void CmdSupply(int num) {
+        this.wpn.bull_num += num;
+        Debug.Log("ammo supply: current ammo: " + this.wpn.bull_num);
+    }
+
+
     void Shoot() {
         bool is_fire = Input.GetMouseButton(0);
         if (is_fire && Time.time - last_fire > 0.15) {
@@ -147,7 +164,11 @@ public class RoboController : NetworkBehaviour {
     }
     [Command]
     public void CmdShoot(Vector3 pos, Vector3 vel) {
-        GameObject bullet = weapon.GetBullet();
+        GameObject bullet = wpn.GetBullet();
+        if (bullet == null) {
+            Debug.Log("no bullet");
+            return;
+        }
         bullet.transform.position = pos;
         bullet.GetComponent<Rigidbody>().velocity = vel;
         bullet.GetComponent<Bullet>().hitter = this.gameObject;
