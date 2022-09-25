@@ -139,19 +139,24 @@ public class RoboController : NetworkBehaviour {
     }
 
 
+    // get ammunition supply at reborn spot
     void Supply() {
         if (Input.GetKeyDown(KeyCode.O) && gameObject.name.ToLower().Contains("infantry")) {
-            CmdSupply(50);
-        }
-        else if (Input.GetKeyDown(KeyCode.I) && gameObject.name.ToLower().Contains("hero")) {
-            CmdSupply(5);
+            CmdSupply(this.gameObject.name, 50);
+        } else if (Input.GetKeyDown(KeyCode.I) && gameObject.name.ToLower().Contains("hero")) {
+            CmdSupply(this.gameObject.name, 5);
         }
         Debug.Log("current ammo: " + this.wpn.bull_num);
     }
     [Command]
-    public void CmdSupply(int num) {
-        this.wpn.bull_num += num;
-        Debug.Log("ammo supply: current ammo: " + this.wpn.bull_num);
+    public void CmdSupply(string robot_s, int num) {
+        if (this.robo_state.robo_buff.FindIndex(i => i.tag==BuffType.rev) == -1) {
+            Debug.Log("not in revive spot");
+            return ;
+        }
+        Debug.Log(robot_s + " calls supply of " + num);
+        GameObject obj = GameObject.Find(robot_s);
+        obj.GetComponent<Weapon>().bull_num += num;
     }
 
 
