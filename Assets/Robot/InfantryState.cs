@@ -9,6 +9,7 @@ public class InfantryState : RoboState {
     private int level;
     Weapon wpn;
 
+
     public override void Start() {
         base.Start();
         wpn = GetComponent<Weapon>();
@@ -23,6 +24,7 @@ public class InfantryState : RoboState {
         this.weapon_pref = "bullspd++";
         this.level_s = "level1";
     }
+
 
     public override void Configure() {
         /* configure chassis params */
@@ -39,6 +41,7 @@ public class InfantryState : RoboState {
         this.cooldown = tmp["cooldown"].ToObject<int>();
         this.bullspd = tmp["bullspd"].ToObject<int>();
     }
+
 
     public override RoboSync Pull() {
         RoboSync rs = base.Pull();
