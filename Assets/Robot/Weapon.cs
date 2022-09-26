@@ -53,14 +53,12 @@ public class Weapon : MonoBehaviour {
             timer = Time.time;
             if (Q1 <= 2*Q0 && Q1 > Q0)
                 robot.currblood -= Mathf.RoundToInt((Q1-Q0) / 250f / 10f * robot.maxblood);
-            this.currheat -= this.cooldown;
+            this.currheat -= Mathf.RoundToInt(this.cooldown / 10f);
             if (this.currheat < 0)
                 this.currheat = 0;
         }
-        if (robot.currblood < 0) {
-            robot.currblood = 0;
-            robot.survival = false;
-        }
+        if (robot.currblood < 0)
+            robot.Die();
     }
 
     public GameObject GetBullet() {

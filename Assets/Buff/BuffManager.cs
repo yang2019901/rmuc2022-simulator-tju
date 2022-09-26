@@ -8,14 +8,17 @@ using Mirror;
 
 /* use abstract class and function to provide general calling form */
 public abstract class Buff {
-    /* make sure Update() is called in FixedUpdate() */
     public string tag;
+    /* make sure Update() is called in FixedUpdate() */
     public abstract void Update();
+    /* Note: Enable() may be called every frame. Make sure list.Add() won't be called multiple times */
     public virtual void Enable(Collider collider) {
+        if (!en) {
+            robot.robo_buff.Add(this);
+        }
+        col = collider;
         timer = 2;
         en = true;
-        col = collider;
-        robot.robo_buff.Add(this);
     }
     public virtual void init(RoboState robo_state, string my_color, string enemy_color) {
         robot = robo_state;
@@ -23,6 +26,8 @@ public abstract class Buff {
         enemy_color_s = enemy_color;
     }
     public virtual void Disable() {
+        if (!en)
+            return ;
         robot.robo_buff.Remove(this);
     }
     public float timer;

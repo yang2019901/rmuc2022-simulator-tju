@@ -38,7 +38,7 @@ public class RoboState : BasicState {
     }
 
     float timer_rev = 0f;
-    int rbn_req;
+    int rbn_req = 0; // every death will add 10 to rbn_req immediately
     int rbn = 0;
     // revive per second
     private void Revive() {
@@ -114,11 +114,7 @@ public class RoboState : BasicState {
         Debug.Log("current blood: " + currblood);
 
         if (this.currblood <= 0) {
-            this.currblood = 0;
-            this.survival = false;
-            this.rbn_req += 10;
-            foreach (ArmorController ac in acs)
-                ac.Disable();
+            Die();
             BattleField.singleton.Kill(hitter, this.gameObject);
         } else
             StartCoroutine("ArmorsBlink", 0.1f);
@@ -168,14 +164,24 @@ public class RoboState : BasicState {
             this.currblood = robo_sync.currblood;
             this.SetBloodBars();
             if (robo_sync.bat_stat == BatStat.Dead)
-                foreach (ArmorController ac in acs)
-                    ac.Disable();
+                Die();
             else
                 StartCoroutine(this.ArmorsBlink(0.1f));
         }
         this.survival = robo_sync.bat_stat!=BatStat.Dead;
         return;
     }
+
+
+    public void Die() {
+        Debug.Log(this.gameObject.name + " dies");
+        this.currblood = 0;
+        this.survival = false;
+        this.rbn_req += 10;
+        foreach (ArmorController ac in acs)
+            ac.Disable();
+    }
+
 
     public virtual void GetUserPref() { }
     public virtual void Configure() { }

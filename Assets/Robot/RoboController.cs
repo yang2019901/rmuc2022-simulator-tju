@@ -66,6 +66,8 @@ public class RoboController : NetworkBehaviour {
             Look();
             Supply();
             Shoot();
+        } else {
+            StopMove();
         }
     }
 
@@ -74,6 +76,13 @@ public class RoboController : NetworkBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None
                 : CursorLockMode.Locked;
+        }
+    }
+
+
+    void StopMove() {
+        foreach (WheelCollider wc in wheelColliders) {
+            wc.motorTorque = 0f;
         }
     }
 
@@ -146,10 +155,16 @@ public class RoboController : NetworkBehaviour {
         } else if (Input.GetKeyDown(KeyCode.I) && gameObject.name.ToLower().Contains("hero")) {
             CmdSupply(this.gameObject.name, 5);
         }
-        Debug.Log("current ammo: " + this.wpn.bull_num);
     }
     [Command]
     public void CmdSupply(string robot_s, int num) {
+        // /* detect what buff this robot currently has */
+        // string buffs = "";
+        // foreach (Buff tmp in this.robo_state.robo_buff) {
+        //     buffs += tmp + " ";
+        // }
+        // Debug.Log(buffs);
+
         if (this.robo_state.robo_buff.FindIndex(i => i.tag==BuffType.rev) == -1) {
             Debug.Log("not in revive spot");
             return ;
@@ -163,7 +178,7 @@ public class RoboController : NetworkBehaviour {
     void Shoot() {
         bool is_fire = Input.GetMouseButton(0);
         if (is_fire && Time.time - last_fire > 0.15) {
-            CmdShoot(bullet_start.position, bullet_start.forward * 18 + _rigid.velocity);
+            CmdShoot(bullet_start.position, bullet_start.forward * robo_state.bullspd + _rigid.velocity);
             last_fire = Time.time;
         }
     }
