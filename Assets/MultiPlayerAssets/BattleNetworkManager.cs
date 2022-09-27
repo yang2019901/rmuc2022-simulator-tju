@@ -38,7 +38,7 @@ public class BattleNetworkManager : NetworkManager {
         Debug.Log("client: stop client");
         if (isScnLobby()) {
             net_lob.playerSyncs.Callback -= net_lob.OnPlayerSyncChanged;
-            mainmenu.SetPlayerOpt();
+            mainmenu.SetPlayerMode();
         } else if (isScnField()) {
             SceneManager.LoadScene(scn_lobby);
             Destroy(this.gameObject);

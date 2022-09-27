@@ -35,14 +35,10 @@ public class Weapon : MonoBehaviour {
     }
 
 
-    float timer;
-    void Update() {
-        if (!robot.survival) {
-            Reset();
-            return;
-        }
-        int Q1 = this.currheat;
-        int Q0 = this.maxheat;
+    int Q1, Q0;
+    void CalcHeat() {
+        Q1 = this.currheat;
+        Q0 = this.maxheat;
         if (Q1 > 2*Q0) {
             robot.currblood -= Mathf.RoundToInt((Q1 - 2*Q0) / 250f * robot.maxblood);
             this.currheat = 2 * Q0;
@@ -57,8 +53,18 @@ public class Weapon : MonoBehaviour {
             if (this.currheat < 0)
                 this.currheat = 0;
         }
-        if (robot.currblood < 0)
-            robot.Die();
+    }
+
+
+    float timer;
+    void Update() {
+        if (!robot.survival)
+            Reset();
+        else {
+            CalcHeat();
+            if (robot.currblood < 0)
+                robot.Die();
+        }
     }
 
     public GameObject GetBullet() {

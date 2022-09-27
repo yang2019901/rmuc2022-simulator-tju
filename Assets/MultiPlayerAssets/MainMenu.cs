@@ -52,9 +52,9 @@ namespace RMUC_UI {
 
         public void JoinLobby() {
             net_man.networkAddress = input_addr.text;
+            DisableAllMenus();
             Debug.Log(net_man.networkAddress);
             net_man.StartClient();
-            SetPlayerLobby();
         }
 
         public void CreateLobby() {
@@ -78,20 +78,19 @@ namespace RMUC_UI {
 
         /// <summary> switch to another menu
         public void SetPlayerInfo() {
-            DisableAllMenu();
+            DisableAllMenus();
             Menu_player_info.SetActive(true);
         }
         public void SetPlayerMode() {
-            DisableAllMenu();
+            DisableAllMenus();
             Menu_player_mode.SetActive(true);
         }
         public void SetPlayerOpt() {
-            Debug.Log("change to player opt");
-            DisableAllMenu();
+            DisableAllMenus();
             Menu_player_opt.SetActive(true);
         }
         public void SetPlayerLobby() {
-            DisableAllMenu();
+            DisableAllMenus();
             foreach (AvatarTab avaTab in this.avatars)
                 avaTab.ResetAvatarTab();
             /* Don't use NI_obj.SetActive() in client PC. Otherwise, NI_obj won't be spawned properly */
@@ -104,7 +103,7 @@ namespace RMUC_UI {
         /// <summary>
         /// (wrap-up) set all menus to be inactive (obviously, it's invisible, too)
         /// </summary>
-        private void DisableAllMenu() {
+        private void DisableAllMenus() {
             Menu_player_mode.SetActive(false);
             Menu_player_info.SetActive(false);
             Menu_player_opt.SetActive(false);
@@ -151,7 +150,7 @@ namespace RMUC_UI {
             else
                 net_man.StopServer();
             // OnClientDisconnect will take care of loading scene
-            // SetPlayerOpt();
+            SetPlayerOpt();
         }
 
         public void SetButtonReady() {

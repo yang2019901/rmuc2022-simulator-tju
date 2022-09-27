@@ -12,7 +12,9 @@ public class BattleUI : MonoBehaviour
     public RMUC_UI.AvaBatStat otptStat_red;
     public RMUC_UI.AvaBatStat otptStat_blue;
     
-    
+    public RMUC_UI.HeatRing hr;
+    public float ratio = 0;
+
     public void Push(UISync uisync) {
         for (int i = 0; i < avaBatStats.Length; i++) {
             avaBatStats[i].Push(uisync.robots[i]);
@@ -27,5 +29,7 @@ public class BattleUI : MonoBehaviour
 
         otptStat_red.Push(uisync.os_r);
         otptStat_blue.Push(uisync.os_b);
+
+        hr.SetHeat(ratio);
     }
 }

@@ -69,6 +69,8 @@ public class RoboController : NetworkBehaviour {
         } else {
             StopMove();
         }
+
+        // BattleField.singleton.bat_ui.ratio = (float)wpn.currheat / wpn.maxheat;
     }
 
 

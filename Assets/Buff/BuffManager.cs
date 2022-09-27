@@ -115,7 +115,7 @@ public class B_Base : Buff {
     }
 }
 
-/* Buff of High Ground */
+/* Buff of Upland */
 public class B_Upland : Buff {
     public override void Enable(Collider col) {
         if (!en) {
@@ -130,7 +130,7 @@ public class B_Upland : Buff {
         base.Disable();
         if (!en)
             return;
-        /* release high ground control */
+        /* release Upland control */
         col.name += enemy_color_s;
         /* remove buff - Upland */
         robot.li_B_cd.Remove(5f);
@@ -244,7 +244,7 @@ public class B_Island : Buff {
         base.Disable();
         if (!en)
             return;
-        /* release high ground control */
+        /* release Upland control */
         col.name += enemy_color_s;
         /* remove buff - Island */
         robot.li_B_cd.Remove(0.5f);
@@ -411,7 +411,7 @@ public class BuffManager : MonoBehaviour {
             case BuffType.uld:
                 if (col.name.Contains(my_color_s)) {
                     buffs[BuffType.uld].Enable(col);
-                    /* take over the high ground => change its name so that enemy can't share the buff */
+                    /* take over the Upland => change its name so that enemy can't share the buff */
                     col.name = col.name.Replace(enemy_color_s, "");
                 }
                 break;
@@ -429,7 +429,7 @@ public class BuffManager : MonoBehaviour {
             case BuffType.ild:
                 if (col.name.Contains(my_color_s) && robot.gameObject.name.Contains("engineer")) {
                     buffs[BuffType.ild].Enable(col);
-                    /* take over the high ground => change its name so that enemy can't share the buff */
+                    /* take over the Upland => change its name so that enemy can't share the buff */
                     col.name = col.name.Replace(enemy_color_s, "");
                 }
                 break;
