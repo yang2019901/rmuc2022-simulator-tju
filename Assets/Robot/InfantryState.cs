@@ -3,10 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InfantryState : RoboState {
+    /// <summary>
+    /// Key state variables
+    /// </summary>
     private string chassis_pref; // chassis preference: "power++", "maxblood++", "init_mode"
     private string weapon_pref; // weapon preference: "bullspd++" "maxheat++" "cooldown++"
-    private string level_s; // level info: "level1", "level2", "level3"
-    private int level;
+    private int level = 0;      // level: starting from 0: 0, 1, 2
+
+    /// <summary>
+    /// Game Params
+    /// </summary>
+    public float[] maxexp = new float[3] {3f, 6f, Mathf.Infinity};
+    public float[] expvals = new float[3] {2.5f, 5f, 7.5f};
+    public float currexp = 0;
+    float expgrow = 0.2f;
+
+    /// <summary>
+    /// External reference
+    /// </summary>
     Weapon wpn;
 
 
@@ -17,17 +31,47 @@ public class InfantryState : RoboState {
     }
 
 
+    public override void Update() {
+        base.Update();
+        GetExp();
+        LevelUp();
+    }
+
+
+    float exptimer = 0;
+    void GetExp() {
+        if (this.survival && Time.time - exptimer > 12) {
+            this.currexp += expgrow;
+            exptimer = Time.time;
+        }
+    }
+
+
+    void LevelUp() {
+        while (this.currexp >= this.maxexp[level]) {
+            this.currexp -= this.maxexp[level];
+            this.level++;
+            Configure();
+        }
+    }
+
+
     /* get user's preference of chassis and weapon from GUI */
     public override void GetUserPref() {
         // TODO
         this.chassis_pref = "power++";
         this.weapon_pref = "bullspd++";
-        this.level_s = "level1";
     }
 
 
+    string level_s; // level info: "level1", "level2", "level3"
+
+    /// <summary>
+    /// Refresh infantry state when born, reborn or level up
+    /// </summary>
     public override void Configure() {
         /* configure chassis params */
+        level_s = string.Format("level{0}", this.level+1);
         var tmp = AssetManager.singleton.infa_chs[this.chassis_pref];
         if (this.chassis_pref != "init_mode")
             tmp = tmp[this.level_s];
@@ -40,6 +84,8 @@ public class InfantryState : RoboState {
         this.maxheat = tmp["maxheat"].ToObject<int>();
         this.cooldown = tmp["cooldown"].ToObject<int>();
         this.bullspd = tmp["bullspd"].ToObject<int>();
+
+        this.expval = this.expvals[level];
     }
 
 

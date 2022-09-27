@@ -134,6 +134,7 @@ namespace RMUC_UI {
             if (net_lob.owner_uid == net_lob.uid) {
                 // start the game
                 NetworkClient.Send<NetLobby.StartGameMessage>(new NetLobby.StartGameMessage(true));
+                Menu_player_lobby.SetActive(false);
             } else {
                 NetLobby.AvaStateMessage mes = new NetLobby.AvaStateMessage();
                 mes.ready = !this.ava_ready;

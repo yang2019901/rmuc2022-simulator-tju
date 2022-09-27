@@ -110,6 +110,11 @@ public class RoboState : BasicState {
         damage = Mathf.RoundToInt(damage * (hitter.GetComponent<RoboState>().B_atk + 1)
             * Mathf.Max(1 - this.GetComponent<RoboState>().B_dfc, 0));
         currblood -= damage;
+        /* if robot is invulnerable, there's no armorsblink or setbloodbar */
+        if (damage == 0)
+            return;
+        /* else, robot record this hit and make visual effect */
+        Hit(hitter);
 
         Debug.Log("current blood: " + currblood);
 

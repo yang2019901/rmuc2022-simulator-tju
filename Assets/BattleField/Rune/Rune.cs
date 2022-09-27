@@ -11,7 +11,7 @@ public class Rune : MonoBehaviour {
 
 
     public bool activated { get; private set; }
-    private const int jun_sta = 60;    // rune_junior starts
+    private const int jun_sta = 2;    // rune_junior starts
     private const int jun_end = 120;   // rune_junior ends
     private const int sen_sta = 240;   // rune_senior starts
     private const int sen_end = 420;   // rune_senior ends
@@ -67,10 +67,9 @@ public class Rune : MonoBehaviour {
         activated = true;
         StartCoroutine(BattleField.singleton.ActivateRune(armor_color, rune_buff));
         if (armor_color == ArmorColor.Red) {
+            /* rune_state_red's all blade has been turned on during hitting */
             rune_state_blue.SetActiveState(Activation.Idle);
-            rune_state_red.SetActiveState(Activation.Activated);
         } else {
-            rune_state_blue.SetActiveState(Activation.Activated);
             rune_state_red.SetActiveState(Activation.Idle);
         }
     }

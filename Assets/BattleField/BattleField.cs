@@ -66,26 +66,51 @@ public class BattleField : MonoBehaviour {
         }
     }
 
-
+    void AddRuneBuff(ArmorColor armor_color, RuneBuff rune_buff) {
+        float atk_up = rune_buff == RuneBuff.Junior ? 0.5f : 1f;
+        if (armor_color == ArmorColor.Red) {
+            Debug.Log("Team Red adds rune buff");
+            foreach (RoboState robot in robo_red) {
+                robot.li_B_atk.Add(atk_up);
+                robot.UpdateBuff();
+            }
+        } else {
+            Debug.Log("Team Blue adds rune buff");
+            foreach (RoboState robot in robo_blue) {
+                robot.li_B_atk.Add(atk_up);
+                robot.UpdateBuff();
+            }
+        }
+    }
+    void RemoveRuneBuff(ArmorColor armor_color, RuneBuff rune_buff) {
+        float atk_up = rune_buff == RuneBuff.Junior ? 0.5f : 1f;
+        if (armor_color == ArmorColor.Red) {
+            Debug.Log("Team Red removes rune buff");
+            foreach (RoboState robot in robo_red) {
+                robot.li_B_atk.Remove(atk_up);
+                robot.UpdateBuff();
+            }
+        } else {
+            Debug.Log("Team Blue removes rune buff");
+            foreach (RoboState robot in robo_blue) {
+                robot.li_B_atk.Remove(atk_up);
+                robot.UpdateBuff();
+            }
+        }
+    }
     public IEnumerator ActivateRune(ArmorColor armor_color, RuneBuff rune_buff) {
         if (rune_buff == RuneBuff.None)
             Debug.LogError("Error: activate RuneBuff.None");
-        float atk_up = rune_buff == RuneBuff.Junior ? 0.5f : 1f;
-        if (armor_color == ArmorColor.Red) {
-            Debug.Log("Team Red activates Rune");
-            foreach (RoboState robot in robo_red)
-                robot.li_B_atk.Add(atk_up);
-        } else {
-            Debug.Log("Team Blue activates Rune");
-            foreach (RoboState robot in robo_blue)
-                robot.li_B_atk.Add(atk_up);
-        }
+        AddRuneBuff(armor_color, rune_buff);
         yield return new WaitForSeconds(45);
+        
         rune.rune_state_blue.SetActiveState(Activation.Idle);
         rune.rune_state_red.SetActiveState(Activation.Idle);
-        /* right then, rune.activated is true => no spinning, no light */
+        RemoveRuneBuff(armor_color, rune_buff);
+        /* right now, rune.activated is true => no spinning, no light */
         yield return new WaitForSeconds(30);
-        /* reset rune */
+
+        /* reset rune.activated and motion params */
         rune.Reset();
     }
 

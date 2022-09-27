@@ -175,7 +175,8 @@ public class B_RuneActiv : Buff {
         robot.li_B_cd.Remove(5f);
         robot.UpdateBuff();
         en = false;
-        rune_state.SetActiveState(Activation.Idle);
+        if (!BattleField.singleton.rune.activated)
+            rune_state.SetActiveState(Activation.Idle);
     }
 
     public override void Update() {

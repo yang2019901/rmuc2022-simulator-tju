@@ -18,4 +18,13 @@ public abstract class BasicState : MonoBehaviour {
         }
     }
     public ArmorColor armor_color;
+    public float expval;
+    protected Dictionary<GameObject, float> last_hit = new Dictionary<GameObject, float>();
+    protected void Hit(GameObject hitter) {
+        if (!last_hit.ContainsKey(hitter)) {
+            last_hit.Add(hitter, Time.time);
+        } else {
+            last_hit[hitter] = Time.time;
+        }
+    }
 }
