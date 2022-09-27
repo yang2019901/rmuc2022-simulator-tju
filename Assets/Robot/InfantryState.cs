@@ -15,7 +15,6 @@ public class InfantryState : RoboState {
     /// </summary>
     public float[] maxexp = new float[3] {3f, 6f, Mathf.Infinity};
     public float[] expvals = new float[3] {2.5f, 5f, 7.5f};
-    public float currexp = 0;
     float expgrow = 0.2f;
 
     /// <summary>

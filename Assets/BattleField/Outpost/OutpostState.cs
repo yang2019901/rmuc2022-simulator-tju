@@ -12,6 +12,7 @@ public class OutpostState : TowerState
     {
         base.Start();
         buff_active = true;
+        this.expval = 5f;
         foreach (ArmorController ac in acs)
             ac.SetLight(AssetManager.singleton.light_purple);
     }

@@ -7,7 +7,7 @@ public enum Caliber {_17mm, _42mm}
 public class Weapon : MonoBehaviour {
     /* turret params */
     public int bullspd => robot.bullspd;
-    public int cooldown => robot.cooldown;
+    public float cooldown => robot.cooldown * robot.B_cd;
     public int maxheat => robot.maxheat;
     public int bull_num;
     public int currheat;

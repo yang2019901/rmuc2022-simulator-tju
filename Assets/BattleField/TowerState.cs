@@ -34,15 +34,23 @@ public class TowerState : BasicState {
         Debug.Log("current blood: " + currblood);
 
         if (this.currblood <= 0) {
-            this.currblood = 0;
-            this.survival = false;
-            foreach (ArmorController ac in acs)
-                ac.Disable();
+            this.killed = true;
+            this.killer = hitter;
+            Die();
             BattleField.singleton.Kill(hitter, this.gameObject);
         } else
             StartCoroutine(this.ArmorsBlink(0.1f));
 
         SetBloodBars();
+    }
+
+
+    void Die() {
+        this.currblood = 0;
+        this.survival = false;
+        foreach (ArmorController ac in acs)
+            ac.Disable();
+        DistribExp();
     }
 
 

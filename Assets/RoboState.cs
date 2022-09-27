@@ -10,6 +10,7 @@ public class RoboState : BasicState {
      *  they are initialized by RoboState.Configure() and updated by UpdateBuff() or BuffManager.cs
      */
 
+    public float currexp = 0;
     /* weapon params */
     public int maxheat;
     public int cooldown;
@@ -119,6 +120,8 @@ public class RoboState : BasicState {
         Debug.Log("current blood: " + currblood);
 
         if (this.currblood <= 0) {
+            this.killed = true;
+            this.killer = hitter;
             Die();
             BattleField.singleton.Kill(hitter, this.gameObject);
         } else
@@ -185,9 +188,10 @@ public class RoboState : BasicState {
         this.rbn_req += 10;
         foreach (ArmorController ac in acs)
             ac.Disable();
-        foreach (Buff tmp in this.robo_buff) {
+        foreach (Buff tmp in this.robo_buff.ToArray()) {
             tmp.Disable();
         }
+        DistribExp();
     }
 
 

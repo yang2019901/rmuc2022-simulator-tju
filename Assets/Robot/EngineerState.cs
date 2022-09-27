@@ -19,7 +19,9 @@ public class EngineerState : RoboState {
     }
     // Start is called before the first frame update
     public override void Start() {
+        /* Make sure init maxblood first because in Start(), maxblood is assigned to currblood */
         this.maxblood = 500;
+        this.expval = 5f; 
         base.Start();
     }
 

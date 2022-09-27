@@ -27,4 +27,30 @@ public abstract class BasicState : MonoBehaviour {
             last_hit[hitter] = Time.time;
         }
     }
+    protected GameObject killer;
+    protected bool killed = false;
+    protected void DistribExp() {
+        if (killed) {
+            RoboState robot = killer.GetComponent<RoboState>();
+            robot.currexp += this.expval;
+            foreach (GameObject hitter in this.last_hit.Keys) {
+                if (hitter != killer && Time.time - last_hit[hitter] < 10)
+                    hitter.GetComponent<RoboState>().currexp += 0.25f * this.expval;
+            }
+        } else {
+            RoboState[] robots = this.armor_color == ArmorColor.Red ? BattleField.singleton.robo_blue
+                : BattleField.singleton.robo_red;
+            List<RoboState> hero_infa = new List<RoboState>();
+            foreach (RoboState robot in robots) {
+                string robo_name = robot.gameObject.name.ToLower();
+                bool heroOrinfa = robo_name.Contains("infantry") || robo_name.Contains("hero");
+                if (robot.survival && heroOrinfa)
+                    hero_infa.Add(robot);
+            }
+            float exp_average = this.expval / (float)hero_infa.Count;
+            foreach (RoboState robot in hero_infa)
+                robot.currexp += exp_average;
+        }
+    }
+
 }

@@ -9,14 +9,13 @@ public class HeroState : RoboState {
     public bool sniping = false;
     private string chassis_pref; // chassis preference: "power++", "maxblood++", "init_mode"
     private string weapon_pref; // weapon preference: "bullspd++" "maxheat++"
-    private int level;
+    public int level;
     
     /// <summary>
     /// Game Params
     /// </summary>
     public float[] maxexp = new float[3] {8f, 12f, Mathf.Infinity};
     public float[] expvals = new float[3] {7.5f, 10f, 15f};
-    public float currexp = 0;
     float expgrow = 0.4f;
 
     /// <summary>
@@ -48,7 +47,8 @@ public class HeroState : RoboState {
     }
 
     void LevelUp() {
-        while (this.currexp >= this.maxexp[level]) {
+        /* prevent 7.9999998 < 8 so that hero has to wait another 12 sec */
+        while (this.currexp >= this.maxexp[level] - Mathf.Epsilon) {
             this.currexp -= this.maxexp[level];
             this.level++;
             Configure();
