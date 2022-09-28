@@ -71,7 +71,7 @@ public class Weapon : MonoBehaviour {
     }
 
 
-    public void GetHeat() {
+    public void GainHeat() {
         this.currheat += this.caliber==Caliber._17mm ? 10 : 100;
         return;
     }
@@ -80,7 +80,7 @@ public class Weapon : MonoBehaviour {
     public GameObject GetBullet() {
         if (bull_num > 0) {
             bull_num--;
-            GetHeat();
+            GainHeat();
             return this.caliber==Caliber._17mm ? BulletPool.singleton.GetSmallBullet() 
                 : BulletPool.singleton.GetBigBullet();
         }

@@ -97,4 +97,10 @@ public class InfantryState : RoboState {
         rs.bull_num = wpn.bull_num;
         return rs;
     }
+
+
+    public override void Push(RoboSync robo_sync) {
+        base.Push(robo_sync);
+        this.wpn.bull_num = robo_sync.bull_num;
+    }
 }

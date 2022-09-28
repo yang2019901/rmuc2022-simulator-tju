@@ -180,8 +180,8 @@ public class RoboController : NetworkBehaviour {
     void Shoot() {
         bool is_fire = Input.GetMouseButton(0);
         if (is_fire && Time.time - last_fire > 0.15) {
-            if (!NetworkServer.active) {
-                this.wpn.GetHeat();
+            if (!NetworkServer.active && wpn.bull_num > 0) {
+                this.wpn.GainHeat();
             }
             CmdShoot(bullet_start.position, bullet_start.forward * robo_state.bullspd + _rigid.velocity);
             last_fire = Time.time;
