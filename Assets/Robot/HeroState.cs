@@ -27,7 +27,7 @@ public class HeroState : RoboState {
     public override void Start() {
         base.Start();
         wpn = GetComponent<Weapon>();
-        wpn.Reset();
+        wpn.ResetHeat();
     }
 
 

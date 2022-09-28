@@ -25,11 +25,11 @@ public class Weapon : MonoBehaviour {
 
         this.robot = GetComponent<RoboState>();
         this.bull_num = 0;
-        Reset();
+        ResetHeat();
     }
 
 
-    public void Reset() {
+    public void ResetHeat() {
         this.currheat = 0;
         return;
     }
@@ -41,14 +41,17 @@ public class Weapon : MonoBehaviour {
         Q0 = this.maxheat;
         if (Q1 > 2*Q0) {
             robot.currblood -= Mathf.RoundToInt((Q1 - 2*Q0) / 250f * robot.maxblood);
+            robot.SetBloodBars();
             this.currheat = 2 * Q0;
             Q1 = this.currheat;
         }
 
         if (Time.time - timer > 0.1f) {
             timer = Time.time;
-            if (Q1 <= 2*Q0 && Q1 > Q0)
+            if (Q1 <= 2*Q0 && Q1 > Q0) {
                 robot.currblood -= Mathf.RoundToInt((Q1-Q0) / 250f / 10f * robot.maxblood);
+                robot.SetBloodBars();
+            }
             this.currheat -= Mathf.RoundToInt(this.cooldown / 10f);
             if (this.currheat < 0)
                 this.currheat = 0;
@@ -59,7 +62,7 @@ public class Weapon : MonoBehaviour {
     float timer;
     void Update() {
         if (!robot.survival)
-            Reset();
+            ResetHeat();
         else {
             CalcHeat();
             if (robot.currblood < 0)
@@ -67,19 +70,19 @@ public class Weapon : MonoBehaviour {
         }
     }
 
+
+    public void GetHeat() {
+        this.currheat += this.caliber==Caliber._17mm ? 10 : 100;
+        return;
+    }
+
+
     public GameObject GetBullet() {
         if (bull_num > 0) {
             bull_num--;
-            if (caliber == Caliber._17mm) {
-                // small bullet
-                this.currheat += 10;
-                return BulletPool.singleton.GetSmallBullet();
-            }
-            else {
-                // big bullet
-                this.currheat += 100;
-                return BulletPool.singleton.GetBigBullet();
-            }
+            GetHeat();
+            return this.caliber==Caliber._17mm ? BulletPool.singleton.GetSmallBullet() 
+                : BulletPool.singleton.GetBigBullet();
         }
         else return null;
     }

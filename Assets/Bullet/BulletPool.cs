@@ -75,8 +75,8 @@ public class BulletPool : NetworkBehaviour {
                however, component<rigidbody> will be removed to avoid unnecessary calculation */
             Destroy(bullet.GetComponent<Rigidbody>());
             Destroy(bullet.GetComponent<Bullet>());
-            Destroy(bullet.GetComponent<NetworkTransform>());
             Destroy(bullet.GetComponent<Collider>());
+            Destroy(bullet.GetComponent<NetworkTransform>());
             // Destroy(bullet.GetComponent<NetworkIdentity>());
             return;
         }

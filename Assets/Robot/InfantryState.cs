@@ -8,7 +8,7 @@ public class InfantryState : RoboState {
     /// </summary>
     private string chassis_pref; // chassis preference: "power++", "maxblood++", "init_mode"
     private string weapon_pref; // weapon preference: "bullspd++" "maxheat++" "cooldown++"
-    private int level = 0;      // level: starting from 0: 0, 1, 2
+    public int level = 0;      // level: starting from 0: 0, 1, 2
 
     /// <summary>
     /// Game Params
@@ -26,7 +26,7 @@ public class InfantryState : RoboState {
     public override void Start() {
         base.Start();
         wpn = GetComponent<Weapon>();
-        wpn.Reset();
+        wpn.ResetHeat();
     }
 
 

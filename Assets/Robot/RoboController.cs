@@ -70,7 +70,7 @@ public class RoboController : NetworkBehaviour {
             StopMove();
         }
 
-        // BattleField.singleton.bat_ui.ratio = (float)wpn.currheat / wpn.maxheat;
+        BattleField.singleton.bat_ui.ratio = (float)wpn.currheat / wpn.maxheat;
     }
 
 
@@ -119,6 +119,7 @@ public class RoboController : NetworkBehaviour {
 
         /* make chassis follow turret(aka, yaw) */
         float d_ang = -Mathf.DeltaAngle(yaw_ang, _rigid.transform.eulerAngles.y);
+        if (Mathf.Abs(d_ang) < 1)  d_ang = 0;
         /* TODO: use PID controller */
         float torque = 0.2f * d_ang;
         for (int i = 0; i < wheel_num; i++) {
@@ -158,8 +159,7 @@ public class RoboController : NetworkBehaviour {
             CmdSupply(this.gameObject.name, 5);
         }
     }
-    [Command]
-    public void CmdSupply(string robot_s, int num) {
+    [Command] public void CmdSupply(string robot_s, int num) {
         // /* detect what buff this robot currently has */
         // string buffs = "";
         // foreach (Buff tmp in this.robo_state.robo_buff) {
@@ -180,12 +180,14 @@ public class RoboController : NetworkBehaviour {
     void Shoot() {
         bool is_fire = Input.GetMouseButton(0);
         if (is_fire && Time.time - last_fire > 0.15) {
+            if (!NetworkServer.active) {
+                this.wpn.GetHeat();
+            }
             CmdShoot(bullet_start.position, bullet_start.forward * robo_state.bullspd + _rigid.velocity);
             last_fire = Time.time;
         }
     }
-    [Command]
-    public void CmdShoot(Vector3 pos, Vector3 vel) {
+    [Command] public void CmdShoot(Vector3 pos, Vector3 vel) {
         GameObject bullet = wpn.GetBullet();
         if (bullet == null) {
             Debug.Log("no bullet");

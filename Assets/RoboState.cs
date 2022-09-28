@@ -65,6 +65,7 @@ public class RoboState : BasicState {
         rbn = 0;
         /* by rule, recover currblood to 20% */
         this.currblood = maxblood / 5;
+        SetBloodBars();
         this.survival = true;
         /* set host's visual effect */
         Debug.Log(string.Format("{0} reborns", this.gameObject.name));
@@ -98,6 +99,7 @@ public class RoboState : BasicState {
         Configure();
         this.acs = GetComponentsInChildren<ArmorController>();
         this.currblood = this.maxblood;
+        SetBloodBars();
     }
     public virtual void Update() {
         if (NetworkServer.active)
@@ -139,7 +141,7 @@ public class RoboState : BasicState {
     }
 
     public GameObject[] blood_bars;
-    private void SetBloodBars() {
+    public void SetBloodBars() {
         Vector3 scale = new Vector3(1, 1, (float)currblood / maxblood);
         foreach (GameObject bb in blood_bars) {
             bb.transform.localScale = scale;
@@ -170,7 +172,7 @@ public class RoboState : BasicState {
         }
         if (this.currblood > robo_sync.currblood) {
             this.currblood = robo_sync.currblood;
-            this.SetBloodBars();
+            SetBloodBars();
             if (robo_sync.bat_stat == BatStat.Dead)
                 Die();
             else
@@ -184,6 +186,7 @@ public class RoboState : BasicState {
     public void Die() {
         Debug.Log(this.gameObject.name + " dies");
         this.currblood = 0;
+        SetBloodBars();
         this.survival = false;
         this.rbn_req += 10;
         foreach (ArmorController ac in acs)

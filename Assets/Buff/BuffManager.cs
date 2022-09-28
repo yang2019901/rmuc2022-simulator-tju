@@ -4,7 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
+// using Mirror;
 
 /* use abstract class and function to provide general calling form */
 public abstract class Buff {
@@ -372,8 +372,8 @@ public class BuffManager : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        if (!NetworkServer.active)
-            return ;
+        // if (!NetworkServer.active)
+        //     return ;
         foreach (Buff tmp in buffs.Values) {
             tmp.Update();
         }

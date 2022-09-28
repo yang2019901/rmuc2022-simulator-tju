@@ -16,7 +16,7 @@ public class Bullet : NetworkBehaviour {
     }
 
     IEnumerator RemoveBullet() {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(10);
         BulletPool.singleton.RemoveBullet(this.gameObject);
     }
 
