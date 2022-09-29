@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public enum Caliber {_17mm, _42mm}
 
@@ -12,6 +13,7 @@ public class Weapon : MonoBehaviour {
     public int bull_num;
     public int currheat;
 
+    public float heat_ratio = 0;
     RoboState robot;
     Caliber caliber;    // 17mm or 42mm
 
@@ -56,11 +58,14 @@ public class Weapon : MonoBehaviour {
             if (this.currheat < 0)
                 this.currheat = 0;
         }
+        heat_ratio = currheat / (float) maxheat;
     }
 
 
     float timer;
     void Update() {
+        if (!NetworkServer.active)
+            return;
         if (!robot.survival)
             ResetHeat();
         else {

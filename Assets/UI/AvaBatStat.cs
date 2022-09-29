@@ -74,7 +74,6 @@ namespace RMUC_UI {
             }
             if (robo_sync.has_wpn) {
                 if (this.bull_num != robo_sync.bull_num)
-                    Debug.Log("robo_sync bullnum: "+robo_sync.bull_num);
                     if (robo_sync.bull_num == 0)
                         txt_bullnum.text = "<color=#FF0707>0</color>";
                     else

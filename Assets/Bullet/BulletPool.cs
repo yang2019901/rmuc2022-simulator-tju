@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
+// using Mirror;
 
 /* Singleton */
-public class BulletPool : NetworkBehaviour {
+public class BulletPool : MonoBehaviour {
     /* singleton, used to get */
     public static BulletPool singleton { get; private set; }
     public GameObject smallbullet_t;
@@ -17,11 +17,11 @@ public class BulletPool : NetworkBehaviour {
     private List<GameObject> bigbullet_idle;
     private List<GameObject> bigbullet_busy;
 
-    public override void OnStartServer() {
-        base.OnStartServer();
+    // public override void OnStartServer() {
+    //     base.OnStartServer();
+    void Awake() {
         if (singleton == null) {
             singleton = this;
-            DontDestroyOnLoad(this);
         } else {
             Destroy(this);
         }
@@ -51,7 +51,7 @@ public class BulletPool : NetworkBehaviour {
             tmp = (GameObject)Instantiate(smallbullet_t);
         tmp.SetActive(true);
         smallbullet_busy.Add(tmp);
-        NetworkServer.Spawn(tmp);
+        // NetworkServer.Spawn(tmp);
         return tmp;
     }
 
@@ -64,7 +64,7 @@ public class BulletPool : NetworkBehaviour {
             tmp = (GameObject)Instantiate(bigbullet_t);
         tmp.SetActive(true);
         bigbullet_busy.Add(tmp);
-        NetworkServer.Spawn(tmp);
+        // NetworkServer.Spawn(tmp);
         return tmp;
     }
 
@@ -76,11 +76,11 @@ public class BulletPool : NetworkBehaviour {
             Destroy(bullet.GetComponent<Rigidbody>());
             Destroy(bullet.GetComponent<Bullet>());
             Destroy(bullet.GetComponent<Collider>());
-            Destroy(bullet.GetComponent<NetworkTransform>());
+            // Destroy(bullet.GetComponent<NetworkTransform>());
             // Destroy(bullet.GetComponent<NetworkIdentity>());
             return;
         }
-        NetworkServer.UnSpawn(bullet);
+        // NetworkServer.UnSpawn(bullet);
         if (bullet.name.Contains("17mm")) {
             smallbullet_busy.Remove(bullet);
             bullet.SetActive(false);

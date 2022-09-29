@@ -33,8 +33,8 @@ public class RoboController : NetworkBehaviour {
         if (hasAuthority) {
             Transform tmp = Camera.main.transform;
             tmp.parent = robo_cam;
-            tmp.rotation = robo_cam.rotation;
-            tmp.position = robo_cam.position;
+            tmp.localEulerAngles = Vector3.zero;
+            tmp.localPosition = Vector3.zero;
         }
     }
 
@@ -69,8 +69,9 @@ public class RoboController : NetworkBehaviour {
         } else {
             StopMove();
         }
-
-        BattleField.singleton.bat_ui.ratio = (float)wpn.currheat / wpn.maxheat;
+        // if (BattleField.singleton.bat_ui == null)
+        //     Debug.Log("BattleField.singleton.bat_ui == null");
+        BattleField.singleton.bat_ui.ratio = wpn.heat_ratio;
     }
 
 
@@ -112,28 +113,41 @@ public class RoboController : NetworkBehaviour {
             }
         } else {
             foreach (WheelCollider wc in wheelColliders) {
-                wc.steerAngle = 0f;
                 wc.motorTorque = 0f;
             }
         }
 
         /* make chassis follow turret(aka, yaw) */
         float d_ang = -Mathf.DeltaAngle(yaw_ang, _rigid.transform.eulerAngles.y);
-        if (Mathf.Abs(d_ang) < 1)  d_ang = 0;
+        if (Mathf.Abs(d_ang) < 5)  d_ang = 0;
         /* TODO: use PID controller */
-        float torque = 0.2f * d_ang;
+        float torque = 0.2f * PID(d_ang);
         for (int i = 0; i < wheel_num; i++) {
             float ang1 = wheelColliders[i].steerAngle * Mathf.Deg2Rad;
             float ang2 = (45 + 90 * i) % 360 * Mathf.Deg2Rad;
             Vector2 f1 = wheelColliders[i].motorTorque * new Vector2(Mathf.Cos(ang1), Mathf.Sin(ang1));
             Vector2 f2 = torque * new Vector2(Mathf.Cos(ang2), Mathf.Sin(ang2));
             Vector2 f_all = f1 + f2;
-            wheelColliders[i].steerAngle = Mathf.Rad2Deg * Mathf.Atan2(f_all.y, f_all.x);
+            wheelColliders[i].steerAngle = (Mathf.Rad2Deg * Mathf.Atan2(f_all.y, f_all.x));
             wheelColliders[i].motorTorque = f_all.magnitude;
             /* rotate the visual model */
             if (wheels.Length > i)
                 wheels[i].transform.localEulerAngles = new Vector3(0, wheelColliders[i].steerAngle, 0);
         }
+    }
+    float sum = 0;
+    float last_err;
+    float Kp = 1f;
+    float Ki = 0f;
+    float Kd = 0f;
+    /* use PID controller (Kp > 0) to calc MV */
+    float PID(float err) {
+        sum += err;
+        float d_err = err-last_err;
+        last_err = err;
+        float output = Kp * (err + Ki*sum + Kd*d_err);
+        Debug.Log("pid output: " + output);
+        return output;
     }
 
 
@@ -171,7 +185,6 @@ public class RoboController : NetworkBehaviour {
             Debug.Log("not in revive spot");
             return ;
         }
-        Debug.Log(robot_s + " calls supply of " + num);
         GameObject obj = GameObject.Find(robot_s);
         obj.GetComponent<Weapon>().bull_num += num;
     }
@@ -180,14 +193,21 @@ public class RoboController : NetworkBehaviour {
     void Shoot() {
         bool is_fire = Input.GetMouseButton(0);
         if (is_fire && Time.time - last_fire > 0.15) {
-            if (!NetworkServer.active && wpn.bull_num > 0) {
-                this.wpn.GainHeat();
-            }
             CmdShoot(bullet_start.position, bullet_start.forward * robo_state.bullspd + _rigid.velocity);
             last_fire = Time.time;
         }
     }
     [Command] public void CmdShoot(Vector3 pos, Vector3 vel) {
+        if (!NetworkClient.active) {
+            Debug.Log("gains heat in pure server");
+            ShootBull(pos, vel);
+        }
+        RpcShoot(pos, vel);
+    }
+    [ClientRpc] void RpcShoot(Vector3 pos, Vector3 vel) {
+        ShootBull(pos, vel);
+    }
+    void ShootBull(Vector3 pos, Vector3 vel) {
         GameObject bullet = wpn.GetBullet();
         if (bullet == null) {
             Debug.Log("no bullet");

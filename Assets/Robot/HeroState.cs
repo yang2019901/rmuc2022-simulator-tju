@@ -96,13 +96,16 @@ public class HeroState : RoboState {
         rs.has_level = true;
         rs.level = this.level;
         rs.bull_num = wpn.bull_num;
+        rs.heat_ratio = wpn.heat_ratio;
         return rs;
     }
 
 
     public override void Push(RoboSync robo_sync) {
         base.Push(robo_sync);
-        this.wpn.bull_num = robo_sync.bull_num;
+        /* for visual effects */
+        wpn.bull_num = robo_sync.bull_num;
+        wpn.heat_ratio = robo_sync.heat_ratio;
     }
 
 }

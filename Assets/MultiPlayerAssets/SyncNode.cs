@@ -40,7 +40,7 @@ public struct RoboSync {
     public int level;
     public bool has_wpn;
     public int bull_num;
-    public int currheat;
+    public float heat_ratio;
 }
 
 public struct UISync {

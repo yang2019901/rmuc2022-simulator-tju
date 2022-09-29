@@ -54,7 +54,6 @@ public class RoboState : BasicState {
             if (Time.time - timer_rev >= 1) {
                 rbn += B_rbn;
                 timer_rev = Time.time;
-                Debug.Log(string.Format("current reborn point: {0}/{1}", rbn, rbn_req));
             }
             if (rbn >= rbn_req)
                 StartCoroutine(this.Reborn());
