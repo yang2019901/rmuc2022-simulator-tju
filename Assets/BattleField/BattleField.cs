@@ -6,6 +6,17 @@ using Mirror;
 public class BattleField : MonoBehaviour {
     public static BattleField singleton { get; private set; }
 
+    /// <summary>
+    /// Key state variables
+    /// </summary>
+    public int money_red;
+    public int money_blue;
+    public int score_red;
+    public int score_blue;
+
+    /// <summary>
+    /// External reference
+    /// </summary>
     public BattleUI bat_ui;
     public OutpostState outpost_blue;
     public OutpostState outpost_red;
@@ -16,12 +27,6 @@ public class BattleField : MonoBehaviour {
     public RoboState[] robo_red;
     public RoboState[] robo_blue;
     public List<RoboState> robo_all = new List<RoboState>();
-
-    private int x_half_length = 16;
-    private int y_half_length = 10;
-    private int z_half_length = 10;
-
-    private float t_start;
 
     /* priority (with NetworkIdentity): Instantiate > Awake() > OnStartServer() (obviously, iff in server PC) 
         ----Spawn----> OnStartClient() (obviously, iff in client PC) > Start()    
@@ -43,6 +48,9 @@ public class BattleField : MonoBehaviour {
     }
 
 
+    int x_half_length = 16;
+    int y_half_length = 10;
+    int z_half_length = 10;
     public bool OnField(GameObject obj) {
         Vector3 rel_pos = obj.transform.position - this.transform.position;
         return Mathf.Abs(rel_pos.x) < x_half_length && Mathf.Abs(rel_pos.y) < y_half_length
@@ -114,8 +122,19 @@ public class BattleField : MonoBehaviour {
         rune.Reset();
     }
 
-
+    float t_start;
     public float GetBattleTime() {
         return Time.time - t_start;
+    }
+
+
+    BatSync tmp =  new BatSync();
+    public BatSync Pull() {
+        tmp.time_bat = GetBattleTime();
+        tmp.money_red = this.money_red;
+        tmp.money_blue = this.money_blue;
+        tmp.score_red = this.score_red;
+        tmp.score_blue = this.score_blue;
+        return tmp;
     }
 }

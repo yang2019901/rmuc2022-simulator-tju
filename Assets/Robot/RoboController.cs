@@ -93,7 +93,7 @@ public class RoboController : NetworkBehaviour {
     void Move() {
         /* Manage Power */
         int wheel_num = 4;
-        float efficiency = 0.6f;
+        float efficiency = 0.4f;
         float wheel_power_single = robo_state.power * efficiency / wheel_num;
 
         /* Get move direction from user input */
@@ -146,7 +146,7 @@ public class RoboController : NetworkBehaviour {
         float d_err = err-last_err;
         last_err = err;
         float output = Kp * (err + Ki*sum + Kd*d_err);
-        Debug.Log("pid output: " + output);
+        // Debug.Log("pid output: " + output);
         return output;
     }
 

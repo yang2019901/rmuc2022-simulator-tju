@@ -43,44 +43,55 @@ public struct RoboSync {
     public float heat_ratio;
 }
 
+public struct BatSync {
+    public int money_red;
+    public int money_blue;
+    public int score_red;
+    public int score_blue;
+    public float time_bat;
+}
+
 public struct UISync {
     public SyncList<RoboSync> robots;
     public BaseSync bs_r;
     public BaseSync bs_b;
     public OutpostSync os_r;
     public OutpostSync os_b;
-    public UISync(SyncList<RoboSync> roboSyncs, BaseSync bs_r, BaseSync bs_b, OutpostSync os_r, OutpostSync os_b) {
+    public BatSync bat_sync;
+
+    public UISync(SyncList<RoboSync> roboSyncs, BaseSync bs_r, BaseSync bs_b, OutpostSync os_r, 
+        OutpostSync os_b, BatSync bat_sync) {
         this.robots = roboSyncs;
         this.bs_r = bs_r;
         this.bs_b = bs_b;
         this.os_r = os_r;
         this.os_b = os_b;
+        this.bat_sync = bat_sync;
     }
 }
 
 public class SyncNode : NetworkBehaviour {
-    [SyncVar]
-    private Vector3 rune_rot = new Vector3();
-    [SyncVar]
-    private RuneSync rune_sync_red = new RuneSync();
-    [SyncVar]
-    private RuneSync rune_sync_blue = new RuneSync();
+    [SyncVar] private bool ready_push = false;
 
-    [SyncVar]
-    private OutpostSync otpt_sync_red = new OutpostSync();
-    [SyncVar]
-    private OutpostSync otpt_sync_blue = new OutpostSync();
+    [SyncVar] private BatSync bat_sync; 
+   
+    /* rune */
+    [SyncVar] private Vector3 rune_rot = new Vector3();
+    [SyncVar] private RuneSync rune_sync_red = new RuneSync();
+    [SyncVar] private RuneSync rune_sync_blue = new RuneSync();
 
-    [SyncVar]
-    private BaseSync base_sync_red = new BaseSync();
-    [SyncVar] 
-    private BaseSync base_sync_blue = new BaseSync();
+    /* outpost */
+    [SyncVar] private OutpostSync otpt_sync_red = new OutpostSync();
+    [SyncVar] private OutpostSync otpt_sync_blue = new OutpostSync();
 
+    /* base */
+    [SyncVar] private BaseSync base_sync_red = new BaseSync();
+    [SyncVar] private BaseSync base_sync_blue = new BaseSync();
+
+    /* robots */
     /* Note: SyncList can and only can be modify in Server */
     private readonly SyncList<RoboSync> robo_sync_all = new SyncList<RoboSync>();
 
-    [SyncVar]
-    private bool ready_push = false;
 
     /****************** alias ****************/
     Rune rune;
@@ -107,6 +118,7 @@ public class SyncNode : NetworkBehaviour {
     /* use LateUpdate() to ensure users see these */
     void LateUpdate() {
         if (isServer) {
+            bat_sync = BattleField.singleton.Pull();
             /* server pushes rune appearence to sync info */
             rune_rot = rune.rotator_rune.localEulerAngles;
             rune_sync_red = rune.rune_state_red.Pull();
@@ -142,8 +154,9 @@ public class SyncNode : NetworkBehaviour {
             for (int i = 0; i < robo_all.Count; i++) {
                 robo_all[i].Push(robo_sync_all[i]);
             }
+            /* host needs that to update UI as well */
             BattleField.singleton.bat_ui.Push(new UISync(robo_sync_all, base_sync_red, base_sync_blue, 
-                otpt_sync_red, otpt_sync_blue));
+                otpt_sync_red, otpt_sync_blue, bat_sync));
         }
    }
 }

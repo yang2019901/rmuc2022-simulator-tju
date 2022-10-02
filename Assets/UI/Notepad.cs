@@ -27,7 +27,7 @@ namespace RMUC_UI {
             int time = Mathf.FloorToInt(t);
             int minute = time / 60;
             int second = time % 60;
-            battle_time.text = string.Format("{0:D1}:{0:D2}", minute, second);
+            battle_time.text = string.Format("{0:D1}:{1:D2}", minute, second);
         }
 
         public void SetMoney(int red_money, int red_money_all, int blue_money, int blue_money_all) {
