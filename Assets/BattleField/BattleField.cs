@@ -46,8 +46,11 @@ public class BattleField : MonoBehaviour {
 
     void Start() {
         t_start = Time.time;
+
         rune.Init();
         Debug.Log("rune init");
+
+        AudioSource.PlayClipAtPoint(AssetManager.singleton.gamebg, AssetManager.singleton.transform.position);
     }
 
 
@@ -111,6 +114,7 @@ public class BattleField : MonoBehaviour {
         }
     }
     public IEnumerator ActivateRune(ArmorColor armor_color, RuneBuff rune_buff) {
+        AudioSource.PlayClipAtPoint(AssetManager.singleton.rune_activ, transform.position);
         if (rune_buff == RuneBuff.None)
             Debug.LogError("Error: activate RuneBuff.None");
         AddRuneBuff(armor_color, rune_buff);

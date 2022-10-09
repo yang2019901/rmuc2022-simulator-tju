@@ -24,6 +24,49 @@ public class AssetManager : MonoBehaviour {
     public JObject weapon { get; private set; } // weapon config
     public JObject exp { get; private set; } // experience config
 
+    
+    /* bullet-related */
+    public AudioClip _17mm;
+    public AudioClip _42mm;
+    public AudioClip hit_17mm;
+    public AudioClip hit_42mm;
+
+    /* background */
+    public AudioClip prepare;
+    public AudioClip checking;
+    public AudioClip cntdown; 
+    public AudioClip gamebg; 
+    public AudioClip gamefin;
+
+    /* broadcast */
+    public AudioClip ally_die;
+    public AudioClip enemy_die; 
+    public AudioClip self_die; 
+    public AudioClip kill_1st; 
+    public AudioClip kill_2nd; 
+    public AudioClip kill_3rd;
+    public AudioClip kill_4th;
+    public AudioClip kill_5th;
+    public AudioClip ace;
+
+    /* event */
+    public AudioClip base_warn;
+    public AudioClip base_opn;
+    public AudioClip base_unshd;
+    public AudioClip base_lost;
+    public AudioClip rune_activ;
+
+    /* misc */
+    public AudioClip victory;
+    public AudioClip lv_up;
+    public AudioClip robo_die;
+    public AudioClip ilnd_taken; 
+    public AudioClip buff_taken;
+     
+
+    /// <summary>
+    /// non-API 
+    /// </summary>
     void Awake() {
         /* declare singleton */
         if (singleton == null) {

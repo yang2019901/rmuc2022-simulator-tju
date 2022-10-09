@@ -27,6 +27,11 @@ public class Bullet : MonoBehaviour {
             return;
         ArmorController ac = collision.collider.GetComponent<ArmorController>();
         if (ac != null) {
+            if (gameObject.name.ToLower().Contains("17mm"))
+                AudioSource.PlayClipAtPoint(AssetManager.singleton.hit_17mm, transform.position);
+            else
+                AudioSource.PlayClipAtPoint(AssetManager.singleton.hit_42mm, transform.position);
+
             ac.TakeHit(collision, this.gameObject);
         }
         StartCoroutine(RemoveBullet());
