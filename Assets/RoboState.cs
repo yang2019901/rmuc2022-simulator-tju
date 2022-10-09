@@ -9,8 +9,7 @@ public class RoboState : BasicState {
     /** calculated by algorithm automatically
      *  they are initialized by RoboState.Configure() and updated by UpdateBuff() or BuffManager.cs
      */
-
-    public float currexp = 0;
+    public int currexp = 0;
     /* weapon params */
     public int maxheat;
     public int cooldown;
@@ -30,6 +29,82 @@ public class RoboState : BasicState {
     public float B_pow;
     public float B_rev;
     public int B_rbn; // B_reborn: 2 if supply_spot; 1 if recover_card or self-reviving of engineer 
+
+    public List<float> li_B_atk; // attack buff. Ex: rune_junior => B_atk.Add(0.5); rune_senior => B_atd.Add(1)
+    public List<float> li_B_dfc; // defence buff. Ex: rune_senior => B_dfc.Add(0.5)
+    public List<float> li_B_cd;
+    public List<float> li_B_rev;
+    public List<int> li_B_rbn;
+
+
+
+    /// <summary>
+    /// API
+    /// </summary>
+    public virtual RoboSync Pull() {
+        RoboSync tmp = new RoboSync();
+        tmp.currblood = this.currblood;
+        tmp.maxblood = this.maxblood;
+        if (!this.survival)
+            tmp.bat_stat = BatStat.Dead;
+        else if (Mathf.Approximately(this.B_dfc, 1))
+            tmp.bat_stat = BatStat.Invulnerable;
+        else if (!Mathf.Approximately(this.B_dfc, 0))
+            tmp.bat_stat = BatStat.Defensive;
+        else
+            tmp.bat_stat = BatStat.Survival;
+        return tmp;
+    }
+
+
+    public virtual void Push(RoboSync robo_sync) {
+        if (!this.survival && robo_sync.bat_stat != BatStat.Dead) {
+            Debug.Log(string.Format("{0} reborns", this.gameObject.name));
+            foreach (ArmorController ac in acs)
+                ac.Enable();
+            SetBloodBars();
+        }
+        if (this.currblood > robo_sync.currblood) {
+            this.currblood = robo_sync.currblood;
+            SetBloodBars();
+            if (robo_sync.bat_stat == BatStat.Dead)
+                Die();
+            else
+                StartCoroutine(this.ArmorsBlink(0.1f));
+        }
+        this.survival = robo_sync.bat_stat != BatStat.Dead;
+        return;
+    }
+
+
+    public GameObject[] blood_bars;
+    public void SetBloodBars() {
+        Vector3 scale = new Vector3(1, 1, (float)currblood / maxblood);
+        foreach (GameObject bb in blood_bars) {
+            bb.transform.localScale = scale;
+        }
+    }
+
+
+    public void Die() {
+        Debug.Log(this.gameObject.name + " dies");
+        this.currblood = 0;
+        SetBloodBars();
+        this.rbn_req += 10;
+        
+        this.survival = false;
+        foreach (ArmorController ac in acs)
+            ac.Disable();
+
+        foreach (Buff tmp in this.robo_buff.ToArray()) {
+            tmp.Disable();
+        }
+        UpdateBuff();
+
+        DistribExp();
+    }
+
+
     public void UpdateBuff() {
         B_atk = Mathf.Max(li_B_atk.ToArray());
         B_dfc = Mathf.Max(li_B_dfc.ToArray());
@@ -38,6 +113,36 @@ public class RoboState : BasicState {
         B_rbn = Mathf.Max(li_B_rbn.ToArray());
     }
 
+
+
+    /// <summary>
+    /// non-API
+    /// </summary>
+    /* for visual effects */
+    public virtual void Start() {
+        this.acs = GetComponentsInChildren<ArmorController>();
+
+        li_B_atk = new List<float> { 0 };
+        li_B_dfc = new List<float> { 0 };
+        li_B_cd = new List<float> { 1 };
+        li_B_rev = new List<float> { 0 };
+        li_B_rbn = new List<int> { 0 };
+        UpdateBuff();
+
+        GetUserPref();
+        Configure();
+
+        this.currblood = this.maxblood;
+        SetBloodBars();
+    }
+    
+    
+    public virtual void Update() {
+        if (NetworkServer.active)
+            Revive();
+    }
+
+    
     float timer_rev = 0f;
     int rbn_req = 0; // every death will add 10 to rbn_req immediately
     int rbn = 0;
@@ -60,6 +165,8 @@ public class RoboState : BasicState {
         }
         // Debug.Log("blood: " + currblood + "/" + maxblood);
     }
+    
+    
     IEnumerator Reborn() {
         rbn = 0;
         /* by rule, recover currblood to 20% */
@@ -79,31 +186,6 @@ public class RoboState : BasicState {
         yield break;
     }
 
-    public List<float> li_B_atk; // attack buff. Ex: rune_junior => B_atk.Add(0.5); rune_senior => B_atd.Add(1)
-    public List<float> li_B_dfc; // defence buff. Ex: rune_senior => B_dfc.Add(0.5)
-    public List<float> li_B_cd;
-    public List<float> li_B_rev;
-    public List<int> li_B_rbn;
-
-
-    /* for visual effects */
-    public virtual void Start() {
-        li_B_atk = new List<float> { 0 };
-        li_B_dfc = new List<float> { 0 };
-        li_B_cd = new List<float> { 1 };
-        li_B_rev = new List<float> { 0 };
-        li_B_rbn = new List<int> { 0 };
-        UpdateBuff();
-        GetUserPref();
-        Configure();
-        this.acs = GetComponentsInChildren<ArmorController>();
-        this.currblood = this.maxblood;
-        SetBloodBars();
-    }
-    public virtual void Update() {
-        if (NetworkServer.active)
-            Revive();
-    }
 
     ArmorController[] acs;
     public override void TakeDamage(GameObject hitter, GameObject armor_hit, GameObject bullet) {
@@ -131,6 +213,7 @@ public class RoboState : BasicState {
         SetBloodBars();
     }
 
+
     private IEnumerator ArmorsBlink(float interval) {
         foreach (ArmorController ac in acs)
             ac.SetLight(false);
@@ -139,62 +222,6 @@ public class RoboState : BasicState {
             ac.SetLight(true);
     }
 
-    public GameObject[] blood_bars;
-    public void SetBloodBars() {
-        Vector3 scale = new Vector3(1, 1, (float)currblood / maxblood);
-        foreach (GameObject bb in blood_bars) {
-            bb.transform.localScale = scale;
-        }
-    }
-
-    public virtual RoboSync Pull() {
-        RoboSync tmp = new RoboSync();
-        tmp.currblood = this.currblood;
-        tmp.maxblood = this.maxblood;
-        if (!this.survival)
-            tmp.bat_stat = BatStat.Dead;
-        else if (Mathf.Approximately(this.B_dfc, 1))
-            tmp.bat_stat = BatStat.Invulnerable;
-        else if (!Mathf.Approximately(this.B_dfc, 0))
-            tmp.bat_stat = BatStat.Defensive;
-        else
-            tmp.bat_stat = BatStat.Survival;
-        return tmp;
-    }
-
-    public virtual void Push(RoboSync robo_sync) {
-        if (!this.survival && robo_sync.bat_stat != BatStat.Dead) {
-            Debug.Log(string.Format("{0} reborns", this.gameObject.name));
-            foreach (ArmorController ac in acs)
-                ac.Enable();
-            SetBloodBars();
-        }
-        if (this.currblood > robo_sync.currblood) {
-            this.currblood = robo_sync.currblood;
-            SetBloodBars();
-            if (robo_sync.bat_stat == BatStat.Dead)
-                Die();
-            else
-                StartCoroutine(this.ArmorsBlink(0.1f));
-        }
-        this.survival = robo_sync.bat_stat != BatStat.Dead;
-        return;
-    }
-
-
-    public void Die() {
-        Debug.Log(this.gameObject.name + " dies");
-        this.currblood = 0;
-        SetBloodBars();
-        this.survival = false;
-        this.rbn_req += 10;
-        foreach (ArmorController ac in acs)
-            ac.Disable();
-        foreach (Buff tmp in this.robo_buff.ToArray()) {
-            tmp.Disable();
-        }
-        DistribExp();
-    }
 
 
     public virtual void GetUserPref() { }

@@ -9,14 +9,13 @@ public class HeroState : RoboState {
     public bool sniping = false;
     private string chassis_pref; // chassis preference: "power++", "maxblood++", "init_mode"
     private string weapon_pref; // weapon preference: "bullspd++" "maxheat++"
-    public int level;
+    public int level = 0;
     
     /// <summary>
     /// Game Params
     /// </summary>
-    public float[] maxexp = new float[3] {8f, 12f, Mathf.Infinity};
-    public float[] expvals = new float[3] {7.5f, 10f, 15f};
-    float expgrow = 0.4f;
+    public int maxexp;
+    int expgrow = 4;
 
     /// <summary>
     /// External reference
@@ -24,6 +23,34 @@ public class HeroState : RoboState {
     Weapon wpn;
 
 
+    /// <summary>
+    /// API
+    /// </summary>
+    public override RoboSync Pull() {
+        RoboSync rs = base.Pull();
+        rs.has_blood = true;
+        rs.has_wpn = true;
+        rs.has_level = true;
+        rs.level = this.level;
+        rs.bull_num = wpn.bull_num;
+        rs.heat_ratio = wpn.heat_ratio;
+        return rs;
+    }
+
+
+    public override void Push(RoboSync robo_sync) {
+        base.Push(robo_sync);
+        /* for visual effects */
+        wpn.bull_num = robo_sync.bull_num;
+        wpn.heat_ratio = robo_sync.heat_ratio;
+    }
+
+
+
+
+    /// <summary>
+    /// non-API
+    /// </summary>
     public override void Start() {
         base.Start();
         wpn = GetComponent<Weapon>();
@@ -46,10 +73,10 @@ public class HeroState : RoboState {
         }
     }
 
+
     void LevelUp() {
-        /* prevent 7.9999998 < 8 so that hero has to wait another 12 sec */
-        while (this.currexp >= this.maxexp[level] - Mathf.Epsilon) {
-            this.currexp -= this.maxexp[level];
+        while (this.currexp >= this.maxexp) {
+            this.currexp -= this.maxexp;
             this.level++;
             Configure();
         }
@@ -65,10 +92,7 @@ public class HeroState : RoboState {
 
 
     string level_s; // level info: "level1", "level2", "level3"
-
-    /// <summary>
-    /// Refresh infantry state when born, reborn or level up
-    /// </summary>
+    /* Refresh infantry state when born, reborn or level up */
     public override void Configure() {
         /* configure chassis params */
         level_s = string.Format("level{0}", this.level+1);
@@ -85,27 +109,9 @@ public class HeroState : RoboState {
         this.cooldown = tmp["cooldown"].ToObject<int>();
         this.bullspd = tmp["bullspd"].ToObject<int>();
 
-        this.expval = this.expvals[level];
-    }
-
-
-    public override RoboSync Pull() {
-        RoboSync rs = base.Pull();
-        rs.has_blood = true;
-        rs.has_wpn = true;
-        rs.has_level = true;
-        rs.level = this.level;
-        rs.bull_num = wpn.bull_num;
-        rs.heat_ratio = wpn.heat_ratio;
-        return rs;
-    }
-
-
-    public override void Push(RoboSync robo_sync) {
-        base.Push(robo_sync);
-        /* for visual effects */
-        wpn.bull_num = robo_sync.bull_num;
-        wpn.heat_ratio = robo_sync.heat_ratio;
+        var jobj = AssetManager.singleton.exp["infantry"][level_s];
+        this.expval = jobj["have"].ToObject<int>();
+        this.maxexp = level<2 ? jobj["need"].ToObject<int>() : int.MaxValue;
     }
 
 }

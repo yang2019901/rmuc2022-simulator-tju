@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class BasicState : MonoBehaviour {
     public abstract void TakeDamage(GameObject hitter, GameObject armor_hit, GameObject bullet);
+    
     public void SetArmorColor(ArmorColor armor_color) {
         this.armor_color = armor_color;
         string other_color = armor_color == ArmorColor.Red ? "blue" : "red";
@@ -18,7 +19,7 @@ public abstract class BasicState : MonoBehaviour {
         }
     }
     public ArmorColor armor_color;
-    public float expval;
+   
     protected Dictionary<GameObject, float> last_hit = new Dictionary<GameObject, float>();
     protected void Hit(GameObject hitter) {
         if (!last_hit.ContainsKey(hitter)) {
@@ -27,6 +28,9 @@ public abstract class BasicState : MonoBehaviour {
             last_hit[hitter] = Time.time;
         }
     }
+   
+    public int expval;
+
     protected GameObject killer;
     protected bool killed = false;
     protected void DistribExp() {
@@ -35,7 +39,7 @@ public abstract class BasicState : MonoBehaviour {
             robot.currexp += this.expval;
             foreach (GameObject hitter in this.last_hit.Keys) {
                 if (hitter != killer && Time.time - last_hit[hitter] < 10)
-                    hitter.GetComponent<RoboState>().currexp += 0.25f * this.expval;
+                    hitter.GetComponent<RoboState>().currexp += Mathf.RoundToInt(0.25f * this.expval);
             }
         } else {
             RoboState[] robots = this.armor_color == ArmorColor.Red ? BattleField.singleton.robo_blue
@@ -47,7 +51,7 @@ public abstract class BasicState : MonoBehaviour {
                 if (robot.survival && heroOrinfa)
                     hero_infa.Add(robot);
             }
-            float exp_average = this.expval / (float)hero_infa.Count;
+            int exp_average = Mathf.RoundToInt(this.expval / (float)hero_infa.Count);
             foreach (RoboState robot in hero_infa)
                 robot.currexp += exp_average;
         }

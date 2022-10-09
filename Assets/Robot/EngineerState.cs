@@ -21,7 +21,7 @@ public class EngineerState : RoboState {
     public override void Start() {
         /* Make sure init maxblood first because in Start(), maxblood is assigned to currblood */
         this.maxblood = 500;
-        this.expval = 5f; 
+        this.expval = AssetManager.singleton.exp["engineer"]["have"].ToObject<int>(); 
         base.Start();
     }
 

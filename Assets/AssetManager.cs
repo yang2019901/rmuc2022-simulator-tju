@@ -28,7 +28,6 @@ public class AssetManager : MonoBehaviour {
         /* declare singleton */
         if (singleton == null) {
             singleton = this;
-            DontDestroyOnLoad(this);
         } else
             Destroy(this);
 

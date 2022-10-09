@@ -17,6 +17,31 @@ public class Weapon : MonoBehaviour {
     RoboState robot;
     Caliber caliber;    // 17mm or 42mm
 
+    /// <summary>
+    /// API
+    /// </summary>
+    public void ResetHeat() {
+        this.currheat = 0;
+        return;
+    }
+
+
+    public GameObject GetBullet() {
+        if (bull_num > 0) {
+            bull_num--;
+            GainHeat();
+            return this.caliber==Caliber._17mm ? BulletPool.singleton.GetSmallBullet() 
+                : BulletPool.singleton.GetBigBullet();
+        }
+        else return null;
+    }
+
+
+
+
+    /// <summary>
+    /// non-API
+    /// </summary>
     void Start() {
         if (this.name.ToLower().Contains("infantry"))
             caliber = Caliber._17mm;
@@ -31,9 +56,17 @@ public class Weapon : MonoBehaviour {
     }
 
 
-    public void ResetHeat() {
-        this.currheat = 0;
-        return;
+    float timer;
+    void Update() {
+        if (!NetworkServer.active)
+            return;
+        if (!robot.survival)
+            ResetHeat();
+        else {
+            CalcHeat();
+            if (robot.currblood < 0)
+                robot.Die();
+        }
     }
 
 
@@ -62,33 +95,9 @@ public class Weapon : MonoBehaviour {
     }
 
 
-    float timer;
-    void Update() {
-        if (!NetworkServer.active)
-            return;
-        if (!robot.survival)
-            ResetHeat();
-        else {
-            CalcHeat();
-            if (robot.currblood < 0)
-                robot.Die();
-        }
-    }
-
-
-    public void GainHeat() {
+    void GainHeat() {
         this.currheat += this.caliber==Caliber._17mm ? 10 : 100;
         return;
     }
 
-
-    public GameObject GetBullet() {
-        if (bull_num > 0) {
-            bull_num--;
-            GainHeat();
-            return this.caliber==Caliber._17mm ? BulletPool.singleton.GetSmallBullet() 
-                : BulletPool.singleton.GetBigBullet();
-        }
-        else return null;
-    }
 }
