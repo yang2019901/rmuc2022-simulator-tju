@@ -34,9 +34,13 @@ public abstract class BasicState : MonoBehaviour {
     protected GameObject killer;
     protected bool killed = false;
     protected void DistribExp() {
+        /* KEYWORD: killer, assist killer, first blood bonus */
+        bool fb = !BattleField.singleton.had_first_blood;
         if (killed) {
             RoboState robot = killer.GetComponent<RoboState>();
             robot.currexp += this.expval;
+            if (fb)
+                robot.currexp += 50;
             foreach (GameObject hitter in this.last_hit.Keys) {
                 if (hitter != killer && Time.time - last_hit[hitter] < 10)
                     hitter.GetComponent<RoboState>().currexp += Mathf.RoundToInt(0.25f * this.expval);
@@ -51,9 +55,14 @@ public abstract class BasicState : MonoBehaviour {
                 if (robot.survival && heroOrinfa)
                     hero_infa.Add(robot);
             }
-            int exp_average = Mathf.RoundToInt(this.expval / (float)hero_infa.Count);
+            int exp = fb ? this.expval + 50 : this.expval;
+            int exp_average = Mathf.RoundToInt(exp / (float)hero_infa.Count);
             foreach (RoboState robot in hero_infa)
                 robot.currexp += exp_average;
+        }
+        if (fb) {
+            Debug.Log("first blood");
+            BattleField.singleton.had_first_blood = true;
         }
     }
 

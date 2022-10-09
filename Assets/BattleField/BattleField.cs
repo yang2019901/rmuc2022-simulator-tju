@@ -7,12 +7,14 @@ public class BattleField : MonoBehaviour {
     public static BattleField singleton { get; private set; }
 
     /// <summary>
-    /// Key state variables
+    /// Game Params
     /// </summary>
     public int money_red;
     public int money_blue;
     public int score_red;
     public int score_blue;
+
+    public bool had_first_blood = false;
 
     /// <summary>
     /// External reference
@@ -27,6 +29,7 @@ public class BattleField : MonoBehaviour {
     public RoboState[] robo_red;
     public RoboState[] robo_blue;
     public List<RoboState> robo_all = new List<RoboState>();
+
 
     /* priority (with NetworkIdentity): Instantiate > Awake() > OnStartServer() (obviously, iff in server PC) 
         ----Spawn----> OnStartClient() (obviously, iff in client PC) > Start()    
@@ -73,6 +76,7 @@ public class BattleField : MonoBehaviour {
             // base_blue.shield = 500;
         }
     }
+
 
     void AddRuneBuff(ArmorColor armor_color, RuneBuff rune_buff) {
         float atk_up = rune_buff == RuneBuff.Junior ? 0.5f : 1f;
@@ -121,6 +125,7 @@ public class BattleField : MonoBehaviour {
         /* reset rune.activated and motion params */
         rune.Reset();
     }
+
 
     float t_start;
     public float GetBattleTime() {
