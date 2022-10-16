@@ -96,6 +96,15 @@ public class RoboController : NetworkBehaviour {
         float efficiency = 0.4f;
         float wheel_power_single = robo_state.power * efficiency / wheel_num;
 
+        /* brake */
+        if (Input.GetKey(KeyCode.X)){
+            foreach (WheelCollider wc in wheelColliders)
+                wc.brakeTorque = wheel_power_single;
+            return ;
+        } else 
+            foreach (WheelCollider wc in wheelColliders)
+                wc.brakeTorque = 0;
+
         /* Get move direction from user input */
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
@@ -112,9 +121,7 @@ public class RoboController : NetworkBehaviour {
                 wc.motorTorque = wheel_power_single * Mathf.Sqrt(h * h + v * v);
             }
         } else {
-            foreach (WheelCollider wc in wheelColliders) {
-                wc.motorTorque = 0f;
-            }
+            StopMove();
         }
 
         /* make chassis follow turret(aka, yaw) */

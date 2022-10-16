@@ -35157,7 +35157,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1899311992172322443}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.15065925, y: -0.06, z: 0.17543556}
+  m_LocalPosition: {x: 0.15065925, y: -0.064999975, z: 0.17543556}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -35174,7 +35174,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.1
+  m_Radius: 0.07
   m_Height: 0.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.04, z: 0}
@@ -44214,7 +44214,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1899311992323848612}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.15065925, y: -0.06, z: -0.17456436}
+  m_LocalPosition: {x: 0.15065925, y: -0.065, z: -0.17456436}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44231,7 +44231,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.1
+  m_Radius: 0.07
   m_Height: 0.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.04, z: 0}
@@ -64411,7 +64411,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1899311992668186867}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.14934069, y: -0.06, z: 0.17543556}
+  m_LocalPosition: {x: -0.14934069, y: -0.064999975, z: 0.17543556}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -64428,7 +64428,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.1
+  m_Radius: 0.07
   m_Height: 0.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.04, z: 0}
@@ -68639,25 +68639,25 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.06
   m_SuspensionSpring:
-    spring: 10000
-    damper: 10
-    targetPosition: 0.5
-  m_SuspensionDistance: 0.01
+    spring: 100
+    damper: 50
+    targetPosition: 1
+  m_SuspensionDistance: 0.002
   m_ForceAppPointDistance: 0
-  m_Mass: 0.4
+  m_Mass: 0.5
   m_WheelDampingRate: 0.4
   m_ForwardFriction:
-    m_ExtremumSlip: 0.05
-    m_ExtremumValue: 0.75
-    m_AsymptoteSlip: 0.03
-    m_AsymptoteValue: 0.5
-    m_Stiffness: 0.8
-  m_SidewaysFriction:
-    m_ExtremumSlip: 0.05
+    m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.03
-    m_AsymptoteValue: 1
-    m_Stiffness: 0.8
+    m_AsymptoteSlip: 0.8
+    m_AsymptoteValue: 0.8
+    m_Stiffness: 1
+  m_SidewaysFriction:
+    m_ExtremumSlip: 0.2
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.5
+    m_AsymptoteValue: 0.75
+    m_Stiffness: 1
   m_Enabled: 1
 --- !u!1 &1899311992746815309
 GameObject:
@@ -78828,7 +78828,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1899311992911382491}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.14934075, y: -0.06, z: -0.17456445}
+  m_LocalPosition: {x: -0.14934075, y: -0.064999975, z: -0.17456445}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -78845,7 +78845,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.1
+  m_Radius: 0.07
   m_Height: 0.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.04, z: 0}
@@ -81076,7 +81076,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1899311992946771586}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.013, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -81094,8 +81094,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.13608685, z: 0.4098061}
-  m_Center: {x: 7.460769e-10, y: 0.055093125, z: 0.0031292737}
+  m_Size: {x: 0.3, y: 0.098112345, z: 0.4098061}
+  m_Center: {x: 1.1041485e-17, y: 0.03610587, z: 0.0031292737}
 --- !u!1 &1899311992947161271
 GameObject:
   m_ObjectHideFlags: 0
@@ -82380,7 +82380,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1899311992969313168}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.839, y: 0.298, z: -0.17}
+  m_LocalPosition: {x: 12.11, y: 0.298, z: 4.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -82431,10 +82431,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armor_color: 0
+  expval: 0
   survival: 1
-  heat_limit: 0
-  cool_down: 0
-  shoot_speed: 0
+  currexp: 0
+  maxheat: 0
+  cooldown: 0
+  bullspd: 0
   power: 0
   maxblood: 0
   currblood: 0
@@ -82443,6 +82445,7 @@ MonoBehaviour:
   B_cd: 0
   B_pow: 0
   B_rev: 0
+  B_rbn: 0
   li_B_atk:
   - 0
   li_B_dfc:
@@ -82451,8 +82454,11 @@ MonoBehaviour:
   - 0
   li_B_rev:
   - 0
+  li_B_rbn: 
   blood_bars:
   - {fileID: 2527316594931038070}
+  level: 0
+  maxexp: 0
 --- !u!114 &5539372565188456673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82465,9 +82471,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb1eab4b25ee7d34186c891608696b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shoot_speed: 0
-  cool_down: 0
-  heat_limit: 0
+  bull_num: 0
+  currheat: 0
+  heat_ratio: 0
 --- !u!114 &1995416777828430950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82739,7 +82745,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 20
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -96895,25 +96901,25 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.06
   m_SuspensionSpring:
-    spring: 10000
-    damper: 10
-    targetPosition: 0.5
-  m_SuspensionDistance: 0.01
+    spring: 100
+    damper: 50
+    targetPosition: 1
+  m_SuspensionDistance: 0.002
   m_ForceAppPointDistance: 0
-  m_Mass: 0.4
+  m_Mass: 0.5
   m_WheelDampingRate: 0.4
   m_ForwardFriction:
-    m_ExtremumSlip: 0.05
-    m_ExtremumValue: 0.75
-    m_AsymptoteSlip: 0.03
-    m_AsymptoteValue: 0.5
-    m_Stiffness: 0.8
-  m_SidewaysFriction:
-    m_ExtremumSlip: 0.05
+    m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.03
-    m_AsymptoteValue: 1
-    m_Stiffness: 0.8
+    m_AsymptoteSlip: 0.8
+    m_AsymptoteValue: 0.8
+    m_Stiffness: 1
+  m_SidewaysFriction:
+    m_ExtremumSlip: 0.2
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.5
+    m_AsymptoteValue: 0.75
+    m_Stiffness: 1
   m_Enabled: 1
 --- !u!1 &1899311993248838695
 GameObject:
@@ -99892,25 +99898,25 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.06
   m_SuspensionSpring:
-    spring: 10000
-    damper: 10
-    targetPosition: 0.5
-  m_SuspensionDistance: 0.01
+    spring: 100
+    damper: 50
+    targetPosition: 1
+  m_SuspensionDistance: 0.002
   m_ForceAppPointDistance: 0
-  m_Mass: 0.4
+  m_Mass: 0.5
   m_WheelDampingRate: 0.4
   m_ForwardFriction:
-    m_ExtremumSlip: 0.05
-    m_ExtremumValue: 0.75
-    m_AsymptoteSlip: 0.03
-    m_AsymptoteValue: 0.5
-    m_Stiffness: 0.8
-  m_SidewaysFriction:
-    m_ExtremumSlip: 0.05
+    m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.03
-    m_AsymptoteValue: 1
-    m_Stiffness: 0.8
+    m_AsymptoteSlip: 0.8
+    m_AsymptoteValue: 0.8
+    m_Stiffness: 1
+  m_SidewaysFriction:
+    m_ExtremumSlip: 0.2
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.5
+    m_AsymptoteValue: 0.75
+    m_Stiffness: 1
   m_Enabled: 1
 --- !u!1 &1899311993314222235
 GameObject:
@@ -103035,25 +103041,25 @@ WheelCollider:
   m_Center: {x: 0, y: 0, z: 0}
   m_Radius: 0.06
   m_SuspensionSpring:
-    spring: 10000
-    damper: 10
-    targetPosition: 0.5
-  m_SuspensionDistance: 0.01
+    spring: 100
+    damper: 50
+    targetPosition: 1
+  m_SuspensionDistance: 0.002
   m_ForceAppPointDistance: 0
-  m_Mass: 0.4
+  m_Mass: 0.5
   m_WheelDampingRate: 0.4
   m_ForwardFriction:
-    m_ExtremumSlip: 0.05
-    m_ExtremumValue: 0.75
-    m_AsymptoteSlip: 0.03
-    m_AsymptoteValue: 0.5
-    m_Stiffness: 0.8
-  m_SidewaysFriction:
-    m_ExtremumSlip: 0.05
+    m_ExtremumSlip: 0.4
     m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.03
-    m_AsymptoteValue: 1
-    m_Stiffness: 0.8
+    m_AsymptoteSlip: 0.8
+    m_AsymptoteValue: 0.8
+    m_Stiffness: 1
+  m_SidewaysFriction:
+    m_ExtremumSlip: 0.2
+    m_ExtremumValue: 1
+    m_AsymptoteSlip: 0.5
+    m_AsymptoteValue: 0.75
+    m_Stiffness: 1
   m_Enabled: 1
 --- !u!1 &1899311993379609907
 GameObject:

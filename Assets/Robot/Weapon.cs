@@ -31,10 +31,10 @@ public class Weapon : MonoBehaviour {
             bull_num--;
             GainHeat();
             if (this.caliber == Caliber._17mm) {
-                AudioSource.PlayClipAtPoint(AssetManager.singleton._17mm, transform.position);
+                AssetManager.singleton.PlayClipAtPoint(AssetManager.singleton._17mm, transform.position);
                 return BulletPool.singleton.GetSmallBullet();
             } else {
-                AudioSource.PlayClipAtPoint(AssetManager.singleton._42mm, transform.position);
+                AssetManager.singleton.PlayClipAtPoint(AssetManager.singleton._42mm, transform.position);
                 return BulletPool.singleton.GetBigBullet();
             }
         } else return null;

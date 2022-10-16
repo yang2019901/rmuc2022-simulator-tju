@@ -50,7 +50,7 @@ public class BattleField : MonoBehaviour {
         rune.Init();
         Debug.Log("rune init");
 
-        AudioSource.PlayClipAtPoint(AssetManager.singleton.gamebg, AssetManager.singleton.transform.position);
+        AssetManager.singleton.BrdcstClip(AssetManager.singleton.gamebg, true);
     }
 
 
@@ -114,7 +114,7 @@ public class BattleField : MonoBehaviour {
         }
     }
     public IEnumerator ActivateRune(ArmorColor armor_color, RuneBuff rune_buff) {
-        AudioSource.PlayClipAtPoint(AssetManager.singleton.rune_activ, transform.position);
+        AssetManager.singleton.BrdcstClip(AssetManager.singleton.rune_activ);
         if (rune_buff == RuneBuff.None)
             Debug.LogError("Error: activate RuneBuff.None");
         AddRuneBuff(armor_color, rune_buff);

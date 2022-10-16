@@ -4,7 +4,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-public enum ArmorColor {Red=0, Blue=1}
+public enum ArmorColor { Red = 0, Blue = 1 }
 
 public class AssetManager : MonoBehaviour {
     public static AssetManager singleton { get; private set; }
@@ -24,32 +24,36 @@ public class AssetManager : MonoBehaviour {
     public JObject weapon { get; private set; } // weapon config
     public JObject exp { get; private set; } // experience config
 
-    
+    public GameObject Speaker;
     /* bullet-related */
+    [Header("bullet-related")]
     public AudioClip _17mm;
     public AudioClip _42mm;
     public AudioClip hit_17mm;
     public AudioClip hit_42mm;
 
     /* background */
+    [Header("background")]
     public AudioClip prepare;
     public AudioClip checking;
-    public AudioClip cntdown; 
-    public AudioClip gamebg; 
+    public AudioClip cntdown;
+    public AudioClip gamebg;
     public AudioClip gamefin;
 
     /* broadcast */
+    [Header("broadcast")]
     public AudioClip ally_die;
-    public AudioClip enemy_die; 
-    public AudioClip self_die; 
-    public AudioClip kill_1st; 
-    public AudioClip kill_2nd; 
+    public AudioClip enemy_die;
+    public AudioClip self_die;
+    public AudioClip kill_1st;
+    public AudioClip kill_2nd;
     public AudioClip kill_3rd;
     public AudioClip kill_4th;
     public AudioClip kill_5th;
     public AudioClip ace;
 
     /* event */
+    [Header("event")]
     public AudioClip base_warn;
     public AudioClip base_opn;
     public AudioClip base_unshd;
@@ -57,12 +61,37 @@ public class AssetManager : MonoBehaviour {
     public AudioClip rune_activ;
 
     /* misc */
+    [Header("misc")]
     public AudioClip victory;
     public AudioClip lv_up;
     public AudioClip robo_die;
-    public AudioClip ilnd_taken; 
+    public AudioClip ilnd_taken;
     public AudioClip buff_taken;
-     
+
+
+    /// <summary>
+    /// API 
+    /// </summary>
+    public void PlayClipAtPoint(AudioClip ac, Vector3 pos) => AudioSource.PlayClipAtPoint(ac, pos);
+    public void BrdcstClip(AudioClip ac, bool loop=false) {
+        AudioSource[] src = Speaker.GetComponents<AudioSource>();
+        AudioSource tmp = new AudioSource();
+        bool aud_idle = false;
+        foreach (AudioSource aud in src)
+            if (!aud.isPlaying) {
+                tmp = aud;
+                aud_idle = true;
+                break;
+            }
+        if (!aud_idle)
+            tmp = Speaker.AddComponent<AudioSource>();
+
+        tmp.clip = ac;
+        tmp.loop = loop;
+        tmp.minDistance = 100;      // within minDistance, volume won't decay
+        tmp.Play();
+    }
+
 
     /// <summary>
     /// non-API 
