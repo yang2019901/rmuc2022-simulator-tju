@@ -73,6 +73,8 @@ public class AssetManager : MonoBehaviour {
     /// API 
     /// </summary>
     public void PlayClipAtPoint(AudioClip ac, Vector3 pos) => AudioSource.PlayClipAtPoint(ac, pos);
+
+
     public void BrdcstClip(AudioClip ac, bool loop=false) {
         AudioSource[] src = Speaker.GetComponents<AudioSource>();
         AudioSource tmp = new AudioSource();
@@ -89,8 +91,10 @@ public class AssetManager : MonoBehaviour {
         tmp.clip = ac;
         tmp.loop = loop;
         tmp.minDistance = 100;      // within minDistance, volume won't decay
+        tmp.volume = 0.3f;
         tmp.Play();
     }
+
 
 
     /// <summary>

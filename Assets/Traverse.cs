@@ -75,7 +75,7 @@ public class Traverse : MonoBehaviour
         Renderer tmp = child.GetComponent<MeshRenderer>();
         if (tmp == null)
             return ;
-        if (tmp.sharedMaterial == AssetManager.singleton.light_red)
+        if (tmp.sharedMaterial.name.ToLower() == "material_4")
         // if (child.name.Contains("轨") && !child.name.Contains("板"))
         {
             Debug.Log("replace");

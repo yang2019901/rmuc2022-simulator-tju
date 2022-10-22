@@ -28,6 +28,10 @@ public class RoboController : NetworkBehaviour {
     private Weapon wpn;
     private RoboState robo_state;
 
+    
+    /// <summary>
+    /// non-API
+    /// </summary>
     public override void OnStartClient() {
         base.OnStartClient();
         if (hasAuthority) {
@@ -69,11 +73,16 @@ public class RoboController : NetworkBehaviour {
         } else {
             StopMove();
         }
+        UpdateSelfUI();
+    }
+
+
+    void UpdateSelfUI() {
         // if (BattleField.singleton.bat_ui == null)
         //     Debug.Log("BattleField.singleton.bat_ui == null");
         BattleField.singleton.bat_ui.ratio = wpn.heat_ratio;
-    }
 
+    }
 
     void SetCursor() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -92,43 +101,58 @@ public class RoboController : NetworkBehaviour {
 
     void Move() {
         /* Manage Power */
-        int wheel_num = 4;
+        int wheel_num = wheelColliders.Length;
         float efficiency = 0.4f;
-        float wheel_power_single = robo_state.power * efficiency / wheel_num;
+        float torque_drive = 10f;
+        float torque_spin = 10f;
+
+        float torque_avail = efficiency * robo_state.power;
+
+        bool braking = Input.GetKey(KeyCode.X);
+        bool spinning = Input.GetKey(KeyCode.LeftShift);
 
         /* brake */
-        if (Input.GetKey(KeyCode.X)){
-            foreach (WheelCollider wc in wheelColliders)
-                wc.brakeTorque = wheel_power_single;
+        if (braking){
+            for (int i = 0; i < wheel_num; i++) {
+                wheelColliders[i].steerAngle = (45 + 90 * i) % 360 * Mathf.Deg2Rad;
+                wheelColliders[i].brakeTorque = torque_avail / wheel_num;
+            }
+            Debug.Log("braking");
             return ;
-        } else 
+        } else  // remove previous brake torque
             foreach (WheelCollider wc in wheelColliders)
                 wc.brakeTorque = 0;
-
+        
         /* Get move direction from user input */
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-        Vector3 mov_dir = h * _rigid.transform.right + v * _rigid.transform.forward;
-        mov_dir.Normalize();
 
-        /* Rotate wheels and move the car */
+        /* move the car and steer wheels */
         if (Mathf.Abs(h) > 1e-3 || Mathf.Abs(v) > 1e-3) {
             float steer_ang = Mathf.Rad2Deg * Mathf.Atan2(h, v);
+            steer_ang += yaw.localEulerAngles.y;
             /* get remainder, make sure steer_ang is in [-360, 360] */
             foreach (WheelCollider wc in wheelColliders) {
                 /* steerAngle will CLAMP angle to [-360, 360] */
                 wc.steerAngle = steer_ang;
-                wc.motorTorque = wheel_power_single * Mathf.Sqrt(h * h + v * v);
+                wc.motorTorque = torque_drive * Mathf.Sqrt(h * h + v * v);
             }
         } else {
             StopMove();
         }
 
-        /* make chassis follow turret(aka, yaw) */
-        float d_ang = -Mathf.DeltaAngle(yaw_ang, _rigid.transform.eulerAngles.y);
-        if (Mathf.Abs(d_ang) < 5)  d_ang = 0;
-        /* TODO: use PID controller */
-        float torque = 0.2f * PID(d_ang);
+        float torque = 0;
+        if (spinning) {
+            torque = torque_spin;
+        } else {
+            /* make chassis follow turret(aka, yaw) */
+            float d_ang = -Mathf.DeltaAngle(yaw_ang, _rigid.transform.eulerAngles.y);
+            if (Mathf.Abs(d_ang) < 5)  d_ang = 0;
+            /* TODO: use PID controller */
+            torque = 0.2f * PID(d_ang);
+        }
+        /* apply torques */
+        float torque_now = 0;
         for (int i = 0; i < wheel_num; i++) {
             float ang1 = wheelColliders[i].steerAngle * Mathf.Deg2Rad;
             float ang2 = (45 + 90 * i) % 360 * Mathf.Deg2Rad;
@@ -137,11 +161,19 @@ public class RoboController : NetworkBehaviour {
             Vector2 f_all = f1 + f2;
             wheelColliders[i].steerAngle = (Mathf.Rad2Deg * Mathf.Atan2(f_all.y, f_all.x));
             wheelColliders[i].motorTorque = f_all.magnitude;
+            torque_now += wheelColliders[i].motorTorque;
             /* rotate the visual model */
             if (wheels.Length > i)
                 wheels[i].transform.localEulerAngles = new Vector3(0, wheelColliders[i].steerAngle, 0);
         }
+        if (torque_now < 10)
+            return ;
+        else 
+            for (int i = 0; i < wheel_num; i++)
+                wheelColliders[i].motorTorque *= torque_avail / torque_now;
     }
+    
+
     float sum = 0;
     float last_err;
     float Kp = 1f;

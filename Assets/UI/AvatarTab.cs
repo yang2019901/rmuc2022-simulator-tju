@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+// using UnityEngine.UI;
+using TMPro;
 
 namespace RMUC_UI {
     public class AvatarTab : MonoBehaviour {
         [SerializeField] private GameObject img_ready;
         [SerializeField] private GameObject img_index;
-        [SerializeField] private Text text_owner;
+        [SerializeField] private TMP_Text text_owner;
 
         private const string Golden = "#ffdf00";
         public void SetReady(bool ready) {

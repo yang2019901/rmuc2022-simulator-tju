@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace RMUC_UI {
     public class BloodBar : MonoBehaviour {
@@ -29,8 +30,17 @@ namespace RMUC_UI {
         [Header("For Outpost")]
         public GameObject bar_dead;
 
+        [Header("For Display")]
+        public TMP_Text blood_txt;
+
         float bld_ratio = 1;
         float bld_mid_ratio = 1;
+
+
+        /// <summary>
+        /// API
+        /// </summary>
+
         /* set blood bar's length */
         public void SetBlood(float ratio) {
             this.bld_ratio = ratio;
@@ -39,15 +49,7 @@ namespace RMUC_UI {
                 bar_dead.SetActive(true);
             }
         }
-        void Update() {
-            if (bar_blood_mid != null && bld_mid_ratio > bld_ratio) {
-                if (bld_mid_ratio > bld_ratio + 0.1f)
-                    bld_mid_ratio = bld_ratio + 0.1f;
-                bld_mid_ratio -= 0.1f * Time.deltaTime;
-                bar_blood_mid.transform.position = bld_mid_ratio * (bld_mid_full.position)
-                    + (1 - bld_mid_ratio) * (bld_mid_empty.position);
-            }
-        }
+        
 
         public void SetShield(float ratio) {
             bar_shield.transform.position = ratio * (shd_full.position) + (1 - ratio) * (shd_empty.position);
@@ -72,13 +74,23 @@ namespace RMUC_UI {
         }
 
         /* for base and outpost only:  add a golden cover */
-        public void SetInvulState(bool is_on) {
-            bar_golden.SetActive(is_on);
+        public void SetInvulState(bool is_on) => bar_golden.SetActive(is_on);
+
+        public void DispBldTxt(int currblood, int maxblood) {
+            blood_txt.text = string.Format("<b>{0} / {1}</b>", currblood, maxblood);
         }
 
-        // /* add a green cover */
-        // public void SetBuffState(bool is_on) {
-        //     bar_green.SetActive(is_on);
-        // }
+        /// <summary>
+        /// non-API
+        /// </summary>
+        void Update() {
+            if (bar_blood_mid != null && bld_mid_ratio > bld_ratio) {
+                if (bld_mid_ratio > bld_ratio + 0.1f)
+                    bld_mid_ratio = bld_ratio + 0.1f;
+                bld_mid_ratio -= 0.1f * Time.deltaTime;
+                bar_blood_mid.transform.position = bld_mid_ratio * (bld_mid_full.position)
+                    + (1 - bld_mid_ratio) * (bld_mid_empty.position);
+            }
+        }
     }
 }

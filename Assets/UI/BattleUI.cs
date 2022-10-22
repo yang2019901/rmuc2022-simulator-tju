@@ -24,8 +24,8 @@ public class BattleUI : MonoBehaviour {
         for (int i = 0; i < avaBatStats.Length; i++) {
             avaBatStats[i].Push(uisync.robots[i]);
         }
-        SetBase(uisync.bs_r, baseStat_red);
-        SetBase(uisync.bs_b, baseStat_blue);
+        SetBase(baseStat_red, uisync.bs_r);
+        SetBase(baseStat_blue, uisync.bs_b);
 
         otptStat_red.Push(uisync.os_r);
         otptStat_blue.Push(uisync.os_b);
@@ -37,7 +37,7 @@ public class BattleUI : MonoBehaviour {
         notepad.SetTime(420 - bs.time_bat);
     }
 
-    void SetBase(BaseSync bs, RMUC_UI.BloodBar baseStat) {
+    void SetBase(RMUC_UI.BloodBar baseStat, BaseSync bs) {
         baseStat.SetInvulState(bs.invul);
         baseStat.SetBlood(bs.currblood / 5000f);
         baseStat.SetShield(bs.shield / 500f);
