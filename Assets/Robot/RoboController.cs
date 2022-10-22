@@ -28,7 +28,7 @@ public class RoboController : NetworkBehaviour {
     private Weapon wpn;
     private RoboState robo_state;
 
-    
+
     /// <summary>
     /// non-API
     /// </summary>
@@ -51,6 +51,8 @@ public class RoboController : NetworkBehaviour {
     }
 
     void Start() {
+        if (!hasAuthority)
+            return;
         _rigid = GetComponent<Rigidbody>();
         _rigid.centerOfMass = centerOfMass;
         Cursor.lockState = CursorLockMode.Locked;
@@ -58,6 +60,8 @@ public class RoboController : NetworkBehaviour {
         wpn = GetComponent<Weapon>();
         if (yaw != null)
             yaw_ang = yaw.eulerAngles.y;
+
+        BattleField.singleton.bat_ui.my_roboidx = BattleField.singleton.robo_all.FindIndex(i => i == this.robo_state);
     }
 
     void Update() {
@@ -81,8 +85,8 @@ public class RoboController : NetworkBehaviour {
         // if (BattleField.singleton.bat_ui == null)
         //     Debug.Log("BattleField.singleton.bat_ui == null");
         BattleField.singleton.bat_ui.ratio = wpn.heat_ratio;
-
     }
+
 
     void SetCursor() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -112,17 +116,17 @@ public class RoboController : NetworkBehaviour {
         bool spinning = Input.GetKey(KeyCode.LeftShift);
 
         /* brake */
-        if (braking){
+        if (braking) {
             for (int i = 0; i < wheel_num; i++) {
                 wheelColliders[i].steerAngle = (45 + 90 * i) % 360 * Mathf.Deg2Rad;
                 wheelColliders[i].brakeTorque = torque_avail / wheel_num;
             }
             Debug.Log("braking");
-            return ;
+            return;
         } else  // remove previous brake torque
             foreach (WheelCollider wc in wheelColliders)
                 wc.brakeTorque = 0;
-        
+
         /* Get move direction from user input */
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
@@ -147,7 +151,7 @@ public class RoboController : NetworkBehaviour {
         } else {
             /* make chassis follow turret(aka, yaw) */
             float d_ang = -Mathf.DeltaAngle(yaw_ang, _rigid.transform.eulerAngles.y);
-            if (Mathf.Abs(d_ang) < 5)  d_ang = 0;
+            if (Mathf.Abs(d_ang) < 5) d_ang = 0;
             /* TODO: use PID controller */
             torque = 0.2f * PID(d_ang);
         }
@@ -167,12 +171,12 @@ public class RoboController : NetworkBehaviour {
                 wheels[i].transform.localEulerAngles = new Vector3(0, wheelColliders[i].steerAngle, 0);
         }
         if (torque_now < 10)
-            return ;
-        else 
+            return;
+        else
             for (int i = 0; i < wheel_num; i++)
                 wheelColliders[i].motorTorque *= torque_avail / torque_now;
     }
-    
+
 
     float sum = 0;
     float last_err;
@@ -182,9 +186,9 @@ public class RoboController : NetworkBehaviour {
     /* use PID controller (Kp > 0) to calc MV */
     float PID(float err) {
         sum += err;
-        float d_err = err-last_err;
+        float d_err = err - last_err;
         last_err = err;
-        float output = Kp * (err + Ki*sum + Kd*d_err);
+        float output = Kp * (err + Ki * sum + Kd * d_err);
         // Debug.Log("pid output: " + output);
         return output;
     }
@@ -212,7 +216,8 @@ public class RoboController : NetworkBehaviour {
             CmdSupply(this.gameObject.name, 5);
         }
     }
-    [Command] public void CmdSupply(string robot_s, int num) {
+    [Command]
+    public void CmdSupply(string robot_s, int num) {
         // /* detect what buff this robot currently has */
         // string buffs = "";
         // foreach (Buff tmp in this.robo_state.robo_buff) {
@@ -220,9 +225,9 @@ public class RoboController : NetworkBehaviour {
         // }
         // Debug.Log(buffs);
 
-        if (this.robo_state.robo_buff.FindIndex(i => i.tag==BuffType.rev) == -1) {
+        if (this.robo_state.robo_buff.FindIndex(i => i.tag == BuffType.rev) == -1) {
             Debug.Log("not in revive spot");
-            return ;
+            return;
         }
         GameObject obj = GameObject.Find(robot_s);
         obj.GetComponent<Weapon>().bull_num += num;
@@ -236,14 +241,16 @@ public class RoboController : NetworkBehaviour {
             last_fire = Time.time;
         }
     }
-    [Command] public void CmdShoot(Vector3 pos, Vector3 vel) {
+    [Command]
+    public void CmdShoot(Vector3 pos, Vector3 vel) {
         if (!NetworkClient.active) {
             Debug.Log("gains heat in pure server");
             ShootBull(pos, vel);
         }
         RpcShoot(pos, vel);
     }
-    [ClientRpc] void RpcShoot(Vector3 pos, Vector3 vel) {
+    [ClientRpc]
+    void RpcShoot(Vector3 pos, Vector3 vel) {
         ShootBull(pos, vel);
     }
     void ShootBull(Vector3 pos, Vector3 vel) {

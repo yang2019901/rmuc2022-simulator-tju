@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace RMUC_UI {
     public class BattleUI : MonoBehaviour {
         public Notepad notepad;
-        public RoboTab[] avaBatStats;
+        public RoboTab[] robotabs;
 
         public BloodBar baseStat_red;
         public BloodBar baseStat_blue;
@@ -19,14 +20,15 @@ namespace RMUC_UI {
         [HideInInspector] public float ratio = 0;
         public Image overheat_bg;
 
-        [HideInInspector] public int currblood;
-        [HideInInspector] public int maxblood;
+        public RMUC_UI.RoboTab my_robot;
+        [HideInInspector] public int my_roboidx = -1;
+
 
         public void Push(UISync uisync) {
             SetNotePad(uisync.bat_sync);
 
-            for (int i = 0; i < avaBatStats.Length; i++) {
-                avaBatStats[i].Push(uisync.robots[i]);
+            for (int i = 0; i < robotabs.Length; i++) {
+                robotabs[i].Push(uisync.robots[i]);
             }
             SetBase(baseStat_red, uisync.bs_r);
             SetBase(baseStat_blue, uisync.bs_b);
@@ -34,11 +36,13 @@ namespace RMUC_UI {
             otptStat_red.Push(uisync.os_r);
             otptStat_blue.Push(uisync.os_b);
 
-            SetMyUI();
+            if (my_roboidx != -1) {
+                SetMyUI(uisync.robots[my_roboidx]);
+            }
         }
 
         void SetNotePad(BatSync bs) {
-            notepad.SetTime(420 - bs.time_bat);
+            notepad.SetTime(7 * 60 - bs.time_bat);
         }
 
         void SetBase(BloodBar baseStat, BaseSync bs) {
@@ -47,15 +51,24 @@ namespace RMUC_UI {
             baseStat.SetShield(bs.shield / 500f);
         }
 
-        void SetMyUI() {
-            hr.SetHeat(ratio);
-            if (ratio > 1) {
-                overheat_bg.gameObject.SetActive(true);
-            } else {
-                overheat_bg.gameObject.SetActive(false);
+        // called every frame
+        bool idx_set = false;
+        void SetMyUI(RoboSync my_robosync) {
+            if (!idx_set) {
+                foreach (TMP_Text txt in my_robot.GetComponentsInChildren<TMP_Text>())
+                    if (txt.gameObject.name.ToLower().Contains("idx")) {
+                        txt.text = (my_roboidx % 5 + 1).ToString();
+                        Debug.Log("set my robot index");
+                    }
             }
+            hr.SetHeat(ratio);
+            if (ratio > 1)
+                overheat_bg.gameObject.SetActive(true);
+            else
+                overheat_bg.gameObject.SetActive(false);
 
-            
+            my_robot.Push(my_robosync);
+            my_robot.bld_bar.DispBldTxt(my_robosync.currblood, my_robosync.maxblood);
         }
     }
 }

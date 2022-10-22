@@ -100,7 +100,11 @@ public class InfantryState : RoboState {
         var tmp = AssetManager.singleton.infa_chs[this.chassis_pref];
         if (this.chassis_pref != "init_mode")
             tmp = tmp[this.level_s];
-        this.maxblood = tmp["maxblood"].ToObject<int>();
+
+        int bld_new = tmp["maxblood"].ToObject<int>();
+        this.currblood += bld_new - this.maxblood;  // currblood also raise when level up
+        this.maxblood = bld_new;
+
         this.power = tmp["power"].ToObject<int>();
         /* configure weapon */
         tmp = AssetManager.singleton.weapon["17mm"][this.weapon_pref];

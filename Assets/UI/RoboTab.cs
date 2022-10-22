@@ -46,19 +46,23 @@ namespace RMUC_UI {
             if (otpt_sync.currblood != this.currblood) {
                 bld_bar.SetBlood(otpt_sync.currblood / 1500f);
                 this.currblood = otpt_sync.currblood;
-                Debug.Log("outpost currblood: " + this.currblood);
             }
             bld_bar.SetInvulState(otpt_sync.invul);
         }
 
+
         public void Push(RoboSync robo_sync) {
-            if (this.bat_stat != robo_sync.bat_stat)
+            // img_ava
+            if (this.bat_stat != robo_sync.bat_stat && img_ava != null && imgs_ava.Length > (int)robo_sync.bat_stat)
                 img_ava.sprite = imgs_ava[(int)robo_sync.bat_stat];
+            // blood bar
             if (robo_sync.has_blood && this.bld_bar != null) {
-                if (this.currblood != robo_sync.currblood) {
+                // blood top
+                if (this.currblood != robo_sync.currblood || this.maxblood != robo_sync.maxblood) {
                     bld_bar.SetBlood(((float)robo_sync.currblood) / robo_sync.maxblood);
                 }
-                if (this.maxblood != robo_sync.maxblood) {
+                // blood mask (how many grid in robotab)
+                if (this.maxblood != robo_sync.maxblood && bld_masks.Length > 0) {
                     int idx = MaxbldToIdx(robo_sync.maxblood);
                     if (bld_masks.Length > idx)
                         bld_bar.SetMask(bld_masks[idx]);
@@ -66,25 +70,33 @@ namespace RMUC_UI {
                         Debug.Log("No alternative mask");
                 }
             }
+            // img_lv
             if (robo_sync.has_level && img_lv != null) {
                 if (this.bat_stat != robo_sync.bat_stat || this.level != robo_sync.level) {
-                    this.img_lv.sprite = robo_sync.bat_stat != BatStat.Dead ? imgs_lv[robo_sync.level] 
-                        : imgs_lv_dead[robo_sync.level];
+                    bool surv = robo_sync.bat_stat != BatStat.Dead;
+                    if (surv && imgs_lv.Length > robo_sync.level)
+                        this.img_lv.sprite = imgs_lv[robo_sync.level];
+                    else if (!surv && imgs_lv_dead.Length > robo_sync.level)
+                        this.img_lv.sprite = imgs_lv_dead[robo_sync.level];
                 }
             }
-            if (robo_sync.has_wpn) {
+            // txt_bullnum
+            if (robo_sync.has_wpn && txt_bullnum != null) {
                 if (this.bull_num != robo_sync.bull_num)
                     if (robo_sync.bull_num == 0)
                         txt_bullnum.text = "<color=#FF0707>0</color>";
                     else
                         txt_bullnum.text = robo_sync.bull_num.ToString();
             }
+            // refresh
             this.maxblood = robo_sync.maxblood;
             this.currblood = robo_sync.currblood;
             this.bat_stat = robo_sync.bat_stat;
             this.level = robo_sync.level;
             this.bull_num = robo_sync.bull_num;
         }
+
+
         int MaxbldToIdx(int maxblood) {
             return maxblood <= 500 ? maxblood/50 - 1 : 10; 
         }
