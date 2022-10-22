@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+using RMUC_UI;
+
 /******************************************************************
  * NOTE: only visual-effect-related variables needs synchronizing *
  ******************************************************************/

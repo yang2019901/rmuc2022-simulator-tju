@@ -3,53 +3,59 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BattleUI : MonoBehaviour {
-    public RMUC_UI.Notepad notepad;
-    public RMUC_UI.AvaBatStat[] avaBatStats;
+namespace RMUC_UI {
+    public class BattleUI : MonoBehaviour {
+        public Notepad notepad;
+        public RoboTab[] avaBatStats;
 
-    public RMUC_UI.BloodBar baseStat_red;
-    public RMUC_UI.BloodBar baseStat_blue;
+        public BloodBar baseStat_red;
+        public BloodBar baseStat_blue;
 
-    public RMUC_UI.AvaBatStat otptStat_red;
-    public RMUC_UI.AvaBatStat otptStat_blue;
+        public RoboTab otptStat_red;
+        public RoboTab otptStat_blue;
 
-    /* My UI */
-    public RMUC_UI.HeatRing hr;
-    public float ratio = 0;
-    public Image overheat_bg;
+        /* My UI */
+        public HeatRing hr;
+        [HideInInspector] public float ratio = 0;
+        public Image overheat_bg;
 
-    public void Push(UISync uisync) {
-        SetNotePad(uisync.bat_sync);
+        [HideInInspector] public int currblood;
+        [HideInInspector] public int maxblood;
 
-        for (int i = 0; i < avaBatStats.Length; i++) {
-            avaBatStats[i].Push(uisync.robots[i]);
-        }
-        SetBase(baseStat_red, uisync.bs_r);
-        SetBase(baseStat_blue, uisync.bs_b);
+        public void Push(UISync uisync) {
+            SetNotePad(uisync.bat_sync);
 
-        otptStat_red.Push(uisync.os_r);
-        otptStat_blue.Push(uisync.os_b);
+            for (int i = 0; i < avaBatStats.Length; i++) {
+                avaBatStats[i].Push(uisync.robots[i]);
+            }
+            SetBase(baseStat_red, uisync.bs_r);
+            SetBase(baseStat_blue, uisync.bs_b);
 
-        SetMyUI();
-    }
+            otptStat_red.Push(uisync.os_r);
+            otptStat_blue.Push(uisync.os_b);
 
-    void SetNotePad(BatSync bs) {
-        notepad.SetTime(420 - bs.time_bat);
-    }
-
-    void SetBase(RMUC_UI.BloodBar baseStat, BaseSync bs) {
-        baseStat.SetInvulState(bs.invul);
-        baseStat.SetBlood(bs.currblood / 5000f);
-        baseStat.SetShield(bs.shield / 500f);
-    }
-
-    void SetMyUI() {
-        hr.SetHeat(ratio);
-        if (ratio > 1) {
-            overheat_bg.gameObject.SetActive(true);
-        } else {
-            overheat_bg.gameObject.SetActive(false);
+            SetMyUI();
         }
 
+        void SetNotePad(BatSync bs) {
+            notepad.SetTime(420 - bs.time_bat);
+        }
+
+        void SetBase(BloodBar baseStat, BaseSync bs) {
+            baseStat.SetInvulState(bs.invul);
+            baseStat.SetBlood(bs.currblood / 5000f);
+            baseStat.SetShield(bs.shield / 500f);
+        }
+
+        void SetMyUI() {
+            hr.SetHeat(ratio);
+            if (ratio > 1) {
+                overheat_bg.gameObject.SetActive(true);
+            } else {
+                overheat_bg.gameObject.SetActive(false);
+            }
+
+            
+        }
     }
 }

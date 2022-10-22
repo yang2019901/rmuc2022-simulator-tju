@@ -130,11 +130,11 @@ public class RoboController : NetworkBehaviour {
         /* move the car and steer wheels */
         if (Mathf.Abs(h) > 1e-3 || Mathf.Abs(v) > 1e-3) {
             float steer_ang = Mathf.Rad2Deg * Mathf.Atan2(h, v);
-            steer_ang += yaw.localEulerAngles.y;
-            /* get remainder, make sure steer_ang is in [-360, 360] */
+            steer_ang = steer_ang + yaw.localEulerAngles.y;
             foreach (WheelCollider wc in wheelColliders) {
-                /* steerAngle will CLAMP angle to [-360, 360] */
-                wc.steerAngle = steer_ang;
+                /* Note: steerAngle will CLAMP angle to [-360, 360]
+                    Get remainder, make sure steer_ang is in [-360, 360] */
+                wc.steerAngle = steer_ang % 360;
                 wc.motorTorque = torque_drive * Mathf.Sqrt(h * h + v * v);
             }
         } else {

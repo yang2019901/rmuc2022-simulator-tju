@@ -6,10 +6,10 @@ using TMPro;
 
 // for robot, "Defensive" means B_dfc > 0; for base, "Defensive" means shield > 0;
 // for outpost, it is illegal
-public enum BatStat { Dead = 0, Survival = 1, Defensive = 2, Invulnerable = 3 };
 namespace RMUC_UI {
+    public enum BatStat { Dead = 0, Survival = 1, Defensive = 2, Invulnerable = 3 };
 
-    public class AvaBatStat : MonoBehaviour {
+    public class RoboTab : MonoBehaviour {
         public BloodBar bld_bar;
         public Image img_lv;
         public Image img_ava;

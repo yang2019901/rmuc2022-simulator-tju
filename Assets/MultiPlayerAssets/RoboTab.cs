@@ -4,8 +4,8 @@ using UnityEngine;
 // using UnityEngine.UI;
 using TMPro;
 
-namespace RMUC_UI {
-    public class AvatarTab : MonoBehaviour {
+namespace LobbyUI {
+    public class RoboTab : MonoBehaviour {
         [SerializeField] private GameObject img_ready;
         [SerializeField] private GameObject img_index;
         [SerializeField] private TMP_Text text_owner;
@@ -20,7 +20,7 @@ namespace RMUC_UI {
             text_owner.text = owner;
         }
 
-        public void SetAvatarTab(PlayerSync player_state) {
+        public void SetRoboTab(PlayerSync player_state) {
             if (!player_state.owning_ava)
                 Debug.LogError("Damn! RoboTag receive player_state that owns no robot. Program goes wrong");
             /* local player takes that avatar */
@@ -32,7 +32,7 @@ namespace RMUC_UI {
             SetReady(player_state.ready);
         }
 
-        public void ResetAvatarTab() {
+        public void RstRoboTab() {
             this.SetReady(false);
             SetOwner("");
         }

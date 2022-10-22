@@ -19,7 +19,7 @@ public class BattleField : MonoBehaviour {
     /// <summary>
     /// External reference
     /// </summary>
-    public BattleUI bat_ui;
+    public RMUC_UI.BattleUI bat_ui;
     public OutpostState outpost_blue;
     public OutpostState outpost_red;
     public BaseState base_blue;

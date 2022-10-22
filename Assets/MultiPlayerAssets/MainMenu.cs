@@ -5,7 +5,7 @@ using Mirror;
 using UnityEngine.UI;
 using TMPro;
 
-namespace RMUC_UI {
+namespace LobbyUI {
     /* handle all UI-related events and call corresponding functions in other scripts */
     public class MainMenu : MonoBehaviour {
         public BattleNetworkManager net_man;
@@ -29,7 +29,7 @@ namespace RMUC_UI {
         [Header("robot names")]
         [Tooltip("set in Inspector and corresponding to avatar")]
         public List<string> ava_tags;
-        public List<AvatarTab> avatars;
+        public List<RoboTab> avatars;
 
         void Start() {
             /* set first menu to be player info menu */
@@ -91,8 +91,8 @@ namespace RMUC_UI {
         }
         public void SetPlayerLobby() {
             DisableAllMenus();
-            foreach (AvatarTab avaTab in this.avatars)
-                avaTab.ResetAvatarTab();
+            foreach (RoboTab avaTab in this.avatars)
+                avaTab.RstRoboTab();
             /* Don't use NI_obj.SetActive() in client PC. Otherwise, NI_obj won't be spawned properly */
             if (NetworkServer.active)
                 Menu_player_lobby.SetActive(true);
@@ -115,16 +115,16 @@ namespace RMUC_UI {
         /** under the hood : button click -> TakeAvatar --mes--> (server PC) OnApplyAvatar
             @player_sync: tells which tab is clicked
          */
-        public void TakeAvatar(AvatarTab player_sync) {
+        public void TakeAvatar(RoboTab player_sync) {
             /* get to know which AvatarTab player clicked */
             int idx = this.avatars.FindIndex(ava => ava == player_sync);
-            NetLobby.AvatarMessage mes = new NetLobby.AvatarMessage(
+            NetLobby.AvaOwnMessage mes = new NetLobby.AvaOwnMessage(
                 this.ava_tags[idx], this.input_info.text);
             /* judge whether user click his avatar. If so, give up taking that avatar */
             PlayerSync ps = net_lob.playerSyncs.Find(i => i.connId == net_lob.uid);
             if (ps.owning_ava && ps.ava_tag == this.ava_tags[idx])
                 mes.robot_s = NetLobby.NULLAVA;
-            NetworkClient.Send<NetLobby.AvatarMessage>(mes);
+            NetworkClient.Send<NetLobby.AvaOwnMessage>(mes);
         }
 
         public void InvReady() {
@@ -135,9 +135,9 @@ namespace RMUC_UI {
                 NetworkClient.Send<NetLobby.StartGameMessage>(new NetLobby.StartGameMessage(true));
                 Menu_player_lobby.SetActive(false);
             } else {
-                NetLobby.AvaStateMessage mes = new NetLobby.AvaStateMessage();
+                NetLobby.AvaReadyMessage mes = new NetLobby.AvaReadyMessage();
                 mes.ready = !this.ava_ready;
-                NetworkClient.Send<NetLobby.AvaStateMessage>(mes);
+                NetworkClient.Send<NetLobby.AvaReadyMessage>(mes);
             }
         }
 

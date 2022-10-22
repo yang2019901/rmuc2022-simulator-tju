@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+using RMUC_UI;
+
 public class RoboState : BasicState {
     public bool survival = true;  // whether this robot survives
 

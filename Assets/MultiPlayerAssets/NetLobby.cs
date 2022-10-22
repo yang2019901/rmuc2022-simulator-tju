@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-namespace RMUC_UI {
+namespace LobbyUI {
     [System.Serializable]
     public struct PlayerSync {
         public int connId;          // connId of the player, but only can be used by server because client don't know its connid on server;
@@ -34,17 +34,17 @@ namespace RMUC_UI {
         /** Tip: nested struct declaration => Netlobby.AvatarMessage instead of AvatarMessage.
             direction: client -> server
          */
-        public struct AvatarMessage : NetworkMessage {
+        public struct AvaOwnMessage : NetworkMessage {
             public string robot_s;
             public string player_name;
             /* construct function with params */
-            public AvatarMessage(string robot_s, string player_name) {
+            public AvaOwnMessage(string robot_s, string player_name) {
                 this.robot_s = robot_s;
                 this.player_name = player_name;
             }
         }
 
-        public struct AvaStateMessage : NetworkMessage {
+        public struct AvaReadyMessage : NetworkMessage {
             public bool ready;
         }
         /* used to tell client about its connId in server PC's scene */
@@ -82,14 +82,14 @@ namespace RMUC_UI {
 
             /* when first joining, 1. send fake AvaMes to register
                 2. init AvaTabs as playerSyncs */
-            AvatarMessage fake_ava_mes = new AvatarMessage(NULLAVA, mainmenu.input_info.text);
-            NetworkClient.Send<AvatarMessage>(fake_ava_mes);
+            AvaOwnMessage fake_ava_mes = new AvaOwnMessage(NULLAVA, mainmenu.input_info.text);
+            NetworkClient.Send<AvaOwnMessage>(fake_ava_mes);
             foreach (PlayerSync tmp in playerSyncs) {
                 /* all clients has a corresponding PlayerSync, 
                     yet it's possible that not every client owns avatar */
                 if (tmp.owning_ava) {
                     int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag == tmp.ava_tag);
-                    mainmenu.avatars[avaIdx].SetAvatarTab(tmp);
+                    mainmenu.avatars[avaIdx].SetRoboTab(tmp);
                 }
             }
             /* first client is owner */
@@ -122,7 +122,7 @@ namespace RMUC_UI {
             2. to give up owning avatar
         */
         [Server]
-        public void OnApplyAvatar(NetworkConnectionToClient conn, AvatarMessage mes) {
+        public void OnApplyAvatar(NetworkConnectionToClient conn, AvaOwnMessage mes) {
             bool is_avatar_taken = (-1 != playerSyncs.FindIndex(i => i.owning_ava && i.ava_tag == mes.robot_s));
             if (is_avatar_taken)
                 Debug.Log("server: the robot is taken!");
@@ -152,7 +152,7 @@ namespace RMUC_UI {
         }
 
         [Server]
-        public void OnInvAvaReady(NetworkConnectionToClient conn, AvaStateMessage mes) {
+        public void OnInvAvaReady(NetworkConnectionToClient conn, AvaReadyMessage mes) {
             int id_cli = conn.connectionId;
             int syncIdx = playerSyncs.FindIndex(i => i.connId == id_cli);
             if (syncIdx == -1) {
@@ -185,12 +185,12 @@ namespace RMUC_UI {
             /* step 1: reset old avatar */
             if (oldval.ava_tag != null) {
                 int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag == oldval.ava_tag);
-                mainmenu.avatars[avaIdx].ResetAvatarTab();
+                mainmenu.avatars[avaIdx].RstRoboTab();
             }
             /* step 2: set corresponding AvatarTab according to newval  */
             if (newval.ava_tag != null) {
                 int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag == newval.ava_tag);
-                mainmenu.avatars[avaIdx].SetAvatarTab(newval);
+                mainmenu.avatars[avaIdx].SetRoboTab(newval);
             }
             int syncIdx = this.playerSyncs.FindIndex(p => p.connId == this.uid);
             if (syncIdx != -1) {
