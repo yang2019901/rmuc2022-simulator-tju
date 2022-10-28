@@ -82,8 +82,6 @@ public class RoboController : NetworkBehaviour {
 
 
     void UpdateSelfUI() {
-        // if (BattleField.singleton.bat_ui == null)
-        //     Debug.Log("BattleField.singleton.bat_ui == null");
         BattleField.singleton.bat_ui.ratio = wpn.heat_ratio;
     }
 

@@ -92,14 +92,17 @@ public class HeroState : RoboState {
 
 
     string level_s; // level info: "level1", "level2", "level3"
-    /* Refresh infantry state when born, reborn or level up */
+    /* Refresh hero state when born, reborn or level up */
     public override void Configure() {
         /* configure chassis params */
         level_s = string.Format("level{0}", this.level+1);
         var tmp = AssetManager.singleton.hero_chs[this.chassis_pref];
         if (this.chassis_pref != "init_mode")
             tmp = tmp[this.level_s];
-        this.maxblood = tmp["maxblood"].ToObject<int>();
+
+        int bld_new = tmp["maxblood"].ToObject<int>();
+        this.currblood += bld_new - this.maxblood;  // currblood also raise when level up
+        this.maxblood = bld_new;
         this.power = tmp["power"].ToObject<int>();
         /* configure weapon */
         tmp = AssetManager.singleton.weapon["42mm"][this.weapon_pref];
@@ -109,7 +112,7 @@ public class HeroState : RoboState {
         this.cooldown = tmp["cooldown"].ToObject<int>();
         this.bullspd = tmp["bullspd"].ToObject<int>();
 
-        var jobj = AssetManager.singleton.exp["infantry"][level_s];
+        var jobj = AssetManager.singleton.exp["hero"][level_s];
         this.expval = jobj["have"].ToObject<int>();
         this.maxexp = level<2 ? jobj["need"].ToObject<int>() : int.MaxValue;
     }

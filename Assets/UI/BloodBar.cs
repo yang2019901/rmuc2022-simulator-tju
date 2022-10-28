@@ -84,12 +84,19 @@ namespace RMUC_UI {
         /// non-API
         /// </summary>
         void Update() {
-            if (bar_blood_mid != null && bld_mid_ratio > bld_ratio) {
-                if (bld_mid_ratio > bld_ratio + 0.1f)
-                    bld_mid_ratio = bld_ratio + 0.1f;
-                bld_mid_ratio -= 0.1f * Time.deltaTime;
-                bar_blood_mid.transform.position = bld_mid_ratio * (bld_mid_full.position)
-                    + (1 - bld_mid_ratio) * (bld_mid_empty.position);
+            if (bar_blood_mid != null) {
+                if (bld_mid_ratio > bld_ratio) {
+                    if (bld_mid_ratio > bld_ratio + 0.2f)
+                        bld_mid_ratio = bld_ratio + 0.2f;
+                    bld_mid_ratio -= 0.1f * Time.deltaTime;
+                    bar_blood_mid.transform.position = bld_mid_ratio * (bld_mid_full.position)
+                        + (1 - bld_mid_ratio) * (bld_mid_empty.position);
+                }
+                else {
+                    bld_mid_ratio = bld_ratio;
+                    bar_blood_mid.transform.position = bld_mid_ratio * (bld_mid_full.position)
+                        + (1 - bld_mid_ratio) * (bld_mid_empty.position);
+                }
             }
         }
     }

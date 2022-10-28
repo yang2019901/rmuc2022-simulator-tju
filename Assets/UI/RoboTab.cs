@@ -20,7 +20,9 @@ namespace RMUC_UI {
         public Sprite[] imgs_lv_dead;
         [Header("dead-survival-defensive-invulnerable")]
         public Sprite[] imgs_ava;
-
+        /* for my robotab */
+        [Header("hero engi infa infa")]
+        public Sprite[] imgs_team;
         BatStat bat_stat;
         int currblood = -1;
         int maxblood = -1;
