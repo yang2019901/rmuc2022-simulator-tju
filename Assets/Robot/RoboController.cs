@@ -61,7 +61,8 @@ public class RoboController : NetworkBehaviour {
         if (yaw != null)
             yaw_ang = yaw.eulerAngles.y;
 
-        BattleField.singleton.bat_ui.my_roboidx = BattleField.singleton.robo_all.FindIndex(i => i == this.robo_state);
+        BattleField.singleton.robo_local = this.robo_state;
+        // BattleField.singleton.bat_ui.my_roboidx = BattleField.singleton.robo_all.FindIndex(i => i == this.robo_state);
     }
 
     void Update() {
@@ -70,10 +71,13 @@ public class RoboController : NetworkBehaviour {
 
         SetCursor();
         if (robo_state.survival) {
-            Move();
-            Look();
+            bool playing = Cursor.lockState == CursorLockMode.Locked;
+            if (playing) {
+                Move();
+                Look();
+                Shoot();
+            }
             Supply();
-            Shoot();
         } else {
             StopMove();
         }
@@ -95,8 +99,9 @@ public class RoboController : NetworkBehaviour {
 
 
     void StopMove() {
-        foreach (WheelCollider wc in wheelColliders) {
-            wc.motorTorque = 0f;
+        foreach (var wc in wheelColliders) {
+            wc.motorTorque = 0;
+            wc.brakeTorque = 0.1f;
         }
     }
 
@@ -122,38 +127,38 @@ public class RoboController : NetworkBehaviour {
             Debug.Log("braking");
             return;
         } else  // remove previous brake torque
-            foreach (WheelCollider wc in wheelColliders)
+            foreach (var wc in wheelColliders)
                 wc.brakeTorque = 0;
 
-        /* Get move direction from user input */
+        /* Transform */
+        // Get move direction from user input
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
-        /* move the car and steer wheels */
-        if (Mathf.Abs(h) > 1e-3 || Mathf.Abs(v) > 1e-3) {
-            float steer_ang = Mathf.Rad2Deg * Mathf.Atan2(h, v);
-            steer_ang = steer_ang + yaw.localEulerAngles.y;
-            foreach (WheelCollider wc in wheelColliders) {
-                /* Note: steerAngle will CLAMP angle to [-360, 360]
-                    Get remainder, make sure steer_ang is in [-360, 360] */
-                wc.steerAngle = steer_ang % 360;
-                wc.motorTorque = torque_drive * Mathf.Sqrt(h * h + v * v);
-            }
-        } else {
-            StopMove();
+        // move the car and steer wheels
+        float steer_ang = Mathf.Rad2Deg * Mathf.Atan2(h, v);
+        steer_ang = steer_ang + yaw.localEulerAngles.y;
+        foreach (var wc in wheelColliders) {
+            /* Note: steerAngle will CLAMP angle to [-360, 360]
+                Get remainder, make sure steer_ang is in [-360, 360] */
+            wc.steerAngle = steer_ang % 360;
+            wc.motorTorque = torque_drive * Mathf.Sqrt(h * h + v * v);
         }
 
+
+        /* spin */
         float torque = 0;
         if (spinning) {
             torque = torque_spin;
         } else {
-            /* make chassis follow turret(aka, yaw) */
+            // make chassis follow turret(aka, yaw)
             float d_ang = -Mathf.DeltaAngle(yaw_ang, _rigid.transform.eulerAngles.y);
             if (Mathf.Abs(d_ang) < 5) d_ang = 0;
             /* TODO: use PID controller */
             torque = 0.2f * PID(d_ang);
         }
-        /* apply torques */
+
+        /* get sum of force */
         float torque_now = 0;
         for (int i = 0; i < wheel_num; i++) {
             float ang1 = wheelColliders[i].steerAngle * Mathf.Deg2Rad;
@@ -168,9 +173,11 @@ public class RoboController : NetworkBehaviour {
             if (wheels.Length > i)
                 wheels[i].transform.localEulerAngles = new Vector3(0, wheelColliders[i].steerAngle, 0);
         }
-        if (torque_now < 10)
+        if (torque_now < 10) {
+            foreach (var wc in wheelColliders)
+                wc.brakeTorque = 0.1f;
             return;
-        else
+        } else
             for (int i = 0; i < wheel_num; i++)
                 wheelColliders[i].motorTorque *= torque_avail / torque_now;
     }
@@ -206,29 +213,31 @@ public class RoboController : NetworkBehaviour {
     }
 
 
+    bool shw = false;
     // get ammunition supply at reborn spot
     void Supply() {
-        if (Input.GetKeyDown(KeyCode.O) && gameObject.name.ToLower().Contains("infantry")) {
-            CmdSupply(this.gameObject.name, 50);
-        } else if (Input.GetKeyDown(KeyCode.I) && gameObject.name.ToLower().Contains("hero")) {
-            CmdSupply(this.gameObject.name, 5);
+        // if (Input.GetKeyDown(KeyCode.O) && gameObject.name.ToLower().Contains("infantry")) {
+        //     CmdSupply(this.gameObject.name, 50);
+        // } else if (Input.GetKeyDown(KeyCode.I) && gameObject.name.ToLower().Contains("hero")) {
+        //     CmdSupply(this.gameObject.name, 5);
+        // }
+
+        if (Input.GetKeyDown(KeyCode.O)) {
+            bool in_supp_spot = robo_state.robo_buff.FindIndex(i => i.tag == BuffType.rev) != -1;
+            if (in_supp_spot) {
+                shw = !shw;
+                BattleField.singleton.bat_ui.supp_ui.SetActive(shw);
+            }
         }
     }
     [Command]
     public void CmdSupply(string robot_s, int num) {
-        // /* detect what buff this robot currently has */
-        // string buffs = "";
-        // foreach (Buff tmp in this.robo_state.robo_buff) {
-        //     buffs += tmp + " ";
-        // }
-        // Debug.Log(buffs);
-
-        if (this.robo_state.robo_buff.FindIndex(i => i.tag == BuffType.rev) == -1) {
-            Debug.Log("not in revive spot");
-            return;
-        }
+        // todo: add judge of money
         GameObject obj = GameObject.Find(robot_s);
-        obj.GetComponent<Weapon>().bull_num += num;
+        Weapon weap;
+        if (TryGetComponent<Weapon>(out weap)){
+            weap.bullnum += num;
+        }
     }
 
 

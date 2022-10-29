@@ -15,6 +15,10 @@ namespace RMUC_UI {
         public RoboTab otptStat_red;
         public RoboTab otptStat_blue;
 
+        /* Settings UI */
+        /* supply UI */
+        public GameObject supp_ui;
+
         /* My UI */
         public HeatRing hr;
         [HideInInspector] public float ratio = 0;
@@ -22,8 +26,11 @@ namespace RMUC_UI {
         public TMP_Text txt_bullspd;
         public TMP_Text txt_bullnum;
 
-        public RMUC_UI.RoboTab my_robotab;
-        [HideInInspector] public int my_roboidx = -1;
+        private RMUC_UI.RoboTab my_robotab;
+        // [HideInInspector] public int my_roboidx = -1;
+
+        RoboState myrobot => BattleField.singleton.robo_local;
+
 
 
         public void Push(UISync uisync) {
@@ -38,13 +45,12 @@ namespace RMUC_UI {
             otptStat_red.Push(uisync.os_r);
             otptStat_blue.Push(uisync.os_b);
 
-            if (my_roboidx != -1) {
-                SetMyUI(uisync.robots[my_roboidx]);
-            }
+            SetMyUI();
         }
 
         void SetNotePad(BatSync bs) {
             notepad.SetTime(7 * 60 - bs.time_bat);
+            // todo: set money and score
         }
 
         void SetBase(BloodBar baseStat, BaseSync bs) {
@@ -55,20 +61,32 @@ namespace RMUC_UI {
 
         // called every frame
         bool init = false;
-        void SetMyUI(RoboSync my_robosync) {
+        // void SetMyUI(RoboSync my_robosync) {
+        void SetMyUI() {
+            if (myrobot == null)
+                return;
             if (!init) {
-                string color = BattleField.singleton.robo_all[my_roboidx].armor_color == ArmorColor.Red ? "red" : "blue";
-                foreach (RoboTab rt in GetComponentsInChildren<RoboTab>(includeInactive: true))
+                string color = myrobot.armor_color == ArmorColor.Red ? "red" : "blue";
+                // string color = BattleField.singleton.robo_all[my_roboidx].armor_color == ArmorColor.Red ? "red" : "blue";
+                foreach (RoboTab rt in GetComponentsInChildren<RoboTab>(includeInactive: true)) {
                     if (rt.name.ToLower().Contains("my")) {
-                        Debug.Log("rt.name: " + rt.name);
+                        // Debug.Log("rt.name: " + rt.name);
                         if (rt.name.ToLower().Contains(color)) {
                             rt.gameObject.SetActive(true);
-                            my_robotab = rt;
-                            Debug.Log("my_roboidx: " + my_roboidx);
-                            my_robotab.img_ava.sprite = my_robotab.imgs_team[my_roboidx % 5];
+                            my_robotab = rt;    // store reference
+
+                            // set robotab's img_ava
+                            int idx = 0; var tp = myrobot.GetType();
+                            if (tp == typeof(HeroState)) idx = 0;
+                            else if (tp == typeof(EngineerState)) idx = 1;
+                            else if (tp == typeof(InfantryState)) idx = 2;
+                            else Debug.Log("wrong type of myrobot: " + tp);
+                            my_robotab.img_ava.sprite = my_robotab.imgs_team[idx];
                         } else
                             rt.gameObject.SetActive(false);
                     }
+                }
+                int my_roboidx = BattleField.singleton.robo_all.FindIndex(i=>i==myrobot);
                 foreach (TMP_Text txt in my_robotab.GetComponentsInChildren<TMP_Text>())
                     if (txt.gameObject.name.ToLower().Contains("idx")) {
                         txt.text = (my_roboidx % 5 + 1).ToString();
@@ -82,12 +100,27 @@ namespace RMUC_UI {
             else
                 overheat_bg.gameObject.SetActive(false);
 
-            if (my_robosync.has_wpn) {
-                txt_bullnum.text = my_robosync.bull_num.ToString();
-                txt_bullspd.text = BattleField.singleton.robo_all[my_roboidx].bullspd.ToString();
+            Weapon weap;
+            if (myrobot.TryGetComponent<Weapon>(out weap)) {
+                txt_bullnum.text = weap.bullnum.ToString();
+                txt_bullspd.text = weap.bullspd.ToString();
             }
-            my_robotab.Push(my_robosync);
-            my_robotab.bld_bar.DispBldTxt(my_robosync.currblood, my_robosync.maxblood);
+            my_robotab.Push(myrobot.Pull());
+            my_robotab.bld_bar.DispBldTxt(myrobot.currblood, myrobot.maxblood);
+        }
+
+
+        int bull_num;
+        public void SetBullSupply(int num) {
+            bull_num = num;
+        }
+
+        public void CallBullSupply() {
+            if (myrobot == null)
+                return;
+            RoboController rc = myrobot.GetComponent<RoboController>();
+            rc.CmdSupply(rc.gameObject.name, bull_num);
+            Debug.Log(rc.gameObject.name + " calls supply: " + bull_num);
         }
     }
 }

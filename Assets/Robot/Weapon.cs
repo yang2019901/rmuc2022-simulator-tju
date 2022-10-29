@@ -10,7 +10,7 @@ public class Weapon : MonoBehaviour {
     public int bullspd => robot.bullspd;
     public float cooldown => robot.cooldown * robot.B_cd;
     public int maxheat => robot.maxheat;
-    public int bull_num;
+    public int bullnum;
     public int currheat;
 
     public float heat_ratio = 0;
@@ -27,8 +27,8 @@ public class Weapon : MonoBehaviour {
 
 
     public GameObject GetBullet() {
-        if (bull_num > 0) {
-            bull_num--;
+        if (bullnum > 0) {
+            bullnum--;
             GainHeat();
             if (this.caliber == Caliber._17mm) {
                 AssetManager.singleton.PlayClipAtPoint(AssetManager.singleton._17mm, transform.position);
@@ -55,7 +55,7 @@ public class Weapon : MonoBehaviour {
             Debug.LogError("wrong car name receive by Weapon.cs: " + this.name);
 
         this.robot = GetComponent<RoboState>();
-        this.bull_num = 0;
+        this.bullnum = 0;
         ResetHeat();
     }
 

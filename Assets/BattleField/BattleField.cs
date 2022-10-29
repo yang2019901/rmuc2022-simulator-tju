@@ -29,7 +29,7 @@ public class BattleField : MonoBehaviour {
     public RoboState[] robo_red;
     public RoboState[] robo_blue;
     public List<RoboState> robo_all = new List<RoboState>();
-
+    public RoboState robo_local;
 
     /* priority (with NetworkIdentity): Instantiate > Awake() > OnStartServer() (obviously, iff in server PC) 
         ----Spawn----> OnStartClient() (obviously, iff in client PC) > Start()    
