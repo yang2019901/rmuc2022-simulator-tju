@@ -8,6 +8,10 @@ public class Base : MonoBehaviour
     public void OpenShells(bool open)
     {
         Animator anim = GetComponent<Animator>();
-        anim.SetBool("open", open);    
+        anim.SetBool("open", open);
+        AssetManager.singleton.PlayClipAtPoint(
+            AssetManager.singleton.base_opn, transform.position);
+        if (this.GetComponent<BaseState>().armor_color == BattleField.singleton.robo_local.armor_color)
+            AssetManager.singleton.BrdcstClip(AssetManager.singleton.base_warn);
     }
 }

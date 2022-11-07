@@ -43,13 +43,9 @@ public class AssetManager : MonoBehaviour {
     /* broadcast */
     [Header("broadcast")]
     public AudioClip ally_die;
-    public AudioClip enemy_die;
     public AudioClip self_die;
-    public AudioClip kill_1st;
-    public AudioClip kill_2nd;
-    public AudioClip kill_3rd;
-    public AudioClip kill_4th;
-    public AudioClip kill_5th;
+    public AudioClip frst_bld;
+    public AudioClip[] kill;
     public AudioClip ace;
 
     /* event */
@@ -75,9 +71,9 @@ public class AssetManager : MonoBehaviour {
     public void PlayClipAtPoint(AudioClip ac, Vector3 pos) => AudioSource.PlayClipAtPoint(ac, pos);
 
 
-    public void BrdcstClip(AudioClip ac, bool loop=false) {
+    public void BrdcstClip(AudioClip ac, bool loop=false, float volume=1f) {
         AudioSource[] src = Speaker.GetComponents<AudioSource>();
-        AudioSource tmp = new AudioSource();
+        AudioSource tmp = null;
         bool aud_idle = false;
         foreach (AudioSource aud in src)
             if (!aud.isPlaying) {
@@ -91,7 +87,7 @@ public class AssetManager : MonoBehaviour {
         tmp.clip = ac;
         tmp.loop = loop;
         tmp.minDistance = 100;      // within minDistance, volume won't decay
-        tmp.volume = 0.3f;
+        tmp.volume = volume;
         tmp.Play();
     }
 

@@ -110,17 +110,22 @@ namespace RMUC_UI {
         }
 
 
-        int bull_num;
         public void SetBullSupply(int num) {
-            bull_num = num;
+            TMP_InputField tif = supp_ui.GetComponentInChildren<TMP_InputField>();
+            tif.text = num.ToString();
         }
 
         public void CallBullSupply() {
             if (myrobot == null)
                 return;
             RoboController rc = myrobot.GetComponent<RoboController>();
-            rc.CmdSupply(rc.gameObject.name, bull_num);
-            Debug.Log(rc.gameObject.name + " calls supply: " + bull_num);
+            int bull_num;
+            if (int.TryParse(supp_ui.GetComponentInChildren<TMP_InputField>().text, out bull_num)) {
+                rc.CmdSupply(rc.gameObject.name, bull_num);
+                supp_ui.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+                Debug.Log(rc.gameObject.name + " calls supply: " + bull_num);
+            }
         }
     }
 }

@@ -70,17 +70,15 @@ public class RoboController : NetworkBehaviour {
             return;
 
         SetCursor();
-        if (robo_state.survival) {
-            bool playing = Cursor.lockState == CursorLockMode.Locked;
-            if (playing) {
-                Move();
-                Look();
-                Shoot();
-            }
-            Supply();
-        } else {
+        bool playing = Cursor.lockState == CursorLockMode.Locked;
+        if (robo_state.survival && playing) {
+            Move();
+            Look();
+            Shoot();
+        }else {
             StopMove();
         }
+        Supply();
         UpdateSelfUI();
     }
 
@@ -213,7 +211,6 @@ public class RoboController : NetworkBehaviour {
     }
 
 
-    bool shw = false;
     // get ammunition supply at reborn spot
     void Supply() {
         // if (Input.GetKeyDown(KeyCode.O) && gameObject.name.ToLower().Contains("infantry")) {
@@ -225,8 +222,9 @@ public class RoboController : NetworkBehaviour {
         if (Input.GetKeyDown(KeyCode.O)) {
             bool in_supp_spot = robo_state.robo_buff.FindIndex(i => i.tag == BuffType.rev) != -1;
             if (in_supp_spot) {
-                shw = !shw;
+                bool shw = !BattleField.singleton.bat_ui.supp_ui.activeSelf;
                 BattleField.singleton.bat_ui.supp_ui.SetActive(shw);
+                Cursor.lockState = shw ? CursorLockMode.None : CursorLockMode.Locked;
             }
         }
     }

@@ -15,10 +15,13 @@ public abstract class Buff {
     public virtual void Enable(Collider collider) {
         if (!en) {
             robot.robo_buff.Add(this);
+            AssetManager.singleton.PlayClipAtPoint(
+            AssetManager.singleton.buff_taken, robot.transform.position);
         }
         col = collider;
         timer = 2;
         en = true;
+
     }
     public virtual void init(RoboState robo_state, string my_color, string enemy_color) {
         robot = robo_state;
@@ -27,7 +30,7 @@ public abstract class Buff {
     }
     public virtual void Disable() {
         if (!en)
-            return ;
+            return;
         robot.robo_buff.Remove(this);
     }
     public float timer;

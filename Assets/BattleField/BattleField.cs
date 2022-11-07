@@ -50,7 +50,7 @@ public class BattleField : MonoBehaviour {
         rune.Init();
         Debug.Log("rune init");
 
-        AssetManager.singleton.BrdcstClip(AssetManager.singleton.gamebg, true);
+        AssetManager.singleton.BrdcstClip(AssetManager.singleton.gamebg, true, 0.3f);
     }
 
 
@@ -63,7 +63,7 @@ public class BattleField : MonoBehaviour {
             && Mathf.Abs(rel_pos.z) < z_half_length;
     }
 
-
+    Dictionary<RoboState, int> killnum = new Dictionary<RoboState, int>();
     public void Kill(GameObject hitter, GameObject hittee) {
         Debug.Log(hitter.name + " slays " + hittee.name);
         if (hittee == outpost_blue.gameObject) {
@@ -71,17 +71,47 @@ public class BattleField : MonoBehaviour {
             base_blue.invul = false;
             base_blue.SetInvulLight(false);
             // base_blue.shield = 500;
-        }
-        else if (hittee == outpost_red.gameObject) {
+        } else if (hittee == outpost_red.gameObject) {
             base_red.GetComponent<Base>().OpenShells(true);
             base_red.invul = false;
             base_blue.SetInvulLight(false);
             // base_blue.shield = 500;
         }
+
+        RoboState rs1 = hitter.GetComponent<RoboState>();
+        BasicState rs2;
+        AudioClip ac = null;
+        if (hittee.TryGetComponent<BasicState>(out rs2)) {
+            // teammate's killed
+            if (rs2.armor_color == robo_local.armor_color) {
+                if (rs2 == robo_local) {
+                    ac = AssetManager.singleton.self_die;
+                    AssetManager.singleton.PlayClipAtPoint(
+                        AssetManager.singleton.robo_die, robo_local.transform.position);
+                } else
+                    ac = AssetManager.singleton.ally_die;
+            }
+            // enemy's killed but not by teammate
+            else if (rs1.armor_color != robo_local.armor_color)
+                ac = AssetManager.singleton.kill[0];
+            // enemy's killed by teammate
+            else {
+                if (!killnum.ContainsKey(rs1))
+                    killnum.Add(rs1, -1);
+                int cnt = killnum[rs1];
+                cnt = (cnt + 1) % AssetManager.singleton.kill.Length;
+                killnum[rs1] = cnt;
+                ac = AssetManager.singleton.kill[cnt];
+            }
+        }
+        else
+            Debug.Log("cannot get basicstate from hitter");
+        AssetManager.singleton.BrdcstClip(ac);
     }
 
 
     void AddRuneBuff(ArmorColor armor_color, RuneBuff rune_buff) {
+        AssetManager.singleton.BrdcstClip(AssetManager.singleton.rune_activ);
         float atk_up = rune_buff == RuneBuff.Junior ? 0.5f : 1f;
         if (armor_color == ArmorColor.Red) {
             Debug.Log("Team Red adds rune buff");
@@ -119,7 +149,7 @@ public class BattleField : MonoBehaviour {
             Debug.LogError("Error: activate RuneBuff.None");
         AddRuneBuff(armor_color, rune_buff);
         yield return new WaitForSeconds(45);
-        
+
         rune.rune_state_blue.SetActiveState(Activation.Idle);
         rune.rune_state_red.SetActiveState(Activation.Idle);
         RemoveRuneBuff(armor_color, rune_buff);
@@ -137,7 +167,7 @@ public class BattleField : MonoBehaviour {
     }
 
 
-    BatSync tmp =  new BatSync();
+    BatSync tmp = new BatSync();
     public BatSync Pull() {
         tmp.time_bat = GetBattleTime();
         tmp.money_red = this.money_red;

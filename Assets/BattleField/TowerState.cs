@@ -63,7 +63,8 @@ public class TowerState : BasicState {
         Debug.Log("current blood: " + currblood);
 
         if (this.currblood <= 0) {
-            this.killed = true;
+            // killed by ally doesnt count and ally will not get exp
+            this.killed = hitter.GetComponent<BasicState>().armor_color != armor_color;
             this.killer = hitter;
             Die();
             BattleField.singleton.Kill(hitter, this.gameObject);
