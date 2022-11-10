@@ -75,16 +75,27 @@ public class RoboController : NetworkBehaviour {
             Move();
             Look();
             Shoot();
-        }else {
+        } else {
             StopMove();
         }
         Supply();
         UpdateSelfUI();
     }
 
-
+    RMUC_UI.BattleUI bat_ui => BattleField.singleton.bat_ui;    // alias
     void UpdateSelfUI() {
-        BattleField.singleton.bat_ui.ratio = wpn.heat_ratio;
+        bat_ui.ratio = wpn.heat_ratio;
+        bat_ui.indic_buf[0] = Mathf.Approximately(robo_state.B_atk, 0f) ? -1            // atk
+            : Mathf.Approximately(robo_state.B_atk, 0.5f) ? 0 : 1;
+        bat_ui.indic_buf[1] = Mathf.Approximately(robo_state.B_cd, 1f) ? -1             // cldn
+            : Mathf.Approximately(robo_state.B_cd, 3f) ? 0 : 1;
+        bat_ui.indic_buf[2] = Mathf.Approximately(robo_state.B_rev, 0f) ? -1            // rev
+            : Mathf.Approximately(robo_state.B_rev, 0.02f) ? 0 : 1;
+        bat_ui.indic_buf[3] = Mathf.Approximately(robo_state.B_dfc, 0f) ? -1            // dfc
+            : Mathf.Approximately(robo_state.B_dfc, 0.5f) ? 0 : 1;
+        HeroState hs = robo_state.GetComponent<HeroState>();
+        bat_ui.indic_buf[4] = hs == null || !hs.sniping ? -1 : 0;
+        bat_ui.indic_buf[5] = Mathf.Approximately(robo_state.B_pow, 0f) ? -1 : 0;       // lea
     }
 
 
@@ -213,12 +224,6 @@ public class RoboController : NetworkBehaviour {
 
     // get ammunition supply at reborn spot
     void Supply() {
-        // if (Input.GetKeyDown(KeyCode.O) && gameObject.name.ToLower().Contains("infantry")) {
-        //     CmdSupply(this.gameObject.name, 50);
-        // } else if (Input.GetKeyDown(KeyCode.I) && gameObject.name.ToLower().Contains("hero")) {
-        //     CmdSupply(this.gameObject.name, 5);
-        // }
-
         if (Input.GetKeyDown(KeyCode.O)) {
             bool in_supp_spot = robo_state.robo_buff.FindIndex(i => i.tag == BuffType.rev) != -1;
             if (in_supp_spot) {
@@ -233,7 +238,7 @@ public class RoboController : NetworkBehaviour {
         // todo: add judge of money
         GameObject obj = GameObject.Find(robot_s);
         Weapon weap;
-        if (TryGetComponent<Weapon>(out weap)){
+        if (TryGetComponent<Weapon>(out weap)) {
             weap.bullnum += num;
         }
     }

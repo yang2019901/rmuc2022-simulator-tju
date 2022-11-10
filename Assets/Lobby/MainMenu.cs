@@ -37,6 +37,8 @@ namespace LobbyUI {
             /* set default player name as computer name */
             input_info.text = System.Environment.GetEnvironmentVariable("ComputerName");
             input_addr.text = "localhost";
+
+            AssetManager.singleton.PlayClipAround(AssetManager.singleton.prepare, true, 0.3f);
         }
 
         /* start host -> go to lobby -> lobby behaviour -> start game */

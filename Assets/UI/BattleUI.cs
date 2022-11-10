@@ -21,14 +21,16 @@ namespace RMUC_UI {
 
         /* My UI */
         public HeatRing hr;
-        [HideInInspector] public float ratio = 0;
         public Image overheat_bg;
         public TMP_Text txt_bullspd;
         public TMP_Text txt_bullnum;
+        public float ratio = 0;  // updated by robocontroller every frame
 
-        private RMUC_UI.RoboTab my_robotab;
-        // [HideInInspector] public int my_roboidx = -1;
+        /* atk, cldn, rev, dfc, snp, lea */
+        public int[] indic_buf = new int[6];
+        public Image[] imgs_buf;
 
+        RMUC_UI.RoboTab my_robotab;
         RoboState myrobot => BattleField.singleton.robo_local;
 
 
@@ -48,10 +50,12 @@ namespace RMUC_UI {
             SetMyUI();
         }
 
+
         void SetNotePad(BatSync bs) {
             notepad.SetTime(7 * 60 - bs.time_bat);
             // todo: set money and score
         }
+
 
         void SetBase(BloodBar baseStat, BaseSync bs) {
             baseStat.SetInvulState(bs.invul);
@@ -86,7 +90,7 @@ namespace RMUC_UI {
                             rt.gameObject.SetActive(false);
                     }
                 }
-                int my_roboidx = BattleField.singleton.robo_all.FindIndex(i=>i==myrobot);
+                int my_roboidx = BattleField.singleton.robo_all.FindIndex(i => i == myrobot);
                 foreach (TMP_Text txt in my_robotab.GetComponentsInChildren<TMP_Text>())
                     if (txt.gameObject.name.ToLower().Contains("idx")) {
                         txt.text = (my_roboidx % 5 + 1).ToString();
@@ -94,26 +98,41 @@ namespace RMUC_UI {
                     }
                 init = true;
             }
+            /* update heat, bullnum and speed */
             hr.SetHeat(ratio);
             if (ratio > 1)
                 overheat_bg.gameObject.SetActive(true);
             else
                 overheat_bg.gameObject.SetActive(false);
-
             Weapon weap;
             if (myrobot.TryGetComponent<Weapon>(out weap)) {
                 txt_bullnum.text = weap.bullnum.ToString();
                 txt_bullspd.text = weap.bullspd.ToString();
             }
+            /* update robotab */
             my_robotab.Push(myrobot.Pull());
             my_robotab.bld_bar.DispBldTxt(myrobot.currblood, myrobot.maxblood);
+            SetMyBuff();
         }
-
+        void SetMyBuff() {
+            SetMyBuffAt(0, AssetManager.singleton.img_atk);
+            SetMyBuffAt(1, AssetManager.singleton.img_cldn);
+            SetMyBuffAt(2, AssetManager.singleton.img_rev);
+            SetMyBuffAt(3, AssetManager.singleton.img_dfc);
+            SetMyBuffAt(4, null);
+            SetMyBuffAt(5, null);
+        }
+        void SetMyBuffAt(int idx, Sprite[] spr) {
+            imgs_buf[idx].gameObject.SetActive(indic_buf[idx] != -1);
+            if (spr != null && indic_buf[idx] >= 0 && indic_buf[idx] < spr.Length)
+                imgs_buf[idx].sprite = spr[indic_buf[idx]];
+        }
 
         public void SetBullSupply(int num) {
             TMP_InputField tif = supp_ui.GetComponentInChildren<TMP_InputField>();
             tif.text = num.ToString();
         }
+
 
         public void CallBullSupply() {
             if (myrobot == null)
@@ -126,6 +145,13 @@ namespace RMUC_UI {
                 Cursor.lockState = CursorLockMode.Locked;
                 Debug.Log(rc.gameObject.name + " calls supply: " + bull_num);
             }
+        }
+    
+    
+        void Start() {
+            /* init imgs_buf */
+            for (int i = 0; i < indic_buf.Length; i++)
+                indic_buf[i] = -1;
         }
     }
 }

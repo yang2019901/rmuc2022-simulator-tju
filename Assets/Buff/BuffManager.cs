@@ -250,7 +250,7 @@ public class B_Island : Buff {
         /* release Upland control */
         col.name += enemy_color_s;
         /* remove buff - Island */
-        robot.li_B_cd.Remove(0.5f);
+        robot.li_B_dfc.Remove(0.5f);
         robot.UpdateBuff();
         en = false;
     }

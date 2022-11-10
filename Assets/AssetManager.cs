@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -65,13 +66,18 @@ public class AssetManager : MonoBehaviour {
     public AudioClip buff_taken;
 
 
+    public Sprite[] img_atk;
+    public Sprite[] img_dfc;
+    public Sprite[] img_rev;
+    public Sprite[] img_cldn;
+
     /// <summary>
     /// API 
     /// </summary>
     public void PlayClipAtPoint(AudioClip ac, Vector3 pos) => AudioSource.PlayClipAtPoint(ac, pos);
 
 
-    public void BrdcstClip(AudioClip ac, bool loop=false, float volume=1f) {
+    public void PlayClipAround(AudioClip ac, bool loop = false, float volume = 1f) {
         AudioSource[] src = Speaker.GetComponents<AudioSource>();
         AudioSource tmp = null;
         bool aud_idle = false;
@@ -89,6 +95,17 @@ public class AssetManager : MonoBehaviour {
         tmp.minDistance = 100;      // within minDistance, volume won't decay
         tmp.volume = volume;
         tmp.Play();
+    }
+
+
+    public void StopClip(AudioClip ac) {
+        AudioSource[] src = Speaker.GetComponents<AudioSource>();
+        foreach (AudioSource aud in src) {
+            if (aud.clip == ac) {
+                aud.Stop();
+                Debug.Log(aud.name + " stops");
+            }
+        }
     }
 
 

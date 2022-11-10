@@ -63,7 +63,7 @@ public abstract class BasicState : MonoBehaviour {
         if (fb) {
             Debug.Log("first blood");
             if (this.armor_color != BattleField.singleton.robo_local.armor_color)
-                AssetManager.singleton.BrdcstClip(AssetManager.singleton.frst_bld);
+                AssetManager.singleton.PlayClipAround(AssetManager.singleton.frst_bld);
             BattleField.singleton.had_first_blood = true;
         }
     }

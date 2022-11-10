@@ -12,6 +12,6 @@ public class Base : MonoBehaviour
         AssetManager.singleton.PlayClipAtPoint(
             AssetManager.singleton.base_opn, transform.position);
         if (this.GetComponent<BaseState>().armor_color == BattleField.singleton.robo_local.armor_color)
-            AssetManager.singleton.BrdcstClip(AssetManager.singleton.base_warn);
+            AssetManager.singleton.PlayClipAround(AssetManager.singleton.base_warn);
     }
 }

@@ -50,7 +50,8 @@ public class BattleField : MonoBehaviour {
         rune.Init();
         Debug.Log("rune init");
 
-        AssetManager.singleton.BrdcstClip(AssetManager.singleton.gamebg, true, 0.3f);
+        AssetManager.singleton.StopClip(AssetManager.singleton.prepare);
+        AssetManager.singleton.PlayClipAround(AssetManager.singleton.gamebg, true, 0.3f);
     }
 
 
@@ -106,12 +107,12 @@ public class BattleField : MonoBehaviour {
         }
         else
             Debug.Log("cannot get basicstate from hitter");
-        AssetManager.singleton.BrdcstClip(ac);
+        AssetManager.singleton.PlayClipAround(ac);
     }
 
 
     void AddRuneBuff(ArmorColor armor_color, RuneBuff rune_buff) {
-        AssetManager.singleton.BrdcstClip(AssetManager.singleton.rune_activ);
+        AssetManager.singleton.PlayClipAround(AssetManager.singleton.rune_activ);
         float atk_up = rune_buff == RuneBuff.Junior ? 0.5f : 1f;
         if (armor_color == ArmorColor.Red) {
             Debug.Log("Team Red adds rune buff");
@@ -144,7 +145,7 @@ public class BattleField : MonoBehaviour {
         }
     }
     public IEnumerator ActivateRune(ArmorColor armor_color, RuneBuff rune_buff) {
-        AssetManager.singleton.BrdcstClip(AssetManager.singleton.rune_activ);
+        AssetManager.singleton.PlayClipAround(AssetManager.singleton.rune_activ);
         if (rune_buff == RuneBuff.None)
             Debug.LogError("Error: activate RuneBuff.None");
         AddRuneBuff(armor_color, rune_buff);
