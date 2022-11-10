@@ -58,7 +58,7 @@ public class BaseState : TowerState {
     }
 
     public void Push(BaseSync base_sync) {
-        if (this.currblood > base_sync.currblood) {
+        if (this.currblood != base_sync.currblood) {
             this.currblood = base_sync.currblood;
             this.SetBloodBars();
             if (!base_sync.survival)

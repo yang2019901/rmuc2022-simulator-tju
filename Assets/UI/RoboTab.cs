@@ -43,16 +43,6 @@ namespace RMUC_UI {
         }
 
 
-        public void Push(OutpostSync otpt_sync) {
-            /* no need to set survival, because it won't make difference to outpost UI */
-            if (otpt_sync.currblood != this.currblood) {
-                bld_bar.SetBlood(otpt_sync.currblood / 1500f);
-                this.currblood = otpt_sync.currblood;
-            }
-            bld_bar.SetInvulState(otpt_sync.invul);
-        }
-
-
         public void Push(RoboSync robo_sync) {
             // img_ava
             if (this.bat_stat != robo_sync.bat_stat && img_ava != null && imgs_ava.Length > (int)robo_sync.bat_stat)
@@ -96,6 +86,16 @@ namespace RMUC_UI {
             this.bat_stat = robo_sync.bat_stat;
             this.level = robo_sync.level;
             this.bull_num = robo_sync.bull_num;
+        }
+
+
+        public void Push(OutpostSync otpt_sync) {
+            /* no need to set survival, because it won't make difference to outpost UI */
+            if (otpt_sync.currblood != this.currblood) {
+                bld_bar.SetBlood(otpt_sync.currblood / 1500f);
+                this.currblood = otpt_sync.currblood;
+            }
+            bld_bar.SetInvulState(otpt_sync.invul);
         }
 
 

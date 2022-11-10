@@ -77,7 +77,7 @@ namespace RMUC_UI {
         public void SetInvulState(bool is_on) => bar_golden.SetActive(is_on);
 
         public void DispBldTxt(int currblood, int maxblood) {
-            blood_txt.text = string.Format("<b>{0} / {1}</b>", currblood, maxblood);
+            blood_txt.text = string.Format("<b>{0, 3} / {1,-3}</b>", currblood, maxblood);
         }
 
         /// <summary>

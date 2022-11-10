@@ -51,8 +51,7 @@ public class RoboController : NetworkBehaviour {
     }
 
     void Start() {
-        if (!hasAuthority)
-            return;
+        /* even if no authority, external reference should be inited */
         _rigid = GetComponent<Rigidbody>();
         _rigid.centerOfMass = centerOfMass;
         Cursor.lockState = CursorLockMode.Locked;
@@ -61,7 +60,9 @@ public class RoboController : NetworkBehaviour {
         if (yaw != null)
             yaw_ang = yaw.eulerAngles.y;
 
-        BattleField.singleton.robo_local = this.robo_state;
+        if (hasAuthority) {
+            BattleField.singleton.robo_local = this.robo_state;
+        }
         // BattleField.singleton.bat_ui.my_roboidx = BattleField.singleton.robo_all.FindIndex(i => i == this.robo_state);
     }
 

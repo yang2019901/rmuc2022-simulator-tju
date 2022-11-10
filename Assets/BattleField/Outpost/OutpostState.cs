@@ -25,7 +25,7 @@ public class OutpostState : TowerState
 
     public void Push(OutpostSync outpost_sync) {
         /* in client PC, Start() will set armors to purple */
-        if (this.currblood > outpost_sync.currblood) {
+        if (this.currblood != outpost_sync.currblood) {
             this.currblood = outpost_sync.currblood;
             this.SetBloodBars();
             if (!outpost_sync.survival)
