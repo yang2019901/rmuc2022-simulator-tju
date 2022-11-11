@@ -94,7 +94,7 @@ namespace RMUC_UI {
                 foreach (TMP_Text txt in my_robotab.GetComponentsInChildren<TMP_Text>())
                     if (txt.gameObject.name.ToLower().Contains("idx")) {
                         txt.text = (my_roboidx % 5 + 1).ToString();
-                        Debug.Log("set my robot index");
+                        // Debug.Log("set my robot index");
                     }
                 init = true;
             }

@@ -80,36 +80,38 @@ public class BattleNetworkManager : NetworkManager {
         base.OnClientConnect();
         net_lob.playerSyncs.Callback += net_lob.OnPlayerSyncChanged;
         NetworkClient.RegisterHandler<NetLobby.ClientIdMessage>(net_lob.OnReceiveConnId);
-        Debug.Log("register handler in net_man");
+        // Debug.Log("register handler in net_man");
     }
 
 
 
     public override void OnServerSceneChanged(string sceneName) {
         base.OnServerSceneChanged(sceneName);
-        Debug.Log(sceneName + " has been loaded");
+        // Debug.Log(sceneName + " has been loaded");
         if (isScnField()) {
+            string log = "";
             /* BattleField having been loaded, assign robot instance to avatar owner */
-            foreach (RoboState robot in BattleField.singleton.robo_red) {
+            foreach (RoboState robot in BattleField.singleton.robo_all) {
                 int syncIdx = playerSyncs.FindIndex(i => i.ava_tag == robot.name);
                 if (syncIdx == -1)
-                    Debug.Log("no player takes " + robot.name);
+                    log += "no player takes " + robot.name + "\n";
                 else {
                     NetworkConnectionToClient connToClient = NetworkServer.connections[playerSyncs[syncIdx].connId];
                     robot.GetComponent<NetworkIdentity>().AssignClientAuthority(connToClient);
-                    Debug.Log(playerSyncs[syncIdx].player_name + " takes " + robot.name);
+                    log += playerSyncs[syncIdx].player_name + " takes " + robot.name + "\n";
                 }
             }
-            foreach (RoboState robot in BattleField.singleton.robo_blue) {
-                int syncIdx = playerSyncs.FindIndex(i => i.ava_tag == robot.name);
-                if (syncIdx == -1)
-                    Debug.Log("no player takes " + robot.name);
-                else {
-                    NetworkConnectionToClient connToClient = NetworkServer.connections[playerSyncs[syncIdx].connId];
-                    robot.GetComponent<NetworkIdentity>().AssignClientAuthority(connToClient);
-                    Debug.Log(playerSyncs[syncIdx].player_name + " takes " + robot.name);
-                }
-            }
+            Debug.Log(log);
+            // foreach (RoboState robot in BattleField.singleton.robo_blue) {
+            //     int syncIdx = playerSyncs.FindIndex(i => i.ava_tag == robot.name);
+            //     if (syncIdx == -1)
+            //         Debug.Log("no player takes " + robot.name);
+            //     else {
+            //         NetworkConnectionToClient connToClient = NetworkServer.connections[playerSyncs[syncIdx].connId];
+            //         robot.GetComponent<NetworkIdentity>().AssignClientAuthority(connToClient);
+            //         Debug.Log(playerSyncs[syncIdx].player_name + " takes " + robot.name);
+            //     }
+            // }
         }
     }
 

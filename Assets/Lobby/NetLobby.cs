@@ -172,7 +172,7 @@ namespace LobbyUI {
             this.playerSyncs.CopyTo(net_man.playerSyncs);
             if (mes.start)
                 net_man.ServerChangeScene(net_man.scn_field);
-            Debug.Log("change scene");
+            // Debug.Log("change scene");
         }
 
         [Client]
@@ -204,7 +204,7 @@ namespace LobbyUI {
 
         [Client]
         public void OnReceiveConnId(ClientIdMessage mes) {
-            Debug.Log("receive server-assign connId: " + mes.connId_onserver);
+            // Debug.Log("receive server-assign connId: " + mes.connId_onserver);
             this.uid = mes.connId_onserver;
         }
 

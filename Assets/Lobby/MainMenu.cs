@@ -55,13 +55,13 @@ namespace LobbyUI {
         public void JoinLobby() {
             net_man.networkAddress = input_addr.text;
             DisableAllMenus();
-            Debug.Log(net_man.networkAddress);
+            // Debug.Log(net_man.networkAddress);
             net_man.StartClient();
         }
 
         public void CreateLobby() {
             net_man.networkAddress = "localhost";
-            Debug.Log(net_man.networkAddress);
+            // Debug.Log(net_man.networkAddress);
             net_man.StartHost();
             SetPlayerLobby();
             /* muliplayer => allow to join */

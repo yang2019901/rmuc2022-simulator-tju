@@ -28,8 +28,10 @@ public class BattleField : MonoBehaviour {
     /* hero engineer infantry1 infantry2 */
     public RoboState[] robo_red;
     public RoboState[] robo_blue;
-    public List<RoboState> robo_all = new List<RoboState>();
-    public RoboState robo_local;
+    [HideInInspector]public List<RoboState> robo_all = new List<RoboState>(); // automatical set
+    [HideInInspector]public RoboState robo_local;                             // automatical set
+
+    public SyncNode sync_node;
 
     /* priority (with NetworkIdentity): Instantiate > Awake() > OnStartServer() (obviously, iff in server PC) 
         ----Spawn----> OnStartClient() (obviously, iff in client PC) > Start()    
@@ -48,7 +50,6 @@ public class BattleField : MonoBehaviour {
         t_start = Time.time;
 
         rune.Init();
-        Debug.Log("rune init");
 
         AssetManager.singleton.StopClip(AssetManager.singleton.prepare);
         AssetManager.singleton.PlayClipAround(AssetManager.singleton.gamebg, true, 0.3f);
@@ -63,6 +64,7 @@ public class BattleField : MonoBehaviour {
         return Mathf.Abs(rel_pos.x) < x_half_length && Mathf.Abs(rel_pos.y) < y_half_length
             && Mathf.Abs(rel_pos.z) < z_half_length;
     }
+
 
     Dictionary<RoboState, int> killnum = new Dictionary<RoboState, int>();
     public void Kill(GameObject hitter, GameObject hittee) {
@@ -145,6 +147,9 @@ public class BattleField : MonoBehaviour {
         }
     }
     public IEnumerator ActivateRune(ArmorColor armor_color, RuneBuff rune_buff) {
+        if (NetworkServer.active) {
+            sync_node.RpcActivateRune(armor_color, rune_buff);
+        }
         AssetManager.singleton.PlayClipAround(AssetManager.singleton.rune_activ);
         if (rune_buff == RuneBuff.None)
             Debug.LogError("Error: activate RuneBuff.None");

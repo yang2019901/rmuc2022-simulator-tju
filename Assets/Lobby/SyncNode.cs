@@ -104,6 +104,16 @@ public class SyncNode : NetworkBehaviour {
     /* when sync, robo_red has no difference with robo_blue */
     List<RoboState> robo_all;
 
+
+    [ClientRpc]
+    public void RpcActivateRune(ArmorColor armor_color, RuneBuff rune_buff) {
+        if (NetworkServer.active)   // already activated in server PC
+            return;
+
+        StartCoroutine(BattleField.singleton.ActivateRune(armor_color, rune_buff));
+    }
+
+
     void Start() {
         /* battlefield is initialized in Awake period, which justify following assignment */
         rune = BattleField.singleton.rune;
