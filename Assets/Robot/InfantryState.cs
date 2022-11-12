@@ -13,7 +13,7 @@ public class InfantryState : RoboState {
     /// <summary>
     /// Game Params
     /// </summary>
-    public int maxexp;
+    // public int maxexp;
     int expgrow = 2;
 
     /// <summary>

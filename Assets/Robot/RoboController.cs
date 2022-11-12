@@ -18,6 +18,8 @@ public class RoboController : NetworkBehaviour {
     public Transform bullet_start;
     [Header("View")]
     public Transform robo_cam;
+    public float currcap = 0;
+    const int maxcap = 500;
 
     private Rigidbody _rigid;
     private float last_fire = 0;
@@ -85,7 +87,9 @@ public class RoboController : NetworkBehaviour {
 
     RMUC_UI.BattleUI bat_ui => BattleField.singleton.bat_ui;    // alias
     void UpdateSelfUI() {
-        bat_ui.ratio = wpn.heat_ratio;
+        bat_ui.rat_heat = wpn.heat_ratio;
+        bat_ui.rat_cap = Mathf.Clamp01(currcap / maxcap);
+
         bat_ui.indic_buf[0] = Mathf.Approximately(robo_state.B_atk, 0f) ? -1            // atk
             : Mathf.Approximately(robo_state.B_atk, 0.5f) ? 0 : 1;
         bat_ui.indic_buf[1] = Mathf.Approximately(robo_state.B_cd, 1f) ? -1             // cldn
@@ -115,26 +119,41 @@ public class RoboController : NetworkBehaviour {
         }
     }
 
-
+    bool discharging = false;
     void Move() {
         /* Manage Power */
         int wheel_num = wheelColliders.Length;
         float efficiency = 0.4f;
-        float torque_drive = 10f;
-        float torque_spin = 10f;
+        float charge_coeff = 0.1f;          // how much of torque_avail will be used to charge capacity
+        float discharge_coeff = 1.25f;      // how fast capacity discharge 
+        float torque_drive = 20f;
+        float torque_spin = 20f;
 
         float torque_avail = efficiency * robo_state.power;
 
         bool braking = Input.GetKey(KeyCode.X);
         bool spinning = Input.GetKey(KeyCode.LeftShift);
+        if (Input.GetKeyDown(KeyCode.C))
+            discharging = !discharging;
+
+        /* store energy in capacity */
+        if (discharging && currcap > 1) {
+            currcap -= (discharge_coeff - 1) * robo_state.power * Time.deltaTime ;
+            torque_avail *= discharge_coeff;
+        } else {
+            currcap += charge_coeff * torque_avail * Time.deltaTime;
+            torque_avail *= 1 - charge_coeff;
+        }
+        currcap = Mathf.Min(maxcap, currcap);
 
         /* brake */
         if (braking) {
             for (int i = 0; i < wheel_num; i++) {
                 wheelColliders[i].steerAngle = (45 + 90 * i) % 360 * Mathf.Deg2Rad;
-                wheelColliders[i].brakeTorque = torque_avail / wheel_num;
+                wheelColliders[i].brakeTorque = 5;
             }
             Debug.Log("braking");
+            currcap += torque_avail * Time.deltaTime;
             return;
         } else  // remove previous brake torque
             foreach (var wc in wheelColliders)
@@ -183,9 +202,10 @@ public class RoboController : NetworkBehaviour {
             if (wheels.Length > i)
                 wheels[i].transform.localEulerAngles = new Vector3(0, wheelColliders[i].steerAngle, 0);
         }
-        if (torque_now < 10) {
+        if (torque_now < 1) {   // counted as not moving
             foreach (var wc in wheelColliders)
                 wc.brakeTorque = 0.1f;
+            currcap += torque_avail * Time.deltaTime;
             return;
         } else
             for (int i = 0; i < wheel_num; i++)

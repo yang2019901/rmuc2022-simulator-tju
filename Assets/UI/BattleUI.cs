@@ -22,9 +22,15 @@ namespace RMUC_UI {
         /* My UI */
         public HeatRing hr;
         public Image overheat_bg;
+        public float rat_heat = 0;  // updated by robocontroller every frame
         public TMP_Text txt_bullspd;
         public TMP_Text txt_bullnum;
-        public float ratio = 0;  // updated by robocontroller every frame
+
+        public Image img_cap;
+        public Image img_exp;
+        public TMP_Text txt_cap;
+        public TMP_Text txt_exp;
+        public float rat_cap;
 
         /* atk, cldn, rev, dfc, snp, lea */
         public int[] indic_buf = new int[6];
@@ -99,8 +105,8 @@ namespace RMUC_UI {
                 init = true;
             }
             /* update heat, bullnum and speed */
-            hr.SetHeat(ratio);
-            if (ratio > 1)
+            hr.SetHeat(rat_heat);
+            if (rat_heat > 1)
                 overheat_bg.gameObject.SetActive(true);
             else
                 overheat_bg.gameObject.SetActive(false);
@@ -113,7 +119,18 @@ namespace RMUC_UI {
             my_robotab.Push(myrobot.Pull());
             my_robotab.bld_bar.DispBldTxt(myrobot.currblood, myrobot.maxblood);
             SetMyBuff();
+            if (myrobot.maxexp != int.MaxValue) {
+                txt_exp.text = string.Format("{0} / {1} Exp.", myrobot.currexp, myrobot.maxexp);
+                img_exp.fillAmount = (float) myrobot.currexp / myrobot.maxexp;
+            } else {
+                txt_exp.text = string.Format("Max Exp");
+                img_exp.fillAmount = 1;
+            }
+            txt_cap.text = string.Format("{0:N1}% Cap.", rat_cap*100);
+            img_cap.fillAmount = rat_cap;
         }
+
+
         void SetMyBuff() {
             SetMyBuffAt(0, AssetManager.singleton.img_atk);
             SetMyBuffAt(1, AssetManager.singleton.img_cldn);

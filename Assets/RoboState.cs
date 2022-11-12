@@ -12,6 +12,7 @@ public class RoboState : BasicState {
      *  they are initialized by RoboState.Configure() and updated by UpdateBuff() or BuffManager.cs
      */
     public int currexp = 0;
+    public int maxexp;
     /* weapon params */
     public int maxheat;
     public int cooldown;

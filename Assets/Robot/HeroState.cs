@@ -14,7 +14,7 @@ public class HeroState : RoboState {
     /// <summary>
     /// Game Params
     /// </summary>
-    public int maxexp;
+    // public int maxexp;
     int expgrow = 4;
 
     /// <summary>
