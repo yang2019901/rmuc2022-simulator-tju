@@ -81,19 +81,26 @@ namespace RMUC_UI {
                 foreach (RoboTab rt in GetComponentsInChildren<RoboTab>(includeInactive: true)) {
                     if (rt.name.ToLower().Contains("my")) {
                         // Debug.Log("rt.name: " + rt.name);
-                        if (rt.name.ToLower().Contains(color)) {
-                            rt.gameObject.SetActive(true);
-                            my_robotab = rt;    // store reference
-
-                            // set robotab's img_ava
-                            int idx = 0; var tp = myrobot.GetType();
-                            if (tp == typeof(HeroState)) idx = 0;
-                            else if (tp == typeof(EngineerState)) idx = 1;
-                            else if (tp == typeof(InfantryState)) idx = 2;
-                            else Debug.Log("wrong type of myrobot: " + tp);
-                            my_robotab.img_ava.sprite = my_robotab.imgs_team[idx];
-                        } else
+                        if (!rt.name.ToLower().Contains(color)) {
                             rt.gameObject.SetActive(false);
+                            continue;
+                        }
+                        rt.gameObject.SetActive(true);
+                        my_robotab = rt;    // store reference
+
+                        // get robotab's img_ava's index
+                        int idx = 0; var tp = myrobot.GetType();
+                        if (tp == typeof(HeroState)) idx = 0;
+                        else if (tp == typeof(EngineerState)) {
+                            foreach (var tmp in my_robotab.GetComponentsInChildren<Transform>())
+                                if (tmp.name.Contains("cap") || tmp.name.Contains("exp"))
+                                    tmp.gameObject.SetActive(false);
+                            idx = 1;
+                        }
+                        else if (tp == typeof(InfantryState)) idx = 2;
+                        else Debug.Log("wrong type of myrobot: " + tp);
+                        // set robotab's img_ava
+                        my_robotab.img_ava.sprite = my_robotab.imgs_team[idx];
                     }
                 }
                 int my_roboidx = BattleField.singleton.robo_all.FindIndex(i => i == myrobot);
@@ -119,15 +126,17 @@ namespace RMUC_UI {
             my_robotab.Push(myrobot.Pull());
             my_robotab.bld_bar.DispBldTxt(myrobot.currblood, myrobot.maxblood);
             SetMyBuff();
-            if (myrobot.maxexp != int.MaxValue) {
-                txt_exp.text = string.Format("{0} / {1} Exp.", myrobot.currexp, myrobot.maxexp);
-                img_exp.fillAmount = (float) myrobot.currexp / myrobot.maxexp;
-            } else {
-                txt_exp.text = string.Format("Max Exp");
-                img_exp.fillAmount = 1;
+            if (myrobot.GetType() == typeof(RoboController)) {
+                if (myrobot.maxexp != int.MaxValue) {
+                    txt_exp.text = string.Format("{0} / {1} Exp.", myrobot.currexp, myrobot.maxexp);
+                    img_exp.fillAmount = (float) myrobot.currexp / myrobot.maxexp;
+                } else {
+                    txt_exp.text = string.Format("Max Exp");
+                    img_exp.fillAmount = 1;
+                }
+                txt_cap.text = string.Format("{0:N1}% Cap.", rat_cap*100);
+                img_cap.fillAmount = rat_cap;
             }
-            txt_cap.text = string.Format("{0:N1}% Cap.", rat_cap*100);
-            img_cap.fillAmount = rat_cap;
         }
 
 
@@ -156,7 +165,7 @@ namespace RMUC_UI {
                 return;
             RoboController rc = myrobot.GetComponent<RoboController>();
             int bull_num;
-            if (int.TryParse(supp_ui.GetComponentInChildren<TMP_InputField>().text, out bull_num)) {
+            if (rc != null && int.TryParse(supp_ui.GetComponentInChildren<TMP_InputField>().text, out bull_num)) {
                 rc.CmdSupply(rc.gameObject.name, bull_num);
                 supp_ui.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;

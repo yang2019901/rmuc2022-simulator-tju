@@ -82403,7 +82403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  centerOfMass: {x: 0, y: -0.05, z: 0}
+  centerOfMass: {x: 0, y: 0, z: 0}
   yaw: {fileID: 1899311991754189605}
   pitch: {fileID: 1899311992768718324}
   wheels:
@@ -82418,6 +82418,7 @@ MonoBehaviour:
   - {fileID: 1899311992746062538}
   bullet_start: {fileID: 1899311993332943589}
   robo_cam: {fileID: 1899311993548116148}
+  currcap: 0
 --- !u!114 &1899311992969313171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82434,6 +82435,7 @@ MonoBehaviour:
   expval: 0
   survival: 1
   currexp: 0
+  maxexp: 0
   maxheat: 0
   cooldown: 0
   bullspd: 0
@@ -82458,7 +82460,6 @@ MonoBehaviour:
   blood_bars:
   - {fileID: 2527316594931038070}
   level: 0
-  maxexp: 0
 --- !u!114 &5539372565188456673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82471,7 +82472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb1eab4b25ee7d34186c891608696b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bull_num: 0
+  bullnum: 0
   currheat: 0
   heat_ratio: 0
 --- !u!114 &1995416777828430950
