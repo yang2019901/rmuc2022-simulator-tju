@@ -14,6 +14,13 @@ public class EngineerController : BasicController{
     [Header("View")]
     public Transform robo_cam;
 
+    [Header("Catching")]
+    public Transform elev_1st;
+    public Transform elev_2nd;
+    public Transform arm;
+    public Transform wrist;
+    public Transform claw;
+
     private Rigidbody _rigid;
     private float pitch_ang = 0;
     private float pitch_min = -30;
@@ -66,6 +73,7 @@ public class EngineerController : BasicController{
         if (robo_state.survival && playing) {
             Move();
             Look();
+            Catch();
         } else {
             StopMove();
         }
@@ -105,12 +113,14 @@ public class EngineerController : BasicController{
     }
 
     const int wheel_num = 4;
-    const float torque_drive = 10f;
-    const float torque_spin = 5f;
+    const float torque_drive = 8f;
+    const float torque_spin = 2f;
     void Move() {
         bool catching = Input.GetKey(KeyCode.LeftShift);
-        if (catching)
+        if (catching) {
+            StopMove();
             return;
+        }
 
         bool braking = Input.GetKey(KeyCode.X);
         bool spinning = Input.GetKey(KeyCode.E) ^ Input.GetKey(KeyCode.Q);  // exclusive or
@@ -170,6 +180,58 @@ public class EngineerController : BasicController{
         pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
         /* Rotate Transform "yaw" & "pitch" */
         pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
+    }
+
+
+    readonly Vector3 elev_1st_start = new Vector3(0, 0, 0);
+    readonly Vector3 elev_1st_end = new Vector3(0, 0, -0.24f);
+    readonly Vector3 elev_2nd_start = new Vector3(0, 0, 0);
+    readonly Vector3 elev_2nd_end = new Vector3(0, -0.2f, 0);
+    readonly Vector3 arm_start = new Vector3(0, 0, 0);
+    readonly Vector3 arm_end = new Vector3(-0.4f, 0, 0);
+    readonly Vector3 wrist_fd = new Vector3(-90, 0, 0);
+    readonly Vector3 wrist_bd = new Vector3(90, 0, 0);
+    readonly Vector3 claw_lt = new Vector3(-0.13f, 0, 0);
+    readonly Vector3 claw_rt = new Vector3(0.13f, 0, 0);
+    float rat_arm = 0;
+    float rat_claw = 0.5f;
+    float st_wrist = 0.5f;
+    float rat_wrist = 0.5f;
+    float rat_elev = 0f;
+    void Catch() {
+        wrist.localEulerAngles = Vector3.Lerp(wrist_fd, wrist_bd, rat_wrist); 
+
+        bool catching = Input.GetKey(KeyCode.LeftShift);
+        if (!catching)
+            return ;
+
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        /* elevate */
+        bool cmd_up = Input.GetKey(KeyCode.E);
+        bool cmd_dn = Input.GetKey(KeyCode.Q);
+        if (cmd_up ^ cmd_dn)
+            rat_elev = Mathf.Clamp01(rat_elev + (cmd_up ? Time.deltaTime : -Time.deltaTime));
+        
+        elev_1st.localPosition = Vector3.Lerp(elev_1st_start, elev_1st_end, rat_elev);
+        elev_2nd.localPosition = Vector3.Lerp(elev_2nd_start, elev_2nd_end, rat_elev);
+        /* move arm */
+        rat_arm = Mathf.Clamp01(rat_arm + v*Time.deltaTime);
+        arm.localPosition = Vector3.Lerp(arm_start, arm_end, rat_arm);
+        /* move wrist */
+        bool cmd_out = Input.GetKeyDown(KeyCode.C);
+        bool cmd_in = Input.GetKeyDown(KeyCode.Z);
+        if (cmd_in ^ cmd_out)
+            st_wrist = Mathf.Clamp01(st_wrist + (cmd_out ? 0.5f : -0.5f));
+        if (st_wrist > rat_wrist + 1e-3)
+            rat_wrist += Time.deltaTime;
+        else if (st_wrist < rat_wrist - 1e-3)
+            rat_wrist -= Time.deltaTime;
+        rat_wrist = Mathf.Clamp01(rat_wrist);
+        /* move claw */
+        rat_claw = Mathf.Clamp01(rat_claw + h*Time.deltaTime);
+        claw.localPosition = Vector3.Lerp(claw_lt, claw_rt, rat_claw);
+        
     }
 
 }

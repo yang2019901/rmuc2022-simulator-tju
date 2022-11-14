@@ -92,9 +92,10 @@ namespace RMUC_UI {
                         int idx = 0; var tp = myrobot.GetType();
                         if (tp == typeof(HeroState)) idx = 0;
                         else if (tp == typeof(EngineerState)) {
-                            foreach (var tmp in my_robotab.GetComponentsInChildren<Transform>())
-                                if (tmp.name.Contains("cap") || tmp.name.Contains("exp"))
-                                    tmp.gameObject.SetActive(false);
+                            txt_cap.gameObject.SetActive(false);
+                            img_cap.gameObject.SetActive(false);
+                            txt_exp.gameObject.SetActive(false);
+                            img_exp.gameObject.SetActive(false);
                             idx = 1;
                         }
                         else if (tp == typeof(InfantryState)) idx = 2;
