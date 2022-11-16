@@ -89,7 +89,7 @@ public class RoboState : BasicState {
     }
 
 
-    public void Die() {
+    public virtual void Die() {
         Debug.Log(this.gameObject.name + " dies");
         this.currblood = 0;
         SetBloodBars();
@@ -121,15 +121,15 @@ public class RoboState : BasicState {
     /// <summary>
     /// non-API
     /// </summary>
-    /* for visual effects */
+    /* li_b_xx will be allocated here. hence, make sure base.Start() is called at very beginning */ 
     public virtual void Start() {
         this.acs = GetComponentsInChildren<ArmorController>();
 
         li_B_atk = new List<float> { 0 };
         li_B_dfc = new List<float> { 0 };
-        li_B_cd = new List<float> { 1 };
+        li_B_cd  = new List<float> { 1 };
         li_B_rev = new List<float> { 0 };
-        li_B_rbn = new List<int> { 0 };
+        li_B_rbn = new List<int>   { 0 };
         UpdateBuff();
 
         GetUserPref();
@@ -146,11 +146,13 @@ public class RoboState : BasicState {
     }
 
     
+    protected int rbn_req = 0;  // Every death will add 10 to rbn_req immediately.
+                                // When first died, rbn_req will be 10, 
+                                //  exactly what's needed for first reborn
     float timer_rev = 0f;
-    int rbn_req = 0; // every death will add 10 to rbn_req immediately
     int rbn = 0;
     // revive per second
-    private void Revive() {
+    protected virtual void Revive() {
         if (this.survival) {
             if (B_rev != 0 && Time.time - timer_rev > 1 && currblood < maxblood) {
                 currblood += Mathf.RoundToInt(maxblood * B_rev);

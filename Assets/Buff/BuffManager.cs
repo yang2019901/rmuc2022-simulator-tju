@@ -46,11 +46,13 @@ public abstract class Buff {
     because it's designed to deal with ground buff
 */
 public class B_Revive : Buff {
+    float B_rev = 0.05f;
+    int B_rbn = 2;
     public override void Enable(Collider col) {
         /* add buff - Revive */
         if (!en) {
-            robot.li_B_rev.Add(0.05f);
-            robot.li_B_rbn.Add(2);
+            robot.li_B_rev.Add(B_rev);
+            robot.li_B_rbn.Add(B_rbn);
             robot.UpdateBuff();
         }
         base.Enable(col);
@@ -60,11 +62,19 @@ public class B_Revive : Buff {
         base.Disable();
         if (!en)
             return;
-        robot.li_B_rev.Remove(0.05f);
-        robot.li_B_rbn.Remove(2);
+        robot.li_B_rev.Remove(B_rev);
+        robot.li_B_rbn.Remove(B_rbn);
         robot.UpdateBuff();
         en = false;
     }
+
+
+    public void Reset(float B_rev = 0.05f, int B_rbn = 2) {
+        this.B_rev = B_rev;
+        this.B_rbn = B_rbn;
+        return;
+    }
+
 
     public override void Update() {
         /* no buff */
@@ -343,6 +353,7 @@ public class BuffType {
 }
 
 public class BuffManager : MonoBehaviour {
+    public static char sep = ' ';
     private RoboState robot;
     private Dictionary<string, Buff> buffs;
 
@@ -397,12 +408,17 @@ public class BuffManager : MonoBehaviour {
     }
 
     void OnTriggerStay(Collider col) {
-        char sep = ' ';
         string prefix = col.name.Split(sep)[0];
         switch (prefix) {
             case BuffType.rev:
-                if (col.name.Contains(my_color_s))
+                if (col.name.Contains(my_color_s)) {
+                    B_Revive buf = (B_Revive)buffs[BuffType.rev];
+                    if (col.name.Contains("card"))
+                        buf.Reset(0, 1);
+                    else
+                        buf.Reset();
                     buffs[BuffType.rev].Enable(col);
+                }
                 break;
             case BuffType.bas:
                 if (col.name.Contains(my_color_s)) {

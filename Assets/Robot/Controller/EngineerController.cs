@@ -21,6 +21,9 @@ public class EngineerController : BasicController{
     public Transform wrist;
     public Transform claw;
 
+    [Header("Revive Card")]
+    public Transform rev_card;
+
     private Rigidbody _rigid;
     private float pitch_ang = 0;
     private float pitch_min = -30;
@@ -74,6 +77,7 @@ public class EngineerController : BasicController{
             Move();
             Look();
             Catch();
+            Save();
         } else {
             StopMove();
         }
@@ -111,6 +115,7 @@ public class EngineerController : BasicController{
             wc.brakeTorque = 0.1f;
         }
     }
+
 
     const int wheel_num = 4;
     const float torque_drive = 8f;
@@ -198,6 +203,7 @@ public class EngineerController : BasicController{
     float st_wrist = 0.5f;
     float rat_wrist = 0.5f;
     float rat_elev = 0f;
+    bool holding = false;
     void Catch() {
         wrist.localEulerAngles = Vector3.Lerp(wrist_fd, wrist_bd, rat_wrist); 
 
@@ -232,6 +238,21 @@ public class EngineerController : BasicController{
         rat_claw = Mathf.Clamp01(rat_claw + h*Time.deltaTime);
         claw.localPosition = Vector3.Lerp(claw_lt, claw_rt, rat_claw);
         
+        holding ^= Input.GetKeyDown(KeyCode.R);
+        // TODO
+    }
+
+
+    readonly Vector3 card_start = new Vector3(0, 0.084f, 0.22f);
+    readonly Vector3 card_end = new Vector3(0, 0.084f, 0.50f);
+    bool saving = false;
+    float rat_rev = 0;
+    public void Save() {
+        if (Input.GetKeyDown(KeyCode.R)) {
+            saving = !saving;
+        }
+        rat_rev = Mathf.Clamp01(rat_rev + (saving ? Time.deltaTime : -Time.deltaTime));
+        rev_card.localPosition = Vector3.Lerp(card_start, card_end, rat_rev); 
     }
 
 }
