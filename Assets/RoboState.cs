@@ -152,7 +152,7 @@ public class RoboState : BasicState {
     float timer_rev = 0f;
     int rbn = 0;
     // revive per second
-    protected virtual void Revive() {
+    void Revive() {
         if (this.survival) {
             if (B_rev != 0 && Time.time - timer_rev > 1 && currblood < maxblood) {
                 currblood += Mathf.RoundToInt(maxblood * B_rev);
@@ -166,13 +166,13 @@ public class RoboState : BasicState {
                 timer_rev = Time.time;
             }
             if (rbn >= rbn_req)
-                StartCoroutine(this.Reborn());
+                Reset();
         }
         // Debug.Log("blood: " + currblood + "/" + maxblood);
     }
-    
-    
-    IEnumerator Reborn() {
+
+
+    protected virtual void Reset() {
         rbn = 0;
         /* by rule, recover currblood to 20% */
         this.currblood = maxblood / 5;
@@ -183,10 +183,18 @@ public class RoboState : BasicState {
         foreach (ArmorController ac in acs)
             ac.Enable();
         SetBloodBars();
+        StartCoroutine(this.Reborn());
+    }
+    
+
+    IEnumerator Reborn() {
         /* delay 10 sec invincible */
-        this.B_dfc = 1;
+        this.li_B_dfc.Add(1);
+        UpdateBuff();
         yield return new WaitForSeconds(10);
+
         /* cancel invincible buff */
+        this.li_B_dfc.Remove(1);
         UpdateBuff();
         yield break;
     }

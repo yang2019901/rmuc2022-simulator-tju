@@ -10,6 +10,7 @@ using UnityEngine;
 public class EngineerState : RoboState {
     const int interv_self_rev = 30;     // how long engineer starts to self-revive since last hit
     EngineerController ec;
+    string rev_card_s;
 
 
 
@@ -24,7 +25,24 @@ public class EngineerState : RoboState {
         rs.has_level = false;
         rs.maxblood = this.maxblood;
         return rs;
-    }
+    }       // called by syncnode
+
+
+    public override void Die() {
+        base.Die();
+        ec.rev_card.name = "revive_card";
+    }       // called by weapon
+
+
+    public override void TakeDamage(GameObject hitter, GameObject armor_hit, GameObject bullet) {
+        base.TakeDamage(hitter, armor_hit, bullet);
+        if (reviving) {
+            reviving = false;
+            li_B_rev.Remove(0.02f);
+            UpdateBuff();
+        }
+        timer_hit = 0; 
+    }       // called by armorcontroller
 
 
     /// <summary>
@@ -32,51 +50,33 @@ public class EngineerState : RoboState {
     /// </summary>
     public override void Start() {
         base.Start();
+
+        rev_card_s = BuffType.rev + BuffManager.sep + (armor_color == ArmorColor.Red ? "red" : "blue") + " card";
         ec = GetComponent<EngineerController>();
-        ec.rev_card.name = BuffType.rev + BuffManager.sep + (armor_color == ArmorColor.Red ? "red" : "blue");
+        ec.rev_card.name = rev_card_s;
 
         li_B_rbn.Add(1);
         UpdateBuff();
 
-        tmp1 = interv_self_rev;
         rbn_req = 10;
     }
 
 
-    float tmp2;
+    bool reviving = true;
+    float timer_hit = interv_self_rev;     // how long since last hit
     public override void Update() {
         base.Update();
-        tmp2 = tmp1 + Time.deltaTime;
-        if (tmp1 < interv_self_rev && tmp2 >= interv_self_rev) {
+        if (timer_hit > interv_self_rev && !reviving) {
+            reviving = true;
             li_B_rev.Add(0.02f);
             UpdateBuff();
         }
-        tmp1 = tmp2;
     }
 
 
-    float tmp1 = 0;     // how long since last hit
-    public override void TakeDamage(GameObject hitter, GameObject armor_hit, GameObject bullet)
-    {
-        base.TakeDamage(hitter, armor_hit, bullet);
-        if (tmp1 >= interv_self_rev) {
-            li_B_rev.Remove(0.02f);
-            UpdateBuff();
-        }
-        tmp1 = 0; 
-    }
-
-
-    public override void Die()
-    {
-        base.Die();
-        ec.rev_card.name = "revive_card";
-    }
-
-
-    protected override void Revive() {
-        base.Revive();
-        ec.rev_card.name = BuffType.rev + BuffManager.sep + (armor_color == ArmorColor.Red ? "red" : "blue");
+    protected override void Reset() {
+        base.Reset();
+        ec.rev_card.name = rev_card_s;
     }
 
 

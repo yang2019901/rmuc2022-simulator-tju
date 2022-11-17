@@ -417,6 +417,7 @@ public class BuffManager : MonoBehaviour {
                         buf.Reset(0, 1);
                     else
                         buf.Reset();
+                    Debug.Log("card.name: " + col.name);
                     buffs[BuffType.rev].Enable(col);
                 }
                 break;
