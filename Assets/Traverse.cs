@@ -5,32 +5,27 @@ using Mirror;
 
 /* code will be executed in editor, therefore, component will be added to object persistantly */
 [ExecuteInEditMode]
-public class Traverse : MonoBehaviour
-{
+public class Traverse : MonoBehaviour {
     public Material mat;
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         Transform[] allchildren = GetComponentsInChildren<Transform>();
-        foreach (Transform child in allchildren)
-        {
+        foreach (Transform child in allchildren) {
 
             // AddMC(child);
             // ResetConvex(child);
-            // DeleteMC(child);
-            ReplaceMaterial(child, AssetManager.singleton.light_blue);
+            DeleteMC(child);
+            // ReplaceMaterial(child, AssetManager.singleton.light_blue);
             // DeleteNI(child);
         }
         // DestroyImmediate(this.GetComponent<Traverse>());
     }
 
-    void AddMC(Transform child)
-    {
+    void AddMC(Transform child) {
         MeshFilter mf = child.gameObject.GetComponent<MeshFilter>();
         MeshCollider mc = child.gameObject.GetComponent<MeshCollider>();
         /* has mesh filter but have no mesh collider */
-        if (mf != null && mc == null)
-        {
+        if (mf != null && mc == null) {
             if (child.gameObject.name.Contains("BREP"))
                 return;
             Debug.Log("Add Mesh Collider: " + child.name);
@@ -40,41 +35,34 @@ public class Traverse : MonoBehaviour
         }
     }
 
-    void DeleteMC(Transform child)
-    {
+    void DeleteMC(Transform child) {
         MeshCollider mc = child.gameObject.GetComponent<MeshCollider>();
-        if (mc != null)
-        {
+        if (mc != null) {
             DestroyImmediate(mc);
             Debug.Log("Delete Mesh Collider: " + child.name);
         }
     }
 
-    void SetConvex(Transform child)
-    {
+    void SetConvex(Transform child) {
         MeshCollider mc = child.gameObject.GetComponent<MeshCollider>();
-        if (mc != null)
-        {
+        if (mc != null) {
             mc.convex = true;
             Debug.Log("Set Convex: " + child.name);
         }
     }
 
-    void ResetConvex(Transform child)
-    {
+    void ResetConvex(Transform child) {
         MeshCollider mc = child.gameObject.GetComponent<MeshCollider>();
-        if (mc != null)
-        {
+        if (mc != null) {
             mc.convex = false;
             Debug.Log("Reset Convex: " + child.name);
         }
     }
 
-    void ReplaceMaterial(Transform child, Material new_mat)
-    {
+    void ReplaceMaterial(Transform child, Material new_mat) {
         Renderer tmp = child.GetComponent<MeshRenderer>();
         if (tmp == null)
-            return ;
+            return;
         if (tmp.sharedMaterial.name.ToLower() == "material_4")
         // if (child.name.Contains("轨") && !child.name.Contains("板"))
         {
@@ -83,8 +71,7 @@ public class Traverse : MonoBehaviour
         }
     }
 
-    void DeleteNI(Transform child)
-    {
+    void DeleteNI(Transform child) {
         if (GetComponent<NetworkIdentity>() != null) {
             Debug.Log(child.name);
             DestroyImmediate(GetComponent<NetworkTransform>());

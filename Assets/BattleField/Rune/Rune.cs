@@ -4,10 +4,11 @@ public enum RuneBuff { None, Junior, Senior };
 
 /* Motion control and light control */
 public class Rune : MonoBehaviour {
-    /* set in Unity */
+    /* external reference */
     public Transform rotator_rune;
     public RuneState rune_state_red;
     public RuneState rune_state_blue;
+    public Transform[] mines;
 
 
     public bool activated { get; private set; }
@@ -15,6 +16,9 @@ public class Rune : MonoBehaviour {
     private const int jun_end = 120;   // rune_junior ends
     private const int sen_sta = 240;   // rune_senior starts
     private const int sen_end = 420;   // rune_senior ends
+    private const int mine_1_3 = 15;
+    private const int mine_0_4 = 180;
+    private const int mine_2 = mine_0_4 + 5;
     private RuneBuff rune_buff;
     private float a, w, t;
     private int sgn;
@@ -32,7 +36,11 @@ public class Rune : MonoBehaviour {
         rune_state_blue.SetActiveState(Activation.Idle);
         sgn = Random.Range(0, 1) > 0.5 ? 1 : -1;
         Reset();
+
+        for (int i = 0; i < mines.Length; i++)
+            mines[i].GetComponent<Rigidbody>().useGravity = false;
     }
+
 
     void Update() {
         float t_bat = BattleField.singleton.GetBattleTime();
@@ -60,6 +68,22 @@ public class Rune : MonoBehaviour {
             rune_state_blue.SetActiveState(Activation.Idle);
             rune_state_red.SetActiveState(Activation.Idle);
         }
+
+        float t_next = t_bat + Time.deltaTime;
+        if (t_bat < mine_1_3 && t_next > mine_1_3) {
+            DropMine(1);
+            DropMine(3);
+        } else if (t_bat < mine_0_4 && t_next > mine_0_4) {
+            DropMine(0);
+            DropMine(4);
+        } else if (t_bat < mine_2 && t_next > mine_2)
+            DropMine(2);
+    }
+
+    
+    void DropMine(int mineIdx) {
+        mines[mineIdx].parent = null;
+        mines[mineIdx].GetComponent<Rigidbody>().useGravity = true;
     }
 
 
@@ -89,4 +113,5 @@ public class Rune : MonoBehaviour {
         this.a = Random.Range(0.78f, 1.045f);
         this.w = Random.Range(1.884f, 2f);
     }
+
 }
