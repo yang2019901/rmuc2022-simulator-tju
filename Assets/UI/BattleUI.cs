@@ -127,7 +127,7 @@ namespace RMUC_UI {
             my_robotab.Push(myrobot.Pull());
             my_robotab.bld_bar.DispBldTxt(myrobot.currblood, myrobot.maxblood);
             SetMyBuff();
-            if (myrobot.GetType() == typeof(RoboController)) {
+            if (myrobot.GetComponent<RoboController>() != null) {
                 if (myrobot.maxexp != int.MaxValue) {
                     txt_exp.text = string.Format("{0} / {1} Exp.", myrobot.currexp, myrobot.maxexp);
                     img_exp.fillAmount = (float) myrobot.currexp / myrobot.maxexp;

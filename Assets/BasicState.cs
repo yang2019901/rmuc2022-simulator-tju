@@ -61,7 +61,7 @@ public abstract class BasicState : MonoBehaviour {
                 robot.currexp += exp_average;
         }
         if (fb) {
-            Debug.Log("first blood");
+            // Debug.Log("first blood");
             if (this.armor_color != BattleField.singleton.robo_local.armor_color)
                 AssetManager.singleton.PlayClipAround(AssetManager.singleton.frst_bld);
             BattleField.singleton.had_first_blood = true;

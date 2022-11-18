@@ -33,6 +33,7 @@ public class RoboController : BasicController {
     private Weapon wpn;
     private RoboState robo_state;
 
+    private bool playing => Cursor.lockState == CursorLockMode.Locked;
 
     /// <summary>
     /// non-API
@@ -78,14 +79,13 @@ public class RoboController : BasicController {
             return;
 
         SetCursor();
-        bool playing = Cursor.lockState == CursorLockMode.Locked;
-        if (robo_state.survival && playing) {
+        if (robo_state.survival) {
             Move();
             Look();
             Shoot();
-        } else {
-            StopMove();
         }
+        else
+            StopMove();
         Supply();
         UpdateSelfUI();
     }
@@ -110,6 +110,7 @@ public class RoboController : BasicController {
     }
 
 
+
     void SetCursor() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None
@@ -126,21 +127,23 @@ public class RoboController : BasicController {
     }
 
 
+    const int wheel_num = 4;
+    const float efficiency = 0.4f;
+    const float charge_coeff = 0.1f;          // how much of torque_avail will be used to charge capacity
+    const float discharge_coeff = 1.8f;      // how fast capacity discharge 
+    const float torque_drive = 20f;
+    const float torque_spin = 20f;
     bool discharging = false;
+    float torque_avail;
+    bool braking => playing && Input.GetKey(KeyCode.X);
+    bool spinning => playing && Input.GetKey(KeyCode.LeftShift);
+    float h => playing ? Input.GetAxis("Horizontal") : 0;
+    float v => playing ? Input.GetAxis("Vertical") : 0;
     void Move() {
         /* Manage Power */
-        int wheel_num = wheelColliders.Length;
-        float efficiency = 0.4f;
-        float charge_coeff = 0.1f;          // how much of torque_avail will be used to charge capacity
-        float discharge_coeff = 1.25f;      // how fast capacity discharge 
-        float torque_drive = 20f;
-        float torque_spin = 20f;
+        torque_avail = efficiency * robo_state.power;
 
-        float torque_avail = efficiency * robo_state.power;
-
-        bool braking = Input.GetKey(KeyCode.X);
-        bool spinning = Input.GetKey(KeyCode.LeftShift);
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && playing)
             discharging = !discharging;
 
         /* store energy in capacity */
@@ -166,10 +169,6 @@ public class RoboController : BasicController {
             foreach (var wc in wheelColliders)
                 wc.brakeTorque = 0;
 
-        /* Transform */
-        // Get move direction from user input
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
 
         // move the car and steer wheels
         float steer_ang = Mathf.Rad2Deg * Mathf.Atan2(h, v);
@@ -236,10 +235,10 @@ public class RoboController : BasicController {
     }
 
 
+    /* Get look dir from user input */
+    float mouseX => playing ? 2 * Input.GetAxis("Mouse X") : 0;
+    float mouseY => playing ? 2 * Input.GetAxis("Mouse Y") : 0;
     void Look() {
-        /* Get look dir from user input */
-        float mouseX = 2 * Input.GetAxis("Mouse X");
-        float mouseY = 2 * Input.GetAxis("Mouse Y");
         pitch_ang -= mouseY;
         pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
         yaw_ang += mouseX;
@@ -252,7 +251,7 @@ public class RoboController : BasicController {
 
     // get ammunition supply at reborn spot
     void Supply() {
-        if (Input.GetKeyDown(KeyCode.O)) {
+        if (Input.GetKeyDown(KeyCode.O) && playing) {
             bool in_supp_spot = robo_state.robo_buff.FindIndex(i => i.tag == BuffType.rev) != -1;
             if (in_supp_spot) {
                 bool shw = !BattleField.singleton.bat_ui.supp_ui.activeSelf;
@@ -272,8 +271,8 @@ public class RoboController : BasicController {
     }
 
 
+    bool is_fire => playing && Input.GetMouseButton(0);
     void Shoot() {
-        bool is_fire = Input.GetMouseButton(0);
         if (is_fire && Time.time - last_fire > 0.15) {
             CmdShoot(bullet_start.position, bullet_start.forward * robo_state.bullspd + _rigid.velocity);
             last_fire = Time.time;

@@ -213,7 +213,7 @@ public class RoboState : BasicState {
         /* else, robot record this hit and make visual effect */
         Hit(hitter);
 
-        Debug.Log("current blood: " + currblood);
+        // Debug.Log("current blood: " + currblood);
 
         if (this.currblood <= 0) {
             // killed by ally doesnt count and ally will not get exp
