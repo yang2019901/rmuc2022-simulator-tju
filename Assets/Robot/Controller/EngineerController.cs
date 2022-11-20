@@ -30,6 +30,8 @@ public class EngineerController : BasicController {
     private float pitch_max = 40;
     private RoboState robo_state;
 
+    private HoldMine hm;
+
 
     bool playing => Cursor.lockState == CursorLockMode.Locked;
     bool cmd_C => playing && Input.GetKeyDown(KeyCode.C);
@@ -72,6 +74,7 @@ public class EngineerController : BasicController {
         _rigid.centerOfMass = centerOfMass;
         Cursor.lockState = CursorLockMode.Locked;
         robo_state = GetComponent<RoboState>();
+        hm = GetComponentInChildren<HoldMine>();
 
         if (hasAuthority) {
             BattleField.singleton.robo_local = this.robo_state;
@@ -88,6 +91,7 @@ public class EngineerController : BasicController {
             Move();
             Look();
             MovClaw();
+            Catch();
             Save();
         } else
             StopMove();
@@ -199,48 +203,46 @@ public class EngineerController : BasicController {
     readonly Vector3 arm_end = new Vector3(-0.4f, 0, 0);
     readonly Vector3 wrist_fd = new Vector3(-90, 0, 0);
     readonly Vector3 wrist_bd = new Vector3(90, 0, 0);
-    readonly Vector3 claw_lt = new Vector3(-0.13f, 0, 0);
-    readonly Vector3 claw_rt = new Vector3(0.13f, 0, 0);
+    readonly Vector3 claw_lt = new Vector3(-0.32f, 0.178f, 0.054f);
+    readonly Vector3 claw_rt = new Vector3(-0.08f, 0.178f, 0.054f);
     float rat_arm = 0;
     float rat_claw = 0.5f;
     float st_wrist = 0.5f;
     float rat_wrist = 0.5f;
     float rat_elev = 0f;
     void MovClaw() {
-        wrist.localEulerAngles = Vector3.Lerp(wrist_fd, wrist_bd, rat_wrist);
-
-        if (!cmd_lshift)
-            return;
-
-        /* elevate */
-        if (cmd_E ^ cmd_Q)
-            rat_elev = Mathf.Clamp01(rat_elev + (cmd_E ? Time.deltaTime : -Time.deltaTime));
-
+        if (cmd_lshift) {
+            /* elevate */
+            if (cmd_E ^ cmd_Q)
+                rat_elev = Mathf.Clamp01(rat_elev + (cmd_E ? Time.deltaTime : -Time.deltaTime));
+            /* move arm */
+            rat_arm = Mathf.Clamp01(rat_arm + v * Time.deltaTime);
+            /* move wrist */
+            if (cmd_Z ^ cmd_C)
+                st_wrist = Mathf.Clamp01(st_wrist + (cmd_C ? 0.5f : -0.5f));
+            /* move claw */
+            rat_claw = Mathf.Clamp01(rat_claw + h * Time.deltaTime);
+        }
         elev_1st.localPosition = Vector3.Lerp(elev_1st_start, elev_1st_end, rat_elev);
         elev_2nd.localPosition = Vector3.Lerp(elev_2nd_start, elev_2nd_end, rat_elev);
-        /* move arm */
-        rat_arm = Mathf.Clamp01(rat_arm + v * Time.deltaTime);
         arm.localPosition = Vector3.Lerp(arm_start, arm_end, rat_arm);
-        /* move wrist */
-        if (cmd_Z ^ cmd_C)
-            st_wrist = Mathf.Clamp01(st_wrist + (cmd_C ? 0.5f : -0.5f));
-        if (st_wrist > rat_wrist + 1e-3)
+        if (st_wrist > rat_wrist + 1e-2)
             rat_wrist += Time.deltaTime;
-        else if (st_wrist < rat_wrist - 1e-3)
+        else if (st_wrist < rat_wrist - 1e-2)
             rat_wrist -= Time.deltaTime;
         rat_wrist = Mathf.Clamp01(rat_wrist);
-        /* move claw */
-        rat_claw = Mathf.Clamp01(rat_claw + h * Time.deltaTime);
+        wrist.localEulerAngles = Vector3.Lerp(wrist_fd, wrist_bd, rat_wrist);
         claw.localPosition = Vector3.Lerp(claw_lt, claw_rt, rat_claw);
     }
 
 
-    public bool holding = false;
     void Catch() {
         /* if no cmd to change holding state, there's nothing to do */
-        if (!(cmd_R && cmd_lshift))
-            return;
-        holding = !holding;
+        if (cmd_R && cmd_lshift) {
+            if (hm.holding)
+                hm.Release();
+            hm.holding = !hm.holding;
+        }
     }
 
 

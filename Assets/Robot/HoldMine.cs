@@ -4,18 +4,35 @@ using UnityEngine;
 
 public class HoldMine : MonoBehaviour {
     public const string mine_s = "mine";
-    EngineerController ec;
-    bool holding => ec.holding;
-    void Start() {
-        ec = GetComponentInParent<EngineerController>();
+    public bool holding = false;
+    Transform mine_holding;
+
+
+    void Update() {
+        if (mine_holding != null) {
+            mine_holding.localPosition = Vector3.zero;
+            mine_holding.localEulerAngles = Vector3.zero;
+        }
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if (!this.holding || other.name != mine_s) 
+
+    void OnTriggerStay(Collider other) {
+        if (!this.holding || !other.name.Contains(mine_s) || other.transform.parent != null)
             return;
-        other.transform.parent = this.transform;
-        other.transform.localPosition = Vector3.zero;
-        other.transform.localEulerAngles = Vector3.zero;
-        Debug.Log("catch a mine");
+        Hold(other.transform);
+    }
+
+
+    void Hold(Transform mine) {
+        mine.parent = this.transform;
+        mine_holding = mine;
+    }
+
+
+    public void Release() {
+        if (mine_holding == null)
+            return;
+        mine_holding.parent = null;
+        mine_holding = null;
     }
 }

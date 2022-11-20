@@ -969,7 +969,7 @@ GameObject:
   - component: {fileID: 1395815619350654664}
   - component: {fileID: 1395815619350654662}
   - component: {fileID: 1395815619350654663}
-  - component: {fileID: 7738422860289557532}
+  - component: {fileID: 5288077864364175102}
   m_Layer: 8
   m_Name: BREP_255_1 1
   m_TagString: Untagged
@@ -1042,7 +1042,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7738422860289557532
+--- !u!64 &5288077864364175102
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1051,7 +1051,7 @@ MeshCollider:
   m_GameObject: {fileID: 1395815619350654665}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
@@ -5085,6 +5085,7 @@ GameObject:
   m_Component:
   - component: {fileID: 629354821351425991}
   - component: {fileID: 1830599835921659863}
+  - component: {fileID: 3464988754447931219}
   m_Layer: 8
   m_Name: mine
   m_TagString: Untagged
@@ -5167,3 +5168,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &3464988754447931219
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2836113598150871098}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.20000002, y: 0.2, z: 0.20000005}
+  m_Center: {x: 0.0038455725, y: 0, z: 0.0030764341}
