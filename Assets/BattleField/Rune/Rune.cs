@@ -16,7 +16,7 @@ public class Rune : MonoBehaviour {
     private const int jun_end = 120;   // rune_junior ends
     private const int sen_sta = 240;   // rune_senior starts
     private const int sen_end = 420;   // rune_senior ends
-    private const int mine_1_3 = 5;
+    private const int mine_1_3 = 15;
     private const int mine_0_4 = 180;
     private const int mine_2 = mine_0_4 + 5;
     private RuneBuff rune_buff;

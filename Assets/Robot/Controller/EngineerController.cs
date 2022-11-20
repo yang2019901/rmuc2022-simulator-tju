@@ -25,9 +25,6 @@ public class EngineerController : BasicController {
     public Transform rev_card;
 
     private Rigidbody _rigid;
-    private float pitch_ang = 0;
-    private float pitch_min = -30;
-    private float pitch_max = 40;
     private RoboState robo_state;
 
     private HoldMine hm;
@@ -43,6 +40,7 @@ public class EngineerController : BasicController {
     bool braking => playing && Input.GetKey(KeyCode.X);
     float h => playing ? Input.GetAxis("Horizontal") : 0;
     float v => playing ? Input.GetAxis("Vertical") : 0;
+    float mouseX => playing ? 2 * Input.GetAxis("Mouse X") : 0;
     float mouseY => playing ? 2 * Input.GetAxis("Mouse Y") : 0;
 
     /// <summary>
@@ -75,6 +73,7 @@ public class EngineerController : BasicController {
         Cursor.lockState = CursorLockMode.Locked;
         robo_state = GetComponent<RoboState>();
         hm = GetComponentInChildren<HoldMine>();
+        yaw_ang = _rigid.transform.localEulerAngles.y;
 
         if (hasAuthority) {
             BattleField.singleton.robo_local = this.robo_state;
@@ -164,7 +163,12 @@ public class EngineerController : BasicController {
         /* spin */
         float t2 = 0;
         if (cmd_Q ^ cmd_E)
-            t2 = (cmd_E ? 1 : -1) * torque_spin;
+            yaw_ang += (cmd_E ? 1 : -1) * 30*Time.deltaTime;
+        
+        float d_ang = -Mathf.DeltaAngle(yaw_ang, _rigid.transform.eulerAngles.y);
+        if (Mathf.Abs(d_ang) < 5) d_ang = 0;
+        t2 = 0.2f * PID(d_ang);
+
 
         /* get sum of force */
         float torque = 0;
@@ -186,10 +190,15 @@ public class EngineerController : BasicController {
     }
 
 
+    float pitch_ang = 0;
+    float yaw_ang = 0;
+    const float pitch_min = -30;
+    const float pitch_max = 40;
     void Look() {
         /* Get look dir from user input */
         pitch_ang -= mouseY;
         pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
+        yaw_ang += mouseX;
         /* Rotate Transform "yaw" & "pitch" */
         pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
     }

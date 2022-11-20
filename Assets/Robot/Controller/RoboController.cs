@@ -219,22 +219,6 @@ public class RoboController : BasicController {
     }
 
 
-    float sum = 0;
-    float last_err;
-    float Kp = 1f;
-    float Ki = 0f;
-    float Kd = 0f;
-    /* use PID controller (Kp > 0) to calc MV */
-    float PID(float err) {
-        sum += err;
-        float d_err = err - last_err;
-        last_err = err;
-        float output = Kp * (err + Ki * sum + Kd * d_err);
-        // Debug.Log("pid output: " + output);
-        return output;
-    }
-
-
     /* Get look dir from user input */
     float mouseX => playing ? 2 * Input.GetAxis("Mouse X") : 0;
     float mouseY => playing ? 2 * Input.GetAxis("Mouse Y") : 0;
