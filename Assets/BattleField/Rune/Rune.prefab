@@ -38419,12 +38419,19 @@ MonoBehaviour:
   rotator_rune: {fileID: 606868212420476639}
   rune_state_red: {fileID: 606868213252491757}
   rune_state_blue: {fileID: 606868212395973492}
-  mines:
+  mines_gold:
   - {fileID: 6618735720729751411}
   - {fileID: 6579042552095547467}
   - {fileID: 8948087170775325298}
   - {fileID: 4197460477736575459}
   - {fileID: 6214439006445813358}
+  mines_silv:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &606868214024352655
 GameObject:
   m_ObjectHideFlags: 0
@@ -53036,7 +53043,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2836113598150871098, guid: 91a24d2e891646d4ab635f43854ddc52, type: 3}
       propertyPath: m_Name
-      value: mine 3
+      value: gold mine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91a24d2e891646d4ab635f43854ddc52, type: 3}
@@ -53098,7 +53105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2836113598150871098, guid: 91a24d2e891646d4ab635f43854ddc52, type: 3}
       propertyPath: m_Name
-      value: mine
+      value: gold mine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91a24d2e891646d4ab635f43854ddc52, type: 3}
@@ -53160,7 +53167,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2836113598150871098, guid: 91a24d2e891646d4ab635f43854ddc52, type: 3}
       propertyPath: m_Name
-      value: mine 1
+      value: gold mine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91a24d2e891646d4ab635f43854ddc52, type: 3}
@@ -53222,7 +53229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2836113598150871098, guid: 91a24d2e891646d4ab635f43854ddc52, type: 3}
       propertyPath: m_Name
-      value: mine 4
+      value: gold mine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91a24d2e891646d4ab635f43854ddc52, type: 3}
@@ -53284,7 +53291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2836113598150871098, guid: 91a24d2e891646d4ab635f43854ddc52, type: 3}
       propertyPath: m_Name
-      value: mine 2
+      value: gold mine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91a24d2e891646d4ab635f43854ddc52, type: 3}

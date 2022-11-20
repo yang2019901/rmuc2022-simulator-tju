@@ -8,7 +8,8 @@ public class Rune : MonoBehaviour {
     public Transform rotator_rune;
     public RuneState rune_state_red;
     public RuneState rune_state_blue;
-    public Transform[] mines;
+    public Transform[] mines_gold;
+    public Transform[] mines_silv;
 
 
     public bool activated { get; private set; }
@@ -37,8 +38,10 @@ public class Rune : MonoBehaviour {
         sgn = Random.Range(0, 1) > 0.5 ? 1 : -1;
         Reset();
 
-        for (int i = 0; i < mines.Length; i++)
-            mines[i].GetComponent<Rigidbody>().useGravity = false;
+        for (int i = 0; i < mines_gold.Length; i++)
+            mines_gold[i].GetComponent<Rigidbody>().useGravity = false;
+        for (int i = 0; i < mines_silv.Length; i++)
+            mines_silv[i].transform.parent = null;
     }
 
 
@@ -82,8 +85,8 @@ public class Rune : MonoBehaviour {
 
     
     void DropMine(int mineIdx) {
-        mines[mineIdx].parent = null;
-        mines[mineIdx].GetComponent<Rigidbody>().useGravity = true;
+        mines_gold[mineIdx].parent = null;
+        mines_gold[mineIdx].GetComponent<Rigidbody>().useGravity = true;
     }
 
 

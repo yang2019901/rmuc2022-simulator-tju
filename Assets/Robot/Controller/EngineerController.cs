@@ -163,8 +163,8 @@ public class EngineerController : BasicController {
         /* spin */
         float t2 = 0;
         if (cmd_Q ^ cmd_E)
-            yaw_ang += (cmd_E ? 1 : -1) * 30*Time.deltaTime;
-        
+            yaw_ang += (cmd_E ? 1 : -1) * 30 * Time.deltaTime;
+
         float d_ang = -Mathf.DeltaAngle(yaw_ang, _rigid.transform.eulerAngles.y);
         if (Mathf.Abs(d_ang) < 5) d_ang = 0;
         t2 = 0.2f * PID(d_ang);
@@ -210,14 +210,12 @@ public class EngineerController : BasicController {
     readonly Vector3 elev_2nd_end = new Vector3(0, -0.2f, 0);
     readonly Vector3 arm_start = new Vector3(0, 0, 0);
     readonly Vector3 arm_end = new Vector3(-0.4f, 0, 0);
-    readonly Vector3 wrist_fd = new Vector3(-90, 0, 0);
-    readonly Vector3 wrist_bd = new Vector3(90, 0, 0);
     readonly Vector3 claw_lt = new Vector3(-0.32f, 0.178f, 0.054f);
     readonly Vector3 claw_rt = new Vector3(-0.08f, 0.178f, 0.054f);
     float rat_arm = 0;
     float rat_claw = 0.5f;
-    float st_wrist = 0.5f;
-    float rat_wrist = 0.5f;
+    int st_wrist = 0;
+    float ang = 0;
     float rat_elev = 0f;
     void MovClaw() {
         if (cmd_lshift) {
@@ -228,19 +226,16 @@ public class EngineerController : BasicController {
             rat_arm = Mathf.Clamp01(rat_arm + v * Time.deltaTime);
             /* move wrist */
             if (cmd_Z ^ cmd_C)
-                st_wrist = Mathf.Clamp01(st_wrist + (cmd_C ? 0.5f : -0.5f));
+                st_wrist = st_wrist + (cmd_C ? 90 : -90);
             /* move claw */
             rat_claw = Mathf.Clamp01(rat_claw + h * Time.deltaTime);
         }
         elev_1st.localPosition = Vector3.Lerp(elev_1st_start, elev_1st_end, rat_elev);
         elev_2nd.localPosition = Vector3.Lerp(elev_2nd_start, elev_2nd_end, rat_elev);
         arm.localPosition = Vector3.Lerp(arm_start, arm_end, rat_arm);
-        if (st_wrist > rat_wrist + 1e-2)
-            rat_wrist += Time.deltaTime;
-        else if (st_wrist < rat_wrist - 1e-2)
-            rat_wrist -= Time.deltaTime;
-        rat_wrist = Mathf.Clamp01(rat_wrist);
-        wrist.localEulerAngles = Vector3.Lerp(wrist_fd, wrist_bd, rat_wrist);
+        Debug.Log("st_wrist: " + st_wrist);
+        ang -= 8 * Time.deltaTime * Mathf.DeltaAngle(st_wrist, ang);
+        wrist.localEulerAngles = new Vector3(ang, 0, 0);
         claw.localPosition = Vector3.Lerp(claw_lt, claw_rt, rat_claw);
     }
 

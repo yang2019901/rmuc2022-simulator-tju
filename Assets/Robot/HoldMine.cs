@@ -23,13 +23,9 @@ public class HoldMine : MonoBehaviour {
     }
 
 
-    // void OnTriggerExit(Collider other) {
-    // if (other.transform == mine_holding)
-    // Release();
-    // }
-
-
     void Hold(Transform mine) {
+        if (mine_holding != null)
+            return;
         mine.parent = this.transform;
         mine_holding = mine;
     }
