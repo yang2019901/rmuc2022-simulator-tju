@@ -64,13 +64,6 @@ namespace RMUC_UI {
         void SetNotePad(BatSync bs) {
             // todo: set score
             notepad.DispTime(7 * 60 - bs.time_bat);
-            // assumption: in a single frame, only 1 mine can be xchg at most
-            // int d_blue_max = bs.money_blue_max - last_money_blue_max;
-            // int d_blue = bs.money_blue - last_money_blue;
-            // int d_red_max = bs.money_red_max - last_money_red_max;
-            // int d_red = bs.money_red - last_money_red;
-            // if (SetMoney(d_red, d_red_max, ArmorColor.Red) 
-            //     || SetMoney(d_blue, d_blue_max, ArmorColor.Blue)) {
             if (bs.money_red != last_money_red || bs.money_blue != last_money_blue
                 || bs.money_red_max != last_money_red_max || bs.money_blue_max != last_money_blue_max) {
                 notepad.DispMoney();
@@ -78,18 +71,8 @@ namespace RMUC_UI {
                 last_money_red_max = bs.money_red_max;
                 last_money_blue = bs.money_blue;
                 last_money_blue_max = bs.money_blue_max;
-                Debug.Log("update money in battle ui");
             }
         }
-
-
-        // bool SetMoney(int d_mon, int d_mon_max, ArmorColor armor_color) {
-        //     if (d_mon == 0 && d_mon_max == 0)
-        //         return false;
-        //     if (d_mon_max >= 100)
-        //         notepad.DispXchgMine(armor_color, d_mon_max >= 300);
-        //     return true;
-        // }
 
 
         void SetBase(BloodBar baseStat, BaseSync bs) {
@@ -97,6 +80,7 @@ namespace RMUC_UI {
             baseStat.SetBlood(bs.currblood / 5000f);
             baseStat.SetShield(bs.shield / 500f);
         }
+
 
         // called every frame
         bool init = false;
@@ -125,8 +109,7 @@ namespace RMUC_UI {
                             txt_exp.gameObject.SetActive(false);
                             img_exp.gameObject.SetActive(false);
                             idx = 1;
-                        }
-                        else if (tp == typeof(InfantryState)) idx = 2;
+                        } else if (tp == typeof(InfantryState)) idx = 2;
                         else Debug.Log("wrong type of myrobot: " + tp);
                         // set robotab's img_ava
                         my_robotab.img_ava.sprite = my_robotab.imgs_team[idx];
@@ -158,12 +141,12 @@ namespace RMUC_UI {
             if (myrobot.GetComponent<RoboController>() != null) {
                 if (myrobot.maxexp != int.MaxValue) {
                     txt_exp.text = string.Format("{0} / {1} Exp.", myrobot.currexp, myrobot.maxexp);
-                    img_exp.fillAmount = (float) myrobot.currexp / myrobot.maxexp;
+                    img_exp.fillAmount = (float)myrobot.currexp / myrobot.maxexp;
                 } else {
                     txt_exp.text = string.Format("Max Exp");
                     img_exp.fillAmount = 1;
                 }
-                txt_cap.text = string.Format("{0:N1}% Cap.", rat_cap*100);
+                txt_cap.text = string.Format("{0:N1}% Cap.", rat_cap * 100);
                 img_cap.fillAmount = rat_cap;
             }
         }
@@ -196,19 +179,18 @@ namespace RMUC_UI {
             int bull_num;
             if (rc != null && int.TryParse(supp_ui.GetComponentInChildren<TMP_InputField>().text, out bull_num)) {
                 int money_req = bull_num * (rc.GetComponent<Weapon>().caliber == Caliber._17mm ? 1 : 15);
-                int money_now = rc.name.Contains("red") ? BattleField.singleton.money_red 
+                int money_now = rc.name.Contains("red") ? BattleField.singleton.money_red
                     : BattleField.singleton.money_blue;
-                if (money_now < money_req) {
-                    Debug.Log(string.Format("money has: {0}, money req: {1}", money_now, money_req));
-                }
+                if (money_now < money_req)
+                    return;
                 rc.CmdSupply(rc.gameObject.name, bull_num);
                 supp_ui.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
                 Debug.Log(rc.gameObject.name + " calls supply: " + bull_num);
             }
         }
-    
-    
+
+
         void Start() {
             /* init imgs_buf */
             for (int i = 0; i < indic_buf.Length; i++)

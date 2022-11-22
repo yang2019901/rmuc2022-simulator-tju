@@ -54,7 +54,7 @@ namespace RMUC_UI {
             tmp.transform.SetParent(this.transform);
             tmp.transform.localScale = 0.8f * Vector3.one;
             tmp.transform.localPosition = armor_color == ArmorColor.Red ? new Vector3(-80, -173, 0) 
-                : new Vector3(-80, -173, 0);
+                : new Vector3(100, -173, 0);
             StartCoroutine(AnimXchg(tmp));
 
             DispMoney();

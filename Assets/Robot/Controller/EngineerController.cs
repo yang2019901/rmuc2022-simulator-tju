@@ -241,15 +241,26 @@ public class EngineerController : BasicController {
     }
 
     
-    [SyncVar]
     public bool holding = false;
     void Catch() {
         /* if no cmd to change holding state, there's nothing to do */
         if (cmd_R && cmd_lshift) {
-            if (holding)
-                hm.Release();
-            holding = !holding;
+            CmdCatch(holding);
         }
+    }
+    [Command]
+    void CmdCatch(bool holding) {
+        RpcCatch(holding);
+    }
+    [ClientRpc]
+    void RpcCatch(bool holding) {
+        if (holding) {
+            hm.Release();
+            hm.enabled = false;
+        } else {
+            hm.enabled = true;
+        }
+        this.holding = !holding;
     }
 
 
