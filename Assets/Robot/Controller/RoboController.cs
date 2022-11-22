@@ -250,7 +250,20 @@ public class RoboController : BasicController {
         GameObject obj = GameObject.Find(robot_s);
         Weapon weap;
         if (TryGetComponent<Weapon>(out weap)) {
-            weap.bullnum += num;
+            int money_req = weap.caliber == Caliber._17mm ? num : 15 * num;
+            bool is_red = robot_s.Contains("red");
+            if (is_red) {
+                if (money_req <= BattleField.singleton.money_red) {
+                    weap.bullnum += num;
+                    BattleField.singleton.money_red -= money_req;
+                    Debug.Log("call supply");
+                }
+            }
+            else if (money_req <= BattleField.singleton.money_blue) {
+                weap.bullnum += num;
+                BattleField.singleton.money_blue -= money_req;
+                Debug.Log("call supply");
+            }
         }
     }
 
@@ -265,7 +278,6 @@ public class RoboController : BasicController {
     [Command]
     public void CmdShoot(Vector3 pos, Vector3 vel) {
         if (!NetworkClient.active) {
-            Debug.Log("gains heat in pure server");
             ShootBull(pos, vel);
         }
         RpcShoot(pos, vel);

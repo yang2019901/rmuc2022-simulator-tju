@@ -10,7 +10,9 @@ public class BattleField : MonoBehaviour {
     /// Game Params
     /// </summary>
     public int money_red;
+    public int money_red_max;
     public int money_blue;
+    public int money_blue_max;
     public int score_red;
     public int score_blue;
 
@@ -28,8 +30,8 @@ public class BattleField : MonoBehaviour {
     /* hero engineer infantry1 infantry2 */
     public RoboState[] robo_red;
     public RoboState[] robo_blue;
-    [HideInInspector]public List<RoboState> robo_all = new List<RoboState>(); // automatical set
-    [HideInInspector]public RoboState robo_local;                             // automatical set
+    [HideInInspector] public List<RoboState> robo_all = new List<RoboState>(); // automatical set
+    [HideInInspector] public RoboState robo_local;                             // automatical set
 
     public SyncNode sync_node;
 
@@ -53,7 +55,14 @@ public class BattleField : MonoBehaviour {
 
         AssetManager.singleton.StopClip(AssetManager.singleton.prepare);
         AssetManager.singleton.PlayClipAround(AssetManager.singleton.gamebg, true, 0.3f);
+
+        AllAddMoney(200);
+        StartCoroutine(DistribMoney());
     }
+
+
+    float t_start;
+    public float GetBattleTime() => Time.time - t_start;
 
 
     int x_half_length = 16;
@@ -113,39 +122,6 @@ public class BattleField : MonoBehaviour {
     }
 
 
-    void AddRuneBuff(ArmorColor armor_color, RuneBuff rune_buff) {
-        AssetManager.singleton.PlayClipAround(AssetManager.singleton.rune_activ);
-        float atk_up = rune_buff == RuneBuff.Junior ? 0.5f : 1f;
-        if (armor_color == ArmorColor.Red) {
-            Debug.Log("Team Red adds rune buff");
-            foreach (RoboState robot in robo_red) {
-                robot.li_B_atk.Add(atk_up);
-                robot.UpdateBuff();
-            }
-        } else {
-            Debug.Log("Team Blue adds rune buff");
-            foreach (RoboState robot in robo_blue) {
-                robot.li_B_atk.Add(atk_up);
-                robot.UpdateBuff();
-            }
-        }
-    }
-    void RemoveRuneBuff(ArmorColor armor_color, RuneBuff rune_buff) {
-        float atk_up = rune_buff == RuneBuff.Junior ? 0.5f : 1f;
-        if (armor_color == ArmorColor.Red) {
-            Debug.Log("Team Red removes rune buff");
-            foreach (RoboState robot in robo_red) {
-                robot.li_B_atk.Remove(atk_up);
-                robot.UpdateBuff();
-            }
-        } else {
-            Debug.Log("Team Blue removes rune buff");
-            foreach (RoboState robot in robo_blue) {
-                robot.li_B_atk.Remove(atk_up);
-                robot.UpdateBuff();
-            }
-        }
-    }
     public IEnumerator ActivateRune(ArmorColor armor_color, RuneBuff rune_buff) {
         if (NetworkServer.active) {
             sync_node.RpcActivateRune(armor_color, rune_buff);
@@ -165,21 +141,102 @@ public class BattleField : MonoBehaviour {
         /* reset rune.activated and motion params */
         rune.Reset();
     }
+    
 
+    public void XchgMine(ArmorColor armor_color, bool is_gold) {
+        Debug.Log("team " + armor_color + " xchg mine");
+        int d_mon = is_gold ? 300 : 100;
+        if (armor_color == ArmorColor.Red) {
+            money_red_max += d_mon;
+            money_red += d_mon;
+        }
+        else {
+            money_blue_max += d_mon;
+            money_blue += d_mon;
+        }
 
-    float t_start;
-    public float GetBattleTime() {
-        return Time.time - t_start;
+        bat_ui.notepad.DispXchgMine(armor_color, is_gold);
     }
 
 
-    BatSync tmp = new BatSync();
     public BatSync Pull() {
+        BatSync tmp = new BatSync();
         tmp.time_bat = GetBattleTime();
         tmp.money_red = this.money_red;
+        tmp.money_red_max = this.money_red_max;
         tmp.money_blue = this.money_blue;
+        tmp.money_blue_max = this.money_blue_max;
         tmp.score_red = this.score_red;
         tmp.score_blue = this.score_blue;
         return tmp;
+    }
+
+
+    public void Push(BatSync tmp) {
+        this.money_red = tmp.money_red;
+        this.money_red_max = tmp.money_red_max;
+        this.money_blue = tmp.money_blue;
+        this.money_blue_max = tmp.money_blue_max;
+        this.score_red = tmp.score_red;
+        this.score_blue = tmp.score_blue;
+    }
+
+
+    /// <summary>
+    /// non-API 
+    /// </summary>
+    void RemoveRuneBuff(ArmorColor armor_color, RuneBuff rune_buff) {
+        float atk_up = rune_buff == RuneBuff.Junior ? 0.5f : 1f;
+        if (armor_color == ArmorColor.Red) {
+            Debug.Log("Team Red removes rune buff");
+            foreach (RoboState robot in robo_red) {
+                robot.li_B_atk.Remove(atk_up);
+                robot.UpdateBuff();
+            }
+        } else {
+            Debug.Log("Team Blue removes rune buff");
+            foreach (RoboState robot in robo_blue) {
+                robot.li_B_atk.Remove(atk_up);
+                robot.UpdateBuff();
+            }
+        }
+    }
+
+
+    void AddRuneBuff(ArmorColor armor_color, RuneBuff rune_buff) {
+        AssetManager.singleton.PlayClipAround(AssetManager.singleton.rune_activ);
+        float atk_up = rune_buff == RuneBuff.Junior ? 0.5f : 1f;
+        if (armor_color == ArmorColor.Red) {
+            Debug.Log("Team Red adds rune buff");
+            foreach (RoboState robot in robo_red) {
+                robot.li_B_atk.Add(atk_up);
+                robot.UpdateBuff();
+            }
+        } else {
+            Debug.Log("Team Blue adds rune buff");
+            foreach (RoboState robot in robo_blue) {
+                robot.li_B_atk.Add(atk_up);
+                robot.UpdateBuff();
+            }
+        }
+    }
+
+
+    IEnumerator DistribMoney() {
+        for (int i = 0; i < 5; i++) {
+            yield return new WaitForSeconds(60);
+            AllAddMoney(100);
+        }
+        yield return new WaitForSeconds(60);
+        AllAddMoney(200);
+        yield break;
+    }
+    
+    
+    void AllAddMoney(int number) {
+        money_red_max += number;
+        money_red += number;
+        money_blue_max += number;
+        money_blue += number;
     }
 }

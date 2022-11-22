@@ -47,7 +47,9 @@ public struct RoboSync {
 
 public struct BatSync {
     public int money_red;
+    public int money_red_max;
     public int money_blue;
+    public int money_blue_max;
     public int score_red;
     public int score_blue;
     public float time_bat;
@@ -152,6 +154,7 @@ public class SyncNode : NetworkBehaviour {
         //       than pull() in server PC
         //       which will raise error of null reference in client PC
         if (isClient && ready_push) {
+            BattleField.singleton.Push(bat_sync);
             /* client pulls rune appearence from sync info */
             rune.rotator_rune.localEulerAngles = rune_rot;
             rune.rune_state_red.Push(rune_sync_red);

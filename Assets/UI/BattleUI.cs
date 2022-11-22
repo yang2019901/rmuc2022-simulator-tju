@@ -57,10 +57,39 @@ namespace RMUC_UI {
         }
 
 
+        int last_money_red;
+        int last_money_red_max;
+        int last_money_blue;
+        int last_money_blue_max;
         void SetNotePad(BatSync bs) {
-            notepad.SetTime(7 * 60 - bs.time_bat);
-            // todo: set money and score
+            // todo: set score
+            notepad.DispTime(7 * 60 - bs.time_bat);
+            // assumption: in a single frame, only 1 mine can be xchg at most
+            // int d_blue_max = bs.money_blue_max - last_money_blue_max;
+            // int d_blue = bs.money_blue - last_money_blue;
+            // int d_red_max = bs.money_red_max - last_money_red_max;
+            // int d_red = bs.money_red - last_money_red;
+            // if (SetMoney(d_red, d_red_max, ArmorColor.Red) 
+            //     || SetMoney(d_blue, d_blue_max, ArmorColor.Blue)) {
+            if (bs.money_red != last_money_red || bs.money_blue != last_money_blue
+                || bs.money_red_max != last_money_red_max || bs.money_blue_max != last_money_blue_max) {
+                notepad.DispMoney();
+                last_money_red = bs.money_red;
+                last_money_red_max = bs.money_red_max;
+                last_money_blue = bs.money_blue;
+                last_money_blue_max = bs.money_blue_max;
+                Debug.Log("update money in battle ui");
+            }
         }
+
+
+        // bool SetMoney(int d_mon, int d_mon_max, ArmorColor armor_color) {
+        //     if (d_mon == 0 && d_mon_max == 0)
+        //         return false;
+        //     if (d_mon_max >= 100)
+        //         notepad.DispXchgMine(armor_color, d_mon_max >= 300);
+        //     return true;
+        // }
 
 
         void SetBase(BloodBar baseStat, BaseSync bs) {
@@ -71,7 +100,6 @@ namespace RMUC_UI {
 
         // called every frame
         bool init = false;
-        // void SetMyUI(RoboSync my_robosync) {
         void SetMyUI() {
             if (myrobot == null)
                 return;
@@ -167,6 +195,12 @@ namespace RMUC_UI {
             RoboController rc = myrobot.GetComponent<RoboController>();
             int bull_num;
             if (rc != null && int.TryParse(supp_ui.GetComponentInChildren<TMP_InputField>().text, out bull_num)) {
+                int money_req = bull_num * (rc.GetComponent<Weapon>().caliber == Caliber._17mm ? 1 : 15);
+                int money_now = rc.name.Contains("red") ? BattleField.singleton.money_red 
+                    : BattleField.singleton.money_blue;
+                if (money_now < money_req) {
+                    Debug.Log(string.Format("money has: {0}, money req: {1}", money_now, money_req));
+                }
                 rc.CmdSupply(rc.gameObject.name, bull_num);
                 supp_ui.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;

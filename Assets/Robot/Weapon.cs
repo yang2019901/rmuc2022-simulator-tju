@@ -14,8 +14,8 @@ public class Weapon : MonoBehaviour {
     public int currheat;
 
     public float heat_ratio = 0;
+    public Caliber caliber;    // 17mm or 42mm
     RoboState robot;
-    Caliber caliber;    // 17mm or 42mm
 
     /// <summary>
     /// API

@@ -92,6 +92,8 @@ public class EngineerController : BasicController {
             MovClaw();
             Catch();
             Save();
+            if (Input.GetKeyDown(KeyCode.G))
+                BattleField.singleton.XchgMine(robo_state.armor_color, true);
         } else
             StopMove();
 
@@ -233,19 +235,20 @@ public class EngineerController : BasicController {
         elev_1st.localPosition = Vector3.Lerp(elev_1st_start, elev_1st_end, rat_elev);
         elev_2nd.localPosition = Vector3.Lerp(elev_2nd_start, elev_2nd_end, rat_elev);
         arm.localPosition = Vector3.Lerp(arm_start, arm_end, rat_arm);
-        Debug.Log("st_wrist: " + st_wrist);
         ang -= 8 * Time.deltaTime * Mathf.DeltaAngle(st_wrist, ang);
         wrist.localEulerAngles = new Vector3(ang, 0, 0);
         claw.localPosition = Vector3.Lerp(claw_lt, claw_rt, rat_claw);
     }
 
-
+    
+    [SyncVar]
+    public bool holding = false;
     void Catch() {
         /* if no cmd to change holding state, there's nothing to do */
         if (cmd_R && cmd_lshift) {
-            if (hm.holding)
+            if (holding)
                 hm.Release();
-            hm.holding = !hm.holding;
+            holding = !holding;
         }
     }
 
