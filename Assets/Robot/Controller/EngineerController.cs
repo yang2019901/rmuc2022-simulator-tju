@@ -73,6 +73,8 @@ public class EngineerController : BasicController {
         Cursor.lockState = CursorLockMode.Locked;
         robo_state = GetComponent<RoboState>();
         hm = GetComponentInChildren<HoldMine>();
+        if (!NetworkServer.active)
+            hm.enabled = false;
         yaw_ang = _rigid.transform.localEulerAngles.y;
 
         if (hasAuthority) {
@@ -200,7 +202,8 @@ public class EngineerController : BasicController {
         /* Get look dir from user input */
         pitch_ang -= mouseY;
         pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
-        yaw_ang += mouseX;
+        if (!cmd_lshift)
+            yaw_ang += mouseX;
         /* Rotate Transform "yaw" & "pitch" */
         pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
     }
@@ -250,10 +253,6 @@ public class EngineerController : BasicController {
     }
     [Command]
     void CmdCatch(bool holding) {
-        RpcCatch(holding);
-    }
-    [ClientRpc]
-    void RpcCatch(bool holding) {
         if (holding) {
             hm.Release();
             hm.enabled = false;
@@ -261,7 +260,18 @@ public class EngineerController : BasicController {
             hm.enabled = true;
         }
         this.holding = !holding;
+        // RpcCatch(holding);
     }
+    // [ClientRpc]
+    // void RpcCatch(bool holding) {
+    //     if (holding) {
+    //         hm.Release();
+    //         hm.enabled = false;
+    //     } else {
+    //         hm.enabled = true;
+    //     }
+    //     this.holding = !holding;
+    // }
 
 
     readonly Vector3 card_start = new Vector3(0, 0.084f, 0.22f);

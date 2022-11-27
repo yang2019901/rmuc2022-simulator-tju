@@ -128,7 +128,7 @@ public class RoboController : BasicController {
 
 
     const int wheel_num = 4;
-    const float efficiency = 0.4f;
+    const float efficiency = 0.5f;
     const float charge_coeff = 0.1f;          // how much of torque_avail will be used to charge capacity
     const float discharge_coeff = 1.8f;      // how fast capacity discharge 
     const float torque_drive = 20f;

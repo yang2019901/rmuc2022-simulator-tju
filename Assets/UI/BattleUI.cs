@@ -89,7 +89,6 @@ namespace RMUC_UI {
                 return;
             if (!init) {
                 string color = myrobot.armor_color == ArmorColor.Red ? "red" : "blue";
-                // string color = BattleField.singleton.robo_all[my_roboidx].armor_color == ArmorColor.Red ? "red" : "blue";
                 foreach (RoboTab rt in GetComponentsInChildren<RoboTab>(includeInactive: true)) {
                     if (rt.name.ToLower().Contains("my")) {
                         // Debug.Log("rt.name: " + rt.name);

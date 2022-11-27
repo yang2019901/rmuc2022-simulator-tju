@@ -38,8 +38,8 @@ public class Rune : MonoBehaviour {
         sgn = Random.Range(0, 1) > 0.5 ? 1 : -1;
         Reset();
 
-        for (int i = 0; i < mines_gold.Length; i++)
-            mines_gold[i].GetComponent<Rigidbody>().useGravity = false;
+        // for (int i = 0; i < mines_gold.Length; i++)
+            // mines_gold[i].GetComponent<Rigidbody>().useGravity = false;
         for (int i = 0; i < mines_silv.Length; i++)
             mines_silv[i].transform.parent = null;
     }
@@ -86,7 +86,7 @@ public class Rune : MonoBehaviour {
     
     void DropMine(int mineIdx) {
         mines_gold[mineIdx].parent = null;
-        mines_gold[mineIdx].GetComponent<Rigidbody>().useGravity = true;
+        mines_gold[mineIdx].gameObject.AddComponent<Rigidbody>();
     }
 
 

@@ -16,6 +16,9 @@ public class BattleField : MonoBehaviour {
     public int score_red;
     public int score_blue;
 
+    public const int length = 30;
+    public const int width = 16;
+    public const int height = 4;
     public bool had_first_blood = false;
 
     /// <summary>

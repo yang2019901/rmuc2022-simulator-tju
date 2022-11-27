@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class HoldMine : MonoBehaviour {
     public const string mine_s = "mine";    // mark whether the collider is a mine
@@ -9,7 +10,7 @@ public class HoldMine : MonoBehaviour {
     Rigidbody mine_holding;
 
 
-    void Start() {
+    void Awake() {
         ec = GetComponentInParent<EngineerController>();
     }
 
