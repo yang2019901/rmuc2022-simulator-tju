@@ -27,7 +27,7 @@ public class EngineerController : BasicController {
     private Rigidbody _rigid;
     private RoboState robo_state;
 
-    private HoldMine hm;
+    private CatchMine cm;
 
 
     bool playing => Cursor.lockState == CursorLockMode.Locked;
@@ -72,9 +72,7 @@ public class EngineerController : BasicController {
         _rigid.centerOfMass = centerOfMass;
         Cursor.lockState = CursorLockMode.Locked;
         robo_state = GetComponent<RoboState>();
-        hm = GetComponentInChildren<HoldMine>();
-        if (!NetworkServer.active)
-            hm.enabled = false;
+        cm = GetComponentInChildren<CatchMine>();
         yaw_ang = _rigid.transform.localEulerAngles.y;
 
         if (hasAuthority) {
@@ -253,25 +251,18 @@ public class EngineerController : BasicController {
     }
     [Command]
     void CmdCatch(bool holding) {
+        RpcCatch(holding);
+    }
+    [ClientRpc]
+    void RpcCatch(bool holding) {
         if (holding) {
-            hm.Release();
-            hm.enabled = false;
+            cm.Release();
+            cm.enabled = false;
         } else {
-            hm.enabled = true;
+            cm.enabled = true;
         }
         this.holding = !holding;
-        // RpcCatch(holding);
     }
-    // [ClientRpc]
-    // void RpcCatch(bool holding) {
-    //     if (holding) {
-    //         hm.Release();
-    //         hm.enabled = false;
-    //     } else {
-    //         hm.enabled = true;
-    //     }
-    //     this.holding = !holding;
-    // }
 
 
     readonly Vector3 card_start = new Vector3(0, 0.084f, 0.22f);

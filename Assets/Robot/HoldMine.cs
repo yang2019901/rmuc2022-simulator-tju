@@ -1,51 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 
 public class HoldMine : MonoBehaviour {
-    public const string mine_s = "mine";    // mark whether the collider is a mine
-    public const string held_s = "held";    // mark whether the mine has been held (to prevent grab other team's mine)
-    EngineerController ec;
-    Rigidbody mine_holding;
+    const int maxholding = 2;
+    List<GameObject> mines_holding = new List<GameObject>();
+    readonly Vector3[] mines_pos = {new Vector3(0, 0.25f, 0.08f),
+        new Vector3(0, 0.45f, 0.08f)};  // local position
 
 
-    void Awake() {
-        ec = GetComponentInParent<EngineerController>();
+    void OnTriggerEnter(Collider other) {
+        DetectMine(other.gameObject);
+    }
+
+
+    void OnTriggerExit(Collider other) {
+        DetectMine(other.gameObject);
     }
 
 
     void Update() {
-        if (mine_holding != null) {
-            mine_holding.transform.position = transform.position;
-            mine_holding.transform.eulerAngles = transform.eulerAngles;
-            mine_holding.velocity = Vector3.zero;
+        KeepMinesPos();
+    }
+
+
+    void DetectMine(GameObject obj) {
+        if (obj.name.Contains(CatchMine.mine_s) && !obj.name.Contains(CatchMine.held_s)
+            && mines_holding.Count < maxholding && !mines_holding.Contains(obj)) {
+            obj.transform.parent = this.transform;
+            mines_holding.Add(obj.gameObject);
         }
     }
 
 
-    bool holding => ec.holding;
-    void OnTriggerStay(Collider other) {
-        if (!this.holding || !other.name.Contains(mine_s) || other.name.Contains(held_s))
-            return;
-        Hold(other.transform);
-    }
-
-
-    void Hold(Transform mine) {
-        if (mine_holding != null)
-            return;
-        mine.name = mine.name + held_s;
-        mine.GetComponent<Collider>().enabled = false;
-        mine_holding = mine.GetComponent<Rigidbody>();
-    }
-
-
-    public void Release() {
-        if (mine_holding == null)
-            return;
-        mine_holding.name = mine_holding.name.Replace(held_s, "");
-        mine_holding.GetComponent<Collider>().enabled = true;
-        mine_holding = null;
+    void KeepMinesPos() {
+        if (mines_holding.Count > 0) {
+            for (int i = 0; i < mines_holding.Count; i++) {
+                if (mines_holding[i].name.Contains(CatchMine.held_s)) {
+                    mines_holding[i].transform.parent = null;
+                    mines_holding.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                mines_holding[i].transform.localPosition = mines_pos[i];
+                mines_holding[i].transform.localEulerAngles = Vector3.zero;
+            }
+        }
+        return;
     }
 }
