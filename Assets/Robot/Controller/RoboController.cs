@@ -24,12 +24,11 @@ public class RoboController : BasicController {
     [HideInInspector]public float currcap = 0;
     const int maxcap = 500;
 
-    private Rigidbody _rigid;
+    [SerializeField] private Rigidbody _rigid;
     private float last_fire = 0;
     private float pitch_ang = 0;
     private float pitch_min = -30;
     private float pitch_max = 40;
-    private float yaw_ang = 0;
     private Weapon wpn;
     private RoboState robo_state;
 
@@ -60,13 +59,11 @@ public class RoboController : BasicController {
 
     void Start() {
         /* even if no authority, external reference should be inited */
-        _rigid = GetComponent<Rigidbody>();
+        _rigid = GetComponentInChildren<Rigidbody>();
         _rigid.centerOfMass = centerOfMass;
         Cursor.lockState = CursorLockMode.Locked;
         robo_state = GetComponent<RoboState>();
         wpn = GetComponent<Weapon>();
-        if (yaw != null)
-            yaw_ang = yaw.eulerAngles.y;
 
         if (hasAuthority) {
             BattleField.singleton.robo_local = this.robo_state;
@@ -80,8 +77,8 @@ public class RoboController : BasicController {
 
         SetCursor();
         if (robo_state.survival) {
-            Move();
             Look();
+            Move();
             Shoot();
         }
         else
@@ -169,10 +166,11 @@ public class RoboController : BasicController {
             foreach (var wc in wheelColliders)
                 wc.brakeTorque = 0;
 
+        float chas2yaw = Vector3.SignedAngle(_rigid.transform.forward, yaw.forward, _rigid.transform.up);
 
         // move the car and steer wheels
         float steer_ang = Mathf.Rad2Deg * Mathf.Atan2(h, v);
-        steer_ang = steer_ang + yaw.localEulerAngles.y;
+        steer_ang = steer_ang + chas2yaw;
         foreach (var wc in wheelColliders) {
             /* Note: steerAngle will CLAMP angle to [-360, 360]
                 Get remainder, make sure steer_ang is in [-360, 360] */
@@ -187,10 +185,8 @@ public class RoboController : BasicController {
             torque = torque_spin;
         } else {
             // make chassis follow turret(aka, yaw)
-            float d_ang = -Mathf.DeltaAngle(yaw_ang, _rigid.transform.eulerAngles.y);
-            if (Mathf.Abs(d_ang) < 5) d_ang = 0;
-            /* TODO: use PID controller */
-            torque = 0.2f * PID(d_ang);
+            if (Mathf.Abs(chas2yaw) > 5)
+                torque = 0.2f * this.PID(chas2yaw);
         }
 
         /* get sum of force */
@@ -222,14 +218,21 @@ public class RoboController : BasicController {
     /* Get look dir from user input */
     float mouseX => playing ? 2 * Input.GetAxis("Mouse X") : 0;
     float mouseY => playing ? 2 * Input.GetAxis("Mouse Y") : 0;
+    Vector3 v1 => yaw.transform.up;
+    Vector3 v2 => _rigid.transform.up;
+    Vector3 axis => Vector3.Cross(v1, v2);
+    float ang => Vector3.Angle(v1, v2);
     void Look() {
         pitch_ang -= mouseY;
         pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
-        yaw_ang += mouseX;
-        /* Rotate Transform "yaw" & "pitch" */
+        /* Rotate Transform "pitch" by user input */
         pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
-        yaw.eulerAngles = new Vector3(0, yaw_ang, 0);
-        yaw.localEulerAngles = new Vector3(0, yaw.localEulerAngles.y, 0);
+        /* align "yaw" origin to chassis's */
+        yaw.transform.position = _rigid.transform.position;
+        /* align yaw.up to chassis.up with a single in-plane rotation */
+        yaw.transform.Rotate(axis, ang, Space.World);
+        /* Rotate Transform "yaw" by user input */
+        yaw.transform.Rotate(yaw.up, mouseX, Space.World);
     }
 
 
