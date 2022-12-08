@@ -34656,7 +34656,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1899311992166079578}
-  - component: {fileID: 6746315846617108165}
   m_Layer: 6
   m_Name: chassis
   m_TagString: Untagged
@@ -34685,22 +34684,6 @@ Transform:
   m_Father: {fileID: 1899311992969313172}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &6746315846617108165
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1899311992166079579}
-  serializedVersion: 2
-  m_Mass: 20
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1899311992167949721
 GameObject:
   m_ObjectHideFlags: 0
@@ -82374,13 +82357,14 @@ GameObject:
   - component: {fileID: 1899311992969313171}
   - component: {fileID: 5539372565188456673}
   - component: {fileID: 1995416777828430950}
-  - component: {fileID: 3318242929139300807}
   - component: {fileID: 239671365952528793}
   - component: {fileID: 567264019869157169}
   - component: {fileID: 2850222967384190891}
   - component: {fileID: 552208082120737469}
   - component: {fileID: 7423121405093193642}
   - component: {fileID: 7133675224216829146}
+  - component: {fileID: 3172475466718528725}
+  - component: {fileID: 2259558766380091186}
   m_Layer: 6
   m_Name: infantry
   m_TagString: Untagged
@@ -82435,7 +82419,7 @@ MonoBehaviour:
   bullet_start: {fileID: 1899311993332943589}
   robo_cam: {fileID: 1899311993548116148}
   currcap: 0
-  _rigid: {fileID: 6746315846617108165}
+  _rigid: {fileID: 3172475466718528725}
 --- !u!114 &1899311992969313171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82510,40 +82494,6 @@ MonoBehaviour:
   visible: 0
   m_AssetId: e461b84422e95934f99e00d1af6d2f08
   hasSpawned: 0
---- !u!114 &3318242929139300807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1899311992969313168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 1
-  sendInterval: 0.01
-  syncPosition: 1
-  syncRotation: 1
-  syncScale: 0
-  interpolatePosition: 1
-  interpolateRotation: 1
-  interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
-  bufferResetMultiplier: 5
-  positionSensitivity: 0.01
-  rotationSensitivity: 0.01
-  scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!114 &239671365952528793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82754,6 +82704,56 @@ MonoBehaviour:
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   target: {fileID: 1899311992646628402}
+--- !u!54 &3172475466718528725
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899311992969313168}
+  serializedVersion: 2
+  m_Mass: 20
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &2259558766380091186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899311992969313168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  sendInterval: 0.05
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 0
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  onlySyncOnChange: 1
+  bufferResetMultiplier: 5
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1 &1899311992970444358
 GameObject:
   m_ObjectHideFlags: 0

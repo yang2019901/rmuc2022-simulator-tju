@@ -29,6 +29,7 @@ public class RoboController : BasicController {
     private float pitch_ang = 0;
     private float pitch_min = -30;
     private float pitch_max = 40;
+    private float yaw_ang = 0;
     private Weapon wpn;
     private RoboState robo_state;
 
@@ -64,6 +65,7 @@ public class RoboController : BasicController {
         Cursor.lockState = CursorLockMode.Locked;
         robo_state = GetComponent<RoboState>();
         wpn = GetComponent<Weapon>();
+        yaw_ang = yaw.localEulerAngles.y;
 
         if (hasAuthority) {
             BattleField.singleton.robo_local = this.robo_state;
@@ -218,21 +220,15 @@ public class RoboController : BasicController {
     /* Get look dir from user input */
     float mouseX => playing ? 2 * Input.GetAxis("Mouse X") : 0;
     float mouseY => playing ? 2 * Input.GetAxis("Mouse Y") : 0;
-    Vector3 v1 => yaw.transform.up;
-    Vector3 v2 => _rigid.transform.up;
-    Vector3 axis => Vector3.Cross(v1, v2);
-    float ang => Vector3.Angle(v1, v2);
     void Look() {
         pitch_ang -= mouseY;
+        yaw_ang += mouseX;
         pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
         /* Rotate Transform "pitch" by user input */
         pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
-        /* align "yaw" origin to chassis's */
-        yaw.transform.position = _rigid.transform.position;
-        /* align yaw.up to chassis.up with a single in-plane rotation */
-        yaw.transform.Rotate(axis, ang, Space.World);
         /* Rotate Transform "yaw" by user input */
-        yaw.transform.Rotate(yaw.up, mouseX, Space.World);
+        yaw.eulerAngles = new Vector3(0, yaw_ang, 0);
+        yaw.localEulerAngles = new Vector3(0, yaw.localEulerAngles.y, 0);
     }
 
 
@@ -254,7 +250,7 @@ public class RoboController : BasicController {
         Weapon weap;
         if (TryGetComponent<Weapon>(out weap)) {
             int money_req = weap.caliber == Caliber._17mm ? num : 15 * num;
-            bool is_red = robot_s.Contains("red");
+            bool is_red = obj.GetComponent<RoboState>().armor_color == ArmorColor.Red;
             if (is_red) {
                 if (money_req <= BattleField.singleton.money_red) {
                     weap.bullnum += num;

@@ -40,6 +40,7 @@ public struct RoboSync {
     /* set RMUC_UI.AvaBatStat */
     public bool has_level;
     public int level;
+    public int currexp;
     public bool has_wpn;
     public int bull_num;
     public float heat_ratio;

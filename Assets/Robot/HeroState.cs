@@ -34,6 +34,7 @@ public class HeroState : RoboState {
         rs.level = this.level;
         rs.bull_num = wpn.bullnum;
         rs.heat_ratio = wpn.heat_ratio;
+        rs.currexp = this.currexp;
         return rs;
     }
 
@@ -43,6 +44,11 @@ public class HeroState : RoboState {
         /* for visual effects */
         wpn.bullnum = robo_sync.bull_num;
         wpn.heat_ratio = robo_sync.heat_ratio;
+        if (this.level != robo_sync.level) {
+            this.level = robo_sync.level;
+            Configure();    // update maxexp
+        }
+        this.currexp = robo_sync.currexp;
     }
 
 

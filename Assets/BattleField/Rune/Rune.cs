@@ -1,4 +1,5 @@
 using UnityEngine;
+using Mirror;
 
 public enum RuneBuff { None, Junior, Senior };
 
@@ -10,10 +11,11 @@ public class Rune : MonoBehaviour {
     public RuneState rune_state_blue;
     public Transform[] mines_gold;
     public Transform[] mines_silv;
+    public Activation activ;
+    public ArmorColor rune_color;  // only works when rune's activated
+    public bool disabled;       // rune'll be disabled for 30sec
 
-
-    public bool activated { get; private set; }
-    private const int jun_sta = 2;    // rune_junior starts
+    private const int jun_sta = 10;    // rune_junior starts
     private const int jun_end = 120;   // rune_junior ends
     private const int sen_sta = 240;   // rune_senior starts
     private const int sen_end = 420;   // rune_senior ends
@@ -33,10 +35,11 @@ public class Rune : MonoBehaviour {
     public void Init() {
         rune_state_red.Init();
         rune_state_blue.Init();
-        rune_state_red.SetActiveState(Activation.Idle);
-        rune_state_blue.SetActiveState(Activation.Idle);
+        activ = Activation.Idle;
+        SetRnSta();
         sgn = Random.Range(0, 1) > 0.5 ? 1 : -1;
         Reset();
+        this.disabled = false;
 
         // for (int i = 0; i < mines_gold.Length; i++)
             // mines_gold[i].GetComponent<Rigidbody>().useGravity = false;
@@ -45,33 +48,15 @@ public class Rune : MonoBehaviour {
     }
 
 
+    // Set rune state's activation by this.activ
+    void SetRnSta() {
+        rune_state_red.SetActiveState(this.activ);
+        rune_state_blue.SetActiveState(this.activ);
+    }
+
+
     void Update() {
         float t_bat = BattleField.singleton.GetBattleTime();
-
-        /* rune has been activated => no spinning */
-        if (this.activated)
-            return;
-
-        /* time for rune_junior */
-        if (t_bat >= jun_sta && t_bat <= jun_end) {
-            this.rune_buff = RuneBuff.Junior;
-            rune_state_blue.SetActiveState(Activation.Ready);
-            rune_state_red.SetActiveState(Activation.Ready);
-            RuneSpin();
-        }
-        /* time for rune_senior */
-        else if (t_bat >= sen_sta && t_bat <= sen_end) {
-            this.rune_buff = RuneBuff.Senior;
-            rune_state_blue.SetActiveState(Activation.Ready);
-            rune_state_red.SetActiveState(Activation.Ready);
-            RuneSpin();
-        }
-        /* rune is not available => set light to idle, no spinning */
-        else {
-            rune_state_blue.SetActiveState(Activation.Idle);
-            rune_state_red.SetActiveState(Activation.Idle);
-        }
-
         float t_next = t_bat + Time.deltaTime;
         if (t_bat < mine_1_3 && t_next > mine_1_3) {
             DropMine(1);
@@ -81,6 +66,32 @@ public class Rune : MonoBehaviour {
             DropMine(4);
         } else if (t_bat < mine_2 && t_next > mine_2)
             DropMine(2);
+        
+        /* only server PC needs to calc rotation and activ state; client PC only syncs */
+        if (!NetworkServer.active)
+            return;
+
+        /* rune has been activated => no spinning */
+        if (this.activ == Activation.Activated || disabled)
+            return;
+
+        /* time for rune_junior */
+        if (t_bat >= jun_sta && t_bat <= jun_end) {
+            this.rune_buff = RuneBuff.Junior;
+            this.activ = Activation.Ready;
+            RuneSpin();
+        }
+        /* time for rune_senior */
+        else if (t_bat >= sen_sta && t_bat <= sen_end) {
+            this.rune_buff = RuneBuff.Senior;
+            this.activ = Activation.Ready;
+            RuneSpin();
+        }
+        /* rune is not available => set light to idle, no spinning */
+        else {
+            this.activ = Activation.Idle;
+        }
+        SetRnSta();
     }
 
     
@@ -91,7 +102,6 @@ public class Rune : MonoBehaviour {
 
 
     public void ActivateRune(ArmorColor armor_color) {
-        activated = true;
         StartCoroutine(BattleField.singleton.ActivateRune(armor_color, rune_buff));
         if (armor_color == ArmorColor.Red) {
             /* rune_state_red's all blade has been turned on during hitting */
@@ -111,7 +121,8 @@ public class Rune : MonoBehaviour {
 
     /* Reset Activation State to false and spin params to a new set of values */
     public void Reset() {
-        this.activated = false;
+        this.activ = Activation.Idle;
+        SetRnSta();
         this.t = 0;
         this.a = Random.Range(0.78f, 1.045f);
         this.w = Random.Range(1.884f, 2f);

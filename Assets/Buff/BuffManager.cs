@@ -188,7 +188,7 @@ public class B_RuneActiv : Buff {
         robot.li_B_cd.Remove(5f);
         robot.UpdateBuff();
         en = false;
-        if (!BattleField.singleton.rune.activated)
+        if (BattleField.singleton.rune.activ != Activation.Activated)
             rune_state.SetActiveState(Activation.Idle);
     }
 

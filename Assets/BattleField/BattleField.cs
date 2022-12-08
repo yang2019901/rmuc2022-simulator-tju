@@ -29,6 +29,9 @@ public class BattleField : MonoBehaviour {
     public OutpostState outpost_red;
     public BaseState base_blue;
     public BaseState base_red;
+    // TODO: add guard
+    // public RoboState guard_red;
+    // public RoboState guard_blue;
     public Rune rune;
     /* hero engineer infantry1 infantry2 */
     public RoboState[] robo_red;
@@ -52,6 +55,11 @@ public class BattleField : MonoBehaviour {
 
 
     void Start() {
+        StartGame();
+    }
+
+
+    void StartGame() {
         t_start = Time.time;
 
         rune.Init();
@@ -61,6 +69,26 @@ public class BattleField : MonoBehaviour {
 
         AllAddMoney(200);
         StartCoroutine(DistribMoney());
+    }
+
+
+    [Header("draw-redwin-bluewin")]
+    [SerializeField] Animator[] anims_win;
+    public void EndGame() {
+        int rlt = 0; // 0: draw; 1: red win; 2: blue win
+        int[] blood_diff = new int[3] {outpost_red.currblood - outpost_blue.currblood, 
+            0, // TODO: add guard state and put guard blood difference here
+            base_red.currblood - base_blue.currblood};
+        for (int i = 0; i < blood_diff.Length; i++) {
+            if (blood_diff[i] != 0) {
+                rlt = blood_diff[i] > 0 ? 1 : 2;
+                break;
+            }
+        }
+        
+        if (anims_win != null && anims_win.Length > rlt) {
+            anims_win[rlt].gameObject.SetActive(true);
+        }
     }
 
 
@@ -132,17 +160,17 @@ public class BattleField : MonoBehaviour {
         AssetManager.singleton.PlayClipAround(AssetManager.singleton.rune_activ);
         if (rune_buff == RuneBuff.None)
             Debug.LogError("Error: activate RuneBuff.None");
+        rune.activ = Activation.Activated;
+        rune.rune_color = armor_color;
         AddRuneBuff(armor_color, rune_buff);
         yield return new WaitForSeconds(45);
 
-        rune.rune_state_blue.SetActiveState(Activation.Idle);
-        rune.rune_state_red.SetActiveState(Activation.Idle);
-        RemoveRuneBuff(armor_color, rune_buff);
-        /* right now, rune.activated is true => no spinning, no light */
-        yield return new WaitForSeconds(30);
-
-        /* reset rune.activated and motion params */
+        RmRuneBuff(armor_color, rune_buff);
         rune.Reset();
+        /* reset rune.activ and motion params */
+        rune.disabled = true;
+        yield return new WaitForSeconds(30);
+        rune.disabled = false;
     }
     
 
@@ -188,7 +216,7 @@ public class BattleField : MonoBehaviour {
     /// <summary>
     /// non-API 
     /// </summary>
-    void RemoveRuneBuff(ArmorColor armor_color, RuneBuff rune_buff) {
+    void RmRuneBuff(ArmorColor armor_color, RuneBuff rune_buff) {
         float atk_up = rune_buff == RuneBuff.Junior ? 0.5f : 1f;
         if (armor_color == ArmorColor.Red) {
             Debug.Log("Team Red removes rune buff");
@@ -208,6 +236,7 @@ public class BattleField : MonoBehaviour {
 
     void AddRuneBuff(ArmorColor armor_color, RuneBuff rune_buff) {
         AssetManager.singleton.PlayClipAround(AssetManager.singleton.rune_activ);
+        rune.activ = Activation.Activated;
         float atk_up = rune_buff == RuneBuff.Junior ? 0.5f : 1f;
         if (armor_color == ArmorColor.Red) {
             Debug.Log("Team Red adds rune buff");

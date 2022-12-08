@@ -23,7 +23,6 @@ public class EngineerState : RoboState {
         rs.has_blood = true;
         rs.has_wpn = false;
         rs.has_level = false;
-        rs.maxblood = this.maxblood;
         return rs;
     }       // called by syncnode
 

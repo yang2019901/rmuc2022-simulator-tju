@@ -67,8 +67,9 @@ public class RoboState : BasicState {
                 ac.Enable();
             SetBloodBars();
         }
-        if (this.currblood != robo_sync.currblood) {
+        if (this.currblood != robo_sync.currblood || this.maxblood != robo_sync.maxblood) {
             this.currblood = robo_sync.currblood;
+            this.maxblood = robo_sync.maxblood;
             SetBloodBars();
             if (robo_sync.bat_stat == BatStat.Dead)
                 Die();

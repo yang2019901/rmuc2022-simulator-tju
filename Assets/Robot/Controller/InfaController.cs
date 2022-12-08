@@ -78,7 +78,7 @@ public class InfaController : BasicController {
             return;
 
         SetCursor();
-        Look();
+        // Look();
         Move();
     }
 
@@ -135,11 +135,11 @@ public class InfaController : BasicController {
         if (spinning) {
             torque = -torque_spin * 0.5f;
         } 
-        else {
-            // chassis follows turret
-            if (Mathf.Abs(chas2yaw) > 5)
-                torque = 0.2f * PID(chas2yaw);
-        }
+        // else {
+        //     // chassis follows turret
+        //     if (Mathf.Abs(chas2yaw) > 5)
+        //         torque = 0.2f * PID(chas2yaw);
+        // }
 
         /* get sum of force */
         float torque_now = 0;
@@ -163,19 +163,20 @@ public class InfaController : BasicController {
     float mouseX => playing ? 2 * Input.GetAxis("Mouse X") : 0;
     float mouseY => playing ? 2 * Input.GetAxis("Mouse Y") : 0;
     void Look() {
-        // pitch_ang -= mouseY;
-        // pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
+        pitch_ang -= mouseY;
+        pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
         /* Rotate Transform "yaw" & "pitch" */
-        // pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
+        pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
 
-        yaw.transform.position = _rigid.transform.position;
-        Vector3 v1 = yaw.transform.up;
-        Vector3 v2 = _rigid.transform.up;
-        Vector3 axis = Vector3.Cross(v1, v2);
-        float ang = Vector3.Angle(v1, v2);
-        yaw.transform.Rotate(axis, ang, Space.World);
+        // yaw.transform.position = _rigid.transform.position;
+        // Vector3 v1 = yaw.transform.up;
+        // Vector3 v2 = _rigid.transform.up;
+        // Vector3 axis = Vector3.Cross(v1, v2);
+        // float ang = Vector3.Angle(v1, v2);
+        // yaw.transform.Rotate(axis, ang, Space.World);
 
         yaw.transform.Rotate(yaw.up, mouseX, Space.World);
+        Debug.Log("mouseX: " + mouseX);
     }
 
 }

@@ -178,10 +178,12 @@ namespace RMUC_UI {
             int bull_num;
             if (rc != null && int.TryParse(supp_ui.GetComponentInChildren<TMP_InputField>().text, out bull_num)) {
                 int money_req = bull_num * (rc.GetComponent<Weapon>().caliber == Caliber._17mm ? 1 : 15);
-                int money_now = rc.name.Contains("red") ? BattleField.singleton.money_red
-                    : BattleField.singleton.money_blue;
-                if (money_now < money_req)
+                int money_now = rc.GetComponent<RoboState>().armor_color == ArmorColor.Red ?
+                    BattleField.singleton.money_red : BattleField.singleton.money_blue;
+                if (money_now < money_req) {
+                    Debug.Log("no sufficient money");
                     return;
+                }
                 rc.CmdSupply(rc.gameObject.name, bull_num);
                 supp_ui.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;

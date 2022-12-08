@@ -28496,7 +28496,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6249581533952480115
 Transform:
   m_ObjectHideFlags: 0
@@ -72359,6 +72359,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6249581534702140018}
+  - component: {fileID: 8925579911613104395}
   m_Layer: 6
   m_Name: yaw
   m_TagString: Untagged
@@ -72384,6 +72385,22 @@ Transform:
   m_Father: {fileID: 6249581533757450947}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &8925579911613104395
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6249581534702140021}
+  serializedVersion: 2
+  m_Mass: 10
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6249581534702811046
 GameObject:
   m_ObjectHideFlags: 0
@@ -95927,6 +95944,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6249581535097638157}
   - component: {fileID: 5028331100923149177}
+  - component: {fileID: 5729070849146469430}
   m_Layer: 6
   m_Name: chassis
   m_TagString: Untagged
@@ -95971,6 +95989,42 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!59 &5729070849146469430
+HingeJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6249581535097638156}
+  m_ConnectedBody: {fileID: 8925579911613104395}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
+  m_Axis: {x: 0, y: 1, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  m_UseSpring: 0
+  m_Spring:
+    spring: 0
+    damper: 0
+    targetPosition: 0
+  m_UseMotor: 0
+  m_Motor:
+    targetVelocity: 0
+    force: 0
+    freeSpin: 0
+  m_UseLimits: 0
+  m_Limits:
+    min: 0
+    max: 0
+    bounciness: 0
+    bounceMinVelocity: 0.2
+    contactDistance: 0
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &6249581535098553500
 GameObject:
   m_ObjectHideFlags: 0
@@ -125095,7 +125149,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6249581535595191147
 Transform:
   m_ObjectHideFlags: 0
