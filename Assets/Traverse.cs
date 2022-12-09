@@ -14,8 +14,8 @@ public class Traverse : MonoBehaviour {
 
             // AddMC(child);
             // ResetConvex(child);
-            DeleteMC(child);
-            // ReplaceMaterial(child, AssetManager.singleton.light_blue);
+            // DeleteMC(child);
+            ReplaceMaterial(child, AssetManager.singleton.light_blue);
             // DeleteNI(child);
         }
         // DestroyImmediate(this.GetComponent<Traverse>());
@@ -63,7 +63,7 @@ public class Traverse : MonoBehaviour {
         Renderer tmp = child.GetComponent<MeshRenderer>();
         if (tmp == null)
             return;
-        if (tmp.sharedMaterial.name.ToLower() == "material_4")
+        if (tmp.sharedMaterial == AssetManager.singleton.light_red)
         // if (child.name.Contains("轨") && !child.name.Contains("板"))
         {
             Debug.Log("replace");

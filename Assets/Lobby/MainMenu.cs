@@ -18,7 +18,11 @@ namespace LobbyUI {
         public GameObject Menu_player_mode;
         [Header("option")]
         public GameObject Menu_player_opt;
+        [Header("join")]
+        public GameObject Menu_player_join;
         public TMP_InputField input_addr;
+        public Button btn_join;
+        public Button btn_cancel;
         [Header("lobby")]
         public GameObject Menu_player_lobby;
         public GameObject btn_ready;
@@ -31,6 +35,8 @@ namespace LobbyUI {
         public List<string> ava_tags;
         public List<RoboTab> avatars;
 
+
+
         void Start() {
             /* set first menu to be player info menu */
             SetPlayerInfo();
@@ -40,6 +46,7 @@ namespace LobbyUI {
 
             AssetManager.singleton.PlayClipAround(AssetManager.singleton.prepare, true, 0.3f);
         }
+
 
         /* start host -> go to lobby -> lobby behaviour -> start game */
         public void SinglePlay() {
@@ -52,12 +59,36 @@ namespace LobbyUI {
             net_lob.owner_uid = 0;
         }
 
+
         public void JoinLobby() {
             net_man.networkAddress = input_addr.text;
-            DisableAllMenus();
-            // Debug.Log(net_man.networkAddress);
+            Debug.Log("connecting to " + net_man.networkAddress);
             net_man.StartClient();
+            input_addr.interactable = false;
+            btn_join.interactable = false;
+            btn_join.GetComponentInChildren<TMP_Text>().text = "Connecting";
+            // TODO: add animator
         }
+
+
+        /* button's call back */
+        void CancelJoin() {
+            Debug.Log("cancel join; connecting: " + NetworkClient.isConnecting);
+            if (NetworkClient.isConnecting) {
+                net_man.StopClient();
+            } else {
+                SetPlayerOpt();
+            }
+        }
+
+
+        /* do some end job */
+        public void OnCancelJoin() {
+            input_addr.interactable = true;
+            btn_join.interactable = true;
+            btn_join.GetComponentInChildren<TMP_Text>().text = "<Join>";
+        }
+
 
         public void CreateLobby() {
             net_man.networkAddress = "localhost";
@@ -70,13 +101,15 @@ namespace LobbyUI {
             net_lob.owner_uid = 0;
         }
 
+
         public void Quit() {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit();
+            Application.Quit();
 #endif
         }
+
 
         /// <summary> switch to another menu
         public void SetPlayerInfo() {
@@ -90,6 +123,12 @@ namespace LobbyUI {
         public void SetPlayerOpt() {
             DisableAllMenus();
             Menu_player_opt.SetActive(true);
+        }
+        public void SetPlayerJoin() {
+            DisableAllMenus();
+            Menu_player_join.SetActive(true);
+            btn_join.interactable = true;
+            input_addr.interactable = true;
         }
         public void SetPlayerLobby() {
             DisableAllMenus();
@@ -109,10 +148,11 @@ namespace LobbyUI {
             Menu_player_mode.SetActive(false);
             Menu_player_info.SetActive(false);
             Menu_player_opt.SetActive(false);
+            Menu_player_join.SetActive(false);
             Menu_player_lobby.SetActive(false);
         }
         /// </summary>
-         
+
         /// <summary> Lobby Behaviour
         /** under the hood : button click -> TakeAvatar --mes--> (server PC) OnApplyAvatar
             @player_sync: tells which tab is clicked
@@ -129,6 +169,7 @@ namespace LobbyUI {
             NetworkClient.Send<NetLobby.AvaOwnMessage>(mes);
         }
 
+
         public void InvReady() {
             if (!owning_ava)
                 return;
@@ -143,6 +184,7 @@ namespace LobbyUI {
             }
         }
 
+
         public void LeaveLobby() {
             Debug.Log("networkclient.connection.connectionId: " + NetworkClient.connection.connectionId);
             if (NetworkServer.active && NetworkClient.active)
@@ -155,12 +197,13 @@ namespace LobbyUI {
             SetPlayerOpt();
         }
 
+
         public void SetButtonReady() {
             if (this.owning_ava)
                 btn_ready.SetActive(true);
             else
                 btn_ready.SetActive(false);
-            
+
             TMP_Text btn_txt = btn_ready.GetComponentInChildren<TMP_Text>();
             /* Note: owner can start game any time he wants 
                 Therefore, he has button text of <start game> instead of <ready>*/

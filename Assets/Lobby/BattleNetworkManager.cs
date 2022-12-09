@@ -37,13 +37,20 @@ public class BattleNetworkManager : NetworkManager {
     /* called on that client when a client is disconnected */
     public override void OnStopClient() {
         base.OnStopClient();
-        Debug.Log("client: stop client");
-        if (isScnLobby()) {
-            net_lob.playerSyncs.Callback -= net_lob.OnPlayerSyncChanged;
-            mainmenu.SetPlayerMode();
-        } else if (isScnField()) {
-            SceneManager.LoadScene(scn_lobby);
-            Destroy(this.gameObject);
+        Debug.Log("client PC: stop client; connected: " + NetworkClient.isConnected);
+        if (NetworkClient.isConnected) {
+            // clear what OnClientConnect() has done:
+            if (isScnLobby()) {
+                net_lob.playerSyncs.Callback -= net_lob.OnPlayerSyncChanged;
+                mainmenu.SetPlayerMode();
+            } else if (isScnField()) {
+                SceneManager.LoadScene(scn_lobby);
+                Destroy(this.gameObject);
+            }
+        } else {
+            // mainmenu's attempting to connect but fail
+            // call mainmenu to do finishing touches 
+            mainmenu.OnCancelJoin();
         }
     }
 
@@ -102,16 +109,6 @@ public class BattleNetworkManager : NetworkManager {
                 }
             }
             Debug.Log(log);
-            // foreach (RoboState robot in BattleField.singleton.robo_blue) {
-            //     int syncIdx = playerSyncs.FindIndex(i => i.ava_tag == robot.name);
-            //     if (syncIdx == -1)
-            //         Debug.Log("no player takes " + robot.name);
-            //     else {
-            //         NetworkConnectionToClient connToClient = NetworkServer.connections[playerSyncs[syncIdx].connId];
-            //         robot.GetComponent<NetworkIdentity>().AssignClientAuthority(connToClient);
-            //         Debug.Log(playerSyncs[syncIdx].player_name + " takes " + robot.name);
-            //     }
-            // }
         }
     }
 

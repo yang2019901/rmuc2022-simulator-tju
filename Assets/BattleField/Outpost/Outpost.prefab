@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4341174907216440718}
   - component: {fileID: 3081979158116080984}
   - component: {fileID: 557271864782528855}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_STRIP_PCB-V1_3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 3511779565021982784}
   - component: {fileID: 4729818592937849036}
   - component: {fileID: 557271864677145730}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 33
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 8261284240548351116}
   - component: {fileID: 8484951689862324893}
   - component: {fileID: 557271864105312304}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 41
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -303,7 +303,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3337792431410911656}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0011_2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6369763541442180186}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R7MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 8002925078187983099}
   - component: {fileID: 4375839186060748067}
   - component: {fileID: 557271863814892629}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_TOP_ZHUANGJIAZHICHENG_4 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -465,7 +465,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3121902739185108079}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,7 +497,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7596613823551061736}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0002_8 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +529,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2189985267773445205}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0019_90_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -561,7 +561,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6816224758141263433}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: XT30PW-F_1 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -592,7 +592,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2186670741600309250}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0018_46_2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -624,7 +624,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 509336669610793570}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_TOP_ZHUANGJIAZHICHENG 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -659,7 +659,7 @@ GameObject:
   - component: {fileID: 2883095028570568962}
   - component: {fileID: 2401100621438744596}
   - component: {fileID: 557271863607624397}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 292'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -757,7 +757,7 @@ GameObject:
   - component: {fileID: 3432640708401021758}
   - component: {fileID: 7777252219804186382}
   - component: {fileID: 557271862999680107}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 301'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -855,7 +855,7 @@ GameObject:
   - component: {fileID: 8301522435844974276}
   - component: {fileID: 2762353197863945794}
   - component: {fileID: 557271864468412077}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: A0001_5 18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -953,7 +953,7 @@ GameObject:
   - component: {fileID: 8002170661029686085}
   - component: {fileID: 855645762954595805}
   - component: {fileID: 557271864073454118}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 280'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1048,7 +1048,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7308753220021064040}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0019_90 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1080,7 +1080,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4434791399087925285}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_FRONT_PANEL-V1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1115,7 +1115,7 @@ GameObject:
   - component: {fileID: 4840587280265552725}
   - component: {fileID: 8017040529110463471}
   - component: {fileID: 557271864729745301}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1213,7 +1213,7 @@ GameObject:
   - component: {fileID: 4710314962116916815}
   - component: {fileID: 8332594257080364560}
   - component: {fileID: 557271864384527418}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 49
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1311,7 +1311,7 @@ GameObject:
   - component: {fileID: 9125652467841253415}
   - component: {fileID: 9128349600470936418}
   - component: {fileID: 557271863457398947}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1406,7 +1406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1439453063503989655}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R20MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1438,7 +1438,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2672843860579355626}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 0005_ASM_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1469,7 +1469,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5304082366380347619}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: BC_RM_PP000232 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1501,7 +1501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8645489145699891367}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ASM0001_ASM_3 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1533,7 +1533,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5713103864087671069}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-DB15F_ASM_2_ASM 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1565,7 +1565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8893320676091309655}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 39
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1598,7 +1598,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9215837599487554359}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: A0001_5 10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1630,7 +1630,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5997727343043358709}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R21MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1662,7 +1662,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1282863100068062202}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1694,7 +1694,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5392233546213501002}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C35MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1725,7 +1725,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4896245656635758055}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: JD-7 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1757,7 +1757,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5001992514330104834}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Y1MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1792,7 +1792,7 @@ GameObject:
   - component: {fileID: 1934289929970647685}
   - component: {fileID: 7953134167029827501}
   - component: {fileID: 557271863689085766}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0003_7 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1887,7 +1887,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8988212292432545277}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: DYBZZ_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1919,7 +1919,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5697745167740284357}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1951,7 +1951,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 413616478159548278}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-_AF2000_ASM_2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1983,7 +1983,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7045008813372992637}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C41MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2017,7 +2017,7 @@ GameObject:
   - component: {fileID: 8520229391769575149}
   - component: {fileID: 2857038682776931888}
   - component: {fileID: 557271862949039203}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_STRIP_PCB-V1_3 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2112,7 +2112,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2662682626005807628}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0018_46_3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2144,7 +2144,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 778271824770301444}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2175,7 +2175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3537388870403736636}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C46MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2206,7 +2206,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3667399440728547839}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-202111100003_ASM_50_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2262,7 +2262,7 @@ GameObject:
   - component: {fileID: 8970887827928790623}
   - component: {fileID: 487987907000449103}
   - component: {fileID: 557271864642879468}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 281'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2360,7 +2360,7 @@ GameObject:
   - component: {fileID: 5115014807458810032}
   - component: {fileID: 1067723785950593890}
   - component: {fileID: 557271864913852716}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 41
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2455,7 +2455,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 972581022303700002}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C25MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2486,7 +2486,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 509512568698309129}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R18MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2518,7 +2518,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4326558081121561386}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ASM0001_ASM_3 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2550,7 +2550,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4589762516573421066}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R19MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2582,7 +2582,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2282202686155977549}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _A_ASM_9-57136_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2615,7 +2615,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6526740900562453623}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2649,7 +2649,7 @@ GameObject:
   - component: {fileID: 1477555677172282782}
   - component: {fileID: 6845481125952663981}
   - component: {fileID: 557271863816714826}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_BACK_SHELL_4 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2744,7 +2744,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 972176140997140874}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 36
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2777,7 +2777,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6467002409779694958}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C16MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2808,7 +2808,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6196297555023039465}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: IO__X2_8F9351FA677F_X0_ 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2841,7 +2841,7 @@ GameObject:
   - component: {fileID: 7787671321184999158}
   - component: {fileID: 1342837897347974234}
   - component: {fileID: 2697153591306366849}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_BACK_SHELL_4 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2922,7 +2922,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6247053812035302410}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1609-0603 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2953,7 +2953,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1495093467219588375}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 0011_95 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2988,7 +2988,7 @@ GameObject:
   - component: {fileID: 323817979030480993}
   - component: {fileID: 387145523436379837}
   - component: {fileID: 557271863723084643}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_MID_ZHUANGSHIJIAN_5 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3083,7 +3083,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3013351252369371078}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_STRIP_PCB-V1 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3118,7 +3118,7 @@ GameObject:
   - component: {fileID: 1790145721766726040}
   - component: {fileID: 7432807014917326106}
   - component: {fileID: 557271862850760276}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0018_46_3 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3213,7 +3213,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8374973653404949299}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: armors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3248,7 +3248,7 @@ GameObject:
   - component: {fileID: 6172925258446284967}
   - component: {fileID: 3597163517516830878}
   - component: {fileID: 557271864122768838}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 285'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3343,7 +3343,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3860285125920572309}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0003_7 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3378,7 +3378,7 @@ GameObject:
   - component: {fileID: 8053737464060651888}
   - component: {fileID: 7889582596141350679}
   - component: {fileID: 557271863791494515}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3476,7 +3476,7 @@ GameObject:
   - component: {fileID: 7952859918249597344}
   - component: {fileID: 5450893758359818863}
   - component: {fileID: 557271863578723755}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3571,7 +3571,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1417844704150254820}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R14MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3603,7 +3603,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8282648513885000050}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R6MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3635,7 +3635,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 979673255358811934}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 29
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3669,7 +3669,7 @@ GameObject:
   - component: {fileID: 1330582781870168376}
   - component: {fileID: 2011493089721575260}
   - component: {fileID: 557271863853542864}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3764,7 +3764,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2649781278802906154}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PCB_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3880,7 +3880,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8769888167002243549}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _A_ASM_9-57195 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3912,7 +3912,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 933851088776860850}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3947,7 +3947,7 @@ GameObject:
   - component: {fileID: 4864828248235618887}
   - component: {fileID: 5291360949427833701}
   - component: {fileID: 557271863360230649}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0019_90_1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4042,7 +4042,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 464159483140916791}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: JCB_DENGDIZUO 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4074,7 +4074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5782311519517326110}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ASM0002 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4106,7 +4106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 301696992023260848}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_MID_ZHUANGSHIJIAN 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4141,7 +4141,7 @@ GameObject:
   - component: {fileID: 6187645974795347162}
   - component: {fileID: 2149066623506032320}
   - component: {fileID: 557271864501352959}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 304'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4236,7 +4236,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6715253255263395874}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 27
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4270,7 +4270,7 @@ GameObject:
   - component: {fileID: 2471788554106637000}
   - component: {fileID: 7001335766326158814}
   - component: {fileID: 2876902045990957140}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_MID_POMDENGBAN_1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4320,7 +4320,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3616630554094978118, guid: c419c706935de414da54c7c1ad5867b1, type: 3}
+  - {fileID: 2100000, guid: 38ac1cbe3dda0b548a69bdb2b6119e4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4368,7 +4368,7 @@ GameObject:
   - component: {fileID: 229866834413024337}
   - component: {fileID: 6414881182528064951}
   - component: {fileID: 557271864746959663}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 282'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4463,7 +4463,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7758988242801070970}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C21MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4494,7 +4494,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 68688002707491184}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C10MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4525,7 +4525,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2055964007444604291}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4557,7 +4557,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9080831428014790197}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4589,7 +4589,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3055715993505461279}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851 85
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4624,7 +4624,7 @@ GameObject:
   - component: {fileID: 8320053220569533105}
   - component: {fileID: 5817261555203220113}
   - component: {fileID: 8574190660313827670}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_MID_POMDENGBAN_1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4674,7 +4674,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3616630554094978118, guid: c419c706935de414da54c7c1ad5867b1, type: 3}
+  - {fileID: 2100000, guid: 38ac1cbe3dda0b548a69bdb2b6119e4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4722,7 +4722,7 @@ GameObject:
   - component: {fileID: 7407326421815027777}
   - component: {fileID: 3890808951481620777}
   - component: {fileID: 557271864196119214}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 41
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4817,7 +4817,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8291236121163626419}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: L0402 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4851,7 +4851,7 @@ GameObject:
   - component: {fileID: 4098428829730255861}
   - component: {fileID: 2220973767537725761}
   - component: {fileID: 557271864139965005}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0013_21 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4946,7 +4946,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7806203511962357115}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _X2_6A6180F657AB_X0_ 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4978,7 +4978,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2818511285676439790}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851 83
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5014,7 +5014,7 @@ GameObject:
   - component: {fileID: 4428248687912725819}
   - component: {fileID: 7112127222193851717}
   - component: {fileID: 5099587444858971896}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_FRONT_PANEL-V1_4 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5124,7 +5124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 191295031144435948}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0016_66 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5156,7 +5156,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3582589998354393710}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: L2MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5188,7 +5188,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6400812215239596284}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C6MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5219,7 +5219,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8873732607602807494}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-3225-1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5250,7 +5250,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8396385445850013095}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0019_90_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5284,7 +5284,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2726848961883337558}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C8MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5319,7 +5319,7 @@ GameObject:
   - component: {fileID: 4639295028291333060}
   - component: {fileID: 1372119208759277819}
   - component: {fileID: 1372119208759277818}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_FRONT_PANEL-V1_4 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5429,7 +5429,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1915598539680469389}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _A_ASM_8-1336903 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5460,7 +5460,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8440941545279072253}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5492,7 +5492,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3872069243074667825}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _A_ASM_9-1387344 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5524,7 +5524,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4848272107589155512}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_BACK_SHELL 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5556,7 +5556,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7822833467430626020}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1_3 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5588,7 +5588,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6038201217955865512}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R24MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5620,7 +5620,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1139043991692233606}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 26 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5654,7 +5654,7 @@ GameObject:
   - component: {fileID: 7175225126995524701}
   - component: {fileID: 8160003475346243843}
   - component: {fileID: 557271863186270665}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 305'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5704,7 +5704,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1540615543647114274, guid: c419c706935de414da54c7c1ad5867b1, type: 3}
+  - {fileID: 2100000, guid: 7f6d670647063eb478c1586ea9a0f549, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5749,7 +5749,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2076995270706975221}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 5 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5783,7 +5783,7 @@ GameObject:
   - component: {fileID: 2154758814984678775}
   - component: {fileID: 8265706400698955301}
   - component: {fileID: 2592834800582602398}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: blood bar empty
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5878,7 +5878,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5121783847207187301}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-202111100001_ASM_158_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5938,7 +5938,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7048298275822080802}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R7MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5970,7 +5970,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4144889241402969091}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: L0402 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6001,7 +6001,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 483772701441854850}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-_AF6000_ASM_2_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6039,7 +6039,7 @@ GameObject:
   - component: {fileID: 5650112272863263208}
   - component: {fileID: 2323426240895604356}
   - component: {fileID: 557271863803302791}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 0011_95 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6134,7 +6134,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8626667563977941285}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R11MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6166,7 +6166,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2976717180015727570}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 30
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6198,7 +6198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9216018658288462597}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: A0001_5 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6230,7 +6230,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9146757731287742451}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0018_46_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6264,7 +6264,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2375795105603522020}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6296,7 +6296,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1775501869039772122}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0008_9 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6328,7 +6328,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5652772093808406077}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6360,7 +6360,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1928618637764684209}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: XT30PW-F_1 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6394,7 +6394,7 @@ GameObject:
   - component: {fileID: 4652203696607679387}
   - component: {fileID: 2580578570522769602}
   - component: {fileID: 557271864028463438}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 38
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6489,7 +6489,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3387450143072565701}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0022_30 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6524,7 +6524,7 @@ GameObject:
   - component: {fileID: 6143062732258550937}
   - component: {fileID: 2475718841051086199}
   - component: {fileID: 557271863832661059}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 299'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6619,7 +6619,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9058552543148194283}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: DYBZZ 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6651,7 +6651,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3022672421869964586}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0018_46_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6683,7 +6683,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3004534660633998061}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6715,7 +6715,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 609691108399054750}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6747,7 +6747,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3787919242376929101}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _AF2000_ASM_7 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6779,7 +6779,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6871431722410998239}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: KONGZHIHE 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6814,7 +6814,7 @@ GameObject:
   - component: {fileID: 1788762990626885745}
   - component: {fileID: 6648644401589010833}
   - component: {fileID: 557271864855060531}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 286'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6912,7 +6912,7 @@ GameObject:
   - component: {fileID: 2712361788988097365}
   - component: {fileID: 221068039123604213}
   - component: {fileID: 557271864750069047}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0023_21 10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7007,7 +7007,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8285727625578041653}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ASSEM1_NAUO10 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7038,7 +7038,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7638274152230149804}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_FRONT_PANEL-V1 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7070,7 +7070,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 494570119385998711}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7105,7 +7105,7 @@ GameObject:
   - component: {fileID: 7828127349957082013}
   - component: {fileID: 2038501906845212136}
   - component: {fileID: 557271864068088297}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0022_30 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7200,7 +7200,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5432218356609093587}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: blood bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7235,7 +7235,7 @@ GameObject:
   - component: {fileID: 3037602652161661445}
   - component: {fileID: 3080135367826989095}
   - component: {fileID: 557271863457543268}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_TOP_JIANCEBAWAIKE_1_5 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7333,7 +7333,7 @@ GameObject:
   - component: {fileID: 5161280432353689625}
   - component: {fileID: 4399181611555144944}
   - component: {fileID: 557271864732041397}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851_2 15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7431,7 +7431,7 @@ GameObject:
   - component: {fileID: 1315973794428237664}
   - component: {fileID: 463545955453363064}
   - component: {fileID: 557271863452789601}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1_3 13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7481,7 +7481,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3616630554094978118, guid: c419c706935de414da54c7c1ad5867b1, type: 3}
+  - {fileID: 2100000, guid: 38ac1cbe3dda0b548a69bdb2b6119e4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7526,7 +7526,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5920739081829989363}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 44
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7559,7 +7559,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1353404740396336255}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 30
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7591,7 +7591,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 61297304505493533}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 30
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7623,7 +7623,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8903462965287619172}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0023_21 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7655,7 +7655,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5213565107757746519}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C38MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7686,7 +7686,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6926706586348172851}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 86 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7721,7 +7721,7 @@ GameObject:
   - component: {fileID: 919295845120938905}
   - component: {fileID: 7405007571982799291}
   - component: {fileID: 557271864806365538}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 278'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7816,7 +7816,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3346273264940746112}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0014_ASM_11_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7851,7 +7851,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6250505671992251777}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7883,7 +7883,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6126870818276857912}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7915,7 +7915,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1554559192351302626}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_TOP_JIANCEBAWAIKE_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7947,7 +7947,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3292773520115037773}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7981,7 +7981,7 @@ GameObject:
   - component: {fileID: 858509676207312287}
   - component: {fileID: 5656305575781610180}
   - component: {fileID: 2675235766391116475}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_BACK_SHELL_4 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8062,7 +8062,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1920272001646845381}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: A0001_5 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8094,7 +8094,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4026340271837472299}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: BC_RM_PP000232_ASM_4_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8139,7 +8139,7 @@ GameObject:
   - component: {fileID: 7478038243707445190}
   - component: {fileID: 8604653173309845243}
   - component: {fileID: 557271863900409403}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1_3 19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8189,7 +8189,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3616630554094978118, guid: c419c706935de414da54c7c1ad5867b1, type: 3}
+  - {fileID: 2100000, guid: 38ac1cbe3dda0b548a69bdb2b6119e4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8237,7 +8237,7 @@ GameObject:
   - component: {fileID: 3100109559929644707}
   - component: {fileID: 6921598628878547514}
   - component: {fileID: 557271864109174225}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 288'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8332,7 +8332,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1007667282050300554}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: WS2017_C620_PCB_X2_677F_X0_ 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8366,7 +8366,7 @@ GameObject:
   - component: {fileID: 8823173106299513984}
   - component: {fileID: 6565471020081923614}
   - component: {fileID: 557271864052897167}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0006_8 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8461,7 +8461,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6802444127853406120}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: L1MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8493,7 +8493,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 340803720935583470}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8525,7 +8525,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1046170772142470678}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_MOUDLE_SINGLE_AF2_A_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8578,7 +8578,7 @@ GameObject:
   - component: {fileID: 3024737770894654544}
   - component: {fileID: 8081543986589236494}
   - component: {fileID: 557271864687426919}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 39
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8673,7 +8673,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8308331033925069956}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 3508_X2_7535673A_X0_ 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8705,7 +8705,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8661370139539905066}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8737,7 +8737,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 236292752284513046}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _ 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8768,7 +8768,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3999723004489101143}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1_3 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8803,7 +8803,7 @@ GameObject:
   - component: {fileID: 5412732027785498307}
   - component: {fileID: 3749638151571771981}
   - component: {fileID: 557271864078083910}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: A0001_5 23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8898,7 +8898,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1243912700633110510}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_FRONT_PANEL-V1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8930,7 +8930,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4191107902483959247}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-DB15F_1 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8961,7 +8961,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7896425342440147841}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8993,7 +8993,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7020915197197590414}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_MOUDLE_SINGLE_AF3_A_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9041,7 +9041,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4295368773502793013}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 29
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9073,7 +9073,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 926829952214660894}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 41
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9109,7 +9109,7 @@ GameObject:
   - component: {fileID: 4792821297334494318}
   - component: {fileID: 8824459037097777956}
   - component: {fileID: 557271862984025959}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: A0001_5 14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9204,7 +9204,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3764021896865732815}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: D18MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9235,7 +9235,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 296075675883969138}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9266,7 +9266,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1038349346296414362}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_MID_DENGZHULVJIAN 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9298,7 +9298,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5269683935986950372}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_MOUDLE_SINGLE 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9330,7 +9330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2890291758129993223}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0014_ASM_11 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9362,7 +9362,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 387097286792016122}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: JD-6 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9397,7 +9397,7 @@ GameObject:
   - component: {fileID: 2673278644845831008}
   - component: {fileID: 3931699985694417955}
   - component: {fileID: 557271863000408096}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 54
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9495,7 +9495,7 @@ GameObject:
   - component: {fileID: 3504534872877950005}
   - component: {fileID: 340477092650786773}
   - component: {fileID: 557271863046405784}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: YADENGTIAOBANZI_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9590,7 +9590,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1502137030350135216}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: A0001_5 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9625,7 +9625,7 @@ GameObject:
   - component: {fileID: 6202374794080213232}
   - component: {fileID: 2462833431983565457}
   - component: {fileID: 557271863208699853}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_MID_DENGZHULVJIAN_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9720,7 +9720,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 148616824262421638}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: JCB_JIESHOUBANDENGGAI 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9752,7 +9752,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2191033031820348025}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-_AF2000_ASM_2_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9787,7 +9787,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2356086010912961619}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C43MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9818,7 +9818,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4117496960746790361}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9850,7 +9850,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2250532561710268392}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: XT30PW-F_1_2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9884,7 +9884,7 @@ GameObject:
   - component: {fileID: 5497545563357805364}
   - component: {fileID: 4828299883132286595}
   - component: {fileID: 557271863537677428}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851_2 13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9979,7 +9979,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1226067268088231871}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C39MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10013,7 +10013,7 @@ GameObject:
   - component: {fileID: 74790791544624510}
   - component: {fileID: 6056517326751914074}
   - component: {fileID: 557271863776247379}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1_3 23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10063,7 +10063,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3616630554094978118, guid: c419c706935de414da54c7c1ad5867b1, type: 3}
+  - {fileID: 2100000, guid: 38ac1cbe3dda0b548a69bdb2b6119e4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10111,7 +10111,7 @@ GameObject:
   - component: {fileID: 2970978737139163839}
   - component: {fileID: 7484667962574769183}
   - component: {fileID: 557271863372541404}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 294'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10206,7 +10206,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5400298807233346436}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0013_21 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10238,7 +10238,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5968456581785425843}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10270,7 +10270,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 681039027641914787}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _0001_11 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10302,7 +10302,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3979434888246338179}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C34MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10333,7 +10333,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2722867392579145245}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851_2 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10365,7 +10365,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8588113731800667401}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ASM0001_ASM_3_ASM 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10400,7 +10400,7 @@ GameObject:
   - component: {fileID: 6141590311076057751}
   - component: {fileID: 3861576477172000399}
   - component: {fileID: 557271863152810553}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 55
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10495,7 +10495,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 893327019727146761}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-DB15F_1 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10526,7 +10526,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7986538706274817343}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R21MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10558,7 +10558,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1478864567102714556}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: WS2017_M3508_______ASM_2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10590,7 +10590,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7337966543594322267}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C30MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10621,7 +10621,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5543160180147590384}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10653,7 +10653,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8316164846051426274}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: D8MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10685,7 +10685,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1987349485884053157}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: A0001_5 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10717,7 +10717,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1520113596030316913}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10749,7 +10749,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8230293475351602069}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10784,7 +10784,7 @@ GameObject:
   - component: {fileID: 6588821899776523400}
   - component: {fileID: 5496827252685359830}
   - component: {fileID: 557271864248696084}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 55
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10879,7 +10879,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9059913724126673560}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: JD-7_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10915,7 +10915,7 @@ GameObject:
   - component: {fileID: 1430962006327145371}
   - component: {fileID: 3270128548601279898}
   - component: {fileID: 557271862983671870}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851_2 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11010,7 +11010,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7319796566070087370}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: XT30PW-F_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11041,7 +11041,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 849418801163706219}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: blood bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11073,7 +11073,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5754636737603819455}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 2_ASM_2_ASM_3_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11106,7 +11106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4840396922003256986}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11141,7 +11141,7 @@ GameObject:
   - component: {fileID: 3120478943936477242}
   - component: {fileID: 5247505200255180997}
   - component: {fileID: 557271863541556491}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_STRIP_PCB-V1_3 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11236,7 +11236,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5487363257223167596}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C18MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11267,7 +11267,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7463304037310319231}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11302,7 +11302,7 @@ GameObject:
   - component: {fileID: 3930108486570627224}
   - component: {fileID: 2600417049576457519}
   - component: {fileID: 557271864366459559}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 279'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11400,7 +11400,7 @@ GameObject:
   - component: {fileID: 5018041201914938818}
   - component: {fileID: 8226656894188326997}
   - component: {fileID: 557271864890441380}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 37
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11495,7 +11495,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4559751499750816393}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: P7MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11529,7 +11529,7 @@ GameObject:
   - component: {fileID: 3132522704978552917}
   - component: {fileID: 2489107435704915623}
   - component: {fileID: 557271862959535084}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851_2 23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11624,7 +11624,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5657288361108009192}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C45MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11655,7 +11655,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8008236773147901536}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1609-0603 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11689,7 +11689,7 @@ GameObject:
   - component: {fileID: 6974417507051103574}
   - component: {fileID: 936683811321298955}
   - component: {fileID: 557271863497230572}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 84-0_37 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11784,7 +11784,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5300550363066999328}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851_2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11819,7 +11819,7 @@ GameObject:
   - component: {fileID: 4324296499136827167}
   - component: {fileID: 4828323823629526132}
   - component: {fileID: 557271864610509399}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851_2 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11917,7 +11917,7 @@ GameObject:
   - component: {fileID: 1154024947169637902}
   - component: {fileID: 4416928842136831640}
   - component: {fileID: 557271864753642433}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _0001_11 10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12012,7 +12012,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 802893213093203687}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12044,7 +12044,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5450057902860680152}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R23MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12076,7 +12076,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2374111187111217530}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: U1MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12108,7 +12108,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7538396697083067144}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _AF0000_ASM_7 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12140,7 +12140,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5121521534378311517}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C31MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12174,7 +12174,7 @@ GameObject:
   - component: {fileID: 832952022907109990}
   - component: {fileID: 620299923174867909}
   - component: {fileID: 557271864275185795}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_MID_DENGZHULVJIAN_1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12269,7 +12269,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9169663545979245418}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0005_35 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12304,7 +12304,7 @@ GameObject:
   - component: {fileID: 7566957557115751887}
   - component: {fileID: 8757084634955675554}
   - component: {fileID: 557271864773452665}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 38
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12402,7 +12402,7 @@ GameObject:
   - component: {fileID: 7383026063378336395}
   - component: {fileID: 6116973074339526833}
   - component: {fileID: 557271863846580318}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0005_35 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12500,7 +12500,7 @@ GameObject:
   - component: {fileID: 2156235307959065448}
   - component: {fileID: 2056325702177283712}
   - component: {fileID: 557271864320622201}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12595,7 +12595,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7558790388011511740}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: YADENGTIAOBANZI 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12627,7 +12627,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3944131230289011242}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R13MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12662,7 +12662,7 @@ GameObject:
   - component: {fileID: 3997881905607300796}
   - component: {fileID: 8218051230595982404}
   - component: {fileID: 557271862888723502}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1_3 21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12712,7 +12712,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3616630554094978118, guid: c419c706935de414da54c7c1ad5867b1, type: 3}
+  - {fileID: 2100000, guid: 38ac1cbe3dda0b548a69bdb2b6119e4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12757,7 +12757,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2289081978728728801}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R24MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12789,7 +12789,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5189362132484094692}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_MOUDLE_SINGLE 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12824,7 +12824,7 @@ GameObject:
   - component: {fileID: 4248174852381465418}
   - component: {fileID: 6523986255850464071}
   - component: {fileID: 557271862860316541}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 297'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12919,7 +12919,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1951143816817754997}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: WS2017_C620_10001_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12952,7 +12952,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 354993218146671834}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0006_8 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12984,7 +12984,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7839187452247864791}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13016,7 +13016,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4125671970530393679}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: A0001_5 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13048,7 +13048,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 256922925261804956}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13079,7 +13079,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6232964092209028608}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _A_ASM_9-57136 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13111,7 +13111,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7672052186230474153}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C36MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13142,7 +13142,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7717319227534120017}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: P1MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13173,7 +13173,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7984518783914644222}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1_3 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13205,7 +13205,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7306981453959894431}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13237,7 +13237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4566816530626567186}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R17MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13269,7 +13269,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1816961394962632998}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: D12MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13301,7 +13301,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4970084692324941761}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13333,7 +13333,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5458842004514365401}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13365,7 +13365,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6643349125387604027}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R16MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13397,7 +13397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7501918406441714354}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0022_30 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13429,7 +13429,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5537350964758772868}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _20211119000_ASM_28 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13461,7 +13461,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1716898109737879581}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _A_ASM_9-57195_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13497,7 +13497,7 @@ GameObject:
   - component: {fileID: 615895931431538946}
   - component: {fileID: 661451019547308928}
   - component: {fileID: 557271863497893621}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0005_35 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13592,7 +13592,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1702983407265972625}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ASSEM1_NAUO10_2 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13623,7 +13623,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5261916591534494544}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13658,7 +13658,7 @@ GameObject:
   - component: {fileID: 6765881930752606505}
   - component: {fileID: 216465636116982236}
   - component: {fileID: 557271864582512420}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_MID_POMDENGBAN_1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13708,7 +13708,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3616630554094978118, guid: c419c706935de414da54c7c1ad5867b1, type: 3}
+  - {fileID: 2100000, guid: 38ac1cbe3dda0b548a69bdb2b6119e4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13756,7 +13756,7 @@ GameObject:
   - component: {fileID: 1545504081766652002}
   - component: {fileID: 1942364082709786425}
   - component: {fileID: 557271863755346430}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13851,7 +13851,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4856677924847244972}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_STRIP_PCB-V1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13883,7 +13883,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 927790679044826410}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: D8MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13915,7 +13915,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7728199594396819903}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_BACK_SHELL 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13947,7 +13947,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8182867120842399756}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C20MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13978,7 +13978,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7706268406049964714}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14013,7 +14013,7 @@ GameObject:
   - component: {fileID: 7926200841530337753}
   - component: {fileID: 7689842086120871646}
   - component: {fileID: 557271864366256812}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0006_8 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14108,7 +14108,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 615878059820065717}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: D12MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14140,7 +14140,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8956742277178348100}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_MID_ZHUANGSHIJIAN_5 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14175,7 +14175,7 @@ GameObject:
   - component: {fileID: 172907371986174536}
   - component: {fileID: 4974269612383499667}
   - component: {fileID: 557271864804788788}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_MID_DENGZHULVJIAN_1 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14273,7 +14273,7 @@ GameObject:
   - component: {fileID: 4473119313346066649}
   - component: {fileID: 4986025543008331426}
   - component: {fileID: 557271863502390457}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _0001_11 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14371,7 +14371,7 @@ GameObject:
   - component: {fileID: 4386271374463350438}
   - component: {fileID: 535576678778159618}
   - component: {fileID: 557271864423435901}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0011_2 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14469,7 +14469,7 @@ GameObject:
   - component: {fileID: 4988109836055297926}
   - component: {fileID: 526515153482348906}
   - component: {fileID: 557271864654446198}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0019_90_3 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14567,7 +14567,7 @@ GameObject:
   - component: {fileID: 4759196788025323024}
   - component: {fileID: 1944495032587315343}
   - component: {fileID: 557271864516488762}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: A0001_5 19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14665,7 +14665,7 @@ GameObject:
   - component: {fileID: 3394612439604815231}
   - component: {fileID: 7073015803479152359}
   - component: {fileID: 557271863010846217}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_TOP_DENGTILIANGCEGAIBAN_1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14760,7 +14760,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5980099954846213088}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14792,7 +14792,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5502122882065172483}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C27MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14823,7 +14823,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2471625234823499508}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 40
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14856,7 +14856,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 605361687003329561}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: L5MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14888,7 +14888,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1725320253454985667}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R27MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14920,7 +14920,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8949175773174576150}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14952,7 +14952,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4058544606649332096}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14987,7 +14987,7 @@ GameObject:
   - component: {fileID: 547085416435769282}
   - component: {fileID: 433586275478268348}
   - component: {fileID: 557271864719108464}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 287'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15085,7 +15085,7 @@ GameObject:
   - component: {fileID: 3727159672237023221}
   - component: {fileID: 7755437796094845458}
   - component: {fileID: 557271863680163106}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 38
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15180,7 +15180,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5156263272736043090}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: DYB 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15215,7 +15215,7 @@ GameObject:
   - component: {fileID: 7538612658561809353}
   - component: {fileID: 9054802497911822562}
   - component: {fileID: 557271862930051040}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 46
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15310,7 +15310,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7309594257788083388}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15345,7 +15345,7 @@ GameObject:
   - component: {fileID: 8852425422547290185}
   - component: {fileID: 5860893297902869821}
   - component: {fileID: 4906109721570577351}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: blood bar empty
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15440,7 +15440,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5657765162594685434}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15475,7 +15475,7 @@ GameObject:
   - component: {fileID: 3349409406256863377}
   - component: {fileID: 162028573654019189}
   - component: {fileID: 557271863320202288}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 289'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15570,7 +15570,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6592758297144231122}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15601,7 +15601,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4369854118833694106}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1609-0603 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15632,7 +15632,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1709281406050087931}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ASSEM1_NAUO10_2 8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15663,7 +15663,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6079567225702067720}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _A_ASM_9-1387344_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15696,7 +15696,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 74573192469911215}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15731,7 +15731,7 @@ GameObject:
   - component: {fileID: 1269910883514116253}
   - component: {fileID: 6809701149419486522}
   - component: {fileID: 557271864031137092}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0018_46_2 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15826,7 +15826,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8891352608864029914}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15858,7 +15858,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2608590094152338588}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_STRIP_PCB-V1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15890,7 +15890,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8363510829894324220}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15925,7 +15925,7 @@ GameObject:
   - component: {fileID: 3875173362543135943}
   - component: {fileID: 6868443496106491886}
   - component: {fileID: 557271864456160323}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_STRIP_PCB-V1_3 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16020,7 +16020,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6596102767799226093}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R15MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16052,7 +16052,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7276472069941008354}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ASSEM1_NAUO10_2 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16083,7 +16083,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6209656004943743307}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 47
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16119,7 +16119,7 @@ GameObject:
   - component: {fileID: 1275070381593914106}
   - component: {fileID: 8231680969377224768}
   - component: {fileID: 557271863522082618}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 82_34 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16214,7 +16214,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8140837861397296698}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _X2_53616263_X0_ 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16245,7 +16245,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3224176440598252096}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0022_30 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16277,7 +16277,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 256199080366851359}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0023_21 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16309,7 +16309,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8602900666986395351}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C3MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16340,7 +16340,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4385348523689286809}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16372,7 +16372,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2123705772307743607}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 38
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16405,7 +16405,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7695345541847159065}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ASSEM1_NAUO10_2 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16436,7 +16436,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5511327870596732392}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16468,7 +16468,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6245106441828959564}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _0001_11 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16500,7 +16500,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 679084453547823356}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _A_ASM_9-10125 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16531,7 +16531,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1968754462084727741}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 45
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16564,7 +16564,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6055968549781355677}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 43
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16597,7 +16597,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6360118387022632335}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C32MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16628,7 +16628,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7871061067335537974}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16663,7 +16663,7 @@ GameObject:
   - component: {fileID: 5091786995830473030}
   - component: {fileID: 105288773324406340}
   - component: {fileID: 557271863641866710}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 55
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16758,7 +16758,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7919016149570556836}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: DYX 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16789,7 +16789,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8585664000862024038}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-DB15F_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16820,7 +16820,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6112983836669802770}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16852,7 +16852,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1777898763916702588}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0023_21 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16884,7 +16884,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5282958014563549734}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C29MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16918,7 +16918,7 @@ GameObject:
   - component: {fileID: 5347115174219553869}
   - component: {fileID: 7874201594238371957}
   - component: {fileID: 557271863959884444}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0002_8 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17013,7 +17013,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8455914041525204208}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17048,7 +17048,7 @@ GameObject:
   - component: {fileID: 7302263600237136250}
   - component: {fileID: 3126367376700005219}
   - component: {fileID: 557271863198750588}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: A0001_5 22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17143,7 +17143,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9191339103397472073}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17175,7 +17175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8029953442155697066}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R3MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17207,7 +17207,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3400610554244183120}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ASM0001 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17242,7 +17242,7 @@ GameObject:
   - component: {fileID: 2554983486042067065}
   - component: {fileID: 7026600431966328108}
   - component: {fileID: 557271863099438306}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_MID_ZHUANGSHIJIAN_5 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17340,7 +17340,7 @@ GameObject:
   - component: {fileID: 3761519222547965368}
   - component: {fileID: 3602432636581259583}
   - component: {fileID: 557271864151874082}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 39
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17435,7 +17435,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 831517603930709675}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: L5MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17467,7 +17467,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7291288006221343720}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17499,7 +17499,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9190960380098285615}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_FRONT_PANEL-V1 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17531,7 +17531,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1674392590652778073}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R16MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17563,7 +17563,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5006455984284369961}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17595,7 +17595,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7373437896857793484}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C24MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17626,7 +17626,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 424419077430319174}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R20MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17658,7 +17658,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1780963381278577560}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R11MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17693,7 +17693,7 @@ GameObject:
   - component: {fileID: 2994810878361055195}
   - component: {fileID: 7140623540031932482}
   - component: {fileID: 557271863194196448}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17788,7 +17788,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2197953013764188380}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_STRIP_PCB-V1 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17820,7 +17820,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5083346011494981123}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0004_13 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17855,7 +17855,7 @@ GameObject:
   - component: {fileID: 7433523743571786355}
   - component: {fileID: 4469610694226642708}
   - component: {fileID: 557271863547667881}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 41
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17953,7 +17953,7 @@ GameObject:
   - component: {fileID: 6359730676742476831}
   - component: {fileID: 8065567919118812607}
   - component: {fileID: 557271864030550567}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 291'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18051,7 +18051,7 @@ GameObject:
   - component: {fileID: 4974443038460604999}
   - component: {fileID: 4825417431962216705}
   - component: {fileID: 557271864708432974}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 45
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18149,7 +18149,7 @@ GameObject:
   - component: {fileID: 6678045515314781510}
   - component: {fileID: 394505153386905213}
   - component: {fileID: 557271863584678131}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_TOP_JIANCEBAWAIKE_2_4 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18247,7 +18247,7 @@ GameObject:
   - component: {fileID: 3192959570313573309}
   - component: {fileID: 7239643624006875876}
   - component: {fileID: 557271863369554600}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_TOP_DENGTILIANGCEGAIBAN_1 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18342,7 +18342,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2449114168974822937}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18374,7 +18374,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3276804056987095389}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _0001_11 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18406,7 +18406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1554844582912720457}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: P8MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18440,7 +18440,7 @@ GameObject:
   - component: {fileID: 2072876727386929877}
   - component: {fileID: 790475646268698183}
   - component: {fileID: 557271864482197908}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 49
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18535,7 +18535,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 10344606547790804}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851 87
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18567,7 +18567,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6018489624021532613}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18599,7 +18599,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6417241393081955749}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C17MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18630,7 +18630,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5307987934072814035}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _20211119000_ASM_28_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18667,7 +18667,7 @@ GameObject:
   - component: {fileID: 8276050226174990983}
   - component: {fileID: 4276263918904735203}
   - component: {fileID: 557271864130273539}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0023_21 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18762,7 +18762,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2964850543879979969}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18794,7 +18794,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4204372036142051769}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: U1MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18829,7 +18829,7 @@ GameObject:
   - component: {fileID: 3484491023440127476}
   - component: {fileID: 7384397921398616174}
   - component: {fileID: 557271864842280059}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_TOP_DINGBUMOKUAIDIBAN-GAI_4 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18927,7 +18927,7 @@ GameObject:
   - component: {fileID: 8949209734022193543}
   - component: {fileID: 4182692995508335186}
   - component: {fileID: 557271864169470995}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 53
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19022,7 +19022,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1836074189140232513}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-LED_0603_R 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19053,7 +19053,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5534476821825094891}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_TOP_DENGTILIANGCEGAIBAN 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19088,7 +19088,7 @@ GameObject:
   - component: {fileID: 1398097932129427935}
   - component: {fileID: 4443022484939509002}
   - component: {fileID: 557271863350093156}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 86_40 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19186,7 +19186,7 @@ GameObject:
   - component: {fileID: 6595826939417555672}
   - component: {fileID: 574790981435260301}
   - component: {fileID: 557271863825848756}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19284,7 +19284,7 @@ GameObject:
   - component: {fileID: 2825198309706951236}
   - component: {fileID: 5927433319003898442}
   - component: {fileID: 557271864385267291}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 38
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19379,7 +19379,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7859849643398834578}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R5MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19411,7 +19411,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7936075591602767450}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: WS2017_M3508_______ASM_2_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19445,7 +19445,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255504100391739262}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_TOP_DENGTILIANGCEGAIBAN_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19477,7 +19477,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8830506778312692950}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19509,7 +19509,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 679989474466749904}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: P2MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19544,7 +19544,7 @@ GameObject:
   - component: {fileID: 4838822709261740473}
   - component: {fileID: 5686419491429487074}
   - component: {fileID: 5686419491429487077}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_FRONT_PANEL-V1_4 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19654,7 +19654,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8869013824897081939}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R4MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19686,7 +19686,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8809325888359921123}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 84-_X2_6539_X0_ 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19721,7 +19721,7 @@ GameObject:
   - component: {fileID: 2296132988226703391}
   - component: {fileID: 7454460454582817987}
   - component: {fileID: 557271863342490729}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _0001_11 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19816,7 +19816,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3461292595625529209}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0019_90_3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19851,7 +19851,7 @@ GameObject:
   - component: {fileID: 189934283820869877}
   - component: {fileID: 5769748584754066672}
   - component: {fileID: 557271862857150440}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0017_49 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19946,7 +19946,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 35958203955084303}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-_AF4000_ASM_2_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19981,7 +19981,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7927298765934919262}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-DB15F_ASM_2_ASM 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20016,7 +20016,7 @@ GameObject:
   - component: {fileID: 7046807463677796263}
   - component: {fileID: 1238512959120307801}
   - component: {fileID: 557271863853026026}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 33
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20114,7 +20114,7 @@ GameObject:
   - component: {fileID: 870441986747284382}
   - component: {fileID: 265939285283995593}
   - component: {fileID: 557271864374538867}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 53
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20209,7 +20209,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6826538660031229086}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: IO__X2_65705B578F935165677F_X0_ 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20240,7 +20240,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8809376269513188168}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R27MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20272,7 +20272,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3610701033886179653}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-CDRH74NP-220MC 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20303,7 +20303,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4934342180702714938}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20334,7 +20334,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2830928486634709214}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _X2_6A6180F657AB_X0_ 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20366,7 +20366,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5539599736298168612}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R23MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20398,7 +20398,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3501465237995179340}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R22MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20430,7 +20430,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3916456365503193155}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20462,7 +20462,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2436360862845973176}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: P4MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20493,7 +20493,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8922931161496983014}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20525,7 +20525,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2533726079392574789}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_TOP_ZHUANGJIADIBAN 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20560,7 +20560,7 @@ GameObject:
   - component: {fileID: 1431499473097120626}
   - component: {fileID: 4168125604310568262}
   - component: {fileID: 557271862992976969}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 47
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20655,7 +20655,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9121512262035871358}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20690,7 +20690,7 @@ GameObject:
   - component: {fileID: 4764376918222907294}
   - component: {fileID: 9080878681888651680}
   - component: {fileID: 557271863276175541}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 283'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20785,7 +20785,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 213933965196075868}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ASM0002_ASM_3_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20820,7 +20820,7 @@ GameObject:
   - component: {fileID: 1702924421155486842}
   - component: {fileID: 6508194057023119317}
   - component: {fileID: 6164190686897672354}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: blood bar empty
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20918,7 +20918,7 @@ GameObject:
   - component: {fileID: 5107890810168932983}
   - component: {fileID: 5552787532074701019}
   - component: {fileID: 557271863643932901}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851_2 21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21016,7 +21016,7 @@ GameObject:
   - component: {fileID: 2782842114585036074}
   - component: {fileID: 5866052315745591456}
   - component: {fileID: 557271864030323508}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: A0001_5 15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21111,7 +21111,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7701266207663984474}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 88 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21143,7 +21143,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1524072901677725374}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 4 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21174,7 +21174,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3450383013827590630}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _AF2000_ASM_7_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21210,7 +21210,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9073129245610536863}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 46
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21243,7 +21243,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4741843069283221682}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Q1MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21274,7 +21274,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6128369703019352605}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21306,7 +21306,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4465315129235713686}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: JCB_DENGCEGAI 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21338,7 +21338,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3951927282257388690}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0005_35 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21370,7 +21370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3945386780319662628}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-DB15F_ASM_2 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21402,7 +21402,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6007255842805698803}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C42MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21433,7 +21433,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1296185754993700026}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0019_90_2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21465,7 +21465,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4802624413750617392}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851_2 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21500,7 +21500,7 @@ GameObject:
   - component: {fileID: 1969220061876583446}
   - component: {fileID: 492629722729929339}
   - component: {fileID: 557271864561678643}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: YADENGTIAOBANZI_1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21599,7 +21599,7 @@ GameObject:
   - component: {fileID: 3412686816269048970}
   - component: {fileID: 6199995294035309450}
   - component: {fileID: 6199995294035309453}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_FRONT_PANEL-V1_4 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21709,7 +21709,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3692821197809077586}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: L1MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21741,7 +21741,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9023247603825572220}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: P10MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21772,7 +21772,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7282136001112206600}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 33
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21806,7 +21806,7 @@ GameObject:
   - component: {fileID: 361670164254137565}
   - component: {fileID: 7495145282372549193}
   - component: {fileID: 557271863206102497}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: JD-6_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21901,7 +21901,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6287648887853651937}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Y1MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21933,7 +21933,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4461403195891307828}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C33MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21964,7 +21964,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 961961441349892344}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M8-4L-S 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21996,7 +21996,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8702782604022832316}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-_AF6000_ASM_2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22028,7 +22028,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6852285827289998643}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 82 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22063,7 +22063,7 @@ GameObject:
   - component: {fileID: 3781075518574867229}
   - component: {fileID: 6765063966360084850}
   - component: {fileID: 557271863631741832}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 30
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22158,7 +22158,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3699511383838201946}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_TOP_JIANCEBAWAIKE_2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22190,7 +22190,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4119622793731503887}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _X2_6A6180F657AB_X0_ 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22222,7 +22222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9028871779104182953}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-_AF4000_ASM_2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22254,7 +22254,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1455893255289378994}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C19MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22285,7 +22285,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8158283114858130511}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PCB 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22317,7 +22317,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4573959743552068718}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C2MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22348,7 +22348,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7131188383519285831}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C1MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22382,7 +22382,7 @@ GameObject:
   - component: {fileID: 1177145379373670383}
   - component: {fileID: 4931020935854763473}
   - component: {fileID: 557271864390887087}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 53
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22477,7 +22477,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1662936385775348329}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C37MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22508,7 +22508,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7643203339035567821}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0001_24 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22540,7 +22540,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1096517839954578908}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22572,7 +22572,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1708123080669945516}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R26MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22604,7 +22604,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 113135660215745725}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R18MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22639,7 +22639,7 @@ GameObject:
   - component: {fileID: 9124900983663486975}
   - component: {fileID: 537490039220437600}
   - component: {fileID: 557271864371695880}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: JCB_DENGDIZUO_4 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22734,7 +22734,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7283692904202928338}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1609-0603 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22765,7 +22765,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1841530412491244512}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22796,7 +22796,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5622030527033894048}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ASM0001_ASM_3_ASM 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22828,7 +22828,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5249005075615027778}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: WS2017_C620_10001_ASM_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22863,7 +22863,7 @@ GameObject:
   - component: {fileID: 1687777614118553266}
   - component: {fileID: 5326092079335369297}
   - component: {fileID: 557271864326325741}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0018_46_1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22958,7 +22958,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7402749943648618860}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ASSEM1_NAUO10_2 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22992,7 +22992,7 @@ GameObject:
   - component: {fileID: 8567354917602870038}
   - component: {fileID: 1431244878825366058}
   - component: {fileID: 557271864596744163}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851_2 17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23087,7 +23087,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 936492607735787641}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23119,7 +23119,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7008065030119471322}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R1MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23151,7 +23151,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8324769001573317114}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_TOP_DINGBUMOKUAIDIBAN-GAI 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23183,7 +23183,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2740485742540400007}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: L2MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23215,7 +23215,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4392816430253102342}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 29
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23250,7 +23250,7 @@ GameObject:
   - component: {fileID: 7760993185672401738}
   - component: {fileID: 2444597759575934036}
   - component: {fileID: 557271864057083657}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 290'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23345,7 +23345,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5083341511223314547}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0018_46 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23377,7 +23377,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2007745610980903263}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23409,7 +23409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1158503024692240899}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23441,7 +23441,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6090551053781734394}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23472,7 +23472,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2632495272230111810}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-LED_0603_R 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23503,7 +23503,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1669679091607916257}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_BACK_SHELL 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23535,7 +23535,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9144852530984375146}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23570,7 +23570,7 @@ GameObject:
   - component: {fileID: 7975746015074281381}
   - component: {fileID: 1398226206741819015}
   - component: {fileID: 557271864862482213}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_TOP_ZHUANGJIADIBAN_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23665,7 +23665,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3322528099972812198}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R2MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23697,7 +23697,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 916531558479248829}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R19MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23729,7 +23729,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4463428572451408920}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R3MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23761,7 +23761,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4169862350848502509}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23796,7 +23796,7 @@ GameObject:
   - component: {fileID: 7296060646362888021}
   - component: {fileID: 3752507132223974825}
   - component: {fileID: 557271863705494427}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 37
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23891,7 +23891,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1914458760783350757}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: P3MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23922,7 +23922,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5344723380644718878}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_MOUDLE_SINGLE_AF0_A_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23975,7 +23975,7 @@ GameObject:
   - component: {fileID: 603919314175050857}
   - component: {fileID: 1754133071791551583}
   - component: {fileID: 557271863929898812}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24073,7 +24073,7 @@ GameObject:
   - component: {fileID: 6979104522843411713}
   - component: {fileID: 2700726248798270070}
   - component: {fileID: 557271863830826489}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 45
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24168,7 +24168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1428088717931547909}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R4MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24203,7 +24203,7 @@ GameObject:
   - component: {fileID: 6926292425708038149}
   - component: {fileID: 4751721458588303276}
   - component: {fileID: 557271863730940596}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 47
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24300,7 +24300,7 @@ GameObject:
   - component: {fileID: 7774872429259442818}
   - component: {fileID: 5435218922653388278}
   - component: {fileID: 7023020975183265957}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_BACK_SHELL_4 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24381,7 +24381,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2396038858477862935}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C12MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24412,7 +24412,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2927026687360471859}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R13MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24444,7 +24444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4723763868213078902}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C7MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24478,7 +24478,7 @@ GameObject:
   - component: {fileID: 4630347350080830330}
   - component: {fileID: 15990353495481886}
   - component: {fileID: 557271864791661938}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 39
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24576,7 +24576,7 @@ GameObject:
   - component: {fileID: 1871679252412244676}
   - component: {fileID: 4343261719305826561}
   - component: {fileID: 557271863317665161}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0019_90_2 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24671,7 +24671,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1071450897540938553}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-DB15F_ASM_2 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24703,7 +24703,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5773539914479826570}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: D11MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24735,7 +24735,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3961887704783304780}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 29
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24767,7 +24767,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1073094061457667440}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1_3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24799,7 +24799,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2672103103119246233}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _A_ASM_9-1387403 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24831,7 +24831,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1277085578058125630}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R2MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24863,7 +24863,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4186909237008692030}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _A_ASM_9-1387403_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24899,7 +24899,7 @@ GameObject:
   - component: {fileID: 289985197880375499}
   - component: {fileID: 5695637338414973491}
   - component: {fileID: 557271863642565848}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: JCB_JIESHOUBANDENGGAI_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24994,7 +24994,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7440910780167475478}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: JCB_JIESHOUBANDENGGAI_2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25029,7 +25029,7 @@ GameObject:
   - component: {fileID: 7870421148358967252}
   - component: {fileID: 8042209642971308038}
   - component: {fileID: 557271863309891927}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 54
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25124,7 +25124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5897111437723992916}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25155,7 +25155,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5515091777069271948}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QFP48P50_900X900X160L60X19N 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25186,7 +25186,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7420062382028106750}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M8-4L-S_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25220,7 +25220,7 @@ GameObject:
   - component: {fileID: 6701928068321280908}
   - component: {fileID: 1737950752031462327}
   - component: {fileID: 557271864061980868}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0022_30 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25315,7 +25315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1751300020528501239}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: blood bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25347,7 +25347,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2198339526338347016}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-DB15F_ASM_2_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25379,7 +25379,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 423006747417312273}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C40MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25413,7 +25413,7 @@ GameObject:
   - component: {fileID: 3767191608137985246}
   - component: {fileID: 6782066208449996231}
   - component: {fileID: 557271863950995626}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 54
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25508,7 +25508,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2025765558594572232}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R25MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25540,7 +25540,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3462648815174220409}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _2203150001_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25572,7 +25572,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1408413076415826681}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R22MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25604,7 +25604,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7827046980572506828}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R5MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25636,7 +25636,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6397033039467832991}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: KONGZHIHE_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25668,7 +25668,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 677428556972810646}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: D11MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25700,7 +25700,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6695666672515345989}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0020_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25735,7 +25735,7 @@ GameObject:
   - component: {fileID: 7967107831291292628}
   - component: {fileID: 3935998580542038115}
   - component: {fileID: 557271864666194067}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 33
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25833,7 +25833,7 @@ GameObject:
   - component: {fileID: 5319189157543649028}
   - component: {fileID: 483768495596305787}
   - component: {fileID: 557271863736051626}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 46
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25931,7 +25931,7 @@ GameObject:
   - component: {fileID: 1898450365995202826}
   - component: {fileID: 4616394612447819820}
   - component: {fileID: 557271864167674594}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1_3 15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25981,7 +25981,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3616630554094978118, guid: c419c706935de414da54c7c1ad5867b1, type: 3}
+  - {fileID: 2100000, guid: 38ac1cbe3dda0b548a69bdb2b6119e4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -26026,7 +26026,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4966076909485010288}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26058,7 +26058,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6745413374152542239}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: YADENGTIAOBANZI 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26090,7 +26090,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 346639693691153037}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 35
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26121,7 +26121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8451275588603743846}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C22MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26152,7 +26152,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1883035809595461480}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26187,7 +26187,7 @@ GameObject:
   - component: {fileID: 652042465839692840}
   - component: {fileID: 2501021554635776330}
   - component: {fileID: 557271864367253397}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26282,7 +26282,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5745019326989778945}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0017_49 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26317,7 +26317,7 @@ GameObject:
   - component: {fileID: 197893690053072043}
   - component: {fileID: 8784563895797130137}
   - component: {fileID: 557271864118304541}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1_3 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26367,7 +26367,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3616630554094978118, guid: c419c706935de414da54c7c1ad5867b1, type: 3}
+  - {fileID: 2100000, guid: 38ac1cbe3dda0b548a69bdb2b6119e4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -26412,7 +26412,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2778581574381164957}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26447,7 +26447,7 @@ GameObject:
   - component: {fileID: 7802784469912640062}
   - component: {fileID: 7244115303511379022}
   - component: {fileID: 557271863329923246}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 29
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26545,7 +26545,7 @@ GameObject:
   - component: {fileID: 1498629666526592879}
   - component: {fileID: 4503211464925597779}
   - component: {fileID: 557271863671029553}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26640,7 +26640,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7940960625599241424}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: YADENGTIAOBANZI 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26675,7 +26675,7 @@ GameObject:
   - component: {fileID: 955465816139924103}
   - component: {fileID: 8837956656186989344}
   - component: {fileID: 557271863094391850}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: JCB_JIESHOUBANDENGGAI_2_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26773,7 +26773,7 @@ GameObject:
   - component: {fileID: 8560959381549745220}
   - component: {fileID: 1701327325277555331}
   - component: {fileID: 557271864376598311}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 296'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26868,7 +26868,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4540679944792081553}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R25MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26900,7 +26900,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1154039059649200034}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26935,7 +26935,7 @@ GameObject:
   - component: {fileID: 5200211297144378133}
   - component: {fileID: 4088658385240843413}
   - component: {fileID: 557271862996652240}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 39
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27033,7 +27033,7 @@ GameObject:
   - component: {fileID: 8151529080761040195}
   - component: {fileID: 1971349080670997617}
   - component: {fileID: 557271864450147844}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27131,7 +27131,7 @@ GameObject:
   - component: {fileID: 6630355710857737491}
   - component: {fileID: 8818518352467312944}
   - component: {fileID: 557271862804509910}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0016_66 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27229,7 +27229,7 @@ GameObject:
   - component: {fileID: 8246003587853195572}
   - component: {fileID: 7372536113260170785}
   - component: {fileID: 557271864462594813}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 88_31 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27324,7 +27324,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2299151615756876388}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R26MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27356,7 +27356,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3506418569572548957}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _AF0000_ASM_7_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27392,7 +27392,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6609637867049204024}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: P6MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27423,7 +27423,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2038538956439934036}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R1MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27455,7 +27455,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1594862865330756434}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R17MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27490,7 +27490,7 @@ GameObject:
   - component: {fileID: 1637972183147375551}
   - component: {fileID: 3225141308605780722}
   - component: {fileID: 557271863362762322}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: YADENGTIAOBANZI_1 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27585,7 +27585,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3585291400837760057}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_MOUDLE_SINGLE 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27619,7 +27619,7 @@ GameObject:
   - component: {fileID: 7820019639325457555}
   - component: {fileID: 8033734407869558295}
   - component: {fileID: 400643570774499575}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Outpost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27633,7 +27633,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8033734407869558294}
-  m_LocalRotation: {x: -1.2681633e-17, y: 0.7071068, z: 0.7071068, w: -7.391398e-17}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: -2.8037937, y: 5.079578, z: -1.8546352}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -27641,7 +27641,7 @@ Transform:
   - {fileID: 3462648815174220409}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: -180}
 --- !u!114 &8033734407869558295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27668,6 +27668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armor_color: 1
+  expval: 0
   blood_bars:
   - {fileID: 2034641610143268920}
   - {fileID: 7447253750450236360}
@@ -27676,6 +27677,7 @@ MonoBehaviour:
   survival: 1
   currblood: 0
   buff_active: 1
+  invul: 0
 --- !u!1 &8058749236977963559
 GameObject:
   m_ObjectHideFlags: 0
@@ -27688,7 +27690,7 @@ GameObject:
   - component: {fileID: 6862746783096538393}
   - component: {fileID: 407470187803228160}
   - component: {fileID: 557271864021334797}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 293'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27783,7 +27785,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4073194823717263700}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27815,7 +27817,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4730507229992325669}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851 81
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27847,7 +27849,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 282129833303201868}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27882,7 +27884,7 @@ GameObject:
   - component: {fileID: 3657780700068438773}
   - component: {fileID: 8837804723697116692}
   - component: {fileID: 557271862888868222}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0023_21 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27977,7 +27979,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2671995260692851119}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_MID_DENGZHULVJIAN 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28009,7 +28011,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4779039913754406813}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R6MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28041,7 +28043,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1612922186897091653}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M8-4L-S_ASM_2_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28073,7 +28075,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4408536322001458573}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _AF1000_ASM_7 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28105,7 +28107,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1181778900001118423}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C5MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28136,7 +28138,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7015567744537158824}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28167,7 +28169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2379212588309996951}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 37
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28203,7 +28205,7 @@ GameObject:
   - component: {fileID: 6454596147429971551}
   - component: {fileID: 8895937955293539430}
   - component: {fileID: 557271863738292530}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: JCB_DENGCEGAI_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28301,7 +28303,7 @@ GameObject:
   - component: {fileID: 2271332268759634066}
   - component: {fileID: 6050256507623874242}
   - component: {fileID: 557271864119075279}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 45
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28399,7 +28401,7 @@ GameObject:
   - component: {fileID: 3206113319565496623}
   - component: {fileID: 243172247186783033}
   - component: {fileID: 557271862840158638}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0020_1 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28497,7 +28499,7 @@ GameObject:
   - component: {fileID: 7897786046510758838}
   - component: {fileID: 4499498353477916587}
   - component: {fileID: 557271863645345904}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 33
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28592,7 +28594,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 562648459244304538}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28623,7 +28625,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4601617776854125747}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 26_ASM_1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28657,7 +28659,7 @@ GameObject:
   - component: {fileID: 1614430805006461954}
   - component: {fileID: 2847077399711601992}
   - component: {fileID: 557271863641186272}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 298'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28752,7 +28754,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4187076485504292730}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 42
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28785,7 +28787,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2916988994690716902}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R14MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28817,7 +28819,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8164553220416484830}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: DYB_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28856,7 +28858,7 @@ GameObject:
   - component: {fileID: 3925569372856934875}
   - component: {fileID: 4470729027388592796}
   - component: {fileID: 557271863100635522}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0022_30 10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28954,7 +28956,7 @@ GameObject:
   - component: {fileID: 678238554363836532}
   - component: {fileID: 4229087407085723310}
   - component: {fileID: 557271863279747981}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0008_9 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29049,7 +29051,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8295545364197986066}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_MOUDLE_SINGLE_AF1_A_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29099,7 +29101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 657268098814754710}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C44MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29133,7 +29135,7 @@ GameObject:
   - component: {fileID: 6471266156426647291}
   - component: {fileID: 6228576648129714203}
   - component: {fileID: 557271864098319822}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 46
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29228,7 +29230,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3856478778517757363}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29260,7 +29262,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5990733209502590142}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29291,7 +29293,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 629493296025789898}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C28MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29325,7 +29327,7 @@ GameObject:
   - component: {fileID: 1773003625161915593}
   - component: {fileID: 2468541391112665946}
   - component: {fileID: 557271863643830579}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1_3 17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29375,7 +29377,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3616630554094978118, guid: c419c706935de414da54c7c1ad5867b1, type: 3}
+  - {fileID: 2100000, guid: 38ac1cbe3dda0b548a69bdb2b6119e4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -29420,7 +29422,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6580104516449379090}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-M4X10-15X150001_2 18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29455,7 +29457,7 @@ GameObject:
   - component: {fileID: 6424544546267417750}
   - component: {fileID: 5111763564818726336}
   - component: {fileID: 557271863236472827}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 37
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29553,7 +29555,7 @@ GameObject:
   - component: {fileID: 1424789595622054849}
   - component: {fileID: 8087286612216573655}
   - component: {fileID: 557271863344339003}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29648,7 +29650,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 313415625952789593}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C23MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29679,7 +29681,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 992614138719842051}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851_2 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29714,7 +29716,7 @@ GameObject:
   - component: {fileID: 7086809759881093643}
   - component: {fileID: 4520289548237508371}
   - component: {fileID: 557271863367746284}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 49
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29809,7 +29811,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 58566757842518838}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ASM0001_ASM_3_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29844,7 +29846,7 @@ GameObject:
   - component: {fileID: 3940703455028507589}
   - component: {fileID: 4119748608779715228}
   - component: {fileID: 557271864665425853}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0001_24 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29939,7 +29941,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1299073383020649777}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-DB15F 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29971,7 +29973,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 380755781619454163}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: R15MAINBORD_V3_ASM_1_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30006,7 +30008,7 @@ GameObject:
   - component: {fileID: 5089754250378771173}
   - component: {fileID: 7152082017853049610}
   - component: {fileID: 557271864216143039}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 300'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30101,7 +30103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1124502282131774771}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _X2_94F094FE_X0_ 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30135,7 +30137,7 @@ GameObject:
   - component: {fileID: 8848491600483479363}
   - component: {fileID: 547080424583751017}
   - component: {fileID: 557271864608702917}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 47
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30230,7 +30232,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 56672595927743406}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C4MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30264,7 +30266,7 @@ GameObject:
   - component: {fileID: 6739604455261902305}
   - component: {fileID: 2987458929595128618}
   - component: {fileID: 557271862795756254}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0004_13 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30362,7 +30364,7 @@ GameObject:
   - component: {fileID: 4007125203561280543}
   - component: {fileID: 1022952448793596343}
   - component: {fileID: 557271863714777793}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30460,7 +30462,7 @@ GameObject:
   - component: {fileID: 2032943308612754344}
   - component: {fileID: 1854042583789598272}
   - component: {fileID: 557271864213664398}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30555,7 +30557,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1629854672767785270}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _AF1000_ASM_7_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30591,7 +30593,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7624986948851704873}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-202111100002_ASM_95_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30651,7 +30653,7 @@ GameObject:
   - component: {fileID: 800811003654596858}
   - component: {fileID: 6944301514589078306}
   - component: {fileID: 557271863022742471}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRESSURE_SENSOR-V1_3 37
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30749,7 +30751,7 @@ GameObject:
   - component: {fileID: 2200919708925335123}
   - component: {fileID: 5453698318696956252}
   - component: {fileID: 557271864133344120}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 284'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30847,7 +30849,7 @@ GameObject:
   - component: {fileID: 6584078036273159573}
   - component: {fileID: 3550680945916301090}
   - component: {fileID: 557271864638225030}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 002_5 31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30945,7 +30947,7 @@ GameObject:
   - component: {fileID: 3795388624106871086}
   - component: {fileID: 746668613822330047}
   - component: {fileID: 557271863330670969}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ' 295'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31040,7 +31042,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6808366786197567564}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_MOUDLE_SINGLE 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31072,7 +31074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5925311087609533283}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: LIGHT_ARMOR_BACK_SHELL 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31104,7 +31106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3307010534120285843}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-LED_0603_R 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31135,7 +31137,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7749441883090281591}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31166,7 +31168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8271301589839838653}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: 350800_ASM_3_ASM 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31198,7 +31200,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6385693812220795932}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1005-0402 21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31229,7 +31231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2949113311121499380}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C9MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31260,7 +31262,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 334968657735682584}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: P9MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31294,7 +31296,7 @@ GameObject:
   - component: {fileID: 4376228061055705765}
   - component: {fileID: 5724934693024004856}
   - component: {fileID: 557271863192931892}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PRODUCT_237851_2 19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31389,7 +31391,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2174417612811588873}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4X8_SUNK_SCREWS_3 19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31421,7 +31423,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3188860986583217551}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: QSZ_MID_DENGZHULVJIAN 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31453,7 +31455,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5506794528538545783}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C11MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31484,7 +31486,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6066972528813642683}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: M4_CUSTOMIZED_RIVET-V1_3 19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31516,7 +31518,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6580447305697907408}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: USER_LIBRARY-RES_1609-0603 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31550,7 +31552,7 @@ GameObject:
   - component: {fileID: 3631834546349278651}
   - component: {fileID: 9218271329383814300}
   - component: {fileID: 557271864144173057}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ARMOR_LIGHT_GUIDE_STRIP-V1_3 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31600,7 +31602,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3616630554094978118, guid: c419c706935de414da54c7c1ad5867b1, type: 3}
+  - {fileID: 2100000, guid: 38ac1cbe3dda0b548a69bdb2b6119e4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -31645,7 +31647,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8727710036438127807}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: C26MAINBORD_V3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31676,7 +31678,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3508878601435146565}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: _-0006_8 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31706,9 +31708,97 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3667399440728547839}
     m_Modifications:
+    - target: {fileID: 3096573029232677537, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573029257777999, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573029273748081, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573029273748082, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 38ac1cbe3dda0b548a69bdb2b6119e4d, type: 2}
+    - target: {fileID: 3096573029303114762, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573029317759677, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573029317759678, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 38ac1cbe3dda0b548a69bdb2b6119e4d, type: 2}
+    - target: {fileID: 3096573029554874943, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573029610325090, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573029619741916, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573029782132474, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573029821870512, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573029875536909, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573030077760535, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573030094616262, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573030316882534, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573030407206411, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573030425999296, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573030502063705, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573030534909210, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573030534909215, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 38ac1cbe3dda0b548a69bdb2b6119e4d, type: 2}
     - target: {fileID: 3096573030562016500, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
       propertyPath: m_Name
       value: triangle armor
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573030562016500, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3096573030562016500, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
       propertyPath: m_IsActive
@@ -31757,6 +31847,34 @@ PrefabInstance:
     - target: {fileID: 3096573030562016503, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573030651954181, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573030891505303, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573030978205302, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573030979772423, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573031000250273, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573031126486162, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096573031281515746, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a35ec0cae32a9f647ad651c48ea7d137, type: 3}
