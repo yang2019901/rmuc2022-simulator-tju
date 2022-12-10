@@ -58,9 +58,13 @@ public class RoboController : BasicController {
     }
 
 
+    Transform virt_yaw;
     void Awake() {
         robo_state = GetComponent<RoboState>();
         wpn = GetComponent<Weapon>();
+        /* create virtual yaw transform (independent of chassis's transform) */
+        virt_yaw = new GameObject("virt_yaw-" + this.name).transform;
+        virt_yaw.parent = this.transform.parent;
     }
 
 
@@ -83,23 +87,11 @@ public class RoboController : BasicController {
     }
 
 
-    /* keep yaw.up coincides with _rigid.up */
-    void CalibTurret() {
-        yaw.transform.position = _rigid.transform.position;
-        Vector3 axis = Vector3.Cross(yaw.transform.up, _rigid.transform.up);
-        float ang = Vector3.Angle(yaw.transform.up, _rigid.transform.up);
-        yaw.transform.Rotate(axis, ang, Space.World);
-    }
-
-
     void Update() {
-        if (this.unowned)
-            CalibTurret();
         if (!hasAuthority) {
             return;
         }
 
-        CalibTurret();
         SetCursor();
         if (robo_state.survival) {
             Look();
@@ -241,6 +233,15 @@ public class RoboController : BasicController {
     }
 
 
+    /* keep yaw.up coincides with _rigid.up */
+    void CalibTurret() {
+        // yaw.transform.position = _rigid.transform.position;
+        Vector3 axis = Vector3.Cross(virt_yaw.transform.up, _rigid.transform.up);
+        float ang = Vector3.Angle(virt_yaw.transform.up, _rigid.transform.up);
+        virt_yaw.transform.Rotate(axis, ang, Space.World);
+    }
+
+
     /* Get look dir from user input */
     bool autoaim => playing && Input.GetMouseButton(1);
     float mouseX => playing ? 2 * Input.GetAxis("Mouse X") : 0;
@@ -252,11 +253,13 @@ public class RoboController : BasicController {
             yaw_ang += mouseX;
             pitch_ang -= mouseY;
             pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
-            /* Rotate Transform "yaw" by user input */
-            yaw.transform.Rotate(_rigid.transform.up, mouseX, Space.World);
             /* Rotate Transform "pitch" by user input */
             pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
+            CalibTurret();
+            /* Rotate Transform "virt_yaw" by user input */
+            virt_yaw.transform.Rotate(_rigid.transform.up, mouseX, Space.World);
         }
+        yaw.rotation = virt_yaw.rotation;
     }
 
 
