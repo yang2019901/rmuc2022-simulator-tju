@@ -25,7 +25,7 @@ public class InfaController : BasicController {
     const int maxcap = 500;
 
     [SerializeField] private Rigidbody _rigid;
-    private float last_fire = 0;
+    // private float last_fire = 0;
     private float pitch_ang = 0;
     private float pitch_min = -30;
     private float pitch_max = 40;
@@ -105,7 +105,7 @@ public class InfaController : BasicController {
     const float discharge_coeff = 1.8f;      // how fast capacity discharge 
     const float torque_drive = 20f;
     const float torque_spin = 20f;
-    bool discharging = false;
+    // bool discharging = false;
     float torque_avail;
     bool braking => playing && Input.GetKey(KeyCode.X);
     bool spinning => playing && Input.GetKey(KeyCode.LeftShift);

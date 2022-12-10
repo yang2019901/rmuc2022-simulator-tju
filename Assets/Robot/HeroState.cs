@@ -57,13 +57,17 @@ public class HeroState : RoboState {
     /// <summary>
     /// non-API
     /// </summary>
+    public override void Awake() {
+        base.Awake();
+        wpn = GetComponent<Weapon>();
+    }
+
+
     public override void Start() {
         base.Start();
 
-        wpn = GetComponent<Weapon>();
-        wpn.ResetHeat();
-
         rbn_req = 10;   // when first died, rbn_req will be 20, exactly what's needed for first reborn
+        wpn.ResetHeat();
     }
 
 

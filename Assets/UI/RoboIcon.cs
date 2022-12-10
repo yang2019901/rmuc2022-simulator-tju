@@ -7,7 +7,7 @@ using TMPro;
 
 namespace RMUC_UI {
     public class RoboIcon : MonoBehaviour {
-        Rigidbody robo_conn;
+        RoboState robo_conn;
         public GameObject arrow;
         public TMP_Text txt_idx;
         public Image img_bg;
@@ -18,13 +18,13 @@ namespace RMUC_UI {
         Image img_arrow;
 
 
-        public void Reset(Rigidbody robo_conn) {
+        public void Reset(RoboState robo_conn) {
             if (robo_conn == null) {
                 Destroy(this.gameObject);
                 return;
             }
             this.robo_conn = robo_conn;
-            SetColor(robo_conn.GetComponent<RoboState>().armor_color);
+            SetColor(robo_conn.armor_color);
             string[] kw = robo_conn.name.Split('_');  // keywords contained in robot's name. Ex. infantry_red_4
             if (kw.Length != 3 || kw[0].ToLower().Contains("drone")) {
                 Destroy(this.gameObject);
@@ -56,7 +56,7 @@ namespace RMUC_UI {
 
 
         void SetArrow() {
-            Vector2 vel = new Vector2(robo_conn.velocity.x, robo_conn.velocity.z);
+            Vector2 vel = new Vector2(robo_conn.rigid.velocity.x, robo_conn.rigid.velocity.z);
             if (vel.magnitude < 0.1f) {
                 arrow.SetActive(false);
                 return;
@@ -70,8 +70,8 @@ namespace RMUC_UI {
         void SetIconPos() {
             // pos_map = (pos_real - origin_real) * map_scale + origin_map
             // here, origin_real and origin_map are both zero
-            float pos_x = robo_conn.position.x / BattleField.length * Minimap.length;
-            float pos_y = robo_conn.position.z / BattleField.width * Minimap.width;
+            float pos_x = robo_conn.rigid.transform.position.x / BattleField.length * Minimap.length;
+            float pos_y = robo_conn.rigid.transform.position.z / BattleField.width * Minimap.width;
             this.transform.localPosition = new Vector3(-pos_x, -pos_y, 0);
         }
     }

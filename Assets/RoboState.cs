@@ -7,6 +7,7 @@ using RMUC_UI;
 
 public class RoboState : BasicState {
     public bool survival = true;  // whether this robot survives
+    public Rigidbody rigid;
 
     /** calculated by algorithm automatically
      *  they are initialized by RoboState.Configure() and updated by UpdateBuff() or BuffManager.cs
@@ -122,10 +123,14 @@ public class RoboState : BasicState {
     /// <summary>
     /// non-API
     /// </summary>
+    public virtual void Awake() {
+        this.acs = GetComponentsInChildren<ArmorController>();
+        this.rigid = GetComponentInChildren<Rigidbody>();
+    }
+
+
     /* li_b_xx will be allocated here. hence, make sure base.Start() is called at very beginning */ 
     public virtual void Start() {
-        this.acs = GetComponentsInChildren<ArmorController>();
-
         li_B_atk = new List<float> { 0 };
         li_B_dfc = new List<float> { 0 };
         li_B_cd  = new List<float> { 1 };

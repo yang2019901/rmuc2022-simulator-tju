@@ -116,7 +116,7 @@ namespace RMUC_UI {
                 GameObject tmp = GameObject.Instantiate(this.robo_icon);
                 tmp.transform.SetParent(this.transform);
                 tmp.transform.localScale = 0.6f * Vector3.one;
-                tmp.GetComponent<RoboIcon>().Reset(rs.GetComponent<Rigidbody>());
+                tmp.GetComponent<RoboIcon>().Reset(rs);
             }
         }
 

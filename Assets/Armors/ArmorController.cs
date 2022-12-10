@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ArmorController : MonoBehaviour {
+    public static List<ArmorController> vis_armors_red = new List<ArmorController>();
+    public static List<ArmorController> vis_armors_blue = new List<ArmorController>();
     public bool enable = true;
     public GameObject[] light_bars;
 
@@ -68,5 +70,27 @@ public class ArmorController : MonoBehaviour {
     public void Disable() {
         this.enable = false;
         this.SetLight(false);
+    }
+
+    void OnBecameVisible() {
+        if (!this.enable)
+            return ;
+        if (armor_color == ArmorColor.Red)
+            vis_armors_red.Add(this);
+        else
+            vis_armors_blue.Add(this);
+        // Debug.Log("add armor: " + this);
+        // Debug.Log("vis_armors_red.length: " + vis_armors_red.Count + "\nvis_armors_blue.length: " + vis_armors_blue.Count);
+    }
+
+    void OnBecameInvisible() {
+        if (!this.enable)
+            return ;
+        if (armor_color == ArmorColor.Red)
+            vis_armors_red.Remove(this);
+        else
+            vis_armors_blue.Remove(this);
+        // Debug.Log("Remove armor: " + this);
+        // Debug.Log("vis_armors_red.length: " + vis_armors_red.Count + "\nvis_armors_blue.length: " + vis_armors_blue.Count);
     }
 }

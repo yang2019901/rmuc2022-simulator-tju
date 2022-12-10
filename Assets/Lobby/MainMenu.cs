@@ -60,14 +60,19 @@ namespace LobbyUI {
         }
 
 
+        public void ResetAddr() {
+            if (input_addr.text == "")
+                input_addr.text = "localhost";
+        }
+
+
         public void JoinLobby() {
             net_man.networkAddress = input_addr.text;
             Debug.Log("connecting to " + net_man.networkAddress);
-            net_man.StartClient();
             input_addr.interactable = false;
             btn_join.interactable = false;
-            btn_join.GetComponentInChildren<TMP_Text>().text = "Connecting";
-            // TODO: add animator
+            btn_join.GetComponentInChildren<TMP_Text>().text = "Connecting...";
+            net_man.StartClient();
         }
 
 
@@ -129,6 +134,7 @@ namespace LobbyUI {
             Menu_player_join.SetActive(true);
             btn_join.interactable = true;
             input_addr.interactable = true;
+            btn_join.GetComponentInChildren<TMP_Text>().text = "<Join>";
         }
         public void SetPlayerLobby() {
             DisableAllMenus();

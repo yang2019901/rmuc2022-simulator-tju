@@ -24,7 +24,7 @@ public class EngineerController : BasicController {
     [Header("Revive Card")]
     public Transform rev_card;
 
-    private Rigidbody _rigid;
+    private Rigidbody _rigid => robo_state.rigid;
     private RoboState robo_state;
 
     private CatchMine cm;
@@ -66,13 +66,16 @@ public class EngineerController : BasicController {
     }
 
 
-    void Start() {
-        /* even if no authority, external reference should be inited */
-        _rigid = GetComponent<Rigidbody>();
-        _rigid.centerOfMass = centerOfMass;
-        Cursor.lockState = CursorLockMode.Locked;
+    void Awake() {
         robo_state = GetComponent<RoboState>();
         cm = GetComponentInChildren<CatchMine>();
+    }
+
+
+    void Start() {
+        /* even if no authority, external reference should be inited */
+        _rigid.centerOfMass = centerOfMass;
+        Cursor.lockState = CursorLockMode.Locked;
         yaw_ang = _rigid.transform.localEulerAngles.y;
 
         if (hasAuthority) {

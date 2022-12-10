@@ -22,7 +22,7 @@ public class InfantryState : RoboState {
     Weapon wpn;
 
 
-    
+
     /// <summary>
     /// API
     /// </summary>
@@ -56,9 +56,14 @@ public class InfantryState : RoboState {
     /// <summary>
     /// non-API
     /// </summary>
+    public override void Awake() {
+        base.Awake();
+        wpn = GetComponent<Weapon>();
+    }
+
+
     public override void Start() {
         base.Start();
-        wpn = GetComponent<Weapon>();
         wpn.ResetHeat();
     }
 
@@ -102,7 +107,7 @@ public class InfantryState : RoboState {
     /// </summary>
     public override void Configure() {
         /* configure chassis params */
-        level_s = string.Format("level{0}", this.level+1);
+        level_s = string.Format("level{0}", this.level + 1);
         var tmp = AssetManager.singleton.infa_chs[this.chassis_pref];
         if (this.chassis_pref != "init_mode")
             tmp = tmp[this.level_s];
@@ -122,7 +127,7 @@ public class InfantryState : RoboState {
 
         var jobj = AssetManager.singleton.exp["infantry"][level_s];
         this.expval = jobj["have"].ToObject<int>();
-        this.maxexp = level<2 ? jobj["need"].ToObject<int>() : int.MaxValue;
+        this.maxexp = level < 2 ? jobj["need"].ToObject<int>() : int.MaxValue;
     }
 
 }

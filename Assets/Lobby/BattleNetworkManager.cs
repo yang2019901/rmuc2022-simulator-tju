@@ -85,6 +85,7 @@ public class BattleNetworkManager : NetworkManager {
 
     public override void OnClientConnect() {
         base.OnClientConnect();
+        mainmenu.SetPlayerLobby();
         net_lob.playerSyncs.Callback += net_lob.OnPlayerSyncChanged;
         NetworkClient.RegisterHandler<NetLobby.ClientIdMessage>(net_lob.OnReceiveConnId);
         // Debug.Log("register handler in net_man");

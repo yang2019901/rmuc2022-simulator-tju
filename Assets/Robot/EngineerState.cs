@@ -47,16 +47,21 @@ public class EngineerState : RoboState {
     /// <summary>
     /// non-API
     /// </summary>
+    public override void Awake() {
+        base.Awake();
+        ec = GetComponent<EngineerController>();
+    }
+
+
     public override void Start() {
         base.Start();
-
-        rev_card_s = BuffType.rev + BuffManager.sep + (armor_color == ArmorColor.Red ? "red" : "blue") + " card";
-        ec = GetComponent<EngineerController>();
-        ec.rev_card.name = rev_card_s;
 
         li_B_rbn.Add(1);
         UpdateBuff();
 
+        rev_card_s = BuffType.rev + BuffManager.sep + (armor_color == ArmorColor.Red ? "red" : "blue") + " card";
+        ec.rev_card.name = rev_card_s;
+        
         rbn_req = 10;
     }
 

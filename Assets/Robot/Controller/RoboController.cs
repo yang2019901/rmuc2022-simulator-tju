@@ -20,11 +20,10 @@ public class RoboController : BasicController {
     public Transform bullet_start;
     [Header("View")]
     public Transform robo_cam;
-    
-    [HideInInspector]public float currcap = 0;
+
+    [HideInInspector] public float currcap = 0;
     const int maxcap = 500;
 
-    [SerializeField] private Rigidbody _rigid;
     private float last_fire = 0;
     private float pitch_ang = 0;
     private float pitch_min = -30;
@@ -34,6 +33,7 @@ public class RoboController : BasicController {
     private RoboState robo_state;
 
     private bool playing => Cursor.lockState == CursorLockMode.Locked;
+    private Rigidbody _rigid => robo_state.rigid;
 
     /// <summary>
     /// non-API
@@ -58,32 +58,54 @@ public class RoboController : BasicController {
     }
 
 
-    void Start() {
-        /* even if no authority, external reference should be inited */
-        _rigid = GetComponentInChildren<Rigidbody>();
-        _rigid.centerOfMass = centerOfMass;
-        Cursor.lockState = CursorLockMode.Locked;
+    void Awake() {
         robo_state = GetComponent<RoboState>();
         wpn = GetComponent<Weapon>();
+    }
+
+
+    bool unowned => NetworkServer.active && this.netIdentity.connectionToClient == null; 
+    void Start() {
+        /* even if no authority, external reference should be inited */
+        _rigid.centerOfMass = centerOfMass;
+        Cursor.lockState = CursorLockMode.Locked;
         yaw_ang = yaw.localEulerAngles.y;
 
         if (hasAuthority) {
             BattleField.singleton.robo_local = this.robo_state;
         }
+        if (unowned) {
+            Debug.Log("disable client auth of unowned robot");
+            foreach (var tmp in GetComponents<NetworkTransformChild>()) {
+                tmp.clientAuthority = false;
+            }
+        }
+    }
+
+
+    /* keep yaw.up coincides with _rigid.up */
+    void CalibTurret() {
+        yaw.transform.position = _rigid.transform.position;
+        Vector3 axis = Vector3.Cross(yaw.transform.up, _rigid.transform.up);
+        float ang = Vector3.Angle(yaw.transform.up, _rigid.transform.up);
+        yaw.transform.Rotate(axis, ang, Space.World);
     }
 
 
     void Update() {
-        if (!hasAuthority)
+        if (this.unowned)
+            CalibTurret();
+        if (!hasAuthority) {
             return;
+        }
 
+        CalibTurret();
         SetCursor();
         if (robo_state.survival) {
             Look();
             Move();
             Shoot();
-        }
-        else
+        } else
             StopMove();
         Supply();
         UpdateSelfUI();
@@ -95,6 +117,7 @@ public class RoboController : BasicController {
         bat_ui.rat_heat = wpn.heat_ratio;
         bat_ui.rat_cap = Mathf.Clamp01(currcap / maxcap);
 
+        /* update buff display in UI */
         bat_ui.indic_buf[0] = Mathf.Approximately(robo_state.B_atk, 0f) ? -1            // atk
             : Mathf.Approximately(robo_state.B_atk, 0.5f) ? 0 : 1;
         bat_ui.indic_buf[1] = Mathf.Approximately(robo_state.B_cd, 1f) ? -1             // cldn
@@ -147,7 +170,7 @@ public class RoboController : BasicController {
 
         /* store energy in capacity */
         if (discharging && currcap > 1) {
-            currcap -= (discharge_coeff - 1) * robo_state.power * Time.deltaTime ;
+            currcap -= (discharge_coeff - 1) * robo_state.power * Time.deltaTime;
             torque_avail *= discharge_coeff;
         } else {
             currcap += charge_coeff * torque_avail * Time.deltaTime;
@@ -214,22 +237,36 @@ public class RoboController : BasicController {
         } else
             for (int i = 0; i < wheel_num; i++)
                 wheelColliders[i].motorTorque *= torque_avail / torque_now;
+
     }
 
 
     /* Get look dir from user input */
+    bool autoaim => playing && Input.GetMouseButton(1);
     float mouseX => playing ? 2 * Input.GetAxis("Mouse X") : 0;
     float mouseY => playing ? 2 * Input.GetAxis("Mouse Y") : 0;
     void Look() {
-        pitch_ang -= mouseY;
-        yaw_ang += mouseX;
-        pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
-        /* Rotate Transform "pitch" by user input */
-        pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
-        /* Rotate Transform "yaw" by user input */
-        yaw.eulerAngles = new Vector3(0, yaw_ang, 0);
-        yaw.localEulerAngles = new Vector3(0, yaw.localEulerAngles.y, 0);
+        if (autoaim) {
+            // AutoAim(out yaw_ang, out pitch_ang);
+        } else {
+            yaw_ang += mouseX;
+            pitch_ang -= mouseY;
+            pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
+            /* Rotate Transform "yaw" by user input */
+            yaw.transform.Rotate(_rigid.transform.up, mouseX, Space.World);
+            /* Rotate Transform "pitch" by user input */
+            pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
+        }
     }
+
+
+    // List<ArmorController> enemy_armors => robo_state.armor_color == ArmorColor.Red ? ArmorController.vis_armors_blue : ArmorController.vis_armors_red;
+    // void AutoAim(out float yaw_ang, out float pitch_ang) {
+    //     foreach (ArmorController ac in enemy_armors) {
+    //         Vector3 d = ac.transform.position - this.transform.position;
+
+    //     }
+    // }
 
 
     // get ammunition supply at reborn spot
@@ -257,8 +294,7 @@ public class RoboController : BasicController {
                     BattleField.singleton.money_red -= money_req;
                     Debug.Log("call supply");
                 }
-            }
-            else if (money_req <= BattleField.singleton.money_blue) {
+            } else if (money_req <= BattleField.singleton.money_blue) {
                 weap.bullnum += num;
                 BattleField.singleton.money_blue -= money_req;
                 Debug.Log("call supply");
