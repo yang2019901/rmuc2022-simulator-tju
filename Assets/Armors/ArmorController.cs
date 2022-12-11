@@ -5,18 +5,22 @@ using UnityEngine;
 public class ArmorController : MonoBehaviour {
     public static List<ArmorController> vis_armors_red = new List<ArmorController>();
     public static List<ArmorController> vis_armors_blue = new List<ArmorController>();
-    public bool enable = true;
+    public bool en = true;          // whether this armor is enabled (to be target of auto-aim, to take hit)
     public GameObject[] light_bars;
+    [Header("inward normal vector(local)")]
+    public Vector3 norm_in;
 
     /* cache */
     private Material _light;
     private ArmorColor armor_color;
     private BasicState bs;
 
-    void Start() {
+    void Awake() {
         bs = GetComponentInParent<BasicState>();
-        armor_color = bs.armor_color;
+    }
 
+    void Start() {
+        armor_color = bs.armor_color;
         /* get material by color */
         if (armor_color == ArmorColor.Blue)
             _light = AssetManager.singleton.light_blue;
@@ -25,23 +29,28 @@ public class ArmorController : MonoBehaviour {
     }
 
 
+    void Update() {
+#if UNITY_EDITOR
+        Debug.DrawRay(transform.position, transform.TransformVector(norm_in));
+#endif
+    }
+
+
     /** Since I'd not like add rigidbody to armors, OnCollisionEnter shouldn't be defined in 
         this class */
     public void TakeHit(Collision collision, GameObject bullet) {
-        if (!enable)
+        if (!en)
             return;
-        /* Decide whether this is a successful hit */
-        Vector3 v_rel_local = this.transform.InverseTransformVector(collision.relativeVelocity);
+        /* to judge whether this is a successful hit */
+        float vel_vert = Vector3.Dot(-collision.relativeVelocity, transform.TransformVector(norm_in.normalized));
         /* only bullet coms from outside can be detect, aka, velocity_vertical > 0 */
         /* also, velocity_vertical shouldn't be too small. Otherwise, it's a bad hit */
         if (this.gameObject.name.ToLower().Contains("triangle")) {
-            float velocity_vertical = v_rel_local.y;
-            if (bullet.name.Contains("17mm") || (bullet.name.Contains("42mm") && velocity_vertical < 6))
+            if (bullet.name.Contains("17mm") || (bullet.name.Contains("42mm") && vel_vert < 6))
                 return;
         } else {
-            float velocity_vertical = -v_rel_local.x;
-            if ((bullet.name.Contains("17mm") && velocity_vertical < 12)
-                || (bullet.name.Contains("42mm") && velocity_vertical < 8))
+            if ((bullet.name.Contains("17mm") && vel_vert < 12)
+                || (bullet.name.Contains("42mm") && vel_vert < 8))
                 return;
         }
 
@@ -63,18 +72,18 @@ public class ArmorController : MonoBehaviour {
     }
 
     public void Enable() {
-        this.enable = true;
+        this.en = true;
         this.SetLight(true);
     }
 
     public void Disable() {
-        this.enable = false;
+        this.en = false;
         this.SetLight(false);
     }
 
     void OnBecameVisible() {
-        if (!this.enable)
-            return ;
+        if (!this.en)
+            return;
         if (armor_color == ArmorColor.Red)
             vis_armors_red.Add(this);
         else
@@ -84,8 +93,8 @@ public class ArmorController : MonoBehaviour {
     }
 
     void OnBecameInvisible() {
-        if (!this.enable)
-            return ;
+        if (!this.en)
+            return;
         if (armor_color == ArmorColor.Red)
             vis_armors_red.Remove(this);
         else

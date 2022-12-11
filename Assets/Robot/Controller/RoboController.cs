@@ -19,7 +19,7 @@ public class RoboController : BasicController {
     [Header("Weapon")]
     public Transform bullet_start;
     [Header("View")]
-    public Transform robo_cam;
+    public Transform view;
 
     [HideInInspector] public float currcap = 0;
     const int maxcap = 500;
@@ -28,7 +28,6 @@ public class RoboController : BasicController {
     private float pitch_ang = 0;
     private float pitch_min = -30;
     private float pitch_max = 40;
-    private float yaw_ang = 0;
     private Weapon wpn;
     private RoboState robo_state;
 
@@ -42,7 +41,7 @@ public class RoboController : BasicController {
         base.OnStartClient();
         if (hasAuthority) {
             Transform tmp = Camera.main.transform;
-            tmp.parent = robo_cam;
+            tmp.parent = view;
             tmp.localEulerAngles = Vector3.zero;
             tmp.localPosition = Vector3.zero;
         }
@@ -64,16 +63,16 @@ public class RoboController : BasicController {
         wpn = GetComponent<Weapon>();
         /* create virtual yaw transform (independent of chassis's transform) */
         virt_yaw = new GameObject("virt_yaw-" + this.name).transform;
+        virt_yaw.transform.SetPositionAndRotation(this.transform.position, this.transform.rotation);
         virt_yaw.parent = this.transform.parent;
     }
 
 
-    bool unowned => NetworkServer.active && this.netIdentity.connectionToClient == null; 
+    bool unowned => NetworkServer.active && this.netIdentity.connectionToClient == null;
     void Start() {
         /* even if no authority, external reference should be inited */
         _rigid.centerOfMass = centerOfMass;
         Cursor.lockState = CursorLockMode.Locked;
-        yaw_ang = yaw.localEulerAngles.y;
 
         if (hasAuthority) {
             BattleField.singleton.robo_local = this.robo_state;
@@ -247,15 +246,14 @@ public class RoboController : BasicController {
     float mouseX => playing ? 2 * Input.GetAxis("Mouse X") : 0;
     float mouseY => playing ? 2 * Input.GetAxis("Mouse Y") : 0;
     void Look() {
+        CalibTurret();
         if (autoaim) {
-            // AutoAim(out yaw_ang, out pitch_ang);
+            AutoAim();
         } else {
-            yaw_ang += mouseX;
             pitch_ang -= mouseY;
             pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
             /* Rotate Transform "pitch" by user input */
             pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
-            CalibTurret();
             /* Rotate Transform "virt_yaw" by user input */
             virt_yaw.transform.Rotate(_rigid.transform.up, mouseX, Space.World);
         }
@@ -263,13 +261,54 @@ public class RoboController : BasicController {
     }
 
 
-    // List<ArmorController> enemy_armors => robo_state.armor_color == ArmorColor.Red ? ArmorController.vis_armors_blue : ArmorController.vis_armors_red;
-    // void AutoAim(out float yaw_ang, out float pitch_ang) {
-    //     foreach (ArmorController ac in enemy_armors) {
-    //         Vector3 d = ac.transform.position - this.transform.position;
+    static float SignedAngleOnPlane(Vector3 from, Vector3 to, Vector3 norm) {
+        Vector3 tmp1 = Vector3.ProjectOnPlane(from, norm);
+        Vector3 tmp2 = Vector3.ProjectOnPlane(to, norm);
+        return Vector3.SignedAngle(tmp1, tmp2, norm);
+    }
 
-    //     }
-    // }
+
+    List<ArmorController> enemy_armors => robo_state.armor_color == ArmorColor.Red ?
+        ArmorController.vis_armors_blue : ArmorController.vis_armors_red;
+    Camera robo_cam => Camera.main;
+    Vector3 start => bullet_start.transform.position;
+    void AutoAim() {
+        Vector3 target = new Vector3();
+        float minang = 30;
+        foreach (ArmorController ac in enemy_armors) {
+            if (!ac.en) return;
+            if (Vector3.Dot(ac.transform.position - start, ac.norm_in) <= 0)
+                return ;
+            float ang = Vector3.Angle(ac.transform.position - start, bullet_start.transform.forward);
+            if (ang < minang) {
+                RaycastHit hitinfo;
+                Ray ray = new Ray(start, ac.transform.position - start);
+                // max distance of autoaim: 10 meter
+                if (Physics.Raycast(ray, out hitinfo, 10)
+                    && hitinfo.transform.GetComponent<ArmorController>() != null) {
+                    minang = ang;
+                    target = ac.transform.position;
+                    Debug.Log("hit: " + hitinfo.transform.name);
+                }
+            }
+        }
+        if (minang >= 30) {
+            Debug.Log("no target found in cone of 30 deg");
+            return;
+        }
+        Debug.DrawLine(start, target, Color.yellow);
+        AimAt(target);
+
+    }
+
+    void AimAt(Vector3 target) {
+        Vector3 d = target - pitch.transform.position;
+        float d_yaw = 0.4f * RoboController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
+        float d_pitch = 0.4f * RoboController.SignedAngleOnPlane(bullet_start.forward, d, pitch.transform.right);
+        virt_yaw.transform.Rotate(virt_yaw.transform.up, d_yaw, Space.World);
+        pitch.transform.Rotate(pitch.transform.right, d_pitch, Space.World);
+        pitch_ang += d_pitch;       // update pitch_ang so that when turret won't look around switch off auto-aim
+    }
 
 
     // get ammunition supply at reborn spot

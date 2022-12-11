@@ -180,10 +180,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a8a62c1a30d9ab48bf2597457a99a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enable: 1
+  en: 1
   light_bars:
   - {fileID: 6765366192606305093}
   - {fileID: 8060851942470686315}
+  norm_in: {x: 0.5, y: -0.866025, z: 0}
 --- !u!64 &4677925647268887279
 MeshCollider:
   m_ObjectHideFlags: 0
