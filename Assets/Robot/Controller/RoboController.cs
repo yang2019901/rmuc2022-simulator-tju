@@ -23,6 +23,7 @@ public class RoboController : BasicController {
 
     [HideInInspector] public float currcap = 0;
     const int maxcap = 500;
+    const float maxAutoAim = 15f;
 
     private float last_fire = 0;
     private float pitch_ang = 0;
@@ -76,6 +77,7 @@ public class RoboController : BasicController {
 
         if (hasAuthority) {
             BattleField.singleton.robo_local = this.robo_state;
+            yaw.parent = this.transform.parent;
         }
         if (unowned) {
             Debug.Log("disable client auth of unowned robot");
@@ -86,7 +88,8 @@ public class RoboController : BasicController {
     }
 
 
-    void Update() {
+
+    void LateUpdate() {
         if (!hasAuthority) {
             return;
         }
@@ -173,7 +176,8 @@ public class RoboController : BasicController {
         if (braking) {
             for (int i = 0; i < wheel_num; i++) {
                 wheelColliders[i].steerAngle = (45 + 90 * i) % 360 * Mathf.Deg2Rad;
-                wheelColliders[i].brakeTorque = 5;
+                wheelColliders[i].motorTorque = 0;
+                wheelColliders[i].brakeTorque = 10;
             }
             Debug.Log("braking");
             currcap += torque_avail * Time.deltaTime;
@@ -256,8 +260,11 @@ public class RoboController : BasicController {
             pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
             /* Rotate Transform "virt_yaw" by user input */
             virt_yaw.transform.Rotate(_rigid.transform.up, mouseX, Space.World);
+
+            last_target = null;
         }
         yaw.rotation = virt_yaw.rotation;
+        yaw.position = _rigid.position;
     }
 
 
@@ -272,39 +279,76 @@ public class RoboController : BasicController {
         ArmorController.vis_armors_blue : ArmorController.vis_armors_red;
     Camera robo_cam => Camera.main;
     Vector3 start => bullet_start.transform.position;
+    ArmorController target, last_target;
     void AutoAim() {
-        Vector3 target = new Vector3();
         float minang = 30;
         foreach (ArmorController ac in enemy_armors) {
-            if (!ac.en) return;
-            if (Vector3.Dot(ac.transform.position - start, ac.norm_in) <= 0)
-                return ;
+            // judge whether armor's enabled
+            if (!ac.en)
+                continue;
+            // judge whether armor's facing turret
+            Vector3 v1 = ac.transform.position - start;
+            Vector3 v2 = ac.transform.TransformVector(ac.norm_in);
+            if (Vector3.Angle(v1, v2) >= 60)
+                continue;
+
             float ang = Vector3.Angle(ac.transform.position - start, bullet_start.transform.forward);
-            if (ang < minang) {
+            if (ang < minang || ac == last_target) {
                 RaycastHit hitinfo;
                 Ray ray = new Ray(start, ac.transform.position - start);
+                // judge armor under cover
                 // max distance of autoaim: 10 meter
-                if (Physics.Raycast(ray, out hitinfo, 10)
-                    && hitinfo.transform.GetComponent<ArmorController>() != null) {
+                if (!Physics.Raycast(ray, out hitinfo, maxAutoAim, ~LayerMask.GetMask("Ignore Raycast")))
+                    continue;
+                if (hitinfo.collider.gameObject == ac.gameObject) {
                     minang = ang;
-                    target = ac.transform.position;
-                    Debug.Log("hit: " + hitinfo.transform.name);
+                    target = ac;
+                    if (ac == last_target)  // preferably aiming at last target
+                        break;
                 }
+                // Debug.DrawLine(ac.transform.position, start, Color.blue);
             }
         }
         if (minang >= 30) {
-            Debug.Log("no target found in cone of 30 deg");
             return;
         }
-        Debug.DrawLine(start, target, Color.yellow);
-        AimAt(target);
-
+        Vector3 pos = target.transform.position;
+        last_target = target;
+        Debug.Log("last_target id: " + last_target.GetInstanceID());
+        // Debug.DrawLine(start, target, Color.yellow);
+        if (CalcFall(ref pos))
+            AimAt(pos);
+        else
+            Debug.Log("too far to reach");
     }
+
+
+    float spd => robo_state.bullspd;
+    const float g = 9.8f;
+    bool CalcFall(ref Vector3 target) {
+        Vector3 r = target - start; 
+        float y = Vector3.Dot(r, Vector3.up);
+        float d = r.magnitude;
+        float A = g*g / 4;
+        float B = g*y - spd*spd;
+        float C = d*d;
+        float delta = B*B - 4*A*C;
+        if (delta < 0)
+            return false;
+        float t = Mathf.Sqrt((- B - Mathf.Sqrt(delta))/ (2*A));
+        float theta = Mathf.Asin((y + g*t*t/2) / (spd*t));
+        float y_new = Mathf.Sqrt(d*d - y*y) * Mathf.Tan(theta);
+        // Debug.DrawLine(start, target, Color.yellow);
+        target[1] += y_new - y;
+        // Debug.DrawLine(start, target, Color.green);
+        return true;
+    }
+
 
     void AimAt(Vector3 target) {
         Vector3 d = target - pitch.transform.position;
-        float d_yaw = 0.4f * RoboController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
-        float d_pitch = 0.4f * RoboController.SignedAngleOnPlane(bullet_start.forward, d, pitch.transform.right);
+        float d_yaw = RoboController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
+        float d_pitch = RoboController.SignedAngleOnPlane(bullet_start.forward, d, pitch.transform.right);
         virt_yaw.transform.Rotate(virt_yaw.transform.up, d_yaw, Space.World);
         pitch.transform.Rotate(pitch.transform.right, d_pitch, Space.World);
         pitch_ang += d_pitch;       // update pitch_ang so that when turret won't look around switch off auto-aim
