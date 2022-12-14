@@ -23,7 +23,10 @@ public class RoboController : BasicController {
 
     [HideInInspector] public float currcap = 0;
     const int maxcap = 500;
-    const float maxAutoAim = 15f;
+
+    [Header("AutoAim params")]
+    public float maxDist = 15f;        // max distance of auto aim
+    public float dynCoeff = 0.4f;    // a 0~1 number describes how fast turret chases the target; 0: no chasing    1: perfectly chasing
 
     private float last_fire = 0;
     private float pitch_ang = 0;
@@ -77,10 +80,9 @@ public class RoboController : BasicController {
 
         if (hasAuthority) {
             BattleField.singleton.robo_local = this.robo_state;
-            yaw.parent = this.transform.parent;
         }
         if (unowned) {
-            Debug.Log("disable client auth of unowned robot");
+            // Debug.Log("disable client auth of unowned robot");
             foreach (var tmp in GetComponents<NetworkTransformChild>()) {
                 tmp.clientAuthority = false;
             }
@@ -89,7 +91,7 @@ public class RoboController : BasicController {
 
 
 
-    void LateUpdate() {
+    void Update() {
         if (!hasAuthority) {
             return;
         }
@@ -186,7 +188,7 @@ public class RoboController : BasicController {
             foreach (var wc in wheelColliders)
                 wc.brakeTorque = 0;
 
-        float chas2yaw = Vector3.SignedAngle(_rigid.transform.forward, yaw.forward, _rigid.transform.up);
+        float chas2yaw = Vector3.SignedAngle(_rigid.transform.forward, virt_yaw.forward, _rigid.transform.up);
 
         // move the car and steer wheels
         float steer_ang = Mathf.Rad2Deg * Mathf.Atan2(h, v);
@@ -237,7 +239,7 @@ public class RoboController : BasicController {
 
 
     /* keep yaw.up coincides with _rigid.up */
-    void CalibTurret() {
+    void CalibVirtYaw() {
         // yaw.transform.position = _rigid.transform.position;
         Vector3 axis = Vector3.Cross(virt_yaw.transform.up, _rigid.transform.up);
         float ang = Vector3.Angle(virt_yaw.transform.up, _rigid.transform.up);
@@ -250,7 +252,10 @@ public class RoboController : BasicController {
     float mouseX => playing ? 2 * Input.GetAxis("Mouse X") : 0;
     float mouseY => playing ? 2 * Input.GetAxis("Mouse Y") : 0;
     void Look() {
-        CalibTurret();
+        CalibVirtYaw();
+        /* correct yaw's transform, i.e., elimate attitude error caused by following movement */
+        yaw.rotation = virt_yaw.rotation;
+        yaw.position = _rigid.position;
         if (autoaim) {
             AutoAim();
         } else {
@@ -263,6 +268,7 @@ public class RoboController : BasicController {
 
             last_target = null;
         }
+        /* update yaw's transform, i.e., transform yaw to aim at target (store in virt yaw) */
         yaw.rotation = virt_yaw.rotation;
         yaw.position = _rigid.position;
     }
@@ -298,7 +304,7 @@ public class RoboController : BasicController {
                 Ray ray = new Ray(start, ac.transform.position - start);
                 // judge armor under cover
                 // max distance of autoaim: 10 meter
-                if (!Physics.Raycast(ray, out hitinfo, maxAutoAim, ~LayerMask.GetMask("Ignore Raycast")))
+                if (!Physics.Raycast(ray, out hitinfo, maxDist, ~LayerMask.GetMask("Ignore Raycast")))
                     continue;
                 if (hitinfo.collider.gameObject == ac.gameObject) {
                     minang = ang;
@@ -347,8 +353,8 @@ public class RoboController : BasicController {
 
     void AimAt(Vector3 target) {
         Vector3 d = target - pitch.transform.position;
-        float d_yaw = RoboController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
-        float d_pitch = RoboController.SignedAngleOnPlane(bullet_start.forward, d, pitch.transform.right);
+        float d_yaw = dynCoeff * RoboController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
+        float d_pitch = dynCoeff * RoboController.SignedAngleOnPlane(bullet_start.forward, d, pitch.transform.right);
         virt_yaw.transform.Rotate(virt_yaw.transform.up, d_yaw, Space.World);
         pitch.transform.Rotate(pitch.transform.right, d_pitch, Space.World);
         pitch_ang += d_pitch;       // update pitch_ang so that when turret won't look around switch off auto-aim

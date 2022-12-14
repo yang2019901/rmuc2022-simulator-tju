@@ -25,7 +25,7 @@ public class CatchMine : MonoBehaviour {
 
     bool holding => ec.holding;
     void OnTriggerStay(Collider other) {
-        if (!this.holding || !other.name.Contains(mine_s) || other.name.Contains(held_s))
+        if (!this.holding || !other.name.Contains(mine_s) || other.name.Contains(held_s) || other.transform.parent != null)
             return;
         Hold(other.gameObject);
     }

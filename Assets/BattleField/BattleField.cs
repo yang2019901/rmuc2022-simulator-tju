@@ -36,8 +36,8 @@ public class BattleField : MonoBehaviour {
     /* hero engineer infantry1 infantry2 */
     public RoboState[] robo_red;
     public RoboState[] robo_blue;
-    [HideInInspector] public List<RoboState> robo_all = new List<RoboState>(); // automatical set
-    [HideInInspector] public RoboState robo_local;                             // automatical set
+    [HideInInspector] public List<RoboState> robo_all = new List<RoboState>(); // automatically set
+    [HideInInspector] public RoboState robo_local;                             // automatically set
 
     public SyncNode sync_node;
 
@@ -218,38 +218,25 @@ public class BattleField : MonoBehaviour {
     /// </summary>
     void RmRuneBuff(ArmorColor armor_color, RuneBuff rune_buff) {
         float atk_up = rune_buff == RuneBuff.Junior ? 0.5f : 1f;
-        if (armor_color == ArmorColor.Red) {
-            Debug.Log("Team Red removes rune buff");
-            foreach (RoboState robot in robo_red) {
-                robot.li_B_atk.Remove(atk_up);
-                robot.UpdateBuff();
-            }
-        } else {
-            Debug.Log("Team Blue removes rune buff");
-            foreach (RoboState robot in robo_blue) {
-                robot.li_B_atk.Remove(atk_up);
-                robot.UpdateBuff();
-            }
+        float dfc_up = rune_buff == RuneBuff.Junior ? 0 : 0.5f;
+        RoboState[] targets = armor_color == ArmorColor.Red ? robo_red : robo_blue;
+        foreach (RoboState robot in targets) {
+            robot.li_B_atk.Remove(atk_up);
+            robot.li_B_dfc.Remove(dfc_up);
+            robot.UpdateBuff();
         }
     }
 
 
     void AddRuneBuff(ArmorColor armor_color, RuneBuff rune_buff) {
         AssetManager.singleton.PlayClipAround(AssetManager.singleton.rune_activ);
-        rune.activ = Activation.Activated;
         float atk_up = rune_buff == RuneBuff.Junior ? 0.5f : 1f;
-        if (armor_color == ArmorColor.Red) {
-            Debug.Log("Team Red adds rune buff");
-            foreach (RoboState robot in robo_red) {
-                robot.li_B_atk.Add(atk_up);
-                robot.UpdateBuff();
-            }
-        } else {
-            Debug.Log("Team Blue adds rune buff");
-            foreach (RoboState robot in robo_blue) {
-                robot.li_B_atk.Add(atk_up);
-                robot.UpdateBuff();
-            }
+        float dfc_up = rune_buff == RuneBuff.Junior ? 0 : 0.5f;
+        RoboState[] targets = armor_color == ArmorColor.Red ? robo_red : robo_blue;
+        foreach (RoboState robot in targets) {
+            robot.li_B_atk.Add(atk_up);
+            robot.li_B_dfc.Add(dfc_up);
+            robot.UpdateBuff();
         }
     }
 
