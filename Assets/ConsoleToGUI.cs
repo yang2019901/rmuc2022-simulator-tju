@@ -10,7 +10,9 @@ public class ConsoleToGUI : MonoBehaviour {
     void Update() { if (Input.GetKeyDown(KeyCode.Space)) { doShow = !doShow; } }
     public void Log(string logString, string stackTrace, LogType type) {
         // for onscreen...
-        myLog = logString + "\n" + myLog;
+        string log_brf = logString + "\n";
+        string log_dtl = log_brf + "------------" + stackTrace + "------------\n";
+        myLog = log_brf + myLog;
         if (myLog.Length > kChars) { myLog = myLog.Substring(0, kChars); }
 
         // for the file ...
@@ -21,7 +23,7 @@ public class ConsoleToGUI : MonoBehaviour {
             string r = Random.Range(1000, 9999).ToString();
             filename = d + "/log-" + r + ".txt";
         }
-        try { System.IO.File.AppendAllText(filename, logString + "\n\t" + stackTrace + "\n"); } catch { }
+        try { System.IO.File.AppendAllText(filename, log_brf); } catch { }
     }
 
     void OnGUI() {

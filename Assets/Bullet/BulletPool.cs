@@ -31,12 +31,14 @@ public class BulletPool : MonoBehaviour {
         bigbullet_idle = new List<GameObject>();
         for (int i = 0; i < 400; i++) {
             GameObject tmp = (GameObject)Instantiate(smallbullet_t);
+            tmp.transform.parent = this.transform;
             tmp.SetActive(false);
             smallbullet_idle.Add(tmp);
         }
 
         for (int i = 0; i < 100; i++) {
             GameObject tmp = (GameObject)Instantiate(bigbullet_t);
+            tmp.transform.parent = this.transform;
             tmp.SetActive(false);
             bigbullet_idle.Add(tmp);
         }

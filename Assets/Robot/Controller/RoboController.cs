@@ -255,10 +255,7 @@ public class RoboController : BasicController {
         CalibVirtYaw();
         /* correct yaw's transform, i.e., elimate attitude error caused by following movement */
         yaw.rotation = virt_yaw.rotation;
-        yaw.position = _rigid.position;
-        if (autoaim) {
-            AutoAim();
-        } else {
+        if (!autoaim || !AutoAim()) {
             pitch_ang -= mouseY;
             pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
             /* Rotate Transform "pitch" by user input */
@@ -270,7 +267,6 @@ public class RoboController : BasicController {
         }
         /* update yaw's transform, i.e., transform yaw to aim at target (store in virt yaw) */
         yaw.rotation = virt_yaw.rotation;
-        yaw.position = _rigid.position;
     }
 
 
@@ -286,8 +282,8 @@ public class RoboController : BasicController {
     Camera robo_cam => Camera.main;
     Vector3 start => bullet_start.transform.position;
     ArmorController target, last_target;
-    void AutoAim() {
-        float minang = 30;
+    bool AutoAim() {
+        float minang = 45;
         foreach (ArmorController ac in enemy_armors) {
             // judge whether armor's enabled
             if (!ac.en)
@@ -295,7 +291,7 @@ public class RoboController : BasicController {
             // judge whether armor's facing turret
             Vector3 v1 = ac.transform.position - start;
             Vector3 v2 = ac.transform.TransformVector(ac.norm_in);
-            if (Vector3.Angle(v1, v2) >= 60)
+            if (Vector3.Angle(v1, v2) >= 75)
                 continue;
 
             float ang = Vector3.Angle(ac.transform.position - start, bullet_start.transform.forward);
@@ -315,8 +311,8 @@ public class RoboController : BasicController {
                 // Debug.DrawLine(ac.transform.position, start, Color.blue);
             }
         }
-        if (minang >= 30) {
-            return;
+        if (minang >= 45) {
+            return false;
         }
         Vector3 pos = target.transform.position;
         last_target = target;
@@ -324,26 +320,30 @@ public class RoboController : BasicController {
         // Debug.DrawLine(start, target, Color.yellow);
         if (CalcFall(ref pos))
             AimAt(pos);
-        else
+        else {
             Debug.Log("too far to reach");
+            return false;
+        }
+        
+        return true;
     }
 
 
     float spd => robo_state.bullspd;
     const float g = 9.8f;
     bool CalcFall(ref Vector3 target) {
-        Vector3 r = target - start; 
+        Vector3 r = target - start;
         float y = Vector3.Dot(r, Vector3.up);
         float d = r.magnitude;
-        float A = g*g / 4;
-        float B = g*y - spd*spd;
-        float C = d*d;
-        float delta = B*B - 4*A*C;
+        float A = g * g / 4;
+        float B = g * y - spd * spd;
+        float C = d * d;
+        float delta = B * B - 4 * A * C;
         if (delta < 0)
             return false;
-        float t = Mathf.Sqrt((- B - Mathf.Sqrt(delta))/ (2*A));
-        float theta = Mathf.Asin((y + g*t*t/2) / (spd*t));
-        float y_new = Mathf.Sqrt(d*d - y*y) * Mathf.Tan(theta);
+        float t = Mathf.Sqrt((-B - Mathf.Sqrt(delta)) / (2 * A));
+        float theta = Mathf.Asin((y + g * t * t / 2) / (spd * t));
+        float y_new = Mathf.Sqrt(d * d - y * y) * Mathf.Tan(theta);
         // Debug.DrawLine(start, target, Color.yellow);
         target[1] += y_new - y;
         // Debug.DrawLine(start, target, Color.green);
