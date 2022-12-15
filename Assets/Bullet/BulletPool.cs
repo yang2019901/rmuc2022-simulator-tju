@@ -23,7 +23,7 @@ public class BulletPool : MonoBehaviour {
         if (singleton == null) {
             singleton = this;
         } else {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
         smallbullet_busy = new List<GameObject>();
         smallbullet_idle = new List<GameObject>();

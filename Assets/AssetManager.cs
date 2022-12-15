@@ -118,7 +118,7 @@ public class AssetManager : MonoBehaviour {
         if (singleton == null) {
             singleton = this;
         } else
-            Destroy(this);
+            Destroy(this.gameObject);
 
         infa_chs = JObject.Parse(f_infantry_chassis.text);
         hero_chs = JObject.Parse(f_hero_chassis.text);

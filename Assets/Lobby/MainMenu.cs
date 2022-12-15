@@ -8,7 +8,7 @@ using TMPro;
 namespace LobbyUI {
     /* handle all UI-related events and call corresponding functions in other scripts */
     public class MainMenu : MonoBehaviour {
-        public BattleNetworkManager net_man;
+        BattleNetworkManager net_man => BattleNetworkManager.singleton;
         public NetLobby net_lob;
 
         [Header("info")]
@@ -197,7 +197,7 @@ namespace LobbyUI {
                 net_man.StopHost();
             else if (NetworkClient.active)
                 net_man.StopClient();
-            else
+            else if (NetworkServer.active)
                 net_man.StopServer();
             // OnClientDisconnect will take care of loading scene
             SetPlayerOpt();

@@ -27,7 +27,7 @@ namespace LobbyUI {
     /// </summary>
     public class NetLobby : NetworkBehaviour {
         public const string NULLAVA = null;
-        public BattleNetworkManager net_man;
+        BattleNetworkManager net_man => BattleNetworkManager.singleton;
         [HideInInspector]
         public int uid;     // unique identifier for each client
 
@@ -115,7 +115,7 @@ namespace LobbyUI {
         }
 
         /* OnApplyAvatar():
-            1. registers the PlayerSync when a client PC first apply avatar
+            1. registers the PlayerSync when a client PC first applys avatar
             2. ensures that any registered client only has one corresponding PlayerSync
            Therefore, Inspite of real take-avatar mes, you can send fake mes:
             1. to register in playerSyncs

@@ -48,7 +48,7 @@ public class BattleField : MonoBehaviour {
         if (singleton == null) {
             singleton = this;
         } else
-            Destroy(this);
+            Destroy(this.gameObject);
         robo_all.AddRange(robo_red);
         robo_all.AddRange(robo_blue);
     }

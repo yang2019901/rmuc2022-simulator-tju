@@ -7,6 +7,7 @@ using Mirror;
 using LobbyUI;
 
 public class BattleNetworkManager : NetworkManager {
+    public new static BattleNetworkManager singleton;
     public NetLobby net_lob;
     public MainMenu mainmenu;
     [Scene]
@@ -17,6 +18,15 @@ public class BattleNetworkManager : NetworkManager {
     [HideInInspector]
     public List<PlayerSync> playerSyncs = new List<PlayerSync>();
 
+
+    public override void Awake() {
+        if (singleton == null)
+            singleton = this;
+        else
+            Destroy(this.gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
     bool ScnCmp(string scn_runtime, string scn_asset) {
         return scn_asset.Contains(scn_runtime);
     }
@@ -26,6 +36,8 @@ public class BattleNetworkManager : NetworkManager {
 
     public override void OnStartServer() {
         base.OnStartServer();
+        if (net_lob == null)
+            return;
         NetworkServer.RegisterHandler<NetLobby.AvaOwnMessage>(net_lob.OnApplyAvatar);
         NetworkServer.RegisterHandler<NetLobby.AvaReadyMessage>(net_lob.OnInvAvaReady);
         NetworkServer.RegisterHandler<NetLobby.StartGameMessage>(net_lob.OnStartGame);
@@ -34,46 +46,24 @@ public class BattleNetworkManager : NetworkManager {
     }
 
 
-    /* called on that client when a client is disconnected */
-    public override void OnStopClient() {
-        base.OnStopClient();
-        Debug.Log("client PC: stop client; connected: " + NetworkClient.isConnected);
-        if (NetworkClient.isConnected) {
-            // clear what OnClientConnect() has done:
-            if (isScnLobby()) {
-                net_lob.playerSyncs.Callback -= net_lob.OnPlayerSyncChanged;
-                mainmenu.SetPlayerMode();
-            } else if (isScnField()) {
-                SceneManager.LoadScene(scn_lobby);
-                Destroy(this.gameObject);
-            }
-        } else {
-            // mainmenu's attempting to connect but fail
-            // call mainmenu to do finishing touches 
-            mainmenu.OnCancelJoin();
-        }
-    }
-
-
     public override void OnStopServer() {
         base.OnStopServer();
         Debug.Log("server: stop server");
         if (isScnField()) {
-            SceneManager.LoadScene(scn_lobby);
-            Destroy(this.gameObject);
+            SceneManager.LoadScene(scn_lobby); 
         }
     }
 
 
     /* called on server when a client is connected to server */
-    /// <summary>
-    /// here is to verify
-    /// </summary>
     public override void OnServerConnect(NetworkConnectionToClient conn) {
         base.OnServerConnect(conn);
         Debug.Log("Hey, there! A client connects. ConnId: " + conn.connectionId);
-        conn.Send<NetLobby.ClientIdMessage>(new NetLobby.ClientIdMessage(conn.connectionId));
+        if (isScnLobby()) {
+            conn.Send<NetLobby.ClientIdMessage>(new NetLobby.ClientIdMessage(conn.connectionId));
+        }
     }
+
 
     /* called on server when a client is disconnected */
     public override void OnServerDisconnect(NetworkConnectionToClient conn) {
@@ -82,15 +72,6 @@ public class BattleNetworkManager : NetworkManager {
         if (isScnLobby())
             net_lob.OnPlayerLeave(conn);
     }
-
-    public override void OnClientConnect() {
-        base.OnClientConnect();
-        mainmenu.SetPlayerLobby();
-        net_lob.playerSyncs.Callback += net_lob.OnPlayerSyncChanged;
-        NetworkClient.RegisterHandler<NetLobby.ClientIdMessage>(net_lob.OnReceiveConnId);
-        // Debug.Log("register handler in net_man");
-    }
-
 
 
     public override void OnServerSceneChanged(string sceneName) {
@@ -113,4 +94,41 @@ public class BattleNetworkManager : NetworkManager {
         }
     }
 
+
+
+    public override void OnClientConnect() {
+        base.OnClientConnect();
+        if (mainmenu == null || net_lob == null)
+            return;
+        mainmenu.SetPlayerLobby();
+        net_lob.playerSyncs.Callback += net_lob.OnPlayerSyncChanged;
+        NetworkClient.RegisterHandler<NetLobby.ClientIdMessage>(net_lob.OnReceiveConnId);
+        // Debug.Log("register handler in net_man");
+    }
+
+
+    /* called on that client when a client is stopped (disconnected included) */
+    public override void OnStopClient() {
+        base.OnStopClient();
+        Debug.Log("client PC: stop client; connected: " + NetworkClient.isConnected);
+        if (NetworkClient.isConnected) {
+            // clear what OnClientConnect() has done:
+            if (isScnLobby()) {
+                net_lob.playerSyncs.Callback -= net_lob.OnPlayerSyncChanged;
+                mainmenu.SetPlayerMode();
+            } else if (isScnField() && !NetworkServer.active) {
+                SceneManager.LoadScene(scn_lobby);
+            }
+        } else {
+            // mainmenu's attempting to connect but fail
+            // call mainmenu to do finishing touches 
+            mainmenu.OnCancelJoin();
+        }
+    }
+
+
+    void OnSceneLoaded(Scene scn, LoadSceneMode mode) {
+        this.net_lob = FindObjectOfType<NetLobby>(includeInactive:true);
+        this.mainmenu = FindObjectOfType<MainMenu>(includeInactive:true);
+    }
 }

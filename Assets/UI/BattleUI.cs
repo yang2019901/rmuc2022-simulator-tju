@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Mirror;
 
 namespace RMUC_UI {
     public class BattleUI : MonoBehaviour {
+        [Header("Battle Status")]
         public Notepad notepad;
         public RoboTab[] robotabs;
 
@@ -15,11 +17,13 @@ namespace RMUC_UI {
         public RoboTab otptStat_red;
         public RoboTab otptStat_blue;
 
-        /* Settings UI */
+        [Header("Settings UI")]
         /* supply UI */
         public GameObject supp_ui;
+        /* setting UI */
+        public GameObject pref_ui;
 
-        /* My UI */
+        [Header("Owned robot profile")]
         public HeatRing hr;
         public Image overheat_bg;
         public float rat_heat = 0;  // updated by robocontroller every frame
@@ -39,6 +43,32 @@ namespace RMUC_UI {
         RMUC_UI.RoboTab my_robotab;
         RoboState myrobot => BattleField.singleton.robo_local;
 
+
+
+        void Start() {
+            /* init imgs_buf */
+            for (int i = 0; i < indic_buf.Length; i++)
+                indic_buf[i] = -1;
+        }
+
+
+        void Update() {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None
+                    : CursorLockMode.Locked;
+            }
+
+            if (Input.GetKeyDown(KeyCode.O)) {
+                this.supp_ui.SetActive(!this.supp_ui.activeSelf);
+                Cursor.lockState = this.supp_ui.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
+            }
+
+            if (Input.GetKeyDown(KeyCode.BackQuote)) {
+                /* preference UI */
+                this.pref_ui.SetActive(!this.pref_ui.activeSelf);
+                Cursor.lockState = this.pref_ui.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
+            }
+        }
 
 
         public void Push(UISync uisync) {
@@ -165,6 +195,7 @@ namespace RMUC_UI {
                 imgs_buf[idx].sprite = spr[indic_buf[idx]];
         }
 
+
         public void SetBullSupply(int num) {
             TMP_InputField tif = supp_ui.GetComponentInChildren<TMP_InputField>();
             tif.text = num.ToString();
@@ -177,6 +208,13 @@ namespace RMUC_UI {
             RoboController rc = myrobot.GetComponent<RoboController>();
             int bull_num;
             if (rc != null && int.TryParse(supp_ui.GetComponentInChildren<TMP_InputField>().text, out bull_num)) {
+                /* position check */
+                bool in_supp_spot = rc.robo_state.robo_buff.FindIndex(i => i.tag == BuffType.rev) != -1;
+                if (!in_supp_spot) {
+                    Debug.Log("Cannot call supply: not in supply spot");
+                    return;
+                }
+                /* money check */
                 int money_req = bull_num * (rc.GetComponent<Weapon>().caliber == Caliber._17mm ? 1 : 15);
                 int money_now = rc.GetComponent<RoboState>().armor_color == ArmorColor.Red ?
                     BattleField.singleton.money_red : BattleField.singleton.money_blue;
@@ -192,10 +230,14 @@ namespace RMUC_UI {
         }
 
 
-        void Start() {
-            /* init imgs_buf */
-            for (int i = 0; i < indic_buf.Length; i++)
-                indic_buf[i] = -1;
+        public void ReturnLobby() {
+            NetworkManager net_man = GameObject.FindObjectOfType<NetworkManager>();
+            if (NetworkServer.active && NetworkClient.active)
+                net_man.StopHost();
+            else if (NetworkClient.active)
+                net_man.StopClient();
+            else if (NetworkServer.active)
+                net_man.StopServer();
         }
     }
 }

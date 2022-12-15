@@ -33,7 +33,7 @@ public class RoboController : BasicController {
     private float pitch_min = -30;
     private float pitch_max = 40;
     private Weapon wpn;
-    private RoboState robo_state;
+    [HideInInspector] public RoboState robo_state;
 
     private bool playing => Cursor.lockState == CursorLockMode.Locked;
     private Rigidbody _rigid => robo_state.rigid;
@@ -96,14 +96,12 @@ public class RoboController : BasicController {
             return;
         }
 
-        SetCursor();
         if (robo_state.survival) {
             Look();
             Move();
             Shoot();
         } else
             StopMove();
-        Supply();
         UpdateSelfUI();
     }
 
@@ -125,15 +123,6 @@ public class RoboController : BasicController {
         HeroState hs = robo_state.GetComponent<HeroState>();
         bat_ui.indic_buf[4] = hs == null || !hs.sniping ? -1 : 0;
         bat_ui.indic_buf[5] = Mathf.Approximately(robo_state.B_pow, 0f) ? -1 : 0;       // lea
-    }
-
-
-
-    void SetCursor() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None
-                : CursorLockMode.Locked;
-        }
     }
 
 
@@ -324,7 +313,7 @@ public class RoboController : BasicController {
             Debug.Log("too far to reach");
             return false;
         }
-        
+
         return true;
     }
 
@@ -362,32 +351,23 @@ public class RoboController : BasicController {
 
 
     // get ammunition supply at reborn spot
-    void Supply() {
-        if (Input.GetKeyDown(KeyCode.O) && playing) {
-            bool in_supp_spot = robo_state.robo_buff.FindIndex(i => i.tag == BuffType.rev) != -1;
-            if (in_supp_spot) {
-                bool shw = !BattleField.singleton.bat_ui.supp_ui.activeSelf;
-                BattleField.singleton.bat_ui.supp_ui.SetActive(shw);
-                Cursor.lockState = shw ? CursorLockMode.None : CursorLockMode.Locked;
-            }
-        }
-    }
     [Command]
     public void CmdSupply(string robot_s, int num) {
         // todo: add judge of money
         GameObject obj = GameObject.Find(robot_s);
-        Weapon weap;
-        if (TryGetComponent<Weapon>(out weap)) {
-            int money_req = weap.caliber == Caliber._17mm ? num : 15 * num;
+        RoboController rc = obj.GetComponent<RoboController>();
+        bool in_supp_spot = rc.robo_state.robo_buff.FindIndex(i => i.tag == BuffType.rev) != -1;
+        if (rc != null && in_supp_spot) {
+            int money_req = rc.wpn.caliber == Caliber._17mm ? num : 15 * num;
             bool is_red = obj.GetComponent<RoboState>().armor_color == ArmorColor.Red;
             if (is_red) {
                 if (money_req <= BattleField.singleton.money_red) {
-                    weap.bullnum += num;
+                    rc.wpn.bullnum += num;
                     BattleField.singleton.money_red -= money_req;
                     Debug.Log("call supply");
                 }
             } else if (money_req <= BattleField.singleton.money_blue) {
-                weap.bullnum += num;
+                rc.wpn.bullnum += num;
                 BattleField.singleton.money_blue -= money_req;
                 Debug.Log("call supply");
             }
