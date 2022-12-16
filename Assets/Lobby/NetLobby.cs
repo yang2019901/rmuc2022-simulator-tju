@@ -19,8 +19,8 @@ namespace LobbyUI {
             this.ready = ready;
         }
     }
-    
-    
+
+
     /// <summary>
     /// @Orientation: define visual state and sync them; also do RPC
     /// @Style: Event/Call style
@@ -34,6 +34,7 @@ namespace LobbyUI {
         /** Tip: nested struct declaration => Netlobby.AvatarMessage instead of AvatarMessage.
             direction: client -> server
          */
+        // tell server PC that local client PC wants the robot
         public struct AvaOwnMessage : NetworkMessage {
             public string robot_s;
             public string player_name;
@@ -43,32 +44,36 @@ namespace LobbyUI {
                 this.player_name = player_name;
             }
         }
-
+        // tell server PC that local client PC is ready
         public struct AvaReadyMessage : NetworkMessage {
             public bool ready;
         }
-        /* used to tell client about its connId in server PC's scene */
+        // tell client about its connId in server PC's scene
         public struct ClientIdMessage : NetworkMessage {
             public int connId_onserver; // client PC's id on server scene
             public ClientIdMessage(int connId_onserver) {
                 this.connId_onserver = connId_onserver;
             }
         }
-        /* sent by lobby owner to tell server to start the game */
+        // sent by lobby owner to tell server to start the game
         public struct StartGameMessage : NetworkMessage {
             public bool start;
-            public StartGameMessage(bool start) {
-                this.start = start;
-            }
+            public StartGameMessage(bool start) { this.start = start; }
         }
-
+        /* tell client PC to play transition animation */
+        public struct SceneTransMessage : NetworkMessage {
+            public bool trans;     // playing scene transition anim or not. if true, anim will be played 
+            public SceneTransMessage(bool trans) { this.trans = trans; }
+        }
 
         /// <summary>
         /// Network Variables:
         public readonly SyncList<PlayerSync> playerSyncs = new SyncList<PlayerSync>();
-        [SyncVar] [HideInInspector]
+        [SyncVar]
+        [HideInInspector]
         public int owner_uid; // lobby owner
-        [SyncVar] [HideInInspector]
+        [SyncVar]
+        [HideInInspector]
         public bool allow_join;
         /// </summary> 
 
@@ -77,32 +82,6 @@ namespace LobbyUI {
         public MainMenu mainmenu;
         /// </summary>
 
-        public override void OnStartClient() {
-            base.OnStartClient();
-
-            /* when first joining, 1. send fake AvaMes to register
-                2. init AvaTabs as playerSyncs */
-            AvaOwnMessage fake_ava_mes = new AvaOwnMessage(NULLAVA, mainmenu.input_info.text);
-            NetworkClient.Send<AvaOwnMessage>(fake_ava_mes);
-            foreach (PlayerSync tmp in playerSyncs) {
-                /* all clients has a corresponding PlayerSync, 
-                    yet it's possible that not every client owns avatar */
-                if (tmp.owning_ava) {
-                    int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag == tmp.ava_tag);
-                    mainmenu.avatars[avaIdx].SetRoboTab(tmp);
-                }
-            }
-            /* first client is owner */
-            this.owner_uid = this.playerSyncs[0].connId;
-        }
-
-        public override void OnStopClient() {
-            base.OnStopClient();
-
-            /* update owner id */
-            if (this.playerSyncs.Count > 0)
-                this.owner_uid = this.playerSyncs[0].connId;
-        }
 
         [Server]
         public void OnPlayerLeave(NetworkConnectionToClient conn) {
@@ -122,7 +101,7 @@ namespace LobbyUI {
             2. to give up owning avatar
         */
         [Server]
-        public void OnApplyAvatar(NetworkConnectionToClient conn, AvaOwnMessage mes) {
+        public void OnRecAvaOwnMes(NetworkConnectionToClient conn, AvaOwnMessage mes) {
             bool is_avatar_taken = (-1 != playerSyncs.FindIndex(i => i.owning_ava && i.ava_tag == mes.robot_s));
             if (is_avatar_taken)
                 Debug.Log("server: the robot is taken!");
@@ -152,7 +131,7 @@ namespace LobbyUI {
         }
 
         [Server]
-        public void OnInvAvaReady(NetworkConnectionToClient conn, AvaReadyMessage mes) {
+        public void OnRecAvaReadyMes(NetworkConnectionToClient conn, AvaReadyMessage mes) {
             int id_cli = conn.connectionId;
             int syncIdx = playerSyncs.FindIndex(i => i.connId == id_cli);
             if (syncIdx == -1) {
@@ -168,11 +147,11 @@ namespace LobbyUI {
         }
 
         [Server]
-        public void OnStartGame(NetworkConnectionToClient conn, StartGameMessage mes) {
-            this.playerSyncs.CopyTo(net_man.playerSyncs);
-            if (mes.start)
-                net_man.ServerChangeScene(net_man.scn_field);
-            // Debug.Log("change scene");
+        public void OnRecStartGameMes(NetworkConnectionToClient conn, StartGameMessage mes) {
+            if (mes.start) {
+                this.playerSyncs.CopyTo(net_man.playerSyncs);
+                net_man.StartCoroutine(MyServerChangeScene());
+            }
         }
 
         [Client]
@@ -203,9 +182,59 @@ namespace LobbyUI {
         }
 
         [Client]
-        public void OnReceiveConnId(ClientIdMessage mes) {
+        public void OnRecCliIdMes(ClientIdMessage mes) {
             // Debug.Log("receive server-assign connId: " + mes.connId_onserver);
             this.uid = mes.connId_onserver;
+        }
+
+        // call all clients to play SceneTrans Anim 
+        // and then call net_man.ServerChangeScene
+        [Server]
+        IEnumerator MyServerChangeScene() {
+            NetworkServer.SendToAll<SceneTransMessage>(new SceneTransMessage(true));
+            yield return new WaitForSeconds(5);
+            Debug.Log("net_man starts to change scene");
+            net_man.ServerChangeScene(net_man.scn_field);
+            yield break;
+        }
+
+        [Client]
+        public void OnRecScnTransMes(SceneTransMessage mes) {
+            // mainmenu is not an network obj, so every client 
+            // has to call mainmenu disable it instead of calling it once in server PC
+            mainmenu.DisableAllMenus();
+            if (mes.trans) {
+                Debug.Log("OnRecScnTransMes");
+                SceneTransit.singleton.StartTransit();
+                Debug.Log("StartTransit");
+            }
+        }
+
+        public override void OnStartClient() {
+            base.OnStartClient();
+
+            /* when first joining, 1. send fake AvaMes to register
+                2. init AvaTabs as playerSyncs */
+            AvaOwnMessage fake_ava_mes = new AvaOwnMessage(NULLAVA, mainmenu.input_info.text);
+            NetworkClient.Send<AvaOwnMessage>(fake_ava_mes);
+            foreach (PlayerSync tmp in playerSyncs) {
+                /* all clients has a corresponding PlayerSync, 
+                    yet it's possible that not every client owns avatar */
+                if (tmp.owning_ava) {
+                    int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag == tmp.ava_tag);
+                    mainmenu.avatars[avaIdx].SetRoboTab(tmp);
+                }
+            }
+            /* first client is owner */
+            this.owner_uid = this.playerSyncs[0].connId;
+        }
+
+        public override void OnStopClient() {
+            base.OnStopClient();
+
+            /* update owner id */
+            if (this.playerSyncs.Count > 0)
+                this.owner_uid = this.playerSyncs[0].connId;
         }
 
     }

@@ -20,9 +20,9 @@ public class BattleNetworkManager : NetworkManager {
 
 
     public override void Awake() {
-        if (singleton == null)
+        if (singleton == null) {
             singleton = this;
-        else
+        } else
             Destroy(this.gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -38,9 +38,9 @@ public class BattleNetworkManager : NetworkManager {
         base.OnStartServer();
         if (net_lob == null)
             return;
-        NetworkServer.RegisterHandler<NetLobby.AvaOwnMessage>(net_lob.OnApplyAvatar);
-        NetworkServer.RegisterHandler<NetLobby.AvaReadyMessage>(net_lob.OnInvAvaReady);
-        NetworkServer.RegisterHandler<NetLobby.StartGameMessage>(net_lob.OnStartGame);
+        NetworkServer.RegisterHandler<NetLobby.AvaOwnMessage>(net_lob.OnRecAvaOwnMes);
+        NetworkServer.RegisterHandler<NetLobby.AvaReadyMessage>(net_lob.OnRecAvaReadyMes);
+        NetworkServer.RegisterHandler<NetLobby.StartGameMessage>(net_lob.OnRecStartGameMes);
         /* clear playerSyncs, otherwise, previous items are there */
         net_lob.playerSyncs.Reset();
     }
@@ -49,9 +49,6 @@ public class BattleNetworkManager : NetworkManager {
     public override void OnStopServer() {
         base.OnStopServer();
         Debug.Log("server: stop server");
-        if (isScnField()) {
-            SceneManager.LoadScene(scn_lobby); 
-        }
     }
 
 
@@ -102,7 +99,8 @@ public class BattleNetworkManager : NetworkManager {
             return;
         mainmenu.SetPlayerLobby();
         net_lob.playerSyncs.Callback += net_lob.OnPlayerSyncChanged;
-        NetworkClient.RegisterHandler<NetLobby.ClientIdMessage>(net_lob.OnReceiveConnId);
+        NetworkClient.RegisterHandler<NetLobby.ClientIdMessage>(net_lob.OnRecCliIdMes);
+        NetworkClient.RegisterHandler<NetLobby.SceneTransMessage>(net_lob.OnRecScnTransMes);
         // Debug.Log("register handler in net_man");
     }
 
@@ -110,13 +108,14 @@ public class BattleNetworkManager : NetworkManager {
     /* called on that client when a client is stopped (disconnected included) */
     public override void OnStopClient() {
         base.OnStopClient();
+        Destroy(NetworkClient.localPlayer.gameObject);
         Debug.Log("client PC: stop client; connected: " + NetworkClient.isConnected);
         if (NetworkClient.isConnected) {
             // clear what OnClientConnect() has done:
             if (isScnLobby()) {
                 net_lob.playerSyncs.Callback -= net_lob.OnPlayerSyncChanged;
                 mainmenu.SetPlayerMode();
-            } else if (isScnField() && !NetworkServer.active) {
+            } else if (isScnField()) {
                 SceneManager.LoadScene(scn_lobby);
             }
         } else {
@@ -127,8 +126,12 @@ public class BattleNetworkManager : NetworkManager {
     }
 
 
+    // since battlenetworkmanager is singleton that won't be destroyed when scene changes 
+    // but this.net_lob and this.mainmenu will be destroyed
+    // so every time new scene is loaded, singleton will find the new net_lob and mainmenu
     void OnSceneLoaded(Scene scn, LoadSceneMode mode) {
-        this.net_lob = FindObjectOfType<NetLobby>(includeInactive:true);
-        this.mainmenu = FindObjectOfType<MainMenu>(includeInactive:true);
+        this.net_lob = FindObjectOfType<NetLobby>(includeInactive: true);
+        this.mainmenu = FindObjectOfType<MainMenu>(includeInactive: true);
     }
+
 }

@@ -305,8 +305,7 @@ public class RoboController : BasicController {
         }
         Vector3 pos = target.transform.position;
         last_target = target;
-        Debug.Log("last_target id: " + last_target.GetInstanceID());
-        // Debug.DrawLine(start, target, Color.yellow);
+        // Debug.Log("last_target id: " + last_target.GetInstanceID());
         if (CalcFall(ref pos))
             AimAt(pos);
         else {
@@ -333,9 +332,9 @@ public class RoboController : BasicController {
         float t = Mathf.Sqrt((-B - Mathf.Sqrt(delta)) / (2 * A));
         float theta = Mathf.Asin((y + g * t * t / 2) / (spd * t));
         float y_new = Mathf.Sqrt(d * d - y * y) * Mathf.Tan(theta);
-        // Debug.DrawLine(start, target, Color.yellow);
+        Debug.DrawLine(start, target, Color.yellow);
         target[1] += y_new - y;
-        // Debug.DrawLine(start, target, Color.green);
+        Debug.DrawLine(start, target, Color.green);
         return true;
     }
 

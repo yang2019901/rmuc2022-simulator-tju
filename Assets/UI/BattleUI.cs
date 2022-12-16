@@ -230,8 +230,16 @@ namespace RMUC_UI {
         }
 
 
-        public void ReturnLobby() {
+        public void ReturnLobbyWrapup() {
+            StartCoroutine(ReturnLobbyTrans());
+        }
+
+        IEnumerator ReturnLobbyTrans() {
+            SceneTransit.singleton.StartTransit();
             NetworkManager net_man = GameObject.FindObjectOfType<NetworkManager>();
+            yield return new WaitForSeconds(5);
+            // load of scene will be done automatically in OnStopClient(), 
+            // and dedicated server needn't switch back to lobby ui if it stops
             if (NetworkServer.active && NetworkClient.active)
                 net_man.StopHost();
             else if (NetworkClient.active)

@@ -147,10 +147,8 @@ namespace LobbyUI {
             ava_ready = false;
             SetButtonReady();
         }
-        /// <summary>
-        /// (wrap-up) set all menus to be inactive (obviously, it's invisible, too)
-        /// </summary>
-        private void DisableAllMenus() {
+        /* (wrap-up) set all menus to be inactive */
+        public void DisableAllMenus() {
             Menu_player_mode.SetActive(false);
             Menu_player_info.SetActive(false);
             Menu_player_opt.SetActive(false);
@@ -182,7 +180,6 @@ namespace LobbyUI {
             if (net_lob.owner_uid == net_lob.uid) {
                 // start the game
                 NetworkClient.Send<NetLobby.StartGameMessage>(new NetLobby.StartGameMessage(true));
-                Menu_player_lobby.SetActive(false);
             } else {
                 NetLobby.AvaReadyMessage mes = new NetLobby.AvaReadyMessage();
                 mes.ready = !this.ava_ready;
@@ -205,10 +202,7 @@ namespace LobbyUI {
 
 
         public void SetButtonReady() {
-            if (this.owning_ava)
-                btn_ready.SetActive(true);
-            else
-                btn_ready.SetActive(false);
+            btn_ready.SetActive(this.owning_ava || net_lob.owner_uid == net_lob.uid);
 
             TMP_Text btn_txt = btn_ready.GetComponentInChildren<TMP_Text>();
             /* Note: owner can start game any time he wants 
