@@ -35,13 +35,12 @@ namespace RMUC_UI {
 
 
         void Awake() {
-            Debug.Log("roboicon awake");
             img_arrow = arrow.GetComponentInChildren<Image>();
         }
 
 
         void Update() {
-            if (this.robo_conn == null)
+            if (this.robo_conn == null || this.robo_conn.rigid == null)
                 return;
 
             SetArrow();
@@ -57,8 +56,6 @@ namespace RMUC_UI {
 
 
         void SetArrow() {
-            if (robo_conn.rigid == null)
-                return;
             Vector2 vel = new Vector2(robo_conn.rigid.velocity.x, robo_conn.rigid.velocity.z);
             if (vel.magnitude < 0.1f) {
                 arrow.SetActive(false);

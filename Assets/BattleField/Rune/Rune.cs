@@ -15,9 +15,9 @@ public class Rune : MonoBehaviour {
     public ArmorColor rune_color;  // only works when rune's activated
     public bool disabled;       // rune'll be disabled for 30sec
 
-    private const int jun_sta = 10;    // rune_junior starts
-    private const int jun_end = 120;   // rune_junior ends
-    private const int sen_sta = 240;   // rune_senior starts
+    private const int jun_sta = 1;    // rune_junior starts
+    private const int jun_end = 2;   // rune_junior ends
+    private const int sen_sta = 10;   // rune_senior starts
     private const int sen_end = 420;   // rune_senior ends
     private const int mine_1_3 = 15;
     private const int mine_0_4 = 180;
@@ -37,12 +37,12 @@ public class Rune : MonoBehaviour {
         rune_state_blue.Init();
         activ = Activation.Idle;
         SetRnSta();
-        sgn = Random.Range(0, 1) > 0.5 ? 1 : -1;
+        sgn = Random.Range(0f, 1f) > 0.5 ? 1 : -1;
         Reset();
         this.disabled = false;
 
         // for (int i = 0; i < mines_gold.Length; i++)
-            // mines_gold[i].GetComponent<Rigidbody>().useGravity = false;
+        // mines_gold[i].GetComponent<Rigidbody>().useGravity = false;
         for (int i = 0; i < mines_silv.Length; i++)
             mines_silv[i].transform.parent = null;
     }
@@ -66,7 +66,7 @@ public class Rune : MonoBehaviour {
             DropMine(4);
         } else if (t_bat < mine_2 && t_next > mine_2)
             DropMine(2);
-        
+
         /* only server PC needs to calc rotation and activ state; client PC only syncs */
         if (!NetworkServer.active)
             return;
@@ -94,7 +94,7 @@ public class Rune : MonoBehaviour {
         SetRnSta();
     }
 
-    
+
     void DropMine(int mineIdx) {
         mines_gold[mineIdx].parent = null;
         mines_gold[mineIdx].gameObject.AddComponent<Rigidbody>();
@@ -110,10 +110,10 @@ public class Rune : MonoBehaviour {
             rune_state_red.SetActiveState(Activation.Idle);
         }
     }
-           
 
-    void RuneSpin() {       
-        float spd = this.rune_buff == RuneBuff.Junior ? 60 : (this.a * Mathf.Sin(this.w * t) + 2.09f - this.a) * 180 / Mathf.PI;
+
+    void RuneSpin() {
+        float spd = this.rune_buff == RuneBuff.Junior ? 60 : (this.a * Mathf.Sin(this.w * t) + 2.09f - this.a) * Mathf.Rad2Deg;
         rotator_rune.localEulerAngles += sgn * new Vector3(0, 0, spd * Time.deltaTime);
         this.t += Time.deltaTime;
     }
@@ -128,4 +128,23 @@ public class Rune : MonoBehaviour {
         this.w = Random.Range(1.884f, 2f);
     }
 
+
+    /* target spinning with rune, return its position after a given interval */
+    public Vector3 PredPos(Vector3 target, float interval) {
+        Vector3 center = rotator_rune.transform.position;
+        Vector3 offset = target - center;
+        float ang = 0;
+        if (rune_buff == RuneBuff.Junior) {
+            ang = sgn * 60 * interval;
+        } else if (rune_buff == RuneBuff.Senior) {
+            ang = sgn * Mathf.Rad2Deg * (this.a / this.w * (Mathf.Cos(this.w * this.t) - Mathf.Cos(this.w * (this.t + interval)))
+                + (2.09f - this.a) * interval);
+        } else {
+            Debug.Log("rune's not spinning, no prediction");
+            return target;
+        }
+        Vector3 axis = rotator_rune.transform.forward;
+        Vector3 offset_new = Quaternion.AngleAxis(ang, axis) * offset;
+        return center + offset_new;
+    }
 }

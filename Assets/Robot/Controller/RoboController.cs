@@ -238,13 +238,14 @@ public class RoboController : BasicController {
 
     /* Get look dir from user input */
     bool autoaim => playing && Input.GetMouseButton(1);
+    bool runeMode => Input.GetKey(KeyCode.R);
     float mouseX => playing ? 2 * Input.GetAxis("Mouse X") : 0;
     float mouseY => playing ? 2 * Input.GetAxis("Mouse Y") : 0;
     void Look() {
         CalibVirtYaw();
         /* correct yaw's transform, i.e., elimate attitude error caused by following movement */
         yaw.rotation = virt_yaw.rotation;
-        if (!autoaim || !AutoAim()) {
+        if (!autoaim || !AutoAim(runeMode)) {
             pitch_ang -= mouseY;
             pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
             /* Rotate Transform "pitch" by user input */
@@ -266,17 +267,25 @@ public class RoboController : BasicController {
     }
 
 
-    List<ArmorController> enemy_armors => robo_state.armor_color == ArmorColor.Red ?
-        ArmorController.vis_armors_blue : ArmorController.vis_armors_red;
+    List<ArmorController> target_armors;
     Camera robo_cam => Camera.main;
     Vector3 start => bullet_start.transform.position;
     ArmorController target, last_target;
-    bool AutoAim() {
-        float minang = 45;
-        foreach (ArmorController ac in enemy_armors) {
+    bool AutoAim(bool runeMode) {
+        target_armors = (robo_state.armor_color == ArmorColor.Blue) ^ runeMode ? ArmorController.vis_armors_red : ArmorController.vis_armors_blue;
+        // light cone
+        float minang_th = 45;
+        float minang = 360;
+        foreach (ArmorController ac in target_armors) {
             // judge whether armor's enabled
             if (!ac.en)
                 continue;
+            if (runeMode) {
+                if (ac.tag != "rune armor" || ac.GetComponentInParent<RuneBlade>().blade_light != RuneLight.Center_on)
+                    continue;
+                minang_th = 60;
+            }
+
             // judge whether armor's facing turret
             Vector3 v1 = ac.transform.position - start;
             Vector3 v2 = ac.transform.TransformVector(ac.norm_in);
@@ -297,15 +306,19 @@ public class RoboController : BasicController {
                     if (ac == last_target)  // preferably aiming at last target
                         break;
                 }
-                // Debug.DrawLine(ac.transform.position, start, Color.blue);
+                Debug.DrawLine(ac.transform.position, start, Color.blue);
             }
         }
-        if (minang >= 45) {
+        if (minang >= minang_th) {
+            Debug.Log("no target");
             return false;
         }
-        Vector3 pos = target.transform.position;
         last_target = target;
         // Debug.Log("last_target id: " + last_target.GetInstanceID());
+        Vector3 pos = target.transform.position;
+        float interval = (pos - start).magnitude / wpn.bullspd;
+        if (runeMode)
+            pos = BattleField.singleton.rune.PredPos(pos, interval);
         if (CalcFall(ref pos))
             AimAt(pos);
         else {

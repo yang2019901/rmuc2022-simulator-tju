@@ -14,7 +14,8 @@ public class RuneState : BasicState {
     /* Cache */
     private bool center_light;
     private List<RuneBlade> blades = new List<RuneBlade>();
-    /* All_off: not hit; Center_on: hitting; All_on: hit  */
+    /* indicator of blades' state; 
+        All_off: not hit; Center_on: hitting; All_on: hit  */
     private List<RuneLight> blades_hit = new List<RuneLight>();
     private Material _light;
     /* when timer_hit > max_hit_time, blade will shift to another one */
