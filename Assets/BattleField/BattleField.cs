@@ -150,6 +150,7 @@ public class BattleField : MonoBehaviour {
         else
             Debug.Log("cannot get basicstate from hitter");
         AssetManager.singleton.PlayClipAround(ac);
+        bat_ui.brdcst.EnqueueKill(hitter, hittee);
     }
 
 

@@ -14,6 +14,7 @@ namespace RMUC_UI {
         [Header("red-blue")]
         public Sprite[] spr_bg;
         public Sprite[] spr_arrow;
+        public ArmorColor armor_color;
 
         Image img_arrow;
 
@@ -26,7 +27,7 @@ namespace RMUC_UI {
             this.robo_conn = robo_conn;
             SetColor(robo_conn.armor_color);
             string[] kw = robo_conn.name.Split('_');  // keywords contained in robot's name. Ex. infantry_red_4
-            if (kw.Length != 3 || kw[0].ToLower().Contains("drone")) {
+            if (kw.Length != 3) {
                 Destroy(this.gameObject);
                 return;
             }
@@ -49,6 +50,7 @@ namespace RMUC_UI {
 
 
         void SetColor(ArmorColor armor_color) {
+            this.armor_color = armor_color;
             int tmp = (int)armor_color;
             img_arrow.sprite = spr_arrow[tmp];
             img_bg.sprite = spr_bg[tmp];

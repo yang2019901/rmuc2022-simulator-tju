@@ -21,9 +21,9 @@ namespace RMUC_UI {
 
         bool otpt_r, otpt_b;
         public void SetOtpt() {
-            if (BattleField.singleton.outpost_red.survival ^ otpt_r) 
+            if (BattleField.singleton.outpost_red.survival ^ otpt_r)
                 imgs_otpt[0].gameObject.SetActive(BattleField.singleton.outpost_red.survival);
-            if (BattleField.singleton.outpost_blue.survival ^ otpt_b) 
+            if (BattleField.singleton.outpost_blue.survival ^ otpt_b)
                 imgs_otpt[1].gameObject.SetActive(BattleField.singleton.outpost_blue.survival);
             otpt_r = BattleField.singleton.outpost_red.survival;
             otpt_b = BattleField.singleton.outpost_blue.survival;
@@ -32,9 +32,9 @@ namespace RMUC_UI {
 
         bool base_r, base_b;
         public void SetBase() {
-            if (BattleField.singleton.base_red.survival ^ base_r) 
+            if (BattleField.singleton.base_red.survival ^ base_r)
                 imgs_base[0].gameObject.SetActive(BattleField.singleton.base_red.survival);
-            if (BattleField.singleton.base_blue.survival ^ base_b) 
+            if (BattleField.singleton.base_blue.survival ^ base_b)
                 imgs_base[1].gameObject.SetActive(BattleField.singleton.base_blue.survival);
             base_r = BattleField.singleton.base_red.survival;
             base_b = BattleField.singleton.base_blue.survival;
@@ -102,21 +102,37 @@ namespace RMUC_UI {
         public void SetDrone(ArmorColor armor_color, bool survival) {
 
         }
-        
+
+
+        List<RoboIcon> rbicns = new List<RoboIcon>();
+        public void SetRoboIcons() {
+            if (BattleField.singleton.robo_local == null)
+                return ;
+            foreach (RoboIcon ri in rbicns) {
+                if (ri.armor_color != BattleField.singleton.robo_local.armor_color)
+                    ri.gameObject.SetActive(GameSetting.singleton.show_enemy);
+            }
+        }
+
 
         void Update() {
-            SetRune(); 
+            SetRune();
             SetBase();
             SetOtpt();
+            SetRoboIcons();
         }
 
 
         void Start() {
             foreach (RoboState rs in BattleField.singleton.robo_all) {
+                if (rs.name.Contains("drone"))
+                    continue;
                 GameObject tmp = GameObject.Instantiate(this.robo_icon);
                 tmp.transform.SetParent(this.transform);
                 tmp.transform.localScale = 0.6f * Vector3.one;
-                tmp.GetComponent<RoboIcon>().Reset(rs);
+                RoboIcon ri = tmp.GetComponent<RoboIcon>();
+                ri.Reset(rs);
+                rbicns.Add(ri);
             }
         }
 

@@ -386,8 +386,6 @@ public class BuffManager : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        // if (!NetworkServer.active)
-        //     return ;
         foreach (Buff tmp in buffs.Values) {
             tmp.Update();
         }

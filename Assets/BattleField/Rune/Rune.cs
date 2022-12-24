@@ -55,17 +55,21 @@ public class Rune : MonoBehaviour {
     }
 
 
+    bool[] dropped = new bool[] {false, false, false};
     void Update() {
         float t_bat = BattleField.singleton.GetBattleTime();
-        float t_next = t_bat + Time.deltaTime;
-        if (t_bat < mine_1_3 && t_next > mine_1_3) {
+        if (t_bat > mine_1_3 && !dropped[0]) {
             DropMine(1);
             DropMine(3);
-        } else if (t_bat < mine_0_4 && t_next > mine_0_4) {
+            dropped[0] = true;
+        } else if (t_bat > mine_0_4 && !dropped[1]) {
             DropMine(0);
             DropMine(4);
-        } else if (t_bat < mine_2 && t_next > mine_2)
+            dropped[1] = true;
+        } else if (t_bat > mine_2 && !dropped[2]) {
             DropMine(2);
+            dropped[2] = true;
+        }
 
         /* only server PC needs to calc rotation and activ state; client PC only syncs */
         if (!NetworkServer.active)

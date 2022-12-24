@@ -29,16 +29,17 @@ namespace RMUC_UI {
         public float rat_heat = 0;  // updated by robocontroller every frame
         public TMP_Text txt_bullspd;
         public TMP_Text txt_bullnum;
-
         public Image img_cap;
         public Image img_exp;
         public TMP_Text txt_cap;
         public TMP_Text txt_exp;
         public float rat_cap;
-
         /* atk, cldn, rev, dfc, snp, lea */
         public int[] indic_buf = new int[6];
         public Image[] imgs_buf;
+
+        [Header("Broadcast kill message")]
+        public Broadcast brdcst;
 
         RMUC_UI.RoboTab my_robotab;
         RoboState myrobot => BattleField.singleton.robo_local;

@@ -324,6 +324,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transition: {fileID: 5461433528688608499}
+  f_tips: {fileID: 4900000, guid: 05c42fedb9baf404892e460e7f68925b, type: 3}
+  txt_tip: {fileID: 5461433527854794212}
 --- !u!1 &5461433528754697644
 GameObject:
   m_ObjectHideFlags: 0

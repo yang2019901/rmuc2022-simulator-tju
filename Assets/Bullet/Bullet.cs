@@ -23,8 +23,6 @@ public class Bullet : MonoBehaviour {
     /* requirement: bullet need to be continous dynamic */
     void OnCollisionEnter(Collision collision) {
         /* Note: if bullet hasn't been spawned, isServer returns false even if the code is executed in server */
-        if (!NetworkServer.active)
-            return;
         ArmorController ac = collision.collider.GetComponent<ArmorController>();
         if (ac != null) {
             if (gameObject.name.ToLower().Contains("17mm"))
