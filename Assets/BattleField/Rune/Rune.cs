@@ -1,4 +1,6 @@
 using UnityEngine;
+using System;
+using System.Collections;
 using Mirror;
 
 public enum RuneBuff { None, Junior, Senior };
@@ -9,11 +11,12 @@ public class Rune : MonoBehaviour {
     public Transform rotator_rune;
     public RuneState rune_state_red;
     public RuneState rune_state_blue;
-    public Transform[] mines_gold;
-    public Transform[] mines_silv;
+    public GameObject[] mines_gold;
+    public GameObject[] lightbars_mine;
+    public GameObject[] mines_silv;
     public Activation activ;
     public ArmorColor rune_color;  // only works when rune's activated
-    public bool disabled;       // rune'll be disabled for 30sec
+    public bool disabled;       // rune'll be disabled for 30sec after activation expires
 
     private const int jun_sta = 1;    // rune_junior starts
     private const int jun_end = 2;   // rune_junior ends
@@ -35,9 +38,7 @@ public class Rune : MonoBehaviour {
     public void Init() {
         rune_state_red.Init();
         rune_state_blue.Init();
-        activ = Activation.Idle;
-        SetRnSta();
-        sgn = Random.Range(0f, 1f) > 0.5 ? 1 : -1;
+        sgn = UnityEngine.Random.Range(0f, 1f) > 0.5 ? 1 : -1;
         Reset();
         this.disabled = false;
 
@@ -58,16 +59,16 @@ public class Rune : MonoBehaviour {
     bool[] dropped = new bool[] {false, false, false};
     void Update() {
         float t_bat = BattleField.singleton.GetBattleTime();
-        if (t_bat > mine_1_3 && !dropped[0]) {
-            DropMine(1);
-            DropMine(3);
+        if (t_bat > mine_1_3 - 2 && !dropped[0]) {
+            StartCoroutine(DropMine(1));
+            StartCoroutine(DropMine(3));
             dropped[0] = true;
-        } else if (t_bat > mine_0_4 && !dropped[1]) {
-            DropMine(0);
-            DropMine(4);
+        } else if (t_bat > mine_0_4 - 2 && !dropped[1]) {
+            StartCoroutine(DropMine(0));
+            StartCoroutine(DropMine(4));
             dropped[1] = true;
-        } else if (t_bat > mine_2 && !dropped[2]) {
-            DropMine(2);
+        } else if (t_bat > mine_2 - 2 && !dropped[2]) {
+            StartCoroutine(DropMine(2));
             dropped[2] = true;
         }
 
@@ -75,6 +76,9 @@ public class Rune : MonoBehaviour {
         if (!NetworkServer.active)
             return;
 
+        if (t_bat >= sen_sta && t_bat - Time.deltaTime < sen_sta)
+            disabled = false;   // rune_junior being disabled won't prevent rune_senior from switching to Activation.Ready
+                                //  which means when first enters rune_senior, this.disabled should be cleared 
         /* rune has been activated => no spinning */
         if (this.activ == Activation.Activated || disabled)
             return;
@@ -99,8 +103,16 @@ public class Rune : MonoBehaviour {
     }
 
 
-    void DropMine(int mineIdx) {
-        mines_gold[mineIdx].parent = null;
+    IEnumerator DropMine(int mineIdx) {
+        for (int i = 0; i < 9; i++) {
+            lightbars_mine[2*mineIdx].SetActive(true);
+            lightbars_mine[2*mineIdx+1].SetActive(true);
+            yield return new WaitForSeconds(0.16f);
+            lightbars_mine[2*mineIdx].SetActive(false);
+            lightbars_mine[2*mineIdx+1].SetActive(false);
+            yield return new WaitForSeconds(0.17f);
+        }
+        mines_gold[mineIdx].transform.parent = null;
         mines_gold[mineIdx].gameObject.AddComponent<Rigidbody>();
     }
 
@@ -128,8 +140,8 @@ public class Rune : MonoBehaviour {
         this.activ = Activation.Idle;
         SetRnSta();
         this.t = 0;
-        this.a = Random.Range(0.78f, 1.045f);
-        this.w = Random.Range(1.884f, 2f);
+        this.a = UnityEngine.Random.Range(0.78f, 1.045f);
+        this.w = UnityEngine.Random.Range(1.884f, 2f);
     }
 
 

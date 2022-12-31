@@ -59,6 +59,12 @@ public class BattleField : MonoBehaviour {
     }
 
 
+    void Update() {
+        if (this.GetBattleTime() > 420f || !base_blue.survival || !base_red.survival)
+            this.EndGame();
+    }
+
+
     void StartGame() {
         t_start = Time.time;
 
