@@ -47,9 +47,10 @@ public class Weapon : MonoBehaviour {
     /// non-API
     /// </summary>
     void Start() {
-        if (this.name.ToLower().Contains("infantry"))
+        string tmp = this.name.ToLower();
+        if (tmp.Contains("infantry") || tmp.Contains("drone"))
             caliber = Caliber._17mm;
-        else if (this.name.ToLower().Contains("hero"))
+        else if (tmp.Contains("hero"))
             caliber = Caliber._42mm;
         else
             Debug.LogError("wrong car name receive by Weapon.cs: " + this.name);
@@ -100,8 +101,9 @@ public class Weapon : MonoBehaviour {
 
 
     void GainHeat() {
+        if (this.name.ToLower().Contains("drone"))
+            return;
         this.currheat += this.caliber == Caliber._17mm ? 10 : 100;
-        return;
     }
 
 }

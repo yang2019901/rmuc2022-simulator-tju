@@ -15,8 +15,9 @@ public class Traverse : MonoBehaviour {
             // AddMC(child);
             // ResetConvex(child);
             // DeleteMC(child);
-            ReplaceMaterial(child, AssetManager.singleton.light_red);
+            // ReplaceMaterial(child, AssetManager.singleton.light_red);
             // DeleteNI(child);
+            ReplaceMesh(child);
         }
         // DestroyImmediate(this.GetComponent<Traverse>());
     }
@@ -78,5 +79,21 @@ public class Traverse : MonoBehaviour {
             DestroyImmediate(GetComponent<NetworkIdentity>());
         }
 
+    }
+
+    void ReplaceMesh(Transform child) {
+        Mesh[] meshs = Resources.LoadAll<Mesh>("");
+        Debug.Log(meshs.Length);
+        MeshFilter mf = child.GetComponent<MeshFilter>();
+        if (mf != null) {
+            string name = child.name.Replace(' ', '_').Replace('.', '_').Replace('-', '_');
+            Debug.Log("target obj: " + name);
+            foreach (Mesh mesh in meshs) {
+                Debug.Log(mesh.name);
+                if (mesh.name.Contains(name)) {
+                    mf.mesh = mesh;
+                }
+            }
+        }
     }
 }

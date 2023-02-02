@@ -32,7 +32,7 @@ public class XchgSpot : MonoBehaviour {
         // Debug.DrawRay(this.transform.TransformPoint(collCent), Vector3.up, Color.green);
         foreach (Collider col in cols) {
             if (col.name.Contains(CatchMine.mine_s)) {
-                if (Time.time - t_last < 3f) {
+                if (BattleField.singleton.GetBattleTime() - t_last < 3f) {
                     BattleField.singleton.XchgMine(armor_color, col.name.Contains("gold"));
                     Debug.Log("xchg a mine successfully");
                     StartCoroutine(CollLightBlink());

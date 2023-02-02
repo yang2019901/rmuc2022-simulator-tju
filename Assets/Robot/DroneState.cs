@@ -10,4 +10,10 @@ public class DroneState : RoboState {
         rs.has_wpn = true;
         return rs;
     }
+
+    public override void Configure() {
+        this.maxblood = 0;
+        this.currblood = 0;
+        this.bullspd = 30;
+    }
 }

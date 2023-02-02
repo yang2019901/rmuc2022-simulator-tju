@@ -25,7 +25,6 @@ public class EngineerController : BasicController {
     public Transform rev_card;
 
     private Rigidbody _rigid => robo_state.rigid;
-    private RoboState robo_state;
 
     private CatchMine cm;
 
@@ -88,7 +87,6 @@ public class EngineerController : BasicController {
         if (!hasAuthority)
             return;
 
-        SetCursor();
         if (robo_state.survival) {
             Move();
             Look();
@@ -120,14 +118,6 @@ public class EngineerController : BasicController {
     }
 
 
-    void SetCursor() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None
-                : CursorLockMode.Locked;
-        }
-    }
-
-
     void StopMove() {
         foreach (var wc in wheelColliders) {
             wc.motorTorque = 0;
@@ -139,6 +129,7 @@ public class EngineerController : BasicController {
     const int wheel_num = 4;
     const float torque_drive = 8f;
     const float torque_spin = 2f;
+    PIDController chas_ctl = new PIDController(1, 0, 0);
     void Move() {
         if (cmd_lshift) {
             StopMove();
@@ -172,7 +163,7 @@ public class EngineerController : BasicController {
 
         float d_ang = -Mathf.DeltaAngle(yaw_ang, _rigid.transform.eulerAngles.y);
         if (Mathf.Abs(d_ang) < 5) d_ang = 0;
-        t2 = 0.2f * PID(d_ang);
+        t2 = 0.2f * chas_ctl.PID(d_ang);
 
 
         /* get sum of force */

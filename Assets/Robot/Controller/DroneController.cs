@@ -3,18 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-
-/* infantry and hero's controller */
-public class RoboController : BasicController {
+public class DroneController : BasicController {
     [Header("Kinematic")]
     public Vector3 centerOfMass;
     [Header("turret")]
     public Transform yaw;
     public Transform pitch;
-    [Header("wheels")]
-    public Transform[] wheels;
-    [Header("order: FL-FR-BR-BL")]
-    public WheelCollider[] wheelColliders;
 
     [Header("Weapon")]
     public Transform bullet_start;
@@ -30,8 +24,12 @@ public class RoboController : BasicController {
     private float pitch_max = 40;
     private Weapon wpn;
 
-    private bool playing => Cursor.lockState == CursorLockMode.Locked;
     private Rigidbody _rigid => robo_state.rigid;
+
+    bool playing => Cursor.lockState == CursorLockMode.Locked;
+    bool cmd_E => playing && Input.GetKey(KeyCode.E);
+    bool cmd_Q => playing && Input.GetKey(KeyCode.Q);
+    float v => playing ? Input.GetAxis("Vertical") : 0;
 
     /// <summary>
     /// non-API
@@ -54,7 +52,6 @@ public class RoboController : BasicController {
             Cursor.lockState = CursorLockMode.None;
         }
     }
-
 
     Transform virt_yaw;
     void Awake() {
@@ -85,7 +82,6 @@ public class RoboController : BasicController {
     }
 
 
-
     void Update() {
         if (!hasAuthority) {
             return;
@@ -95,8 +91,7 @@ public class RoboController : BasicController {
             Look();
             Move();
             Shoot();
-        } else
-            StopMove();
+        }
         UpdateSelfUI();
     }
 
@@ -121,108 +116,16 @@ public class RoboController : BasicController {
     }
 
 
-    void StopMove() {
-        foreach (var wc in wheelColliders) {
-            wc.motorTorque = 0;
-            wc.brakeTorque = 0.1f;
-        }
-    }
-
-
-    const int wheel_num = 4;
-    const float efficiency = 0.5f;
-    const float charge_coeff = 0.1f;          // how much of torque_avail will be used to charge capacity
-    const float discharge_coeff = 1.8f;      // how fast capacity discharge 
-    const float torque_drive = 20f;
-    const float torque_spin = 20f;
-    bool discharging = false;
-    float torque_avail;
-    bool braking => playing && Input.GetKey(KeyCode.X);
-    bool spinning => playing && Input.GetKey(KeyCode.LeftShift);
-    float h => playing ? Input.GetAxis("Horizontal") : 0;
-    float v => playing ? Input.GetAxis("Vertical") : 0;
-    PIDController chas_ctl = new PIDController(1, 0, 0);
     void Move() {
-        /* Manage Power */
-        torque_avail = efficiency * robo_state.power;
-
-        if (Input.GetKeyDown(KeyCode.C) && playing)
-            discharging = !discharging;
-
-        /* store energy in capacity */
-        if (discharging && currcap > 1) {
-            currcap -= (discharge_coeff - 1) * robo_state.power * Time.deltaTime;
-            torque_avail *= discharge_coeff;
-        } else {
-            currcap += charge_coeff * torque_avail * Time.deltaTime;
-            torque_avail *= 1 - charge_coeff;
+        // ascend and descend
+        if (cmd_E ^ cmd_Q) {
+            float dist = (cmd_E ? 1 : -1) * 2 * Time.deltaTime;
+            transform.Translate(dist * transform.up, Space.World);
         }
-        currcap = Mathf.Min(maxcap, currcap);
-
-        /* brake */
-        if (braking) {
-            for (int i = 0; i < wheel_num; i++) {
-                wheelColliders[i].steerAngle = (45 + 90 * i) % 360 * Mathf.Deg2Rad;
-                wheelColliders[i].motorTorque = 0;
-                wheelColliders[i].brakeTorque = 10;
-            }
-            Debug.Log("braking");
-            currcap += torque_avail * Time.deltaTime;
-            return;
-        } else  // remove previous brake torque
-            foreach (var wc in wheelColliders)
-                wc.brakeTorque = 0;
-
-        float chas2yaw = Vector3.SignedAngle(_rigid.transform.forward, virt_yaw.forward, _rigid.transform.up);
-
-        // move the car and steer wheels
-        float steer_ang = Mathf.Rad2Deg * Mathf.Atan2(h, v);
-        steer_ang = steer_ang + chas2yaw;
-        foreach (var wc in wheelColliders) {
-            /* Note: steerAngle will CLAMP angle to [-360, 360]
-                Get remainder, make sure steer_ang is in [-360, 360] */
-            wc.steerAngle = steer_ang % 360;
-            wc.motorTorque = torque_drive * Mathf.Sqrt(h * h + v * v);
-        }
-
-
-        /* spin */
-        float torque = 0;
-        if (spinning) {
-            torque = torque_spin;
-        } else {
-            // make chassis follow turret(aka, yaw)
-            if (Mathf.Abs(chas2yaw) > 5)
-                torque = 0.2f * chas_ctl.PID(chas2yaw);
-        }
-
-        /* get sum of force */
-        float torque_now = 0;
-        for (int i = 0; i < wheel_num; i++) {
-            float ang1 = wheelColliders[i].steerAngle * Mathf.Deg2Rad;
-            float ang2 = (45 + 90 * i) % 360 * Mathf.Deg2Rad;
-            Vector2 f1 = wheelColliders[i].motorTorque * new Vector2(Mathf.Cos(ang1), Mathf.Sin(ang1));
-            Vector2 f2 = torque * new Vector2(Mathf.Cos(ang2), Mathf.Sin(ang2));
-            Vector2 f_all = f1 + f2;
-            wheelColliders[i].steerAngle = (Mathf.Rad2Deg * Mathf.Atan2(f_all.y, f_all.x));
-            wheelColliders[i].motorTorque = f_all.magnitude;
-            torque_now += wheelColliders[i].motorTorque;
-            /* rotate the visual model */
-            if (wheels.Length > i)
-                wheels[i].transform.localEulerAngles = new Vector3(0, wheelColliders[i].steerAngle, 0);
-        }
-        if (torque_now < 1) {   // counted as not moving
-            foreach (var wc in wheelColliders)
-                wc.brakeTorque = 0.1f;
-            currcap += torque_avail * Time.deltaTime;
-            return;
-        } else
-            for (int i = 0; i < wheel_num; i++)
-                wheelColliders[i].motorTorque *= torque_avail / torque_now;
-
+        if (Mathf.Abs(v) > 1e-3)
+            transform.Translate(v * 2 * Time.deltaTime * virt_yaw.forward, Space.World);
+        // wings follow turret
     }
-
-
 
 
     /* keep yaw.up coincides with _rigid.up */
@@ -260,8 +163,8 @@ public class RoboController : BasicController {
 
     protected override void AimAt(Vector3 target) {
         Vector3 d = target - pitch.transform.position;
-        float d_yaw = dynCoeff * BasicController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
-        float d_pitch = dynCoeff * BasicController.SignedAngleOnPlane(bullet_start.forward, d, pitch.transform.right);
+        float d_yaw = dynCoeff * RoboController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
+        float d_pitch = dynCoeff * RoboController.SignedAngleOnPlane(bullet_start.forward, d, pitch.transform.right);
         virt_yaw.transform.Rotate(virt_yaw.transform.up, d_yaw, Space.World);
         pitch.transform.Rotate(pitch.transform.right, d_pitch, Space.World);
         pitch_ang += d_pitch;       // update pitch_ang so that when turret won't look around switch off auto-aim
@@ -271,25 +174,6 @@ public class RoboController : BasicController {
     // get ammunition supply at reborn spot
     [Command]
     public void CmdSupply(string robot_s, int num) {
-        // todo: add judge of money
-        GameObject obj = GameObject.Find(robot_s);
-        RoboController rc = obj.GetComponent<RoboController>();
-        bool in_supp_spot = rc.robo_state.robo_buff.FindIndex(i => i.tag == BuffType.rev) != -1;
-        if (rc != null && in_supp_spot) {
-            int money_req = rc.wpn.caliber == Caliber._17mm ? num : 15 * num;
-            bool is_red = obj.GetComponent<RoboState>().armor_color == ArmorColor.Red;
-            if (is_red) {
-                if (money_req <= BattleField.singleton.money_red) {
-                    rc.wpn.bullnum += num;
-                    BattleField.singleton.money_red -= money_req;
-                    Debug.Log("call supply");
-                }
-            } else if (money_req <= BattleField.singleton.money_blue) {
-                rc.wpn.bullnum += num;
-                BattleField.singleton.money_blue -= money_req;
-                Debug.Log("call supply");
-            }
-        }
     }
 
 

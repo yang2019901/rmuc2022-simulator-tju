@@ -84,6 +84,8 @@ public class RoboState : BasicState {
 
     public GameObject[] blood_bars;
     public void SetBloodBars() {
+        if (maxblood <= 0)
+            return;
         Vector3 scale = new Vector3(1, 1, (float)currblood / maxblood);
         foreach (GameObject bb in blood_bars) {
             bb.transform.localScale = scale;
@@ -96,7 +98,7 @@ public class RoboState : BasicState {
         this.currblood = 0;
         SetBloodBars();
         this.rbn_req += 10;
-        
+
         this.survival = false;
         foreach (ArmorController ac in acs)
             ac.Disable();
@@ -129,13 +131,13 @@ public class RoboState : BasicState {
     }
 
 
-    /* li_b_xx will be allocated here. hence, make sure base.Start() is called at very beginning */ 
+    /* li_b_xx will be allocated here. hence, make sure base.Start() is called at very beginning */
     public virtual void Start() {
         li_B_atk = new List<float> { 0 };
         li_B_dfc = new List<float> { 0 };
-        li_B_cd  = new List<float> { 1 };
+        li_B_cd = new List<float> { 1 };
         li_B_rev = new List<float> { 0 };
-        li_B_rbn = new List<int>   { 0 };
+        li_B_rbn = new List<int> { 0 };
         UpdateBuff();
 
         GetUserPref();
@@ -144,14 +146,14 @@ public class RoboState : BasicState {
         this.currblood = this.maxblood;
         SetBloodBars();
     }
-    
-    
+
+
     public virtual void Update() {
         if (NetworkServer.active)
             Revive();
     }
 
-    
+
     protected int rbn_req = 0;  // Every death will add 10 to rbn_req immediately.
                                 // When first died, rbn_req will be 10, 
                                 //  exactly what's needed for first reborn
@@ -191,7 +193,7 @@ public class RoboState : BasicState {
         SetBloodBars();
         StartCoroutine(this.Reborn());
     }
-    
+
 
     IEnumerator Reborn() {
         /* delay 10 sec invincible */
@@ -244,6 +246,6 @@ public class RoboState : BasicState {
 
 
 
-    public virtual void GetUserPref() { }
-    public virtual void Configure() { }
+    public virtual void GetUserPref() { Debug.Log("RoboState.GetUserPref (virtual)"); }
+    public virtual void Configure() { Debug.Log("RoboState.Configure (virtual)"); }
 }

@@ -80854,6 +80854,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  robo_state: {fileID: 0}
+  maxDist: 15
+  dynCoeff: 0.4
   centerOfMass: {x: 0, y: 0, z: 0}
   yaw: {fileID: 1899311991754189605}
   pitch: {fileID: 1899311992768718324}
@@ -80867,12 +80870,9 @@ MonoBehaviour:
   - {fileID: 1899311993313264970}
   - {fileID: 1899311993377013006}
   - {fileID: 1899311992746062538}
-  bullet_start: {fileID: 1899311993332943589}
+  bullet_start: {fileID: 833646869618964716}
   view: {fileID: 1899311993548116148}
   currcap: 0
-  maxDist: 15
-  dynCoeff: 0.4
-  robo_state: {fileID: 0}
 --- !u!114 &1899311992969313171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123471,6 +123471,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e3cbc26a25200b4cbab679ad7f048b5, type: 3}
+--- !u!4 &833646869618964716 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4248337880542601103, guid: 0e3cbc26a25200b4cbab679ad7f048b5, type: 3}
+  m_PrefabInstance: {fileID: 3559134128887752547}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1899311992232938022 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3116248584433823045, guid: 0e3cbc26a25200b4cbab679ad7f048b5, type: 3}
