@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5862268242522731352}
   - component: {fileID: 1308690092984188313}
   - component: {fileID: 6381118349048070331}
-  - component: {fileID: 5231648342298097836}
   m_Layer: 0
   m_Name: "RoboMaster \u7535\u6E90\u6A21\u5757 PM01 2019 5"
   m_TagString: Untagged
@@ -84,20 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5231648342298097836
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8765717855506937}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: d0422f37a9ac53e49ba949fd525417c4, type: 2}
 --- !u!1 &43556787107521453
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,7 +1007,6 @@ GameObject:
   - component: {fileID: 2154164891128318325}
   - component: {fileID: 4165555545863793116}
   - component: {fileID: 9107639572816518365}
-  - component: {fileID: 392735909472201703}
   m_Layer: 0
   m_Name: "RoboMaster \u7535\u6E90\u6A21\u5757 PM01 2019 10"
   m_TagString: Untagged
@@ -1095,20 +1079,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &392735909472201703
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 219388099589787585}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 9f5efe313e828c44385d3fb46734c5d2, type: 2}
 --- !u!1 &229391057734774285
 GameObject:
   m_ObjectHideFlags: 0
@@ -6362,7 +6332,6 @@ GameObject:
   - component: {fileID: 7192004327518547532}
   - component: {fileID: 3025461487845372531}
   - component: {fileID: 6437854266146581705}
-  - component: {fileID: 6833742520938102877}
   m_Layer: 0
   m_Name: "RoboMaster \u7535\u6E90\u6A21\u5757 PM01 2019 16"
   m_TagString: Untagged
@@ -6435,20 +6404,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6833742520938102877
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 997777378977162497}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 4e3ae8765503e774a93f401f78b6ba1f, type: 2}
 --- !u!1 &1038285020307037681
 GameObject:
   m_ObjectHideFlags: 0
@@ -7373,7 +7328,6 @@ GameObject:
   - component: {fileID: 7729233873044264259}
   - component: {fileID: 2723998139503647050}
   - component: {fileID: 6132208216983543151}
-  - component: {fileID: 5330152561033257860}
   m_Layer: 0
   m_Name: "RoboMaster \u7535\u6E90\u6A21\u5757 PM01 2019 2"
   m_TagString: Untagged
@@ -7446,20 +7400,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5330152561033257860
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1159379601130237601}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 3402e8476f5643f4d95f8bb77948e0d9, type: 2}
 --- !u!1 &1160875004824679647
 GameObject:
   m_ObjectHideFlags: 0
@@ -8550,7 +8490,6 @@ GameObject:
   - component: {fileID: 8698799969292126954}
   - component: {fileID: 827381320656054550}
   - component: {fileID: 1921468788267813659}
-  - component: {fileID: 1664799473806160154}
   m_Layer: 0
   m_Name: "RoboMaster \u7535\u6E90\u6A21\u5757 PM01 2019 12"
   m_TagString: Untagged
@@ -8623,20 +8562,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1664799473806160154
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387622580765180770}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: ab06c2d55224e3b47b92720a314ad570, type: 2}
 --- !u!1 &1402902193038019954
 GameObject:
   m_ObjectHideFlags: 0
@@ -10863,7 +10788,6 @@ GameObject:
   - component: {fileID: 6179421337449873595}
   - component: {fileID: 9064981403980191164}
   - component: {fileID: 8739283671580963471}
-  - component: {fileID: 5353817686522763134}
   m_Layer: 0
   m_Name: "3mm \u7535\u6E90\u7BA1\u7406-TX2\u5B89\u88C5\u677F\u63D2\u9500"
   m_TagString: Untagged
@@ -10936,20 +10860,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5353817686522763134
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697650599849818474}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: da6b79a0638c95a4cb452b07d9e4657f, type: 2}
 --- !u!1 &1704955261686268080
 GameObject:
   m_ObjectHideFlags: 0
@@ -21646,38 +21556,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &3071990274955710670
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3071990274955710671}
-  m_Layer: 0
-  m_Name: colliders
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3071990274955710671
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3071990274955710670}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3071990276283685762}
-  m_Father: {fileID: 7641439840345675748}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3071990274959156470
 GameObject:
   m_ObjectHideFlags: 0
@@ -34051,7 +33929,7 @@ GameObject:
   - component: {fileID: 3071990276283685762}
   - component: {fileID: 3071990276283685763}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34064,13 +33942,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3071990276283685765}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3071990274955710671}
-  m_RootOrder: 0
+  m_Father: {fileID: 3071990276743643590}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &3071990276283685763
 BoxCollider:
@@ -37945,16 +37823,17 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3071990276743643449}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3071990275772925110}
   - {fileID: 4051620144550246147}
+  - {fileID: 3071990276283685762}
   m_Father: {fileID: 7641439840345675748}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &3071990276786869150
 GameObject:
   m_ObjectHideFlags: 0
@@ -44152,7 +44031,6 @@ GameObject:
   - component: {fileID: 5604437704844183562}
   - component: {fileID: 4289952947417815917}
   - component: {fileID: 6487300855023730744}
-  - component: {fileID: 4661504285420382074}
   m_Layer: 0
   m_Name: "RoboMaster \u7535\u6E90\u6A21\u5757 PM01 2019 1"
   m_TagString: Untagged
@@ -44225,20 +44103,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4661504285420382074
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3810348050834239766}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: d72fe397cf6427344b915f13354d44dc, type: 2}
 --- !u!1 &3811160045741885805
 GameObject:
   m_ObjectHideFlags: 0
@@ -52506,7 +52370,6 @@ GameObject:
   - component: {fileID: 3890278043262044468}
   - component: {fileID: 4744580647134994734}
   - component: {fileID: 5935926029573284084}
-  - component: {fileID: 3676763182114584737}
   m_Layer: 0
   m_Name: "RoboMaster \u7535\u6E90\u6A21\u5757 PM01 2019 13"
   m_TagString: Untagged
@@ -52579,20 +52442,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3676763182114584737
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4988738937258808481}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 46c866cd5578d214cb439bf3933cd1d9, type: 2}
 --- !u!1 &4993281539335969967
 GameObject:
   m_ObjectHideFlags: 0
@@ -52687,7 +52536,6 @@ GameObject:
   - component: {fileID: 206395388522036355}
   - component: {fileID: 5945599306039559985}
   - component: {fileID: 8840703655546345880}
-  - component: {fileID: 3914159127564079865}
   m_Layer: 0
   m_Name: "RoboMaster \u7535\u6E90\u6A21\u5757 PM01 2019 11"
   m_TagString: Untagged
@@ -52760,20 +52608,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3914159127564079865
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4999650854695780133}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: ae783b6132f2f5e4a8e77cd87a37657a, type: 2}
 --- !u!1 &5026083266570839270
 GameObject:
   m_ObjectHideFlags: 0
@@ -53532,7 +53366,6 @@ GameObject:
   - component: {fileID: 4781768423511526085}
   - component: {fileID: 7534826913311618508}
   - component: {fileID: 2350997064335727360}
-  - component: {fileID: 7659710535581761575}
   m_Layer: 0
   m_Name: M2.5-6-D4
   m_TagString: Untagged
@@ -53605,20 +53438,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7659710535581761575
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5084497947223689304}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 6f3cba80fc2b2e642aa719e76365dbf9, type: 2}
 --- !u!1 &5127839090545737386
 GameObject:
   m_ObjectHideFlags: 0
@@ -53796,7 +53615,6 @@ GameObject:
   - component: {fileID: 36355323551186908}
   - component: {fileID: 2536803641071820812}
   - component: {fileID: 8247690960323856098}
-  - component: {fileID: 2121178518634187563}
   m_Layer: 0
   m_Name: ' 7'
   m_TagString: Untagged
@@ -53869,20 +53687,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2121178518634187563
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5144695456454195187}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 9c5b505b515af2541ac0f5904bfd016f, type: 2}
 --- !u!1 &5156887323780148414
 GameObject:
   m_ObjectHideFlags: 0
@@ -57944,7 +57748,6 @@ GameObject:
   - component: {fileID: 4593439467852445662}
   - component: {fileID: 7452656934140721108}
   - component: {fileID: 6076396102201868738}
-  - component: {fileID: 7280359862740557086}
   m_Layer: 0
   m_Name: "RoboMaster \u7535\u6E90\u6A21\u5757 PM01 2019 7"
   m_TagString: Untagged
@@ -58017,20 +57820,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7280359862740557086
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5702514887954075521}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: e2e4a31b3e8a76c4987865000075daee, type: 2}
 --- !u!1 &5707093752124888197
 GameObject:
   m_ObjectHideFlags: 0
@@ -68817,7 +68606,6 @@ Transform:
   m_Children:
   - {fileID: 3071990276743643590}
   - {fileID: 1444113319048627273}
-  - {fileID: 3071990274955710671}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -68832,8 +68620,8 @@ Rigidbody:
   m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0
-  m_UseGravity: 1
-  m_IsKinematic: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -68895,7 +68683,6 @@ MonoBehaviour:
   pitch: {fileID: 891577611837757158}
   bullet_start: {fileID: 1176783288369672010}
   view: {fileID: 1672663108200058215}
-  currcap: 0
 --- !u!114 &-2181913554240509953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69041,7 +68828,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7007611606794374494}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 92a60adbf5299fc439099e600e798765, type: 2}
   m_CullingMode: 0
@@ -69479,7 +69266,6 @@ GameObject:
   - component: {fileID: 3895057524678874930}
   - component: {fileID: 3856956807939402973}
   - component: {fileID: 7350594993204257004}
-  - component: {fileID: 146153887738703508}
   m_Layer: 0
   m_Name: "RoboMaster \u7535\u6E90\u6A21\u5757 PM01 2019 14"
   m_TagString: Untagged
@@ -69552,20 +69338,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &146153887738703508
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7045227618884053851}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: ab8d6f88602df8a4aaa06c9c7e315773, type: 2}
 --- !u!1 &7047880858272965431
 GameObject:
   m_ObjectHideFlags: 0
@@ -70452,7 +70224,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7163966038850294596}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.1967001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -70461,7 +70233,7 @@ Transform:
   - {fileID: 8976328894071696101}
   m_Father: {fileID: 7641439840345675748}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7178793236112791440
 GameObject:
   m_ObjectHideFlags: 0
@@ -76838,7 +76610,6 @@ GameObject:
   - component: {fileID: 3324813908366639889}
   - component: {fileID: 2136363518094348653}
   - component: {fileID: 3791674641724499712}
-  - component: {fileID: 4798254071879652322}
   m_Layer: 0
   m_Name: "RoboMaster \u7535\u6E90\u6A21\u5757 PM01 2019 17"
   m_TagString: Untagged
@@ -76911,20 +76682,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4798254071879652322
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8099668262459165055}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: bd1931b0cb416864da6ee23015ef175b, type: 2}
 --- !u!1 &8125654342265202821
 GameObject:
   m_ObjectHideFlags: 0
@@ -78985,7 +78742,6 @@ GameObject:
   - component: {fileID: 2394462877014926731}
   - component: {fileID: 6214380304805694399}
   - component: {fileID: 5149526199789497444}
-  - component: {fileID: 4885389119344264776}
   m_Layer: 0
   m_Name: "RoboMaster \u7535\u6E90\u6A21\u5757 PM01 2019 9"
   m_TagString: Untagged
@@ -79058,20 +78814,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4885389119344264776
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8349663665857771220}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 8f343d8ea2be87d4da6e8e4efac18033, type: 2}
 --- !u!1 &8359472908158742586
 GameObject:
   m_ObjectHideFlags: 0
@@ -82443,7 +82185,6 @@ GameObject:
   - component: {fileID: 3887124333989904891}
   - component: {fileID: 3254817695068482782}
   - component: {fileID: 7320219024134488969}
-  - component: {fileID: 4744183203552294999}
   m_Layer: 0
   m_Name: "RoboMaster \u7535\u6E90\u6A21\u5757 PM01 2019 15"
   m_TagString: Untagged
@@ -82516,20 +82257,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4744183203552294999
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8807207711991525668}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 3f6cd0020defa714aa6a38639639a122, type: 2}
 --- !u!1 &8818718932940800508
 GameObject:
   m_ObjectHideFlags: 0
@@ -85410,7 +85137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4438184034802352573, guid: 71596217168f91849ab8e4b807a02452, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0004
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4438184034802352573, guid: 71596217168f91849ab8e4b807a02452, type: 3}
       propertyPath: m_LocalRotation.w

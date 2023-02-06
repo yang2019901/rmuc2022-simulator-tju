@@ -9,6 +9,8 @@ public class BasicController : NetworkBehaviour {
     public float maxDist = 15f;        // max distance of auto aim
     public float dynCoeff = 0.4f;    // a 0~1 number describes how fast turret chases the target; 0: no chasing    1: perfectly chasing
 
+    
+    // project 'from' and 'to' to the plane defined by norm and calc signed angle of their projections
     public static float SignedAngleOnPlane(Vector3 from, Vector3 to, Vector3 norm) {
         Vector3 tmp1 = Vector3.ProjectOnPlane(from, norm);
         Vector3 tmp2 = Vector3.ProjectOnPlane(to, norm);

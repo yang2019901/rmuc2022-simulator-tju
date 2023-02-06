@@ -17,7 +17,8 @@ public class Traverse : MonoBehaviour {
             // DeleteMC(child);
             // ReplaceMaterial(child, AssetManager.singleton.light_red);
             // DeleteNI(child);
-            ReplaceMesh(child);
+            // ReplaceMesh(child);
+            DeleteMC(child);
         }
         // DestroyImmediate(this.GetComponent<Traverse>());
     }

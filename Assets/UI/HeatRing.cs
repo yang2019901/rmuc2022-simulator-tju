@@ -16,7 +16,7 @@ namespace RMUC_UI {
 
         public void SetHeat(float ratio) {
             ratio = Mathf.Clamp(ratio, 0, 1);
-            if (ratio > 0 && ratio <= 1f / 3)
+            if (ratio >= 0 && ratio <= 1f / 3)
                 img_hr.sprite = hr[0];
             else if (ratio <= 2f / 3)
                 img_hr.sprite = hr[1];

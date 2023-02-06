@@ -77,6 +77,9 @@ public class Weapon : MonoBehaviour {
 
     int Q1, Q0;
     void CalcHeat() {
+        if (this.maxheat == 0 || robot.maxblood <= 0)
+            return;
+
         Q1 = this.currheat;
         Q0 = this.maxheat;
         if (Q1 > 2 * Q0) {

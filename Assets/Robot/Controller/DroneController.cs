@@ -15,21 +15,21 @@ public class DroneController : BasicController {
     [Header("View")]
     public Transform view;
 
-    [HideInInspector] public float currcap = 0;
-    const int maxcap = 500;
+    public const float speed = 0.5f;
 
     private float last_fire = 0;
     private float pitch_ang = 0;
     private float pitch_min = -30;
     private float pitch_max = 40;
     private Weapon wpn;
-
+    private Animator anim_posture;   // control visual effect of leaning to make flying realistic
     private Rigidbody _rigid => robo_state.rigid;
 
     bool playing => Cursor.lockState == CursorLockMode.Locked;
     bool cmd_E => playing && Input.GetKey(KeyCode.E);
     bool cmd_Q => playing && Input.GetKey(KeyCode.Q);
     float v => playing ? Input.GetAxis("Vertical") : 0;
+    float h => playing ? Input.GetAxis("Horizontal") : 0;
 
     /// <summary>
     /// non-API
@@ -57,6 +57,7 @@ public class DroneController : BasicController {
     void Awake() {
         robo_state = GetComponent<RoboState>();
         wpn = GetComponent<Weapon>();
+        anim_posture = GetComponent<Animator>();
         /* create virtual yaw transform (independent of chassis's transform) */
         virt_yaw = new GameObject("virt_yaw-" + this.name).transform;
         virt_yaw.transform.SetPositionAndRotation(yaw.transform.position, yaw.transform.rotation);
@@ -98,13 +99,10 @@ public class DroneController : BasicController {
 
     RMUC_UI.BattleUI bat_ui => BattleField.singleton.bat_ui;    // alias
     void UpdateSelfUI() {
-        bat_ui.rat_heat = wpn.heat_ratio;
-        bat_ui.rat_cap = Mathf.Clamp01(currcap / maxcap);
-
         /* update buff display in UI */
         bat_ui.indic_buf[0] = Mathf.Approximately(robo_state.B_atk, 0f) ? -1            // atk
             : Mathf.Approximately(robo_state.B_atk, 0.5f) ? 0 : 1;
-        bat_ui.indic_buf[1] = Mathf.Approximately(robo_state.B_cd, 1f) ? -1             // cldn
+        bat_ui.indic_buf[1] = Mathf.Approximately(robo_state.B_cd, 1f) ? -1             // cd
             : Mathf.Approximately(robo_state.B_cd, 3f) ? 0 : 1;
         bat_ui.indic_buf[2] = Mathf.Approximately(robo_state.B_rev, 0f) ? -1            // rev
             : Mathf.Approximately(robo_state.B_rev, 0.02f) ? 0 : 1;
@@ -116,15 +114,45 @@ public class DroneController : BasicController {
     }
 
 
+    PIDController pid_follow = new PIDController(0.5f, 0f, 10f);         // T = J*theta''. theta is set (by mouse) and T is CV. 
+                                                                       //  so it's a second-order system. use PD controller
+    PIDController pid_throttle = new PIDController(6f, 0.5f, 0.1f);
+    PIDController pid_force_v = new PIDController(2f, 0.01f, 0f);                // control force forward
+    PIDController pid_force_h = new PIDController(2f, 0.01f, 0f);                // control force right
+    PIDController pid_lean_v = new PIDController(5f, 0.02f, 20f);
+    PIDController pid_lean_h = new PIDController(5f, 0.02f, 20f);
     void Move() {
         // ascend and descend
-        if (cmd_E ^ cmd_Q) {
-            float dist = (cmd_E ? 1 : -1) * 2 * Time.deltaTime;
-            transform.Translate(dist * transform.up, Space.World);
-        }
-        if (Mathf.Abs(v) > 1e-3)
-            transform.Translate(v * 2 * Time.deltaTime * virt_yaw.forward, Space.World);
+        float vel_set = speed * ((cmd_E ? 1 : 0) - (cmd_Q ? 1 : 0));
+        Vector3 f_thro = pid_throttle.PID(vel_set - _rigid.velocity.y) * Vector3.up;
+        _rigid.AddForce(f_thro, ForceMode.Acceleration);
+
+        // fly horizontally
+        Vector3 vec_set = new Vector3();
+        if (Mathf.Abs(v) > 1e-3 || Mathf.Abs(h) > 1e-3) {
+            Vector3 vec_v = Vector3.ProjectOnPlane(virt_yaw.forward, Vector3.up).normalized;
+            Vector3 vec_h = Vector3.ProjectOnPlane(virt_yaw.right, Vector3.up).normalized;
+            vec_set = (h * vec_h + v * vec_v).normalized;
+        } else
+            vec_set = Vector3.zero;
+        float tmp_v = pid_force_v.PID(vec_set.z - _rigid.velocity.z);
+        float tmp_h = pid_force_h.PID(vec_set.x - _rigid.velocity.x);
+        Vector3 force = tmp_v * Vector3.forward + tmp_h * Vector3.right;
+        _rigid.AddForce(force, ForceMode.Acceleration);
+
+        // set visual effect of leaning
+        Vector3 error = 0.15f * vec_set - Vector3.ProjectOnPlane(_rigid.transform.up, Vector3.up);
+    // Debug.LogFormat("vec_set: {0}\t error: {1}", vec_set, error);
+        Vector3 torque = pid_lean_v.PID(error.z) * Vector3.right + pid_lean_h.PID(error.x) * Vector3.back;
+        _rigid.AddTorque(torque, ForceMode.Acceleration);
+
         // wings follow turret
+        float wing2yaw = Vector3.SignedAngle(_rigid.transform.forward, virt_yaw.forward, _rigid.transform.up);
+        Vector3 torque_fol = pid_follow.PID(wing2yaw) * _rigid.transform.up;
+        _rigid.AddTorque(torque_fol, ForceMode.Acceleration);
+
+        // yaw rotates with _rigid, hence calibration is needed
+        CalibYaw();
     }
 
 
@@ -137,6 +165,13 @@ public class DroneController : BasicController {
     }
 
 
+    /** align yaw's rotation to virt_yaw's rotation, should be called when yaw is 'dirty'
+        (when yaw ain't aligned with virt_yaw and transform of yaw or any child is to use)
+    */
+    void CalibYaw() {
+        yaw.rotation = virt_yaw.rotation;
+    }
+
     /* Get look dir from user input */
     bool autoaim => playing && Input.GetMouseButton(1);
     bool runeMode => Input.GetKey(KeyCode.R);
@@ -144,8 +179,8 @@ public class DroneController : BasicController {
     float mouseY => playing ? 2 * Input.GetAxis("Mouse Y") : 0;
     void Look() {
         CalibVirtYaw();
-        /* correct yaw's transform, i.e., elimate attitude error caused by following movement */
-        yaw.rotation = virt_yaw.rotation;
+        // must align yaw to virt_yaw now because 'bullet_start', which is child of yaw is to use 
+        CalibYaw();
         if (!autoaim || !base.AutoAim(bullet_start, runeMode)) {
             pitch_ang -= mouseY;
             pitch_ang = Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
@@ -157,7 +192,7 @@ public class DroneController : BasicController {
             base.last_target = null;
         }
         /* update yaw's transform, i.e., transform yaw to aim at target (store in virt yaw) */
-        yaw.rotation = virt_yaw.rotation;
+        CalibYaw();
     }
 
 

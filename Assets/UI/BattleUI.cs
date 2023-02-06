@@ -34,7 +34,7 @@ namespace RMUC_UI {
         public Image img_exp;
         public TMP_Text txt_cap;
         public TMP_Text txt_exp;
-        public float rat_cap;
+        public float rat_cap = 0;
         /* atk, cldn, rev, dfc, snp, lea */
         public int[] indic_buf = new int[6];
         public Image[] imgs_buf;
@@ -114,46 +114,57 @@ namespace RMUC_UI {
         }
 
 
+        void InitMyUI() {
+            string color = myrobot.armor_color == ArmorColor.Red ? "red" : "blue";
+            // find my robotab (at the bottom left of the screen)
+            foreach (RoboTab rt in GetComponentsInChildren<RoboTab>(includeInactive: true)) {
+                if (rt.name.ToLower().Contains("my")) {
+                    // Debug.Log("rt.name: " + rt.name);
+                    if (!rt.name.ToLower().Contains(color)) {
+                        rt.gameObject.SetActive(false);
+                        continue;
+                    }
+                    rt.gameObject.SetActive(true);
+                    my_robotab = rt;    // store reference
+
+                    // get robotab's img_ava's index
+                    int idx = 0; var tp = myrobot.GetType();
+
+                    if (tp == typeof(HeroState)) idx = 0;
+                    else if (tp == typeof(EngineerState)) {
+                        txt_cap.gameObject.SetActive(false);
+                        img_cap.gameObject.SetActive(false);
+                        txt_exp.gameObject.SetActive(false);
+                        img_exp.gameObject.SetActive(false);
+                        idx = 1;
+                    } else if (tp == typeof(InfantryState)) idx = 2;
+                    // else if (tp == typeof(DroneState)) idx = 5;
+                    else Debug.Log("wrong type of myrobot: " + tp);
+
+                    // set robotab's img_ava
+                    my_robotab.img_ava.sprite = my_robotab.imgs_team[idx];
+                }
+            }
+            int my_roboidx = BattleField.singleton.robo_all.FindIndex(i => i == myrobot);
+            foreach (TMP_Text txt in my_robotab.GetComponentsInChildren<TMP_Text>())
+                if (txt.gameObject.name.ToLower().Contains("idx")) {
+                    txt.text = (my_roboidx % 5 + 1).ToString();
+                    // Debug.Log("set my robot index");
+                }
+        }
+
+
         // called every frame
         bool init = false;
         void SetMyUI() {
             if (myrobot == null)
                 return;
-            if (!init) {
-                string color = myrobot.armor_color == ArmorColor.Red ? "red" : "blue";
-                foreach (RoboTab rt in GetComponentsInChildren<RoboTab>(includeInactive: true)) {
-                    if (rt.name.ToLower().Contains("my")) {
-                        // Debug.Log("rt.name: " + rt.name);
-                        if (!rt.name.ToLower().Contains(color)) {
-                            rt.gameObject.SetActive(false);
-                            continue;
-                        }
-                        rt.gameObject.SetActive(true);
-                        my_robotab = rt;    // store reference
 
-                        // get robotab's img_ava's index
-                        int idx = 0; var tp = myrobot.GetType();
-                        if (tp == typeof(HeroState)) idx = 0;
-                        else if (tp == typeof(EngineerState)) {
-                            txt_cap.gameObject.SetActive(false);
-                            img_cap.gameObject.SetActive(false);
-                            txt_exp.gameObject.SetActive(false);
-                            img_exp.gameObject.SetActive(false);
-                            idx = 1;
-                        } else if (tp == typeof(InfantryState)) idx = 2;
-                        else Debug.Log("wrong type of myrobot: " + tp);
-                        // set robotab's img_ava
-                        my_robotab.img_ava.sprite = my_robotab.imgs_team[idx];
-                    }
-                }
-                int my_roboidx = BattleField.singleton.robo_all.FindIndex(i => i == myrobot);
-                foreach (TMP_Text txt in my_robotab.GetComponentsInChildren<TMP_Text>())
-                    if (txt.gameObject.name.ToLower().Contains("idx")) {
-                        txt.text = (my_roboidx % 5 + 1).ToString();
-                        // Debug.Log("set my robot index");
-                    }
+            if (!init) {
+                InitMyUI();
                 init = true;
             }
+
             /* update heat, bullnum and speed */
             hr.SetHeat(rat_heat);
             if (rat_heat > 1)
@@ -165,20 +176,26 @@ namespace RMUC_UI {
                 txt_bullnum.text = weap.bullnum.ToString();
                 txt_bullspd.text = weap.bullspd.ToString();
             }
+
             /* update robotab */
             my_robotab.Push(myrobot.Pull());
             my_robotab.bld_bar.DispBldTxt(myrobot.currblood, myrobot.maxblood);
             SetMyBuff();
-            if (myrobot.GetComponent<RoboController>() != null) {
+            if (myrobot.GetComponent<RoboController>() != null) {                   // update capacity and Exp.
                 if (myrobot.maxexp != int.MaxValue) {
                     txt_exp.text = string.Format("{0} / {1} Exp.", myrobot.currexp, myrobot.maxexp);
                     img_exp.fillAmount = (float)myrobot.currexp / myrobot.maxexp;
                 } else {
-                    txt_exp.text = string.Format("Max Exp");
+                    txt_exp.text = string.Format("Max Exp.");
                     img_exp.fillAmount = 1;
                 }
                 txt_cap.text = string.Format("{0:N1}% Cap.", rat_cap * 100);
                 img_cap.fillAmount = rat_cap;
+            } else {
+                img_cap.fillAmount = 0;
+                txt_cap.text = "Unavail Cap.";
+                img_exp.fillAmount = 0;
+                txt_exp.text = "Unavail Exp.";
             }
         }
 
