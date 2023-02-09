@@ -119,8 +119,8 @@ public class DroneController : BasicController {
     PIDController pid_throttle = new PIDController(6f, 0.5f, 0.1f);
     PIDController pid_force_v = new PIDController(2f, 0.01f, 0f);                // control force forward
     PIDController pid_force_h = new PIDController(2f, 0.01f, 0f);                // control force right
-    PIDController pid_lean_v = new PIDController(5f, 0.02f, 20f);
-    PIDController pid_lean_h = new PIDController(5f, 0.02f, 20f);
+    PIDController pid_lean_v = new PIDController(7f, 0.01f, 25f);
+    PIDController pid_lean_h = new PIDController(7f, 0.01f, 25f);
     void Move() {
         // ascend and descend
         float vel_set = speed * ((cmd_E ? 1 : 0) - (cmd_Q ? 1 : 0));
@@ -200,6 +200,7 @@ public class DroneController : BasicController {
         Vector3 d = target - pitch.transform.position;
         float d_yaw = dynCoeff * RoboController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
         float d_pitch = dynCoeff * RoboController.SignedAngleOnPlane(bullet_start.forward, d, pitch.transform.right);
+        d_pitch = Mathf.Clamp(pitch_ang + d_pitch, -pitch_max, -pitch_min) - Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
         virt_yaw.transform.Rotate(virt_yaw.transform.up, d_yaw, Space.World);
         pitch.transform.Rotate(pitch.transform.right, d_pitch, Space.World);
         pitch_ang += d_pitch;       // update pitch_ang so that when turret won't look around switch off auto-aim

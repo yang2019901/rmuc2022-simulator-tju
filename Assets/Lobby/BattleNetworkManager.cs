@@ -108,7 +108,8 @@ public class BattleNetworkManager : NetworkManager {
     /* called on that client when a client is stopped (disconnected included) */
     public override void OnStopClient() {
         base.OnStopClient();
-        Destroy(NetworkClient.localPlayer.gameObject);
+        if (NetworkClient.localPlayer != null)
+            Destroy(NetworkClient.localPlayer.gameObject);
         Debug.Log("client PC: stop client; connected: " + NetworkClient.isConnected);
         if (NetworkClient.isConnected) {
             // clear what OnClientConnect() has done:

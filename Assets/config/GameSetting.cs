@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* used to set volume, visiblility, etc */
 public class GameSetting : MonoBehaviour {
     public static GameSetting singleton;
 
@@ -15,5 +16,9 @@ public class GameSetting : MonoBehaviour {
             DontDestroyOnLoad(this);
         } else
             Destroy(this.gameObject);
+    }
+
+    void Update() {
+        AudioListener.volume = volume;
     }
 }

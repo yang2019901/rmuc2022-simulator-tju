@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 public enum ArmorColor { Red = 0, Blue = 1 }
@@ -74,6 +73,8 @@ public class AssetManager : MonoBehaviour {
     /// <summary>
     /// API 
     /// </summary>
+
+    /* audioclip that is played at point is short, therefore not changing volume while playing */
     public void PlayClipAtPoint(AudioClip ac, Vector3 pos) => AudioSource.PlayClipAtPoint(ac, pos);
 
 

@@ -22,7 +22,7 @@ namespace LobbyUI {
 
 
     /// <summary>
-    /// @Orientation: define visual state and sync them; also do RPC
+    /// @job: manage network lobby, especially about events and their synchronization
     /// @Style: Event/Call style
     /// </summary>
     public class NetLobby : NetworkBehaviour {
@@ -30,6 +30,7 @@ namespace LobbyUI {
         BattleNetworkManager net_man => BattleNetworkManager.singleton;
         [HideInInspector]
         public int uid;     // unique identifier for each client
+
 
         /** Tip: nested struct declaration => Netlobby.AvatarMessage instead of AvatarMessage.
             direction: client -> server
@@ -65,6 +66,7 @@ namespace LobbyUI {
             public bool trans;     // playing scene transition anim or not. if true, anim will be played 
             public SceneTransMessage(bool trans) { this.trans = trans; }
         }
+
 
         /// <summary>
         /// Network Variables:
