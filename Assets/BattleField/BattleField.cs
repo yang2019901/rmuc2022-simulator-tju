@@ -19,7 +19,8 @@ public class BattleField : MonoBehaviour {
     public const int length = 30;
     public const int width = 16;
     public const int height = 4;
-    public bool had_first_blood = false;
+    public bool had_first_blood;
+    public bool started_game;
 
     /// <summary>
     /// External reference
@@ -55,26 +56,48 @@ public class BattleField : MonoBehaviour {
 
 
     void Start() {
-        StartGame();
+        StartCoroutine(StartGame());
     }
 
 
     void Update() {
+        t_bat += Time.deltaTime;
         if (this.GetBattleTime() > 420f || !base_blue.survival || !base_red.survival)
             this.EndGame();
     }
 
 
-    void StartGame() {
-        t_start = Time.time;
+    // reset game params, such as money, started_game, etc; score won't be reset
+    void ResetParam() {
+        this.money_red = 0;
+        this.money_red_max = 0;
+        this.money_blue = 0;
+        this.money_blue_max = 0;
+        this.had_first_blood = false;
+        this.started_game = false;
+    }
+
+
+    IEnumerator StartGame() {
+        // a short time for both team to prepare for the game. (change position, look around, etc.)
+        ResetParam();
+        t_bat = - GameSetting.singleton.prepare_sec - 6;
+        Debug.Log(t_bat);
+
+        yield return new WaitForSeconds(GameSetting.singleton.prepare_sec);
+
+        AssetManager.singleton.StopClip(AssetManager.singleton.prepare);
+        AssetManager.singleton.PlayClipAround(AssetManager.singleton.cntdown);
+
+        yield return new WaitForSeconds(6);
+
+        AssetManager.singleton.PlayClipAround(AssetManager.singleton.gamebg, true, 0.3f);
 
         rune.Init();
 
-        AssetManager.singleton.StopClip(AssetManager.singleton.prepare);
-        AssetManager.singleton.PlayClipAround(AssetManager.singleton.gamebg, true, 0.3f);
-
         AllAddMoney(200);
         StartCoroutine(DistribMoney());
+        this.started_game = true;
     }
 
 
@@ -82,7 +105,7 @@ public class BattleField : MonoBehaviour {
     [SerializeField] Animator[] anims_win;
     public void EndGame() {
         int rlt = 0; // 0: draw; 1: red win; 2: blue win
-        int[] blood_diff = new int[3] {outpost_red.currblood - outpost_blue.currblood, 
+        int[] blood_diff = new int[3] {outpost_red.currblood - outpost_blue.currblood,
             0, // TODO: add guard state and put guard blood difference here
             base_red.currblood - base_blue.currblood};
         for (int i = 0; i < blood_diff.Length; i++) {
@@ -91,15 +114,18 @@ public class BattleField : MonoBehaviour {
                 break;
             }
         }
-        
+
         if (anims_win != null && anims_win.Length > rlt) {
             anims_win[rlt].gameObject.SetActive(true);
         }
+        ////////////////////////////////////////////////// 
+        // TODO: start another round or return to lobby //
+        ////////////////////////////////////////////////// 
     }
 
 
-    float t_start;
-    public float GetBattleTime() => Time.time - t_start;
+    float t_bat = 0;
+    public float GetBattleTime() => t_bat;
 
 
     int x_half_length = 16;
@@ -152,8 +178,7 @@ public class BattleField : MonoBehaviour {
                 killnum[rs1] = cnt;
                 ac = AssetManager.singleton.kill[cnt];
             }
-        }
-        else
+        } else
             Debug.Log("cannot get basicstate from hitter");
         AssetManager.singleton.PlayClipAround(ac);
         bat_ui.brdcst.EnqueueKill(hitter, hittee);
@@ -179,7 +204,7 @@ public class BattleField : MonoBehaviour {
         yield return new WaitForSeconds(30);
         rune.disabled = false;
     }
-    
+
 
     public void XchgMine(ArmorColor armor_color, bool is_gold) {
         Debug.Log("team " + armor_color + " xchg mine");
@@ -187,8 +212,7 @@ public class BattleField : MonoBehaviour {
         if (armor_color == ArmorColor.Red) {
             money_red_max += d_mon;
             money_red += d_mon;
-        }
-        else {
+        } else {
             money_blue_max += d_mon;
             money_blue += d_mon;
         }
@@ -211,6 +235,7 @@ public class BattleField : MonoBehaviour {
 
 
     public void Push(BatSync tmp) {
+        this.t_bat = tmp.time_bat;
         this.money_red = tmp.money_red;
         this.money_red_max = tmp.money_red_max;
         this.money_blue = tmp.money_blue;
@@ -257,8 +282,8 @@ public class BattleField : MonoBehaviour {
         AllAddMoney(200);
         yield break;
     }
-    
-    
+
+
     void AllAddMoney(int number) {
         money_red_max += number;
         money_red += number;

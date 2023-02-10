@@ -22,7 +22,7 @@ public class RuneState : BasicState {
     private const float max_hit_time = 2.5f;
     private float timer_hit = 0f;
     private int idx_target;
-    private Activation activate_state;
+    private Activation activate_state = Activation.Idle;
 
     public void Init() {
         _light = (armor_color == ArmorColor.Red) ? AssetManager.singleton.light_red : AssetManager.singleton.light_blue;

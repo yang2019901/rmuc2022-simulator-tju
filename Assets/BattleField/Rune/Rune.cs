@@ -56,9 +56,12 @@ public class Rune : MonoBehaviour {
     }
 
 
-    bool[] dropped = new bool[] {false, false, false};
+    bool[] dropped = new bool[] { false, false, false };
+    float t_bat => BattleField.singleton.GetBattleTime();
     void Update() {
-        float t_bat = BattleField.singleton.GetBattleTime();
+        if (!BattleField.singleton.started_game)
+            return;
+
         if (t_bat > mine_1_3 - 2 && !dropped[0]) {
             StartCoroutine(DropMine(1));
             StartCoroutine(DropMine(3));
@@ -105,11 +108,11 @@ public class Rune : MonoBehaviour {
 
     IEnumerator DropMine(int mineIdx) {
         for (int i = 0; i < 9; i++) {
-            lightbars_mine[2*mineIdx].SetActive(true);
-            lightbars_mine[2*mineIdx+1].SetActive(true);
+            lightbars_mine[2 * mineIdx].SetActive(true);
+            lightbars_mine[2 * mineIdx + 1].SetActive(true);
             yield return new WaitForSeconds(0.16f);
-            lightbars_mine[2*mineIdx].SetActive(false);
-            lightbars_mine[2*mineIdx+1].SetActive(false);
+            lightbars_mine[2 * mineIdx].SetActive(false);
+            lightbars_mine[2 * mineIdx + 1].SetActive(false);
             yield return new WaitForSeconds(0.17f);
         }
         mines_gold[mineIdx].transform.parent = null;

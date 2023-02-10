@@ -246,6 +246,6 @@ public class RoboState : BasicState {
 
 
 
-    public virtual void GetUserPref() { Debug.Log("RoboState.GetUserPref (virtual)"); }
-    public virtual void Configure() { Debug.Log("RoboState.Configure (virtual)"); }
+    public virtual void GetUserPref() {} // { Debug.Log("RoboState.GetUserPref (virtual)"); }
+    public virtual void Configure()   {} // { Debug.Log("RoboState.Configure (virtual)"); }
 }

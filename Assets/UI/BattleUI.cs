@@ -95,7 +95,10 @@ namespace RMUC_UI {
         int last_money_blue_max;
         void SetNotePad(BatSync bs) {
             // todo: set score
-            notepad.DispTime(7 * 60 - bs.time_bat);
+            if (bs.time_bat >= 0)   // game started
+                notepad.DispTime(7 * 60 - bs.time_bat);
+            else    // game not started
+                notepad.DispTime(-bs.time_bat);
             if (bs.money_red != last_money_red || bs.money_blue != last_money_blue
                 || bs.money_red_max != last_money_red_max || bs.money_blue_max != last_money_blue_max) {
                 notepad.DispMoney();
@@ -252,12 +255,11 @@ namespace RMUC_UI {
         public void ReturnLobbyWrapup() {
             StartCoroutine(ReturnLobbyTrans());
         }
-
         IEnumerator ReturnLobbyTrans() {
             SceneTransit.singleton.StartTransit();
             NetworkManager net_man = GameObject.FindObjectOfType<NetworkManager>();
             yield return new WaitForSeconds(5);
-            // load of scene will be done automatically in OnStopClient(), 
+            // load of scene will finish automatically in OnStopClient(), 
             // and dedicated server needn't switch back to lobby ui if it stops
             if (NetworkServer.active && NetworkClient.active)
                 net_man.StopHost();
@@ -265,6 +267,11 @@ namespace RMUC_UI {
                 net_man.StopClient();
             else if (NetworkServer.active)
                 net_man.StopServer();
+        }
+
+
+        public void SetVolume(float vol_new) {
+            GameSetting.singleton.SetGenVol(vol_new);
         }
     }
 }

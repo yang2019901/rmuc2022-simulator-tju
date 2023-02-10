@@ -2,13 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/* used to set volume, visiblility, etc */
+/* store and indicate game settings; however, some variables control the game, changing which will cause changing of game as well */
 public class GameSetting : MonoBehaviour {
     public static GameSetting singleton;
 
+    [Header("indicate the game")]
     public float volume = 1;    // voice volume: range from 0 to 1
-    public bool show_enemy = false;
+    
 
+    [Header("control the game")]
+    public bool show_enemy = false;
+    public int prepare_sec = 10;    // how long will game start after scene switched
+
+    
     void Awake() {
         if (singleton == null) {
             singleton = this;
@@ -18,7 +24,8 @@ public class GameSetting : MonoBehaviour {
             Destroy(this.gameObject);
     }
 
-    void Update() {
-        AudioListener.volume = volume;
+    public void SetGenVol(float volume) {
+        this.volume = volume;
+        AudioListener.volume = this.volume;
     }
 }
