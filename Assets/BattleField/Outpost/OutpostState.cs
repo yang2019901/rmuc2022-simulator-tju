@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OutpostState : TowerState
-{
+public class OutpostState : TowerState {
     public bool buff_active;
     // outpost invulnerable: purple lightbars, stop rotating, no blinking
     public bool invul;
@@ -48,8 +47,7 @@ public class OutpostState : TowerState
     /// <summary>
     /// non-API
     /// </summary>
-    public override void Start()
-    {
+    public override void Start() {
         base.Start();
         buff_active = true;
         this.expval = AssetManager.singleton.exp["outpost"]["have"].ToObject<int>();
@@ -58,8 +56,9 @@ public class OutpostState : TowerState
     }
 
 
+    const float time_invul_off = 30;    // outpost switchs off invulnerable state 30 sec after game starts
     public void Update() {
-        bool tmp = BattleField.singleton.GetBattleTime() < 10;
+        bool tmp = BattleField.singleton.GetBattleTime() < time_invul_off;
         if (this.invul && !tmp) {
             foreach (ArmorController ac in acs) {
                 ac.SetLight(true);

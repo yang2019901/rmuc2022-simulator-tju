@@ -8,8 +8,6 @@ public class Bullet : MonoBehaviour {
     public GameObject hitter;
 
     void Update() {
-        // if (!isServer)
-        //     return;
         if (!BattleField.singleton.OnField(this.gameObject)) {
             BulletPool.singleton.RemoveBullet(this.gameObject);
         }

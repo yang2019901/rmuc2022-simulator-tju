@@ -70,6 +70,10 @@ public class EngineerState : RoboState {
     float timer_hit = interv_self_rev;     // how long since last hit
     public override void Update() {
         base.Update();
+
+        if (!BattleField.singleton.started_game)
+            return;        
+
         if (timer_hit > interv_self_rev && !reviving) {
             reviving = true;
             li_B_rev.Add(0.02f);

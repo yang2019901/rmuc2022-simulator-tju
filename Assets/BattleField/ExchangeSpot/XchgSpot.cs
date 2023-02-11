@@ -16,6 +16,8 @@ public class XchgSpot : MonoBehaviour {
     const string used_s = "used";
     float t_last = -3f;
     void Update() {
+        if (!BattleField.singleton.started_game)
+            return;
         // calling Physics.Overlapxxx is efficient to detect collide
         Collider[] cols = Physics.OverlapBox(this.transform.TransformPoint(detCent), 0.5f * detSize, this.transform.rotation);
         // Debug.DrawRay(this.transform.TransformPoint(detCent), Vector3.up, Color.red);

@@ -93,8 +93,9 @@ public class EngineerController : BasicController {
             MovClaw();
             Catch();
             Save();
-            if (Input.GetKeyDown(KeyCode.G))
-                BattleField.singleton.XchgMine(robo_state.armor_color, true);
+        // used to debug mine exchanging
+        // if (Input.GetKeyDown(KeyCode.G))
+        //     BattleField.singleton.XchgMine(robo_state.armor_color, true);
         } else
             StopMove();
 

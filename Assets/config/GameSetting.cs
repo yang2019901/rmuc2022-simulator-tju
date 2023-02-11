@@ -8,6 +8,7 @@ public class GameSetting : MonoBehaviour {
 
     [Header("indicate the game")]
     public float volume = 1;    // voice volume: range from 0 to 1
+    public int fps;
     
 
     [Header("control the game")]

@@ -84,7 +84,7 @@ public class DroneController : BasicController {
 
 
     void Update() {
-        if (!hasAuthority) {
+        if (!hasAuthority || !BattleField.singleton.started_game) {
             return;
         }
 

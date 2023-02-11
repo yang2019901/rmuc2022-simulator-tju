@@ -23,8 +23,11 @@ namespace RMUC_UI {
         public GameObject supp_ui;
         /* setting UI */
         public GameObject pref_ui;
+        public TMP_Text txt_volume;
+        public TMP_Text txt_fps;
 
         [Header("Owned robot profile")]
+        public GameObject robo_prof;
         public HeatRing hr;
         public Image overheat_bg;
         public float rat_heat = 0;  // updated by robocontroller every frame
@@ -41,6 +44,7 @@ namespace RMUC_UI {
 
         [Header("Broadcast kill message")]
         public Broadcast brdcst;
+
 
         RMUC_UI.RoboTab my_robotab;
         RoboState myrobot => BattleField.singleton.robo_local;
@@ -119,34 +123,33 @@ namespace RMUC_UI {
 
         void InitMyUI() {
             string color = myrobot.armor_color == ArmorColor.Red ? "red" : "blue";
-            // find my robotab (at the bottom left of the screen)
-            foreach (RoboTab rt in GetComponentsInChildren<RoboTab>(includeInactive: true)) {
-                if (rt.name.ToLower().Contains("my")) {
-                    // Debug.Log("rt.name: " + rt.name);
-                    if (!rt.name.ToLower().Contains(color)) {
-                        rt.gameObject.SetActive(false);
-                        continue;
-                    }
-                    rt.gameObject.SetActive(true);
-                    my_robotab = rt;    // store reference
-
-                    // get robotab's img_ava's index
-                    int idx = 0; var tp = myrobot.GetType();
-
-                    if (tp == typeof(HeroState)) idx = 0;
-                    else if (tp == typeof(EngineerState)) {
-                        txt_cap.gameObject.SetActive(false);
-                        img_cap.gameObject.SetActive(false);
-                        txt_exp.gameObject.SetActive(false);
-                        img_exp.gameObject.SetActive(false);
-                        idx = 1;
-                    } else if (tp == typeof(InfantryState)) idx = 2;
-                    // else if (tp == typeof(DroneState)) idx = 5;
-                    else Debug.Log("wrong type of myrobot: " + tp);
-
-                    // set robotab's img_ava
-                    my_robotab.img_ava.sprite = my_robotab.imgs_team[idx];
+            // get the robotab of my color and init battle status (cap., exp., etc)
+            foreach (RoboTab rt in robo_prof.GetComponentsInChildren<RoboTab>(includeInactive: true)) {
+                if (!rt.name.ToLower().Contains(color)) {
+                    rt.gameObject.SetActive(false);
+                    continue;
                 }
+
+                rt.gameObject.SetActive(true);
+                my_robotab = rt;    // store reference
+
+                // get robotab's img_ava's index
+                int idx = 0;
+                var tp = myrobot.GetType();
+                if (tp == typeof(HeroState)) idx = 0;
+                else if (tp == typeof(InfantryState)) idx = 2;
+                else if (tp == typeof(EngineerState)) {
+                    img_cap.fillAmount = 0;
+                    txt_cap.text = "Unavail Cap.";
+                    img_exp.fillAmount = 0;
+                    txt_exp.text = "Unavail Exp.";
+                    idx = 1;
+                } else if (tp == typeof(DroneState)) {
+                    my_robotab.transform.parent.gameObject.SetActive(false);
+                } else Debug.Log("wrong type of myrobot: " + tp);
+
+                // set robotab's img_ava
+                my_robotab.img_ava.sprite = my_robotab.imgs_team[idx];
             }
             int my_roboidx = BattleField.singleton.robo_all.FindIndex(i => i == myrobot);
             foreach (TMP_Text txt in my_robotab.GetComponentsInChildren<TMP_Text>())
@@ -195,10 +198,6 @@ namespace RMUC_UI {
                 txt_cap.text = string.Format("{0:N1}% Cap.", rat_cap * 100);
                 img_cap.fillAmount = rat_cap;
             } else {
-                img_cap.fillAmount = 0;
-                txt_cap.text = "Unavail Cap.";
-                img_exp.fillAmount = 0;
-                txt_exp.text = "Unavail Exp.";
             }
         }
 
@@ -271,7 +270,15 @@ namespace RMUC_UI {
 
 
         public void SetVolume(float vol_new) {
-            GameSetting.singleton.SetGenVol(vol_new);
+            GameSetting.singleton.SetGenVol(vol_new / 100);
+            txt_volume.text = string.Format("{0}%", Mathf.RoundToInt(vol_new));
+        }
+
+
+        public void SetFPS(float value) {
+            int fps = 30 * Mathf.RoundToInt(value);
+            txt_fps.text = string.Format("{0}fps", fps);
+            Application.targetFrameRate = fps;
         }
     }
 }

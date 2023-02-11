@@ -73,6 +73,10 @@ public class HeroState : RoboState {
 
     public override void Update() {
         base.Update();
+
+        if (!BattleField.singleton.started_game)
+            return;
+
         GetExp();
         LevelUp();
     }

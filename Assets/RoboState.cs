@@ -149,6 +149,9 @@ public class RoboState : BasicState {
 
 
     public virtual void Update() {
+        if (!BattleField.singleton.started_game)
+            return;
+
         if (NetworkServer.active)
             Revive();
     }
@@ -246,6 +249,6 @@ public class RoboState : BasicState {
 
 
 
-    public virtual void GetUserPref() {} // { Debug.Log("RoboState.GetUserPref (virtual)"); }
-    public virtual void Configure()   {} // { Debug.Log("RoboState.Configure (virtual)"); }
+    public virtual void GetUserPref() { } // { Debug.Log("RoboState.GetUserPref (virtual)"); }
+    public virtual void Configure() { } // { Debug.Log("RoboState.Configure (virtual)"); }
 }

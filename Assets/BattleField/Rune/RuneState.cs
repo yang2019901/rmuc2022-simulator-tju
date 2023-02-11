@@ -124,6 +124,8 @@ public class RuneState : BasicState {
 
 
     void Update() {
+        if (!BattleField.singleton.started_game)
+            return;
         /* set blade shifting */
         if (activate_state == Activation.Hitting) {
             if (timer_hit >= max_hit_time) {
