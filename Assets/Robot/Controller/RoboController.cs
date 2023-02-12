@@ -75,6 +75,15 @@ public class RoboController : BasicController {
 
         if (hasAuthority) {
             BattleField.singleton.robo_local = this.robo_state;
+            BattleField.singleton.bat_ui.drop_chas.ClearOptions();
+            BattleField.singleton.bat_ui.drop_turr.ClearOptions();
+            if (robo_state.GetType() == typeof(InfantryState)) {
+                BattleField.singleton.bat_ui.drop_chas.AddOptions(new List<string>(){"血量优先", "功率优先"});
+                BattleField.singleton.bat_ui.drop_turr.AddOptions(new List<string>(){"爆发优先", "冷却优先", "弹速优先"});
+            } else if (robo_state.GetType() == typeof(HeroState)) {
+                BattleField.singleton.bat_ui.drop_chas.AddOptions(new List<string>(){"血量优先", "功率优先"});
+                BattleField.singleton.bat_ui.drop_turr.AddOptions(new List<string>(){"爆发优先", "弹速优先"});
+            }
         }
         if (unowned) {
             // Debug.Log("disable client auth of unowned robot");
@@ -272,12 +281,12 @@ public class RoboController : BasicController {
     [Command]
     public void CmdSupply(string robot_s, int num) {
         // todo: add judge of money
-        GameObject obj = GameObject.Find(robot_s);
-        RoboController rc = obj.GetComponent<RoboController>();
+        RoboState rs = BattleField.singleton.GetRobot(robot_s);
+        RoboController rc = rs.GetComponent<RoboController>();
         bool in_supp_spot = rc.robo_state.robo_buff.FindIndex(i => i.tag == BuffType.rev) != -1;
         if (rc != null && in_supp_spot) {
             int money_req = rc.wpn.caliber == Caliber._17mm ? num : 15 * num;
-            bool is_red = obj.GetComponent<RoboState>().armor_color == ArmorColor.Red;
+            bool is_red = rs.GetComponent<RoboState>().armor_color == ArmorColor.Red;
             if (is_red) {
                 if (money_req <= BattleField.singleton.money_red) {
                     rc.wpn.bullnum += num;
@@ -290,6 +299,15 @@ public class RoboController : BasicController {
                 Debug.Log("call supply");
             }
         }
+    }
+
+
+    [Command]
+    /* when game starts, robo_local of every client PC send their preference choice */
+    public void CmdUserPref(string robot_s, string pref_chas, string pref_turr) {
+        RoboState rs = BattleField.singleton.GetRobot(robot_s);
+        rs.GetUserPref(pref_chas, pref_turr);
+        rs.Configure();
     }
 
 

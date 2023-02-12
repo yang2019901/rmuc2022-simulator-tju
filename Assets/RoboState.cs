@@ -140,7 +140,6 @@ public class RoboState : BasicState {
         li_B_rbn = new List<int> { 0 };
         UpdateBuff();
 
-        GetUserPref();
         Configure();
 
         this.currblood = this.maxblood;
@@ -249,6 +248,6 @@ public class RoboState : BasicState {
 
 
 
-    public virtual void GetUserPref() { } // { Debug.Log("RoboState.GetUserPref (virtual)"); }
+    public virtual void GetUserPref(string pref_chas, string pref_turr) { } // { Debug.Log("RoboState.GetUserPref (virtual)"); }
     public virtual void Configure() { } // { Debug.Log("RoboState.Configure (virtual)"); }
 }

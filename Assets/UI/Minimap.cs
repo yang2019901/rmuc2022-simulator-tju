@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Mirror;
 
 
 namespace RMUC_UI {
@@ -107,7 +108,7 @@ namespace RMUC_UI {
         List<RoboIcon> rbicns = new List<RoboIcon>();
         public void SetRoboIcons() {
             if (BattleField.singleton.robo_local == null)
-                return ;
+                return;
             foreach (RoboIcon ri in rbicns) {
                 if (ri.armor_color != BattleField.singleton.robo_local.armor_color)
                     ri.gameObject.SetActive(GameSetting.singleton.show_enemy);
@@ -116,6 +117,8 @@ namespace RMUC_UI {
 
 
         void Update() {
+            if (!NetworkClient.active)
+                return;
             SetRune();
             SetBase();
             SetOtpt();

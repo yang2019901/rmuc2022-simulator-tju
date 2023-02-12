@@ -117,6 +117,15 @@ public class SyncNode : NetworkBehaviour {
     }
 
 
+    [ClientRpc]
+    public void RpcKill(GameObject hitter, GameObject hittee) {
+        if (NetworkServer.active)
+            return;
+
+        BattleField.singleton.Kill(hitter, hittee);
+    }
+
+
     void Start() {
         /* battlefield is initialized in Awake period, which justify following assignment */
         rune = BattleField.singleton.rune;

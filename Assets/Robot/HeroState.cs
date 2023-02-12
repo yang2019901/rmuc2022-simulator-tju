@@ -7,10 +7,10 @@ public class HeroState : RoboState {
     /// Key state variable
     /// </summary>
     public bool sniping = false;
-    private string chassis_pref; // chassis preference: "power++", "maxblood++", "init_mode"
-    private string weapon_pref; // weapon preference: "bullspd++" "maxheat++"
+    private string chassis_pref = "init_mode"; // chassis preference: "power++", "maxblood++", "init_mode"
+    private string weapon_pref = "init_mode"; // weapon preference: "bullspd++" "maxheat++", "init_mode"
     public int level = 0;
-    
+
     /// <summary>
     /// Game Params
     /// </summary>
@@ -100,11 +100,12 @@ public class HeroState : RoboState {
     }
 
 
+    Dictionary<string, string> dict_chas = new Dictionary<string, string>() { { "功率优先", "power++" }, { "血量优先", "maxblood++" } };
+    Dictionary<string, string> dict_turr = new Dictionary<string, string>() { { "爆发优先", "maxheat++" }, { "弹速优先", "bullspd++" } };
     /* get user's preference of chassis and weapon from GUI */
-    public override void GetUserPref() {
-        // TODO
-        this.chassis_pref = "power++";
-        this.weapon_pref = "bullspd++";
+    public override void GetUserPref(string pref_chas, string pref_turr) {
+        this.chassis_pref = dict_chas[pref_chas];
+        this.weapon_pref = dict_turr[pref_turr];
     }
 
 
@@ -112,7 +113,7 @@ public class HeroState : RoboState {
     /* Refresh hero state when born, reborn or level up */
     public override void Configure() {
         /* configure chassis params */
-        level_s = string.Format("level{0}", this.level+1);
+        level_s = string.Format("level{0}", this.level + 1);
         var tmp = AssetManager.singleton.hero_chs[this.chassis_pref];
         if (this.chassis_pref != "init_mode")
             tmp = tmp[this.level_s];
@@ -131,7 +132,7 @@ public class HeroState : RoboState {
 
         var jobj = AssetManager.singleton.exp["hero"][level_s];
         this.expval = jobj["have"].ToObject<int>();
-        this.maxexp = level<2 ? jobj["need"].ToObject<int>() : int.MaxValue;
+        this.maxexp = level < 2 ? jobj["need"].ToObject<int>() : int.MaxValue;
     }
 
 }

@@ -14,7 +14,7 @@ namespace RMUC_UI {
         public Image img_lv;
         public Image img_ava;
         public TMP_Text txt_bullnum;
-        
+
         public Sprite[] bld_masks;
         public Sprite[] imgs_lv;
         public Sprite[] imgs_lv_dead;
@@ -100,7 +100,7 @@ namespace RMUC_UI {
 
 
         int MaxbldToIdx(int maxblood) {
-            return maxblood <= 500 ? maxblood/50 - 1 : 10; 
+            return maxblood <= 500 ? maxblood / 50 - 1 : 10;
         }
 
     }

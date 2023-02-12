@@ -82,7 +82,6 @@ public class BattleField : MonoBehaviour {
         // a short time for both team to prepare for the game. (change position, look around, etc.)
         ResetParam();
         t_bat = - GameSetting.singleton.prepare_sec - 6;
-        Debug.Log(t_bat);
 
         yield return new WaitForSeconds(GameSetting.singleton.prepare_sec);
 
@@ -91,10 +90,13 @@ public class BattleField : MonoBehaviour {
 
         yield return new WaitForSeconds(6);
 
-        AssetManager.singleton.PlayClipAround(AssetManager.singleton.gamebg, true, 0.3f);
-
         rune.Init();
-
+        if (robo_local != null) {
+            var rc = robo_local.GetComponent<RoboController>();
+            if (rc != null)
+                rc.CmdUserPref(rc.gameObject.name, bat_ui.drop_chas.captionText.text, bat_ui.drop_turr.captionText.text);
+        }
+        AssetManager.singleton.PlayClipAround(AssetManager.singleton.gamebg, true, 0.3f);
         AllAddMoney(200);
         StartCoroutine(DistribMoney());
         this.started_game = true;
@@ -128,6 +130,14 @@ public class BattleField : MonoBehaviour {
     public float GetBattleTime() => t_bat;
 
 
+    public RoboState GetRobot(string robot_s) {
+        // // for release
+        // return this.robo_all.Find(i => i.name == robot_s);
+        // for debug
+        return GameObject.Find(robot_s).GetComponent<RoboState>();
+    }
+
+
     int x_half_length = 16;
     int y_half_length = 10;
     int z_half_length = 10;
@@ -141,6 +151,10 @@ public class BattleField : MonoBehaviour {
     Dictionary<RoboState, int> killnum = new Dictionary<RoboState, int>();
     public void Kill(GameObject hitter, GameObject hittee) {
         Debug.Log(hitter.name + " slays " + hittee.name);
+        if (NetworkServer.active)
+            sync_node.RpcKill(hitter, hittee);
+        if (!NetworkClient.active)
+            return;
         if (hittee == outpost_blue.gameObject) {
             base_blue.GetComponent<Base>().OpenShells(true);
             base_blue.invul = false;

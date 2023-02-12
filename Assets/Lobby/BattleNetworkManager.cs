@@ -80,14 +80,12 @@ public class BattleNetworkManager : NetworkManager {
             foreach (RoboState robot in BattleField.singleton.robo_all) {
                 int syncIdx = playerSyncs.FindIndex(i => i.ava_tag == robot.name);
                 if (syncIdx == -1)
-                    log += "no player takes " + robot.name + "\n";
-                else {
-                    NetworkConnectionToClient connToClient = NetworkServer.connections[playerSyncs[syncIdx].connId];
-                    robot.GetComponent<NetworkIdentity>().AssignClientAuthority(connToClient);
-                    log += playerSyncs[syncIdx].player_name + " takes " + robot.name + "\n";
-                }
+                    continue;
+                NetworkConnectionToClient connToClient = NetworkServer.connections[playerSyncs[syncIdx].connId];
+                robot.GetComponent<NetworkIdentity>().AssignClientAuthority(connToClient);
+                log += playerSyncs[syncIdx].player_name + " takes " + robot.name + "\n";
             }
-            Debug.Log(log);
+            // Debug.Log(log);
         }
     }
 

@@ -13,7 +13,7 @@ public class GameSetting : MonoBehaviour {
 
     [Header("control the game")]
     public bool show_enemy = false;
-    public int prepare_sec = 10;    // how long will game start after scene switched
+    public int prepare_sec = 0;    // how long will game start after scene switched
 
     
     void Awake() {

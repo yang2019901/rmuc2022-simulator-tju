@@ -6,6 +6,7 @@ using Mirror;
 public class Bullet : MonoBehaviour {
     [HideInInspector]
     public GameObject hitter;
+    public bool cli_det_hit = false;    // whether client detect hit
 
     void Update() {
         if (!BattleField.singleton.OnField(this.gameObject)) {
@@ -28,7 +29,8 @@ public class Bullet : MonoBehaviour {
             else
                 AssetManager.singleton.PlayClipAtPoint(AssetManager.singleton.hit_42mm, transform.position);
 
-            ac.TakeHit(collision, this.gameObject);
+            if (cli_det_hit || NetworkServer.active)
+                ac.TakeHit(collision, this.gameObject);
         }
         StartCoroutine(RemoveBullet());
     }

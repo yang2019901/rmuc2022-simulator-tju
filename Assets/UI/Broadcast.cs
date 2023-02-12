@@ -34,23 +34,23 @@ namespace RMUC_UI {
         }
 
 
-        List<BasicState> mach_red = new List<BasicState>();
-        List<BasicState> mach_blue = new List<BasicState>();
+        List<BasicState> team_red = new List<BasicState>();     // robots and towers with red armor
+        List<BasicState> team_blue = new List<BasicState>();    // robots and towers with blue armor
         void Start() {
-            mach_red.AddRange(BattleField.singleton.robo_red);
-            mach_red.Add(BattleField.singleton.outpost_red);
-            mach_blue.AddRange(BattleField.singleton.robo_blue);
-            mach_blue.Add(BattleField.singleton.outpost_blue);
+            team_red.AddRange(BattleField.singleton.robo_red);
+            team_red.Add(BattleField.singleton.outpost_red);
+            team_blue.AddRange(BattleField.singleton.robo_blue);
+            team_blue.Add(BattleField.singleton.outpost_blue);
         }
 
 
-        bool playing = false;
+        bool broadcasting = false;
         void Update() {
             // // for test
             // if (Input.GetKeyDown(KeyCode.T))
             //     EnqueueKill(BattleField.singleton.robo_blue[1].gameObject, BattleField.singleton.outpost_red.gameObject);
             
-            if (!playing) {
+            if (!broadcasting) {
                 BrdcstKill();
             }
         }
@@ -61,22 +61,20 @@ namespace RMUC_UI {
             BasicState killee = hittee.GetComponent<BasicState>();
             if (killer == null || killee == null)
                 return;
-            else {
-                killers.Add(killer);
-                killees.Add(killee);
-                Debug.Log("current mes in queue: " + killers.Count);
-            }
+            killers.Add(killer);
+            killees.Add(killee);
+        // Debug.Log("current mes in queue: " + killers.Count);
         }
 
 
         /* choose the right image and index from alternatives */
         void SetMesInfo(BasicState bs, bool killed, Image ava, Image idx_bg, TMP_Text idx) {
             if (bs.armor_color == ArmorColor.Red) {
-                int tmp = mach_red.FindIndex(i => i == bs);
+                int tmp = team_red.FindIndex(i => i == bs);
                 ava.sprite = killed ? spr_ava_dead_red[tmp] : spr_ava_red[tmp];
                 idx_bg.sprite = spr_idx_bg[0];
             } else {
-                int tmp = mach_blue.FindIndex(i => i == bs);
+                int tmp = team_blue.FindIndex(i => i == bs);
                 ava.sprite = killed ? spr_ava_dead_blue[tmp] : spr_ava_blue[tmp];
                 idx_bg.sprite = spr_idx_bg[1];
             }
@@ -92,7 +90,7 @@ namespace RMUC_UI {
 
 
         void OnFinishBrdcst() {
-            playing = false;
+            broadcasting = false;
         }
 
 
@@ -111,7 +109,7 @@ namespace RMUC_UI {
             SetMesInfo(killee, true, img_killee, img_killee_idx, txt_killee_idx);
 
             anim.SetTrigger("Start");
-            playing = true;
+            broadcasting = true;
         }
 
     }

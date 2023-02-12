@@ -6,8 +6,8 @@ public class InfantryState : RoboState {
     /// <summary>
     /// Key state variables
     /// </summary>
-    private string chassis_pref; // chassis preference: "power++", "maxblood++", "init_mode"
-    private string weapon_pref; // weapon preference: "bullspd++" "maxheat++" "cooldown++"
+    private string chassis_pref = "init_mode";  // chassis preference: "power++", "maxblood++", "init_mode"
+    private string weapon_pref = "init_mode";   // weapon preference: "bullspd++", "maxheat++", "cooldown++", "init_mode"
     public int level = 0;      // level: starting from 0: 0, 1, 2
 
     /// <summary>
@@ -97,11 +97,12 @@ public class InfantryState : RoboState {
     }
 
 
+    Dictionary<string, string> dict_chas = new Dictionary<string, string>() {{"功率优先", "power++"}, {"血量优先", "maxblood++"}};
+    Dictionary<string, string> dict_turr = new Dictionary<string, string>() {{"爆发优先", "maxheat++"}, {"冷却优先", "cooldown++"}, {"弹速优先", "bullspd++"}};
     /* get user's preference of chassis and weapon from GUI */
-    public override void GetUserPref() {
-        // TODO
-        this.chassis_pref = "power++";
-        this.weapon_pref = "bullspd++";
+    public override void GetUserPref(string pref_chas, string pref_turr) {
+        this.chassis_pref = dict_chas[pref_chas];
+        this.weapon_pref = dict_turr[pref_turr];
     }
 
 

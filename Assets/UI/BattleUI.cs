@@ -25,6 +25,8 @@ namespace RMUC_UI {
         public GameObject pref_ui;
         public TMP_Text txt_volume;
         public TMP_Text txt_fps;
+        public TMP_Dropdown drop_turr;
+        public TMP_Dropdown drop_chas;
 
         [Header("Owned robot profile")]
         public GameObject robo_prof;
@@ -93,10 +95,10 @@ namespace RMUC_UI {
         }
 
 
-        int last_money_red;
-        int last_money_red_max;
-        int last_money_blue;
-        int last_money_blue_max;
+        int last_money_red = -1;
+        int last_money_red_max = -1;
+        int last_money_blue = -1;
+        int last_money_blue_max = -1;
         void SetNotePad(BatSync bs) {
             // todo: set score
             if (bs.time_bat >= 0)   // game started

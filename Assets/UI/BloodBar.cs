@@ -70,7 +70,9 @@ namespace RMUC_UI {
 
         /* for robot only */
         public void SetMask(Sprite newmask) {
-            this.mask.GetComponent<Image>().sprite = newmask;
+            Image tmp = this.mask.GetComponent<Image>();
+            tmp.sprite = newmask;
+            tmp.SetNativeSize();
         }
 
         /* for base and outpost only:  add a golden cover */
