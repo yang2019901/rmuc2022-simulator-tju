@@ -14,20 +14,21 @@ public class Rune : MonoBehaviour {
     public GameObject[] mines_gold;
     public GameObject[] lightbars_mine;
     public GameObject[] mines_silv;
-    public Activation activ;
+    public Activation activ;       // indicate rune's status; idle/ready/hitting/activated
     public ArmorColor rune_color;  // only works when rune's activated
     public bool disabled;       // rune'll be disabled for 30sec after activation expires
+    /* game status */
+    public float a, w, t;
+    public int sgn;
+    public RuneBuff rune_buff;
 
-    private const int jun_sta = 1;    // rune_junior starts
-    private const int jun_end = 2;   // rune_junior ends
-    private const int sen_sta = 10;   // rune_senior starts
-    private const int sen_end = 420;   // rune_senior ends
+    private const int jun_sta = 60;    // rune_junior starts 1min after game starts
+    private const int jun_end = 3 * 60;   // rune_junior ends 3min after game starts
+    private const int sen_sta = 4 * 60;   // rune_senior starts 4min after game starts
+    private const int sen_end = 7 * 60;   // rune_senior ends 7min after game starts
     private const int mine_1_3 = 15;
     private const int mine_0_4 = 180;
     private const int mine_2 = mine_0_4 + 5;
-    private RuneBuff rune_buff;
-    private float a, w, t;
-    private int sgn;
 
 
     /** use Init() instead of Start() to init instance of Rune, 
@@ -42,8 +43,6 @@ public class Rune : MonoBehaviour {
         Reset();
         this.disabled = false;
 
-        // for (int i = 0; i < mines_gold.Length; i++)
-        // mines_gold[i].GetComponent<Rigidbody>().useGravity = false;
         for (int i = 0; i < mines_silv.Length; i++)
             mines_silv[i].transform.parent = null;
     }

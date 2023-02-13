@@ -1932,7 +1932,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.003, y: 0.1272, z: 0.22999999}
+  m_Size: {x: 0.01, y: 0.1272, z: 0.22999999}
   m_Center: {x: -0.0015, y: 0.0010999702, z: 0.000000007450581}
 --- !u!114 &3383274348967909984
 MonoBehaviour:
@@ -2871,6 +2871,7 @@ MonoBehaviour:
   central_lightbars:
   - {fileID: 8122271007974185510}
   - {fileID: 8122271007895360100}
+  armor: {fileID: 3383274348967909984}
 --- !u!1 &8122271008885772022
 GameObject:
   m_ObjectHideFlags: 0

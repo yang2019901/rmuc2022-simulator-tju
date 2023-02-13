@@ -23,19 +23,22 @@ public class BasicController : NetworkBehaviour {
     ArmorController target;
     protected ArmorController last_target;
     public bool AutoAim(Transform bull_start, bool runeMode) {
-        target_armors = (robo_state.armor_color == ArmorColor.Blue) ^ runeMode ? ArmorController.vis_armors_red : ArmorController.vis_armors_blue;
         // light cone
         float minang_th = 45;
         float minang = 360;
+        if (runeMode) {
+            RuneState rs = robo_state.armor_color == ArmorColor.Red ? BattleField.singleton.rune.rune_state_red
+                : BattleField.singleton.rune.rune_state_blue;
+            if (rs.idx_target == -1)
+                return false;
+            target_armors = new List<ArmorController>{rs.blades[rs.idx_target].armor};
+            minang_th = 60;
+        } else
+            target_armors = (robo_state.armor_color == ArmorColor.Blue) ^ runeMode ? ArmorController.vis_armors_red : ArmorController.vis_armors_blue;
         foreach (ArmorController ac in target_armors) {
             // judge whether armor's enabled
             if (!ac.en)
                 continue;
-            if (runeMode) {
-                if (ac.tag != "rune armor" || ac.GetComponentInParent<RuneBlade>().blade_light != RuneLight.Center_on)
-                    continue;
-                minang_th = 60;
-            }
 
             // judge whether armor's facing turret
             Vector3 v1 = ac.transform.position - bull_start.position;
@@ -50,13 +53,13 @@ public class BasicController : NetworkBehaviour {
                 // judge whether armor's under cover, bullet is in "Ignore Raycast" layer
                 if (!Physics.Raycast(ray, out hitinfo, maxDist, ~LayerMask.GetMask("Ignore Raycast")))
                     continue;
+                Debug.DrawLine(ac.transform.position, bull_start.position, Color.blue);
                 if (hitinfo.collider.gameObject == ac.gameObject) {
                     minang = ang;
                     target = ac;
                     if (ac == last_target)  // preferably aiming at last target
                         break;
                 }
-                Debug.DrawLine(ac.transform.position, bull_start.position, Color.blue);
             }
         }
         if (minang >= minang_th) {

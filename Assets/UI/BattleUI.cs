@@ -281,6 +281,7 @@ namespace RMUC_UI {
             int fps = 30 * Mathf.RoundToInt(value);
             txt_fps.text = string.Format("{0}fps", fps);
             Application.targetFrameRate = fps;
+            GameSetting.singleton.fps = fps;
         }
     }
 }

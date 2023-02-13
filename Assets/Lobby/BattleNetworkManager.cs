@@ -15,7 +15,6 @@ public class BattleNetworkManager : NetworkManager {
     [Scene]
     public string scn_lobby;
     /* used to transfer data when scene loads */
-    [HideInInspector]
     public List<PlayerSync> playerSyncs = new List<PlayerSync>();
 
 

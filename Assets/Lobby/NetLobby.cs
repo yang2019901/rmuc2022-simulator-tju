@@ -151,7 +151,7 @@ namespace LobbyUI {
         [Server]
         public void OnRecStartGameMes(NetworkConnectionToClient conn, StartGameMessage mes) {
             if (mes.start) {
-                this.playerSyncs.CopyTo(net_man.playerSyncs);
+                net_man.playerSyncs = new List<PlayerSync>(this.playerSyncs);
                 net_man.StartCoroutine(MyServerChangeScene());
             }
         }

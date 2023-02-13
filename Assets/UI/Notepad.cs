@@ -29,6 +29,10 @@ namespace RMUC_UI {
 
         /* 122s => 2:02 */
         public void DispTime(float t) {
+            if (t < 0) {
+                battle_time.text = "<size=14>比赛结束</size>";
+                return;
+            }
             int time = Mathf.FloorToInt(t);
             int minute = time / 60;
             int second = time % 60;

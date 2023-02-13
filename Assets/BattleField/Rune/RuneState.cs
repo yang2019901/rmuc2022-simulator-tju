@@ -13,7 +13,7 @@ public class RuneState : BasicState {
 
     /* Cache */
     private bool center_light;
-    private List<RuneBlade> blades = new List<RuneBlade>();
+    public List<RuneBlade> blades = new List<RuneBlade>();
     /* indicator of blades' state; 
         All_off: not hit; Center_on: hitting; All_on: hit  */
     private List<RuneLight> blades_hit = new List<RuneLight>();
@@ -21,7 +21,7 @@ public class RuneState : BasicState {
     /* when timer_hit > max_hit_time, blade will shift to another one */
     private const float max_hit_time = 2.5f;
     private float timer_hit = 0f;
-    private int idx_target;
+    public int idx_target;
     private Activation activate_state = Activation.Idle;
 
     public void Init() {
@@ -144,12 +144,14 @@ public class RuneState : BasicState {
         }
     }
 
+
     public RuneSync Pull() {
         RuneSync tmp = new RuneSync();
         tmp.center_light = this.center_light;
         tmp.blades_light = new RuneLight[blades.Count];
         for (int i = 0; i < blades.Count; i++)
             tmp.blades_light[i] = blades[i].blade_light;
+        tmp.idx_target = activate_state == Activation.Hitting ? this.idx_target : -1;
         return tmp;
     }
 
@@ -159,5 +161,6 @@ public class RuneState : BasicState {
         for (int i = 0; i < blades.Count; i++) {
             blades[i].SetBladeLight(rune_sync.blades_light[i]);
         }
+        this.idx_target = rune_sync.idx_target;
     }
 }

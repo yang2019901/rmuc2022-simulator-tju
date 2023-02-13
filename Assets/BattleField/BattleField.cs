@@ -81,7 +81,7 @@ public class BattleField : MonoBehaviour {
     IEnumerator StartGame() {
         // a short time for both team to prepare for the game. (change position, look around, etc.)
         ResetParam();
-        t_bat = - GameSetting.singleton.prepare_sec - 6;
+        t_bat = -GameSetting.singleton.prepare_sec - 6;
 
         yield return new WaitForSeconds(GameSetting.singleton.prepare_sec);
 
@@ -117,9 +117,10 @@ public class BattleField : MonoBehaviour {
             }
         }
 
-        if (anims_win != null && anims_win.Length > rlt) {
+        if (anims_win != null && rlt < anims_win.Length) {
             anims_win[rlt].gameObject.SetActive(true);
         }
+
         ////////////////////////////////////////////////// 
         // TODO: start another round or return to lobby //
         ////////////////////////////////////////////////// 
@@ -132,16 +133,18 @@ public class BattleField : MonoBehaviour {
 
     public RoboState GetRobot(string robot_s) {
         // // for release
+        // Debug.Log("BattleField.singleton.GetRobot() in unity standalone");
         // return this.robo_all.Find(i => i.name == robot_s);
         // for debug
+        Debug.Log("BattleField.singleton.GetRobot() in unity editor");
         return GameObject.Find(robot_s).GetComponent<RoboState>();
     }
 
 
-    int x_half_length = 16;
-    int y_half_length = 10;
-    int z_half_length = 10;
     public bool OnField(GameObject obj) {
+        const int x_half_length = 16;
+        const int y_half_length = 10;
+        const int z_half_length = 10;
         Vector3 rel_pos = obj.transform.position - this.transform.position;
         return Mathf.Abs(rel_pos.x) < x_half_length && Mathf.Abs(rel_pos.y) < y_half_length
             && Mathf.Abs(rel_pos.z) < z_half_length;

@@ -10,6 +10,7 @@ public class RuneBlade : MonoBehaviour {
 
     public GameObject[] flank_lightbars;
     public GameObject[] central_lightbars;
+    public ArmorController armor;
 
     private ArmorColor armor_color;
     private Material light_on;

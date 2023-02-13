@@ -11,6 +11,7 @@ using RMUC_UI;
 public struct RuneSync {
     public RuneLight[] blades_light;
     public bool center_light;
+    public int idx_target;
 }
 
 public struct OutpostSync {
@@ -82,6 +83,9 @@ public class SyncNode : NetworkBehaviour {
    
     /* rune */
     [SyncVar] private Vector3 rune_rot = new Vector3();
+    [SyncVar] private float a, w, t;
+    [SyncVar] private int sgn;
+    [SyncVar] private RuneBuff rune_buff;
     [SyncVar] private RuneSync rune_sync_red = new RuneSync();
     [SyncVar] private RuneSync rune_sync_blue = new RuneSync();
 
@@ -145,6 +149,11 @@ public class SyncNode : NetworkBehaviour {
             bat_sync = BattleField.singleton.Pull();
             /* server pushes rune appearence to sync info */
             rune_rot = rune.rotator_rune.localEulerAngles;
+            a = rune.a;
+            w = rune.w;
+            t = rune.t;
+            sgn = rune.sgn;
+            rune_buff = rune.rune_buff;
             rune_sync_red = rune.rune_state_red.Pull();
             rune_sync_blue = rune.rune_state_blue.Pull();
             /* server pushes outpost appearence to sync info */
@@ -167,6 +176,11 @@ public class SyncNode : NetworkBehaviour {
             BattleField.singleton.Push(bat_sync);
             /* client pulls rune appearence from sync info */
             rune.rotator_rune.localEulerAngles = rune_rot;
+            rune.a = a;
+            rune.w = w;
+            rune.t = t;
+            rune.sgn = sgn;
+            rune.rune_buff = rune_buff;
             rune.rune_state_red.Push(rune_sync_red);
             rune.rune_state_blue.Push(rune_sync_blue);
             /* client pulls outpost appearence from sync info */
