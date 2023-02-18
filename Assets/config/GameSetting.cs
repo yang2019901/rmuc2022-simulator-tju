@@ -7,13 +7,13 @@ public class GameSetting : MonoBehaviour {
     public static GameSetting singleton;
 
     [Header("indicate the game")]
-    public float volume = 1;    // voice volume: range from 0 to 1
+    public float volume;    // voice volume: range from 0 to 1
     public int fps;
     
 
     [Header("control the game")]
-    public bool show_enemy = false;
-    public int prepare_sec = 10;    // how long will game start after scene switched
+    public bool show_enemy;
+    public int prepare_sec;    // how long will game start after scene switched
 
     
     void Awake() {
@@ -23,7 +23,11 @@ public class GameSetting : MonoBehaviour {
             DontDestroyOnLoad(this);
         } else
             Destroy(this.gameObject);
+        
+        show_enemy = false;
+        prepare_sec = 5;
     }
+
 
     public void SetGenVol(float volume) {
         this.volume = volume;

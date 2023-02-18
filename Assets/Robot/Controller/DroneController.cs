@@ -84,16 +84,23 @@ public class DroneController : BasicController {
 
 
     void Update() {
-        if (!hasAuthority || !BattleField.singleton.started_game) {
+        if (!hasAuthority || !BattleField.singleton.started_game)
             return;
-        }
 
         if (robo_state.survival) {
             Look();
-            Move();
             Shoot();
         }
         UpdateSelfUI();
+    }
+
+
+    void FixedUpdate() {
+        if (!hasAuthority || !BattleField.singleton.started_game)
+            return;
+
+        if (robo_state.survival)
+            Move();
     }
 
 
@@ -114,9 +121,9 @@ public class DroneController : BasicController {
     }
 
 
-    PIDController pid_follow = new PIDController(0.5f, 0f, 10f);         // T = J*theta''. theta is set (by mouse) and T is CV. 
+    PIDController pid_follow = new PIDController(5f, 0f, 10f);         // T = J*theta''. theta is set (by mouse) and T is CV. 
                                                                        //  so it's a second-order system. use PD controller
-    PIDController pid_throttle = new PIDController(6f, 0.5f, 0.1f);
+    PIDController pid_throttle = new PIDController(6f, 0.2f, 0.1f);
     PIDController pid_force_v = new PIDController(2f, 0.01f, 0f);                // control force forward
     PIDController pid_force_h = new PIDController(2f, 0.01f, 0f);                // control force right
     PIDController pid_lean_v = new PIDController(7f, 0.01f, 25f);
@@ -124,8 +131,8 @@ public class DroneController : BasicController {
     void Move() {
         // ascend and descend
         float vel_set = speed * ((cmd_E ? 1 : 0) - (cmd_Q ? 1 : 0));
-        Vector3 f_thro = pid_throttle.PID(vel_set - _rigid.velocity.y) * Vector3.up;
-        _rigid.AddForce(f_thro, ForceMode.Acceleration);
+        float f_thro = Mathf.Clamp(pid_throttle.PID(vel_set - _rigid.velocity.y) * 30 * Time.fixedDeltaTime, -5, 5);
+        _rigid.AddForce(f_thro * Vector3.up, ForceMode.Acceleration);
 
         // fly horizontally
         Vector3 vec_set = new Vector3();
@@ -135,21 +142,20 @@ public class DroneController : BasicController {
             vec_set = (h * vec_h + v * vec_v).normalized;
         } else
             vec_set = Vector3.zero;
-        float tmp_v = pid_force_v.PID(vec_set.z - _rigid.velocity.z);
-        float tmp_h = pid_force_h.PID(vec_set.x - _rigid.velocity.x);
-        Vector3 force = tmp_v * Vector3.forward + tmp_h * Vector3.right;
-        _rigid.AddForce(force, ForceMode.Acceleration);
+        float tmp_v = Mathf.Clamp(pid_force_v.PID(vec_set.z - _rigid.velocity.z) * 30 * Time.fixedDeltaTime, -5, 5);
+        float tmp_h = Mathf.Clamp(pid_force_h.PID(vec_set.x - _rigid.velocity.x) * 30 * Time.fixedDeltaTime, -5, 5);
+        _rigid.AddForce(tmp_v * Vector3.forward + tmp_h * Vector3.right, ForceMode.Acceleration);
 
         // set visual effect of leaning
         Vector3 error = 0.15f * vec_set - Vector3.ProjectOnPlane(_rigid.transform.up, Vector3.up);
-    // Debug.LogFormat("vec_set: {0}\t error: {1}", vec_set, error);
-        Vector3 torque = pid_lean_v.PID(error.z) * Vector3.right + pid_lean_h.PID(error.x) * Vector3.back;
-        _rigid.AddTorque(torque, ForceMode.Acceleration);
+        float lean_v = Mathf.Clamp(pid_lean_v.PID(error.z) * 30 * Time.fixedDeltaTime, -3, 3);
+        float lean_h = Mathf.Clamp(pid_lean_h.PID(error.x) * 30 * Time.fixedDeltaTime, -3, 3);
+        _rigid.AddTorque(lean_v * Vector3.right + lean_h * Vector3.back, ForceMode.Acceleration);
 
         // wings follow turret
         float wing2yaw = Vector3.SignedAngle(_rigid.transform.forward, virt_yaw.forward, _rigid.transform.up);
-        Vector3 torque_fol = pid_follow.PID(wing2yaw) * _rigid.transform.up;
-        _rigid.AddTorque(torque_fol, ForceMode.Acceleration);
+        float f_fol = Mathf.Clamp(pid_follow.PID(wing2yaw) * 30 * Time.fixedDeltaTime, -30, 30);
+        _rigid.AddTorque(f_fol * _rigid.transform.up, ForceMode.Acceleration);
 
         // yaw rotates with _rigid, hence calibration is needed
         CalibYaw();

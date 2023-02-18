@@ -82,6 +82,7 @@ public class BattleField : MonoBehaviour {
         // a short time for both team to prepare for the game. (change position, look around, etc.)
         ResetParam();
         t_bat = -GameSetting.singleton.prepare_sec - 6;
+        Debug.Log(t_bat);
 
         yield return new WaitForSeconds(GameSetting.singleton.prepare_sec);
 
@@ -132,12 +133,15 @@ public class BattleField : MonoBehaviour {
 
 
     public RoboState GetRobot(string robot_s) {
-        // // for release
-        // Debug.Log("BattleField.singleton.GetRobot() in unity standalone");
-        // return this.robo_all.Find(i => i.name == robot_s);
-        // for debug
-        Debug.Log("BattleField.singleton.GetRobot() in unity editor");
-        return GameObject.Find(robot_s).GetComponent<RoboState>();
+        RoboState tmp;
+        #if UNITY_EDITOR
+            Debug.Log("GetRobot() in BattleField: in unity editor");
+            tmp = GameObject.Find(robot_s).GetComponent<RoboState>();
+        #elif UNITY_STANDALONE
+            Debug.Log("GetRobot() in BattleField: in standalone");
+            tmp = this.robo_all.Find(i => i.name == robot_s);
+        #endif
+        return tmp;
     }
 
 

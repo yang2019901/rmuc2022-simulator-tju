@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using Mirror;
 
@@ -11,14 +12,12 @@ public class Traverse : MonoBehaviour {
     void Start() {
         Transform[] allchildren = GetComponentsInChildren<Transform>();
         foreach (Transform child in allchildren) {
-
             // AddMC(child);
             // ResetConvex(child);
             // DeleteMC(child);
             // ReplaceMaterial(child, AssetManager.singleton.light_red);
             // DeleteNI(child);
             // ReplaceMesh(child);
-            DeleteMC(child);
         }
         // DestroyImmediate(this.GetComponent<Traverse>());
     }
@@ -82,15 +81,19 @@ public class Traverse : MonoBehaviour {
 
     }
 
+
+    // Dictionary<string, string> dict = new Dictionary<string, string>() {{"垫片", ""}, {"", ""}, {"", ""}}
     void ReplaceMesh(Transform child) {
         Mesh[] meshs = Resources.LoadAll<Mesh>("");
-        Debug.Log(meshs.Length);
         MeshFilter mf = child.GetComponent<MeshFilter>();
         if (mf != null) {
-            string name = child.name.Replace(' ', '_').Replace('.', '_').Replace('-', '_');
+            // string name = child.name.Replace(' ', '_').Replace('.', '_').Replace('-', '_');
+            string name = child.name.Replace(' ', '_');
+            name = Regex.Replace(name, @"([\p{P}*])", "_");
+            name = Regex.Replace(name, @"([\u4e00-\u9fa5])", "___");        // replace all chinese character with ___ (fit simplygon)
             Debug.Log("target obj: " + name);
             foreach (Mesh mesh in meshs) {
-                Debug.Log(mesh.name);
+                // Debug.Log(mesh.name);
                 if (mesh.name.Contains(name)) {
                     mf.mesh = mesh;
                 }
