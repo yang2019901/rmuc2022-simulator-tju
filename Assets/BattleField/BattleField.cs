@@ -82,7 +82,6 @@ public class BattleField : MonoBehaviour {
         // a short time for both team to prepare for the game. (change position, look around, etc.)
         ResetParam();
         t_bat = -GameSetting.singleton.prepare_sec - 6;
-        Debug.Log(t_bat);
 
         yield return new WaitForSeconds(GameSetting.singleton.prepare_sec);
 
@@ -94,8 +93,11 @@ public class BattleField : MonoBehaviour {
         rune.Init();
         if (robo_local != null) {
             var rc = robo_local.GetComponent<RoboController>();
-            if (rc != null)
+            if (rc != null) {
+                /* when game starts, dropdowns become non-interactable and captions of dropdowns in pref_ui submit */
+                bat_ui.SetRoboPrefDrop(false);
                 rc.CmdUserPref(rc.gameObject.name, bat_ui.drop_chas.captionText.text, bat_ui.drop_turr.captionText.text);
+            }
         }
         AssetManager.singleton.PlayClipAround(AssetManager.singleton.gamebg, true, 0.3f);
         AllAddMoney(200);

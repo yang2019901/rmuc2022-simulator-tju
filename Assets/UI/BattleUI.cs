@@ -44,6 +44,10 @@ namespace RMUC_UI {
         public int[] indic_buf = new int[6];
         public Image[] imgs_buf;
 
+        [Header("Drone prof")]
+        public GameObject drone_prof;
+        public Image img_droneTimer;
+
         [Header("Broadcast kill message")]
         public Broadcast brdcst;
 
@@ -54,6 +58,7 @@ namespace RMUC_UI {
 
 
         void Start() {
+            SetRoboPrefDrop(interactable: false);
             /* init imgs_buf */
             for (int i = 0; i < indic_buf.Length; i++)
                 indic_buf[i] = -1;
@@ -271,12 +276,23 @@ namespace RMUC_UI {
         }
 
 
+        /* set dropdown_turr and dropdown_turr interactable or not */
+        public void SetRoboPrefDrop(bool interactable) {
+            drop_chas.interactable = interactable;
+            drop_turr.interactable = interactable;
+            drop_chas.GetComponent<CanvasGroup>().alpha = interactable ? 1f : 0.5f;
+            drop_turr.GetComponent<CanvasGroup>().alpha = interactable ? 1f : 0.5f;
+        }
+
+
+        /* Callback of volume slidebar */
         public void SetVolume(float vol_new) {
             GameSetting.singleton.SetGenVol(vol_new / 100);
             txt_volume.text = string.Format("{0}%", Mathf.RoundToInt(vol_new));
         }
 
 
+        /* Callback of FPS slidebar */
         public void SetFPS(float value) {
             int fps = 30 * Mathf.RoundToInt(value);
             txt_fps.text = string.Format("{0}fps", fps);

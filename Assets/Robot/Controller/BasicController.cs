@@ -109,7 +109,7 @@ public class BasicController : NetworkBehaviour {
 
     /* implement it to rotate turret to aim at target */
     protected virtual void AimAt(Vector3 target) {
-        Debug.Log("if you wanna use auto-aim, first implement AimAt(Vector3)");
+        Debug.Log("if you wanna use auto-aim, implement AimAt(Vector3) first.");
     }
 }
 

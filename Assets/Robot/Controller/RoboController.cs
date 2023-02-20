@@ -71,18 +71,20 @@ public class RoboController : BasicController {
     void Start() {
         /* even if no authority, external reference should be inited */
         _rigid.centerOfMass = centerOfMass;
-        Cursor.lockState = CursorLockMode.Locked;
 
         if (hasAuthority) {
+            Cursor.lockState = CursorLockMode.Locked;
             BattleField.singleton.robo_local = this.robo_state;
+            /* set dropdown of chassis and turret in preference_ui of bat_ui */
+            BattleField.singleton.bat_ui.SetRoboPrefDrop(interactable: true);
             BattleField.singleton.bat_ui.drop_chas.ClearOptions();
             BattleField.singleton.bat_ui.drop_turr.ClearOptions();
             if (robo_state.GetType() == typeof(InfantryState)) {
-                BattleField.singleton.bat_ui.drop_chas.AddOptions(new List<string>(){"血量优先", "功率优先"});
-                BattleField.singleton.bat_ui.drop_turr.AddOptions(new List<string>(){"爆发优先", "冷却优先", "弹速优先"});
+                BattleField.singleton.bat_ui.drop_chas.AddOptions(new List<string>() { "血量优先", "功率优先" });
+                BattleField.singleton.bat_ui.drop_turr.AddOptions(new List<string>() { "爆发优先", "冷却优先", "弹速优先" });
             } else if (robo_state.GetType() == typeof(HeroState)) {
-                BattleField.singleton.bat_ui.drop_chas.AddOptions(new List<string>(){"血量优先", "功率优先"});
-                BattleField.singleton.bat_ui.drop_turr.AddOptions(new List<string>(){"爆发优先", "弹速优先"});
+                BattleField.singleton.bat_ui.drop_chas.AddOptions(new List<string>() { "血量优先", "功率优先" });
+                BattleField.singleton.bat_ui.drop_turr.AddOptions(new List<string>() { "爆发优先", "弹速优先" });
             }
         }
         if (unowned) {
@@ -269,8 +271,15 @@ public class RoboController : BasicController {
 
     protected override void AimAt(Vector3 target) {
         Vector3 d = target - pitch.transform.position;
-        float d_yaw = dynCoeff * BasicController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
-        float d_pitch = dynCoeff * BasicController.SignedAngleOnPlane(bullet_start.forward, d, pitch.transform.right);
+        float l = Mathf.Abs(Vector3.Dot(pitch.transform.up, pitch.transform.position - bullet_start.transform.position));
+        float ang1 = Mathf.Acos(l / d.magnitude) * Mathf.Rad2Deg;
+        Vector3 L = Quaternion.AngleAxis(ang1, pitch.transform.right) * d;
+        float d_pitch = Vector3.SignedAngle(-pitch.transform.up, L, pitch.transform.right);
+        // Debug.LogFormat("l: {0}, ang1: {1}, d_pitch: {2}", l, ang1, d_pitch);
+        d_pitch = dynCoeff * d_pitch;
+
+        float d_yaw = dynCoeff * RoboController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
+        d_pitch = Mathf.Clamp(pitch_ang + d_pitch, -pitch_max, -pitch_min) - Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
         virt_yaw.transform.Rotate(virt_yaw.transform.up, d_yaw, Space.World);
         pitch.transform.Rotate(pitch.transform.right, d_pitch, Space.World);
         pitch_ang += d_pitch;       // update pitch_ang so that when turret won't look around switch off auto-aim

@@ -69,10 +69,12 @@ public class DroneController : BasicController {
     void Start() {
         /* even if no authority, external reference should be inited */
         _rigid.centerOfMass = centerOfMass;
-        Cursor.lockState = CursorLockMode.Locked;
 
         if (hasAuthority) {
+            Cursor.lockState = CursorLockMode.Locked;
             BattleField.singleton.robo_local = this.robo_state;
+            BattleField.singleton.bat_ui.robo_prof.SetActive(false);
+            BattleField.singleton.bat_ui.drone_prof.SetActive(true);
         }
         if (unowned) {
             // Debug.Log("disable client auth of unowned robot");
@@ -90,6 +92,7 @@ public class DroneController : BasicController {
         if (robo_state.survival) {
             Look();
             Shoot();
+            Attack();
         }
         UpdateSelfUI();
     }
@@ -204,8 +207,14 @@ public class DroneController : BasicController {
 
     protected override void AimAt(Vector3 target) {
         Vector3 d = target - pitch.transform.position;
+        float l = Mathf.Abs(Vector3.Dot(pitch.transform.up, pitch.transform.position - bullet_start.transform.position));
+        float ang1 = Mathf.Acos(l / d.magnitude) * Mathf.Rad2Deg;
+        Vector3 L = Quaternion.AngleAxis(ang1, pitch.transform.right) * d;
+        float d_pitch = Vector3.SignedAngle(-pitch.transform.up, L, pitch.transform.right);
+        // Debug.LogFormat("l: {0}, ang1: {1}, d_pitch: {2}", l, ang1, d_pitch);
+        d_pitch = dynCoeff * d_pitch;
+
         float d_yaw = dynCoeff * RoboController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
-        float d_pitch = dynCoeff * RoboController.SignedAngleOnPlane(bullet_start.forward, d, pitch.transform.right);
         d_pitch = Mathf.Clamp(pitch_ang + d_pitch, -pitch_max, -pitch_min) - Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
         virt_yaw.transform.Rotate(virt_yaw.transform.up, d_yaw, Space.World);
         pitch.transform.Rotate(pitch.transform.right, d_pitch, Space.World);
@@ -213,21 +222,54 @@ public class DroneController : BasicController {
     }
 
 
-    // get ammunition supply at reborn spot
+    float last_atk = -30;
+    int money_team => robo_state.armor_color == ArmorColor.Red ? BattleField.singleton.money_red : BattleField.singleton.money_blue;
+    float t_bat => BattleField.singleton.GetBattleTime();
+    void Attack() {
+        if (!playing)
+            return;
+        /* player calls drone attack and money suffices */
+        if (Input.GetKeyDown(KeyCode.R) && money_team >= 300 && t_bat - last_atk >= 30) {
+            CmdAttack();
+            last_atk = t_bat;
+        }
+        if (t_bat - last_atk >= 30) {
+            bat_ui.img_droneTimer.fillAmount = 0;
+            wpn.bullnum = 0;
+        }
+        float ratio = (t_bat - last_atk) / 30;
+        bat_ui.img_droneTimer.fillAmount = ratio > 1 ? 0 : 1 - ratio;
+    }
+    /* get ammunition supply at reborn spot */
     [Command]
-    public void CmdSupply(string robot_s, int num) {
+    public void CmdAttack() {
+        /* double check in server PC */
+        if (money_team < 300) {
+            Debug.Log("insufficient money to call drone attack");
+            return;
+        } else if (t_bat - last_atk < 30) {
+            Debug.Log("already attacking");
+            return;
+        }
+        wpn.bullnum = 400;
+        last_atk = t_bat;
     }
 
 
     bool is_fire => playing && Input.GetMouseButton(0);
     void Shoot() {
-        if (is_fire && Time.time - last_fire > 0.15) {
+        if (t_bat - last_atk >= 30)
+            return;
+        if (is_fire && Time.time - last_fire > 0.05f) {
             CmdShoot(bullet_start.position, bullet_start.forward * robo_state.bullspd + _rigid.velocity);
             last_fire = Time.time;
         }
     }
     [Command]
     public void CmdShoot(Vector3 pos, Vector3 vel) {
+        if (t_bat - last_atk >= 30)
+            return;
+
         if (!NetworkClient.active) {
             ShootBull(pos, vel);
         }
