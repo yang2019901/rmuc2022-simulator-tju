@@ -7,7 +7,7 @@ public class OutpostState : TowerState {
     // outpost invulnerable: purple lightbars, stop rotating, no blinking
     public bool invul;
 
-
+    const float time_invul_off = 0;    // outpost switchs off invulnerable state 30 sec after game starts
 
     /// <summary>
     /// API
@@ -56,7 +56,6 @@ public class OutpostState : TowerState {
     }
 
 
-    const float time_invul_off = 30;    // outpost switchs off invulnerable state 30 sec after game starts
     public void Update() {
         bool tmp = BattleField.singleton.GetBattleTime() < time_invul_off;
         if (this.invul && !tmp) {

@@ -46,9 +46,9 @@ public class Weapon : MonoBehaviour {
     /// <summary>
     /// non-API
     /// </summary>
-    void Start() {
+    void Awake() {
         string tmp = this.name.ToLower();
-        if (tmp.Contains("infantry") || tmp.Contains("drone"))
+        if (tmp.Contains("infantry") || tmp.Contains("drone") || tmp.Contains("guard"))
             caliber = Caliber._17mm;
         else if (tmp.Contains("hero"))
             caliber = Caliber._42mm;

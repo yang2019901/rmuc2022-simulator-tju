@@ -53,7 +53,7 @@ public class BasicController : NetworkBehaviour {
                 // judge whether armor's under cover, bullet is in "Ignore Raycast" layer
                 if (!Physics.Raycast(ray, out hitinfo, maxDist, ~LayerMask.GetMask("Ignore Raycast")))
                     continue;
-                Debug.DrawLine(ac.transform.position, bull_start.position, Color.blue);
+                // Debug.DrawLine(ac.transform.position, bull_start.position, Color.blue);
                 if (hitinfo.collider.gameObject == ac.gameObject) {
                     minang = ang;
                     target = ac;
@@ -102,7 +102,7 @@ public class BasicController : NetworkBehaviour {
         float y_new = Mathf.Sqrt(d * d - y * y) * Mathf.Tan(theta);
         Debug.DrawLine(bull_start, target, Color.yellow);
         target[1] += y_new - y;
-        Debug.DrawLine(bull_start, target, Color.green);
+        // Debug.DrawLine(bull_start, target, Color.green);
         return true;
     }
 

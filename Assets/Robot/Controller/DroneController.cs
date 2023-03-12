@@ -9,11 +9,12 @@ public class DroneController : BasicController {
     [Header("turret")]
     public Transform yaw;
     public Transform pitch;
+    public GameObject[] paddles;
 
     [Header("Weapon")]
     public Transform bullet_start;
     [Header("View")]
-    public Transform view;
+    public Transform view;      // control visual effect of leaning to make flying realistic
 
     public const float speed = 0.5f;
 
@@ -22,7 +23,7 @@ public class DroneController : BasicController {
     private float pitch_min = -30;
     private float pitch_max = 40;
     private Weapon wpn;
-    private Animator anim_posture;   // control visual effect of leaning to make flying realistic
+    // private Animator anim_posture;
     private Rigidbody _rigid => robo_state.rigid;
 
     bool playing => Cursor.lockState == CursorLockMode.Locked;
@@ -57,7 +58,6 @@ public class DroneController : BasicController {
     void Awake() {
         robo_state = GetComponent<RoboState>();
         wpn = GetComponent<Weapon>();
-        anim_posture = GetComponent<Animator>();
         /* create virtual yaw transform (independent of chassis's transform) */
         virt_yaw = new GameObject("virt_yaw-" + this.name).transform;
         virt_yaw.transform.SetPositionAndRotation(yaw.transform.position, yaw.transform.rotation);
@@ -99,11 +99,22 @@ public class DroneController : BasicController {
 
 
     void FixedUpdate() {
-        if (!hasAuthority || !BattleField.singleton.started_game)
+        if(!BattleField.singleton.started_game)
+            return;
+        PaddleSpin();
+        if (!hasAuthority) 
             return;
 
-        if (robo_state.survival)
+        if (robo_state.survival) {
             Move();
+        }
+    }
+
+
+    void PaddleSpin() {
+        for (int i = 0; i < paddles.Length; i++) {
+            paddles[i].transform.Rotate(Vector3.up, (i % 2 == 0 ? 1 : -1) * 15 * 360 * Time.fixedDeltaTime, Space.Self);
+        }
     }
 
 

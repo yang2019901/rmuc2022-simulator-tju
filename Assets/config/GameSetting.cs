@@ -25,7 +25,7 @@ public class GameSetting : MonoBehaviour {
             Destroy(this.gameObject);
         
         show_enemy = false;
-        prepare_sec = 5;
+        prepare_sec = 0;
     }
 
 
