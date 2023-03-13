@@ -34,7 +34,6 @@ public class RoboController : BasicController {
     private Weapon wpn;
 
     private bool playing => Cursor.lockState == CursorLockMode.Locked;
-    private Rigidbody _rigid => robo_state.rigid;
     bool isInfantry => robo_state.GetType() == typeof(InfantryState);
     bool isHero => robo_state.GetType() == typeof(HeroState);
     bool isGuard => robo_state.GetType() == typeof(GuardState);

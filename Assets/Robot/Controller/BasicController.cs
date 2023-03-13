@@ -9,7 +9,9 @@ public class BasicController : NetworkBehaviour {
     public float maxDist = 15f;        // max distance of auto aim
     public float dynCoeff = 0.4f;    // a 0~1 number describes how fast turret chases the target; 0: no chasing    1: perfectly chasing
 
-    
+    protected Rigidbody _rigid => robo_state.rigid;
+
+
     // project 'from' and 'to' to the plane defined by norm and calc signed angle of their projections
     public static float SignedAngleOnPlane(Vector3 from, Vector3 to, Vector3 norm) {
         Vector3 tmp1 = Vector3.ProjectOnPlane(from, norm);
@@ -17,6 +19,26 @@ public class BasicController : NetworkBehaviour {
         return Vector3.SignedAngle(tmp1, tmp2, norm);
     }
 
+
+    Vector3 vel_targ;
+    Vector3 last_pos;
+    // Note: MUST called in FixedUpdate(), otherwise, the vel_targ has a random error with inaccuracy of about 30%
+    void CalcTargVel() {
+        if (target == null)
+            return;
+        vel_targ = (target.transform.position - last_pos) / Time.fixedDeltaTime;
+        if (vel_targ.magnitude > 10)    // too fast => illegal velocity when target switching
+            vel_targ = Vector3.zero;
+        // Debug.Log("target velocity: " + vel_targ.magnitude);
+        last_pos = target.transform.position;
+    }
+
+
+    public virtual void FixedUpdate() {
+        CalcTargVel();
+    }
+
+    
 
     List<ArmorController> target_armors;
     Camera robo_cam => Camera.main;
@@ -66,12 +88,16 @@ public class BasicController : NetworkBehaviour {
             Debug.Log("no target");
             return false;
         }
-        last_target = target;
         // Debug.Log("last_target id: " + last_target.GetInstanceID());
         Vector3 pos = target.transform.position;
         float interval = (pos - bull_start.position).magnitude / robo_state.bullspd;
         if (runeMode)
             pos = BattleField.singleton.rune.PredPos(pos, interval);
+        else if (target == last_target) {
+            // hit robot and outpost and base
+            pos = target.transform.position + (vel_targ - _rigid.velocity) * interval;
+        }
+        last_target = target;
         if (CalcFall(ref pos, bull_start.position))
             AimAt(pos);
         else {

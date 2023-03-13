@@ -23,8 +23,7 @@ public class DroneController : BasicController {
     private float pitch_min = -30;
     private float pitch_max = 40;
     private Weapon wpn;
-    // private Animator anim_posture;
-    private Rigidbody _rigid => robo_state.rigid;
+
 
     bool playing => Cursor.lockState == CursorLockMode.Locked;
     bool cmd_E => playing && Input.GetKey(KeyCode.E);
@@ -98,7 +97,9 @@ public class DroneController : BasicController {
     }
 
 
-    void FixedUpdate() {
+    public override void FixedUpdate() {
+        base.FixedUpdate();
+
         if(!BattleField.singleton.started_game)
             return;
         PaddleSpin();

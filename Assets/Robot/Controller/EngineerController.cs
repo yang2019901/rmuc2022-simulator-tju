@@ -24,8 +24,6 @@ public class EngineerController : BasicController {
     [Header("Revive Card")]
     public Transform rev_card;
 
-    private Rigidbody _rigid => robo_state.rigid;
-
     private CatchMine cm;
 
 
