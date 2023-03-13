@@ -218,18 +218,16 @@ public class DroneController : BasicController {
 
     protected override void AimAt(Vector3 target) {
         Vector3 d = target - pitch.transform.position;
-        float l = Mathf.Abs(Vector3.Dot(pitch.transform.up, pitch.transform.position - bullet_start.transform.position));
-        float ang1 = Mathf.Acos(l / d.magnitude) * Mathf.Rad2Deg;
-        Vector3 L = Quaternion.AngleAxis(ang1, pitch.transform.right) * d;
-        float d_pitch = Vector3.SignedAngle(-pitch.transform.up, L, pitch.transform.right);
-        // Debug.LogFormat("l: {0}, ang1: {1}, d_pitch: {2}", l, ang1, d_pitch);
-        d_pitch = dynCoeff * d_pitch;
+        float d_pitch = BasicController.SignedAngleOnPlane(bullet_start.forward, d, pitch.transform.right);
+        float d_yaw =BasicController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
 
-        float d_yaw = dynCoeff * RoboController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
+        d_pitch = dynCoeff * d_pitch;
+        d_yaw = dynCoeff * d_yaw;
+        
         d_pitch = Mathf.Clamp(pitch_ang + d_pitch, -pitch_max, -pitch_min) - Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
         virt_yaw.transform.Rotate(virt_yaw.transform.up, d_yaw, Space.World);
         pitch.transform.Rotate(pitch.transform.right, d_pitch, Space.World);
-        pitch_ang += d_pitch;       // update pitch_ang so that when turret won't look around switch off auto-aim
+        pitch_ang += d_pitch;       // update pitch_ang so that turret won't look around when switch off auto-aim
     }
 
 

@@ -4,8 +4,10 @@ using UnityEngine;
 using Mirror;
 
 
-/* infantry and hero's controller */
+/* infantry, hero and guard's controller */
 public class RoboController : BasicController {
+    enum RoboCtlType { Infantry, Hero, Guard };
+
     [Header("Kinematic")]
     public Vector3 centerOfMass;
     [Header("turret")]
@@ -23,15 +25,19 @@ public class RoboController : BasicController {
 
     [HideInInspector] public float currcap = 0;
     const int maxcap = 500;
+    [Header("robot params")]
+    public float pitch_min = -30;   // down is minus, up is positive 
+    public float pitch_max = 40;
 
     private float last_fire = 0;
     private float pitch_ang = 0;
-    private float pitch_min = -30;
-    private float pitch_max = 40;
     private Weapon wpn;
 
     private bool playing => Cursor.lockState == CursorLockMode.Locked;
     private Rigidbody _rigid => robo_state.rigid;
+    bool isInfantry => robo_state.GetType() == typeof(InfantryState);
+    bool isHero => robo_state.GetType() == typeof(HeroState);
+    bool isGuard => robo_state.GetType() == typeof(GuardState);
 
     /// <summary>
     /// non-API
@@ -64,6 +70,8 @@ public class RoboController : BasicController {
         virt_yaw = new GameObject("virt_yaw-" + this.name).transform;
         virt_yaw.transform.SetPositionAndRotation(yaw.transform.position, yaw.transform.rotation);
         virt_yaw.parent = this.transform.parent;
+        /* judge robo type -> infantry, hero or guard */
+        System.Type t = robo_state.GetType();
     }
 
 
@@ -79,10 +87,10 @@ public class RoboController : BasicController {
             BattleField.singleton.bat_ui.SetRoboPrefDrop(interactable: true);
             BattleField.singleton.bat_ui.drop_chas.ClearOptions();
             BattleField.singleton.bat_ui.drop_turr.ClearOptions();
-            if (robo_state.GetType() == typeof(InfantryState)) {
+            if (isInfantry) {
                 BattleField.singleton.bat_ui.drop_chas.AddOptions(new List<string>() { "血量优先", "功率优先" });
                 BattleField.singleton.bat_ui.drop_turr.AddOptions(new List<string>() { "爆发优先", "冷却优先", "弹速优先" });
-            } else if (robo_state.GetType() == typeof(HeroState)) {
+            } else if (isHero) {
                 BattleField.singleton.bat_ui.drop_chas.AddOptions(new List<string>() { "血量优先", "功率优先" });
                 BattleField.singleton.bat_ui.drop_turr.AddOptions(new List<string>() { "爆发优先", "弹速优先" });
             }
@@ -114,6 +122,9 @@ public class RoboController : BasicController {
 
     RMUC_UI.BattleUI bat_ui => BattleField.singleton.bat_ui;    // alias
     void UpdateSelfUI() {
+        if (isGuard)      // guard runs without player, thereby no SelfUI
+            return;
+
         bat_ui.rat_heat = wpn.heat_ratio;
         bat_ui.rat_cap = Mathf.Clamp01(currcap / maxcap);
 
@@ -133,6 +144,12 @@ public class RoboController : BasicController {
 
 
     void StopMove() {
+        if (isGuard) {
+            // exponential decay of velocity with time coeff of 1 (sec)
+            _rigid.AddForce(-_rigid.velocity, ForceMode.Acceleration);
+            return;
+        }
+
         foreach (var wc in wheelColliders) {
             wc.motorTorque = 0;
             wc.brakeTorque = 0.1f;
@@ -154,6 +171,12 @@ public class RoboController : BasicController {
     float v => playing ? Input.GetAxis("Vertical") : 0;
     PIDController chas_ctl = new PIDController(1, 0, 0);
     void Move() {
+        if (isGuard) {
+            float vel_target = 3;
+            float vel_actual = _rigid.velocity.magnitude;
+            _rigid.AddForce((vel_target-vel_actual) * _rigid.transform.right, ForceMode.Acceleration);
+            return;
+        }
         /* Manage Power */
         torque_avail = efficiency * robo_state.power;
 
@@ -271,18 +294,16 @@ public class RoboController : BasicController {
 
     protected override void AimAt(Vector3 target) {
         Vector3 d = target - pitch.transform.position;
-        float l = Mathf.Abs(Vector3.Dot(pitch.transform.up, pitch.transform.position - bullet_start.transform.position));
-        float ang1 = Mathf.Acos(l / d.magnitude) * Mathf.Rad2Deg;
-        Vector3 L = Quaternion.AngleAxis(ang1, pitch.transform.right) * d;
-        float d_pitch = Vector3.SignedAngle(-pitch.transform.up, L, pitch.transform.right);
-        // Debug.LogFormat("l: {0}, ang1: {1}, d_pitch: {2}", l, ang1, d_pitch);
-        d_pitch = dynCoeff * d_pitch;
+        float d_pitch = BasicController.SignedAngleOnPlane(bullet_start.forward, d, pitch.transform.right);
+        float d_yaw =BasicController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
 
-        float d_yaw = dynCoeff * RoboController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
+        d_pitch = dynCoeff * d_pitch;
+        d_yaw = dynCoeff * d_yaw;
+        
         d_pitch = Mathf.Clamp(pitch_ang + d_pitch, -pitch_max, -pitch_min) - Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
         virt_yaw.transform.Rotate(virt_yaw.transform.up, d_yaw, Space.World);
         pitch.transform.Rotate(pitch.transform.right, d_pitch, Space.World);
-        pitch_ang += d_pitch;       // update pitch_ang so that when turret won't look around switch off auto-aim
+        pitch_ang += d_pitch;       // update pitch_ang so that turret won't look around when switch off auto-aim
     }
 
 

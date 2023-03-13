@@ -122,11 +122,14 @@ public class SyncNode : NetworkBehaviour {
 
 
     [ClientRpc]
-    public void RpcKill(GameObject hitter, GameObject hittee) {
+    public void RpcKill(string hitter_s, string hittee_s) {
         if (NetworkServer.active)
             return;
 
-        BattleField.singleton.Kill(hitter, hittee);
+        BasicState hitter = BattleField.singleton.team_all.Find(i => i.name == hitter_s);
+        BasicState hittee = BattleField.singleton.team_all.Find(i => i.name == hittee_s);
+        
+        BattleField.singleton.Kill(hitter.gameObject, hittee.gameObject);
     }
 
 

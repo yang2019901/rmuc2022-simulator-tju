@@ -7,7 +7,7 @@ using RMUC_UI;
 
 public class RoboState : BasicState {
     public bool survival = true;  // whether this robot survives
-    public Rigidbody rigid;
+    [HideInInspector] public Rigidbody rigid;
 
     /** calculated by algorithm automatically
      *  they are initialized by RoboState.Configure() and updated by UpdateBuff() or BuffManager.cs

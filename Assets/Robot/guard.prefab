@@ -22821,6 +22821,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3496315141564625284}
+  - component: {fileID: 3424237081511011738}
+  - component: {fileID: 8489364790055159491}
   m_Layer: 0
   m_Name: guard
   m_TagString: Untagged
@@ -22845,6 +22847,59 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3424237081511011738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4309584977906314046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1eab4b25ee7d34186c891608696b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullnum: 0
+  currheat: 0
+  heat_ratio: 0
+  caliber: 0
+--- !u!114 &8489364790055159491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4309584977906314046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48dde94801626c4f8658e33b5c2fff8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armor_color: 1
+  expval: 0
+  survival: 1
+  rigid: {fileID: 0}
+  currexp: 0
+  maxexp: 0
+  maxheat: 0
+  cooldown: 0
+  bullspd: 0
+  power: 0
+  maxblood: 0
+  currblood: 0
+  B_atk: 0
+  B_dfc: 0
+  B_cd: 0
+  B_pow: 0
+  B_rev: 0
+  B_rbn: 0
+  li_B_atk: []
+  li_B_dfc: []
+  li_B_cd: []
+  li_B_rev: []
+  li_B_rbn: 
+  blood_bars:
+  - {fileID: 8848110362175125634}
 --- !u!1 &4314057746753232245
 GameObject:
   m_ObjectHideFlags: 0
@@ -48871,5 +48926,10 @@ PrefabInstance:
 --- !u!4 &4864923624009300459 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2312674622602815350, guid: 94ce7807be14d5d4f84ecae2fcd5aada, type: 3}
+  m_PrefabInstance: {fileID: 7177588894848245405}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8848110362175125634 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1824281573584889375, guid: 94ce7807be14d5d4f84ecae2fcd5aada, type: 3}
   m_PrefabInstance: {fileID: 7177588894848245405}
   m_PrefabAsset: {fileID: 0}

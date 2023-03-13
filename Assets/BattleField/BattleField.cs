@@ -39,6 +39,7 @@ public class BattleField : MonoBehaviour {
     public RoboState[] robo_blue;
     [HideInInspector] public List<RoboState> robo_all = new List<RoboState>(); // automatically set
     [HideInInspector] public RoboState robo_local;                             // automatically set
+    [HideInInspector] public List<BasicState> team_all = new List<BasicState>();
 
     public SyncNode sync_node;
 
@@ -52,6 +53,10 @@ public class BattleField : MonoBehaviour {
             Destroy(this.gameObject);
         robo_all.AddRange(robo_red);
         robo_all.AddRange(robo_blue);
+
+        team_all.AddRange(robo_all);
+        team_all.Add(outpost_red);
+        team_all.Add(outpost_blue);
     }
 
 
@@ -161,9 +166,15 @@ public class BattleField : MonoBehaviour {
     public void Kill(GameObject hitter, GameObject hittee) {
         Debug.Log(hitter.name + " slays " + hittee.name);
         if (NetworkServer.active)
-            sync_node.RpcKill(hitter, hittee);
+            sync_node.RpcKill(hitter.name, hittee.name);
         if (!NetworkClient.active)
             return;
+        
+        /* a team's base is lost and game ends */
+        if (hittee.GetComponent<BaseState>() != null)
+            EndGame();
+
+        /* a team's outpost is lost and its base becomes vulnerable */
         if (hittee == outpost_blue.gameObject) {
             base_blue.GetComponent<Base>().OpenShells(true);
             base_blue.invul = false;

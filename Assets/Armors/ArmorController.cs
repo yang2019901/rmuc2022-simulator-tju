@@ -43,6 +43,7 @@ public class ArmorController : MonoBehaviour {
             return;
         /* to judge whether this is a successful hit */
         float vel_vert = Vector3.Dot(-collision.relativeVelocity, transform.TransformVector(norm_in.normalized));
+        Debug.Log(vel_vert);
         /* only bullet coms from outside can be detect, aka, velocity_vertical > 0 */
         /* also, velocity_vertical shouldn't be too small. Otherwise, it's a bad hit */
         if (this.gameObject.name.ToLower().Contains("triangle")) {
