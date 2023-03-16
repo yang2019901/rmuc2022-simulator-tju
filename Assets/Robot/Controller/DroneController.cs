@@ -292,7 +292,7 @@ public class DroneController : BasicController {
     void ShootBull(Vector3 pos, Vector3 vel) {
         GameObject bullet = wpn.GetBullet();
         if (bullet == null) {
-            Debug.Log("no bullet");
+            // Debug.Log("no bullet");
             return;
         }
         bullet.transform.position = pos;

@@ -8,7 +8,7 @@ public class GuardState : RoboState {
 
     public override void Awake() {
         base.Awake();
-        wpn.GetComponent<Weapon>();
+        wpn = GetComponent<Weapon>();
     }
 
 

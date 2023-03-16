@@ -29,7 +29,6 @@ public class RoboController : BasicController {
     public float pitch_min = -30;   // down is minus, up is positive 
     public float pitch_max = 40;
 
-    private float last_fire = 0;
     private float pitch_ang = 0;
     private Weapon wpn;
 
@@ -69,8 +68,6 @@ public class RoboController : BasicController {
         virt_yaw = new GameObject("virt_yaw-" + this.name).transform;
         virt_yaw.transform.SetPositionAndRotation(yaw.transform.position, yaw.transform.rotation);
         virt_yaw.parent = this.transform.parent;
-        /* judge robo type -> infantry, hero or guard */
-        System.Type t = robo_state.GetType();
     }
 
 
@@ -93,8 +90,7 @@ public class RoboController : BasicController {
                 BattleField.singleton.bat_ui.drop_chas.AddOptions(new List<string>() { "血量优先", "功率优先" });
                 BattleField.singleton.bat_ui.drop_turr.AddOptions(new List<string>() { "爆发优先", "弹速优先" });
             }
-        }
-        if (unowned) {
+        } else if (unowned) {
             // Debug.Log("disable client auth of unowned robot");
             foreach (var tmp in GetComponents<NetworkTransformChild>()) {
                 tmp.clientAuthority = false;
@@ -105,7 +101,7 @@ public class RoboController : BasicController {
 
 
     void Update() {
-        if (!hasAuthority) {
+        if (!hasAuthority && !(isGuard && NetworkServer.active)) {
             return;
         }
 
@@ -143,16 +139,29 @@ public class RoboController : BasicController {
 
 
     void StopMove() {
-        if (isGuard) {
-            // exponential decay of velocity with time coeff of 1 (sec)
-            _rigid.AddForce(-_rigid.velocity, ForceMode.Acceleration);
+        if (isGuard)
             return;
-        }
 
         foreach (var wc in wheelColliders) {
             wc.motorTorque = 0;
             wc.brakeTorque = 0.1f;
         }
+    }
+
+
+    float vel_guard_targ = 1;
+    int move_guard_dir = 1;
+    PIDController pid_move = new PIDController(10, 0.08f, 0.5f);
+    void GuardMove() {
+        Vector3 vec_err = move_guard_dir * vel_guard_targ * Vector3.forward - _rigid.velocity;
+        Vector3 f = Vector3.forward * pid_move.PID(vec_err.z);
+        _rigid.AddForce(f, ForceMode.Acceleration);
+        if (_rigid.transform.position.z < -1.2f)
+            move_guard_dir = 1;
+        else if (_rigid.transform.position.z > 1.2f)
+            move_guard_dir = -1;
+        // Debug.Log(_rigid.velocity.magnitude);
+        return;
     }
 
 
@@ -171,11 +180,10 @@ public class RoboController : BasicController {
     PIDController chas_ctl = new PIDController(1, 0, 0);
     void Move() {
         if (isGuard) {
-            float vel_target = 3;
-            float vel_actual = _rigid.velocity.magnitude;
-            _rigid.AddForce((vel_target-vel_actual) * _rigid.transform.right, ForceMode.Acceleration);
+            GuardMove();
             return;
         }
+
         /* Manage Power */
         torque_avail = efficiency * robo_state.power;
 
@@ -267,12 +275,38 @@ public class RoboController : BasicController {
     }
 
 
+    int pitch_guard_dir = -1;
+    bool targ_avail = false;
+    void GuardLook() {
+        CalibVirtYaw();
+        yaw.rotation = virt_yaw.rotation;
+        targ_avail = base.AutoAim(bullet_start, runeMode: false);
+        if (!targ_avail) {
+            pitch_ang += pitch_guard_dir * Time.deltaTime * 120;
+            if (pitch_ang < -pitch_max)
+                pitch_guard_dir = 1;
+            else if (pitch_ang > -pitch_min)
+                pitch_guard_dir = -1;
+
+            virt_yaw.transform.Rotate(_rigid.transform.up, 100 * Time.deltaTime, Space.World);
+            pitch.localEulerAngles = new Vector3(pitch_ang, 0, 0);
+            base.last_target = null;
+        }
+        yaw.rotation = virt_yaw.rotation;
+    }
+
+
     /* Get look dir from user input */
     bool autoaim => playing && Input.GetMouseButton(1);
     bool runeMode => Input.GetKey(KeyCode.R);
     float mouseX => playing ? 2 * Input.GetAxis("Mouse X") : 0;
     float mouseY => playing ? 2 * Input.GetAxis("Mouse Y") : 0;
     void Look() {
+        if (isGuard) {
+            GuardLook();
+            return;
+        }
+
         CalibVirtYaw();
         /* correct yaw's transform, i.e., elimate attitude error caused by following movement */
         yaw.rotation = virt_yaw.rotation;
@@ -292,13 +326,14 @@ public class RoboController : BasicController {
 
 
     protected override void AimAt(Vector3 target) {
+        // Note: makes sure y and z axis of `pitch` coincides with those two axes of `bullet_start` 
         Vector3 d = target - pitch.transform.position;
         float d_pitch = BasicController.SignedAngleOnPlane(bullet_start.forward, d, pitch.transform.right);
-        float d_yaw =BasicController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
+        float d_yaw = BasicController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
 
         d_pitch = dynCoeff * d_pitch;
         d_yaw = dynCoeff * d_yaw;
-        
+
         d_pitch = Mathf.Clamp(pitch_ang + d_pitch, -pitch_max, -pitch_min) - Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
         virt_yaw.transform.Rotate(virt_yaw.transform.up, d_yaw, Space.World);
         pitch.transform.Rotate(pitch.transform.right, d_pitch, Space.World);
@@ -340,10 +375,23 @@ public class RoboController : BasicController {
     }
 
 
+    void GuardShoot() {
+        if (targ_avail && Time.time - last_fire > 0.1f) {
+            ShootBull(bullet_start.position, robo_state.bullspd * bullet_start.forward + _rigid.velocity);
+            last_fire = Time.time;
+        }
+    }
+
+
     bool is_fire => playing && Input.GetMouseButton(0);
+    float last_fire;
     void Shoot() {
-        if (is_fire && Time.time - last_fire > 0.15) {
-            CmdShoot(bullet_start.position, bullet_start.forward * robo_state.bullspd + _rigid.velocity);
+        if (isGuard) {
+            GuardShoot();
+            return;
+        }
+        if (is_fire && Time.time - last_fire > 0.15f) {
+            CmdShoot(bullet_start.position, robo_state.bullspd * bullet_start.forward + _rigid.velocity);
             last_fire = Time.time;
         }
     }
@@ -361,7 +409,7 @@ public class RoboController : BasicController {
     void ShootBull(Vector3 pos, Vector3 vel) {
         GameObject bullet = wpn.GetBullet();
         if (bullet == null) {
-            Debug.Log("no bullet");
+            // Debug.Log("no bullet");
             return;
         }
         bullet.transform.position = pos;

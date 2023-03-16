@@ -38,7 +38,7 @@ public class BasicController : NetworkBehaviour {
         CalcTargVel();
     }
 
-    
+
 
     List<ArmorController> target_armors;
     Camera robo_cam => Camera.main;
@@ -53,7 +53,7 @@ public class BasicController : NetworkBehaviour {
                 : BattleField.singleton.rune.rune_state_blue;
             if (rs.idx_target == -1)
                 return false;
-            target_armors = new List<ArmorController>{rs.blades[rs.idx_target].armor};
+            target_armors = new List<ArmorController> { rs.blades[rs.idx_target].armor };
             minang_th = 60;
         } else
             target_armors = (robo_state.armor_color == ArmorColor.Blue) ^ runeMode ? ArmorController.vis_armors_red : ArmorController.vis_armors_blue;
@@ -85,7 +85,7 @@ public class BasicController : NetworkBehaviour {
             }
         }
         if (minang >= minang_th) {
-            Debug.Log("no target");
+            // Debug.Log("no target");
             return false;
         }
         // Debug.Log("last_target id: " + last_target.GetInstanceID());
@@ -96,12 +96,13 @@ public class BasicController : NetworkBehaviour {
         else if (target == last_target) {
             // hit robot and outpost and base
             pos = target.transform.position + (vel_targ - _rigid.velocity) * interval;
+            // Debug.Log(this.name + ": " + _rigid.velocity.magnitude);
         }
         last_target = target;
         if (CalcFall(ref pos, bull_start.position))
             AimAt(pos);
         else {
-            Debug.Log("too far to reach");
+            // Debug.Log("too far to reach");
             return false;
         }
 
@@ -165,8 +166,12 @@ public class PIDController {
     }
 
 
+    // reset pid controller params (and integral as well)
     public void Reset(float Kp, float Ki, float Kd) {
         this.sum = 0;
         this.last_err = 0;
+        this.Kp = Kp;
+        this.Ki = Ki;
+        this.Kd = Kd;
     }
 }

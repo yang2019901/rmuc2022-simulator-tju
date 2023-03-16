@@ -22,10 +22,14 @@ public class ArmorController : MonoBehaviour {
     void Start() {
         armor_color = bs.armor_color;
         /* get material by color */
-        if (armor_color == ArmorColor.Blue)
+        if (armor_color == ArmorColor.Blue) {
             _light = AssetManager.singleton.light_blue;
-        else
+            vis_armors_blue.Add(this);
+        }
+        else {
             _light = AssetManager.singleton.light_red;
+            vis_armors_red.Add(this);
+        }
     }
 
 
@@ -82,21 +86,21 @@ public class ArmorController : MonoBehaviour {
         this.SetLight(false);
     }
 
-    void OnBecameVisible() {
-        if (armor_color == ArmorColor.Red)
-            vis_armors_red.Add(this);
-        else
-            vis_armors_blue.Add(this);
-        // Debug.Log("add armor: " + this);
-        // Debug.Log("vis_armors_red.length: " + vis_armors_red.Count + "\nvis_armors_blue.length: " + vis_armors_blue.Count);
-    }
+    // void OnBecameVisible() {
+    //     if (armor_color == ArmorColor.Red)
+    //         vis_armors_red.Add(this);
+    //     else
+    //         vis_armors_blue.Add(this);
+    //     // Debug.Log("add armor: " + this);
+    //     // Debug.Log("vis_armors_red.length: " + vis_armors_red.Count + "\nvis_armors_blue.length: " + vis_armors_blue.Count);
+    // }
 
-    void OnBecameInvisible() {
-        if (armor_color == ArmorColor.Red)
-            vis_armors_red.Remove(this);
-        else
-            vis_armors_blue.Remove(this);
-        // Debug.Log("Remove armor: " + this);
-        // Debug.Log("vis_armors_red.length: " + vis_armors_red.Count + "\nvis_armors_blue.length: " + vis_armors_blue.Count);
-    }
+    // void OnBecameInvisible() {
+    //     if (armor_color == ArmorColor.Red)
+    //         vis_armors_red.Remove(this);
+    //     else
+    //         vis_armors_blue.Remove(this);
+    //     // Debug.Log("Remove armor: " + this);
+    //     // Debug.Log("vis_armors_red.length: " + vis_armors_red.Count + "\nvis_armors_blue.length: " + vis_armors_blue.Count);
+    // }
 }
