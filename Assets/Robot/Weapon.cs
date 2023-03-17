@@ -35,6 +35,12 @@ public class Weapon : MonoBehaviour {
                 return BulletPool.singleton.GetSmallBullet();
             } else {
                 AssetManager.singleton.PlayClipAtPoint(AssetManager.singleton._42mm, transform.position);
+                if (robot.GetComponent<HeroState>().sniping) {  // hero snipe bonus
+                    if (robot.armor_color == ArmorColor.Red)
+                        BattleField.singleton.money_red += 10;
+                    else
+                        BattleField.singleton.money_blue += 10;
+                }
                 return BulletPool.singleton.GetBigBullet();
             }
         } else return null;

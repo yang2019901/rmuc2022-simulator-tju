@@ -30,9 +30,8 @@ public class BattleField : MonoBehaviour {
     public OutpostState outpost_red;
     public BaseState base_blue;
     public BaseState base_red;
-    // TODO: add guard
-    // public RoboState guard_red;
-    // public RoboState guard_blue;
+    public GuardState guard_red;
+    public GuardState guard_blue;
     public Rune rune;
     /* hero engineer infantry1 infantry2 */
     public RoboState[] robo_red;
@@ -141,13 +140,13 @@ public class BattleField : MonoBehaviour {
 
     public RoboState GetRobot(string robot_s) {
         RoboState tmp;
-        #if UNITY_EDITOR
-            Debug.Log("GetRobot() in BattleField: in unity editor");
-            tmp = GameObject.Find(robot_s).GetComponent<RoboState>();
-        #elif UNITY_STANDALONE
+#if UNITY_EDITOR
+        Debug.Log("GetRobot() in BattleField: in unity editor");
+        tmp = GameObject.Find(robot_s).GetComponent<RoboState>();
+#elif UNITY_STANDALONE
             Debug.Log("GetRobot() in BattleField: in standalone");
             tmp = this.robo_all.Find(i => i.name == robot_s);
-        #endif
+#endif
         return tmp;
     }
 
@@ -169,22 +168,29 @@ public class BattleField : MonoBehaviour {
             sync_node.RpcKill(hitter.name, hittee.name);
         if (!NetworkClient.active)
             return;
-        
+
         /* a team's base is lost and game ends */
         if (hittee.GetComponent<BaseState>() != null)
             EndGame();
 
+        BaseState bs;
+        GuardState gs;
         /* a team's outpost is lost and its base becomes vulnerable */
-        if (hittee == outpost_blue.gameObject) {
-            base_blue.GetComponent<Base>().OpenShells(true);
-            base_blue.invul = false;
-            base_blue.SetInvulLight(false);
-            // base_blue.shield = 500;
-        } else if (hittee == outpost_red.gameObject) {
-            base_red.GetComponent<Base>().OpenShells(true);
-            base_red.invul = false;
-            base_blue.SetInvulLight(false);
-            // base_blue.shield = 500;
+        if (hittee.GetComponent<OutpostState>() != null) {
+            bs = hittee == outpost_blue.gameObject ? base_blue : base_red;
+            gs = hittee == outpost_blue.gameObject ? guard_blue : guard_red;
+            bs.GetComponent<Base>().OpenShells(true);
+            bs.invul = false;
+            bs.SetInvulLight(false);
+            bs.shield = 500;
+            gs.invul = false;
+            gs.SetInvulLight(false);
+        }
+
+        gs = hittee.GetComponent<GuardState>();
+        if (gs != null) {
+            bs = gs.armor_color == ArmorColor.Red ? base_red : base_blue;
+            bs.shield = 0;
         }
 
         RoboState rs1 = hitter.GetComponent<RoboState>();

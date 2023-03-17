@@ -15,7 +15,7 @@ public class Traverse : MonoBehaviour {
             // AddMC(child);
             // ResetConvex(child);
             // DeleteMC(child);
-            // ReplaceMaterial(child, AssetManager.singleton.light_red);
+            ReplaceMaterial(child, mat);
             // DeleteNI(child);
             // ReplaceMesh(child);
         }

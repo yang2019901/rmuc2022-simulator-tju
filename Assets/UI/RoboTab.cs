@@ -49,6 +49,8 @@ namespace RMUC_UI {
                 img_ava.sprite = imgs_ava[(int)robo_sync.bat_stat];
             // blood bar
             if (robo_sync.has_blood && this.bld_bar != null) {
+                if (robo_sync.maxblood <= 0)
+                    Debug.LogErrorFormat("Err: {0} max blood: {1} <= 0", this.name, this.maxblood);
                 // blood top
                 if (this.currblood != robo_sync.currblood || this.maxblood != robo_sync.maxblood) {
                     bld_bar.SetBlood(((float)robo_sync.currblood) / robo_sync.maxblood);
@@ -57,10 +59,15 @@ namespace RMUC_UI {
                 if (this.maxblood != robo_sync.maxblood && bld_masks.Length > 0) {
                     int idx = MaxbldToIdx(robo_sync.maxblood);
                     if (bld_masks.Length > idx)
-                        bld_bar.SetMask(bld_masks[idx]);
+                        bld_bar.SetBloodMask(bld_masks[idx]);
                     else
                         Debug.Log("No alternative mask");
                 }
+                // blood effect (invulnerable golden or defensive green)
+                if (bld_bar.bar_green != null && (this.bat_stat == BatStat.Defensive ^ robo_sync.bat_stat == BatStat.Defensive))
+                    bld_bar.bar_green.SetActive(robo_sync.bat_stat == BatStat.Defensive);
+                if (bld_bar.bar_golden != null && (this.bat_stat == BatStat.Invulnerable ^ robo_sync.bat_stat == BatStat.Invulnerable))
+                    bld_bar.bar_golden.SetActive(robo_sync.bat_stat == BatStat.Invulnerable);
             }
             // img_lv
             if (robo_sync.has_level && img_lv != null) {

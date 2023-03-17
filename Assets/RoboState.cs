@@ -210,7 +210,7 @@ public class RoboState : BasicState {
     }
 
 
-    ArmorController[] acs;
+    protected ArmorController[] acs;
     public override void TakeDamage(GameObject hitter, GameObject armor_hit, GameObject bullet) {
         /* Requirement: make sure that small bullet's name contains "17mm" && big bullet's contains "42mm" */
         int damage = bullet.name.Contains("17mm") ? 10 : 100;

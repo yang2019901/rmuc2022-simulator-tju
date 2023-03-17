@@ -63,15 +63,19 @@ public struct UISync {
     public BaseSync bs_b;
     public OutpostSync os_r;
     public OutpostSync os_b;
+    public RoboSync gs_r;
+    public RoboSync gs_b;
     public BatSync bat_sync;
 
-    public UISync(SyncList<RoboSync> roboSyncs, BaseSync bs_r, BaseSync bs_b, OutpostSync os_r, 
-        OutpostSync os_b, BatSync bat_sync) {
+    public UISync(SyncList<RoboSync> roboSyncs, BaseSync bs_r, BaseSync bs_b, OutpostSync os_r,
+        OutpostSync os_b, RoboSync gs_r, RoboSync gs_b, BatSync bat_sync) {
         this.robots = roboSyncs;
         this.bs_r = bs_r;
         this.bs_b = bs_b;
         this.os_r = os_r;
         this.os_b = os_b;
+        this.gs_r = gs_r;
+        this.gs_b = gs_b;
         this.bat_sync = bat_sync;
     }
 }
@@ -79,8 +83,8 @@ public struct UISync {
 public class SyncNode : NetworkBehaviour {
     [SyncVar] private bool ready_push = false;
 
-    [SyncVar] private BatSync bat_sync; 
-   
+    [SyncVar] private BatSync bat_sync;
+
     /* rune */
     [SyncVar] private Vector3 rune_rot = new Vector3();
     [SyncVar] private float a, w, t;
@@ -97,6 +101,10 @@ public class SyncNode : NetworkBehaviour {
     [SyncVar] private BaseSync base_sync_red = new BaseSync();
     [SyncVar] private BaseSync base_sync_blue = new BaseSync();
 
+    /* guard */
+    [SyncVar] private RoboSync guard_sync_red = new RoboSync();
+    [SyncVar] private RoboSync guard_sync_blue = new RoboSync();
+
     /* robots */
     /* Note: SyncList can and only can be modify in Server */
     private readonly SyncList<RoboSync> robo_sync_all = new SyncList<RoboSync>();
@@ -108,6 +116,8 @@ public class SyncNode : NetworkBehaviour {
     OutpostState outpost_blue;
     BaseState base_red;
     BaseState base_blue;
+    GuardState guard_red;
+    GuardState guard_blue;
     /* when sync, robo_red has no difference with robo_blue */
     List<RoboState> robo_all;
 
@@ -128,7 +138,7 @@ public class SyncNode : NetworkBehaviour {
 
         BasicState hitter = BattleField.singleton.team_all.Find(i => i.name == hitter_s);
         BasicState hittee = BattleField.singleton.team_all.Find(i => i.name == hittee_s);
-        
+
         BattleField.singleton.Kill(hitter.gameObject, hittee.gameObject);
     }
 
@@ -141,6 +151,8 @@ public class SyncNode : NetworkBehaviour {
         base_red = BattleField.singleton.base_red;
         base_blue = BattleField.singleton.base_blue;
         robo_all = BattleField.singleton.robo_all;
+        guard_red = BattleField.singleton.guard_red;
+        guard_blue = BattleField.singleton.guard_blue;
         if (isServer)
             for (int i = 0; i < robo_all.Count; i++)
                 robo_sync_all.Add(new RoboSync());
@@ -150,7 +162,7 @@ public class SyncNode : NetworkBehaviour {
     void LateUpdate() {
         if (isServer) {
             bat_sync = BattleField.singleton.Pull();
-            /* server pushes rune appearence to sync info */
+            /* pulls rune appearence from server PC */
             rune_rot = rune.rotator_rune.localEulerAngles;
             a = rune.a;
             w = rune.w;
@@ -159,25 +171,28 @@ public class SyncNode : NetworkBehaviour {
             rune_buff = rune.rune_buff;
             rune_sync_red = rune.rune_state_red.Pull();
             rune_sync_blue = rune.rune_state_blue.Pull();
-            /* server pushes outpost appearence to sync info */
+            /* pulls outpost appearence from server PC */
             otpt_sync_red = outpost_red.Pull();
             otpt_sync_blue = outpost_blue.Pull();
-            /* server pushes base appearence to sync info */
+            /* pulls base appearence from server PC */
             base_sync_red = base_red.Pull();
             base_sync_blue = base_blue.Pull();
-            /* server pushes robots appearence to sync info */
+            /* pulls robots appearence from server PC */
             for (int i = 0; i < robo_sync_all.Count; i++) {
                 robo_sync_all[i] = robo_all[i].Pull();
             }
+            /* pulls guard appearence from server PC */
+            guard_sync_red = guard_red.Pull();
+            guard_sync_blue = guard_blue.Pull();
             ready_push = true;
         }
- 
+
         // Note: When battlefield is first loaded, push() may be called in client PC earlier 
         //       than pull() in server PC
         //       which will raise error of null reference in client PC
         if (isClient && ready_push) {
             BattleField.singleton.Push(bat_sync);
-            /* client pulls rune appearence from sync info */
+            /* pushes rune appearence to client PC */
             rune.rotator_rune.localEulerAngles = rune_rot;
             rune.a = a;
             rune.w = w;
@@ -186,19 +201,22 @@ public class SyncNode : NetworkBehaviour {
             rune.rune_buff = rune_buff;
             rune.rune_state_red.Push(rune_sync_red);
             rune.rune_state_blue.Push(rune_sync_blue);
-            /* client pulls outpost appearence from sync info */
+            /* pushes outpost appearence to client PC */
             outpost_red.Push(otpt_sync_red);
             outpost_blue.Push(otpt_sync_blue);
-            /* client pulls base appearence from sync info */
+            /* pushes base appearence to client PC */
             base_red.Push(base_sync_red);
             base_blue.Push(base_sync_blue);
-            /* client pulls robots appearence from sync info */
+            /* pushes robots appearence to client PC */
             for (int i = 0; i < robo_all.Count; i++) {
                 robo_all[i].Push(robo_sync_all[i]);
             }
+            /* pushes guard appearence to client PC */
+            guard_red.Push(guard_sync_red);
+            guard_blue.Push(guard_sync_blue);
             /* host needs that to update UI as well */
-            BattleField.singleton.bat_ui.Push(new UISync(robo_sync_all, base_sync_red, base_sync_blue, 
-                otpt_sync_red, otpt_sync_blue, bat_sync));
+            BattleField.singleton.bat_ui.Push(new UISync(robo_sync_all, base_sync_red, base_sync_blue,
+                otpt_sync_red, otpt_sync_blue, guard_sync_red, guard_sync_blue, bat_sync));
         }
-   }
+    }
 }

@@ -22921,7 +22921,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   robo_state: {fileID: 0}
-  maxDist: 6
+  maxDist: 8
   dynCoeff: 0.4
   centerOfMass: {x: 0, y: 0, z: 0}
   yaw: {fileID: 1035657434385464836}

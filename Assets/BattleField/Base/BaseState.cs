@@ -19,7 +19,7 @@ public class BaseState : TowerState {
 
     public override void TakeDamage(GameObject hitter, GameObject armor_hit, GameObject bullet) {
         if (this.invul)
-            return ;
+            return;
         if (hitter.name.ToLower().Contains("hero")) {
             HeroState hero = hitter.GetComponent<HeroState>();
             if (hero == null)
@@ -27,7 +27,7 @@ public class BaseState : TowerState {
 
             /* Base gets 100% defence to 42mm bullet after sniping in 10 sec */
             if (Time.time - last_snipe < 10f)
-                return ;
+                return;
 
             if (hero.sniping) {
                 /* temporarily change B_atk */
@@ -38,7 +38,7 @@ public class BaseState : TowerState {
                 /* update last snipe time to now */
                 last_snipe = Time.time;
                 Debug.LogWarning("Extraordinary!!, hero sniping");
-            } else 
+            } else
                 base.TakeDamage(hitter, armor_hit, bullet);
         } else
             base.TakeDamage(hitter, armor_hit, bullet);
@@ -81,5 +81,5 @@ public class BaseState : TowerState {
         else
             foreach (ArmorController ac in acs)
                 ac.SetLight(true);
-    } 
+    }
 }

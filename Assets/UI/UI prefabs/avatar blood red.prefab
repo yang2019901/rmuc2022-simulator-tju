@@ -29,9 +29,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2076285453005650217}
   - {fileID: 2076285451361535420}
   - {fileID: 2076285451340925695}
+  - {fileID: 2076285453005650217}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -52,10 +52,15 @@ MonoBehaviour:
   bld_full: {fileID: 2076285451916626825}
   bld_empty: {fileID: 2076285453028882241}
   bar_golden: {fileID: 2076285451340925694}
+  bar_blood_mid: {fileID: 0}
+  bld_mid_full: {fileID: 0}
+  bld_mid_empty: {fileID: 0}
   bar_shield: {fileID: 0}
   shd_full: {fileID: 0}
   shd_empty: {fileID: 0}
   bar_green: {fileID: 2076285451361535411}
+  bar_dead: {fileID: 0}
+  blood_txt: {fileID: 0}
 --- !u!1 &2076285451340925694
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,7 +92,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2076285451263859021}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -163,7 +168,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2076285451263859021}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -280,7 +285,7 @@ RectTransform:
   - {fileID: 2076285451916626825}
   - {fileID: 2076285453028882241}
   m_Father: {fileID: 2076285451263859021}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

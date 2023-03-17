@@ -69,7 +69,7 @@ namespace RMUC_UI {
         }
 
         /* for robot only */
-        public void SetMask(Sprite newmask) {
+        public void SetBloodMask(Sprite newmask) {
             Image tmp = this.mask.GetComponent<Image>();
             tmp.sprite = newmask;
             tmp.SetNativeSize();

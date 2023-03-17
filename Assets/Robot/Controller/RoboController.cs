@@ -92,7 +92,8 @@ public class RoboController : BasicController {
             }
         } else if (unowned) {
             // Debug.Log("disable client auth of unowned robot");
-            foreach (var tmp in GetComponents<NetworkTransformChild>()) {
+            // NetworkTransformBase is the base of both NetworkTransform and NetworkTransformChild
+            foreach (var tmp in GetComponents<NetworkTransformBase>()) {
                 tmp.clientAuthority = false;
             }
         }
@@ -151,6 +152,7 @@ public class RoboController : BasicController {
 
     float vel_guard_targ = 1;
     int move_guard_dir = 1;
+    float last_t;
     PIDController pid_move = new PIDController(10, 0.08f, 0.5f);
     void GuardMove() {
         Vector3 vec_err = move_guard_dir * vel_guard_targ * Vector3.forward - _rigid.velocity;
@@ -161,6 +163,8 @@ public class RoboController : BasicController {
         else if (_rigid.transform.position.z > 1.2f)
             move_guard_dir = -1;
         // Debug.Log(_rigid.velocity.magnitude);
+        if (Time.time - last_t > 2)
+            vel_guard_targ = Random.Range(1, 3);
         return;
     }
 
@@ -386,6 +390,9 @@ public class RoboController : BasicController {
     bool is_fire => playing && Input.GetMouseButton(0);
     float last_fire;
     void Shoot() {
+        if (!BattleField.singleton.started_game)
+            return;
+            
         if (isGuard) {
             GuardShoot();
             return;

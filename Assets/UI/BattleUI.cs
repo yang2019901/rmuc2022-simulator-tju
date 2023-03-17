@@ -18,6 +18,9 @@ namespace RMUC_UI {
         public RoboTab otptStat_red;
         public RoboTab otptStat_blue;
 
+        public RoboTab guardStat_red;
+        public RoboTab guardStat_blue;
+
         [Header("Settings UI")]
         /* supply UI */
         public GameObject supp_ui;
@@ -95,6 +98,9 @@ namespace RMUC_UI {
 
             otptStat_red.Push(uisync.os_r);
             otptStat_blue.Push(uisync.os_b);
+
+            guardStat_red.Push(uisync.gs_r);
+            guardStat_blue.Push(uisync.gs_b);
 
             SetMyUI();
         }
