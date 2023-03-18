@@ -65,7 +65,7 @@ public class BasicController : NetworkBehaviour {
             // judge whether armor's facing turret
             Vector3 v1 = ac.transform.position - bull_start.position;
             Vector3 v2 = ac.transform.TransformVector(ac.norm_in);
-            if (Vector3.Angle(v1, v2) >= 75)
+            if (Vector3.Angle(v1, v2) >= 50)
                 continue;
 
             float ang = Vector3.Angle(ac.transform.position - bull_start.position, bull_start.forward);

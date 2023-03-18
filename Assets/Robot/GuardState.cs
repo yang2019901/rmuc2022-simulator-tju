@@ -43,7 +43,7 @@ public class GuardState : RoboState {
 
 
     public override void Configure() {
-        // this.maxblood = 600;
+        this.maxblood = 600;
         this.maxheat = 320;
         this.cooldown = 100;
         this.bullspd = 30;

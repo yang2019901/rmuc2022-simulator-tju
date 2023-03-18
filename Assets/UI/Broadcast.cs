@@ -38,8 +38,10 @@ namespace RMUC_UI {
         List<BasicState> team_blue = new List<BasicState>();    // robots and towers with blue armor
         void Start() {
             team_red.AddRange(BattleField.singleton.robo_red);
+            team_red.Add(BattleField.singleton.guard_red);
             team_red.Add(BattleField.singleton.outpost_red);
             team_blue.AddRange(BattleField.singleton.robo_blue);
+            team_blue.Add(BattleField.singleton.guard_blue);
             team_blue.Add(BattleField.singleton.outpost_blue);
         }
 
@@ -78,7 +80,8 @@ namespace RMUC_UI {
                 ava.sprite = killed ? spr_ava_dead_blue[tmp] : spr_ava_blue[tmp];
                 idx_bg.sprite = spr_idx_bg[1];
             }
-            if (bs.GetComponent<RoboState>() != null) {
+            // guard has no index
+            if (bs.GetComponent<RoboState>() != null && bs.GetComponent<GuardState>() == null) {
                 idx_bg.gameObject.SetActive(true);
                 idx.gameObject.SetActive(true);
                 idx.text = bs.name.Split('_')[2];

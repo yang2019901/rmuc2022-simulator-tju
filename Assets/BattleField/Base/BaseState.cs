@@ -45,6 +45,9 @@ public class BaseState : TowerState {
         if (shield + currblood >= maxblood) {
             shield = shield + currblood - maxblood;
             currblood = maxblood;
+        } else {
+            currblood = shield + currblood;
+            shield = 0;
         }
     }
 
