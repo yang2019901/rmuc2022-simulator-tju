@@ -66123,8 +66123,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7007611606794374494}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 10, y: 2, z: -6}
+  m_LocalRotation: {x: 3.3573144e-13, y: 0.6766156, z: -1.8189894e-12, w: -0.73633647}
+  m_LocalPosition: {x: -0.797836, y: 3.3299978, z: -5.0034046}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -66202,6 +66202,7 @@ MonoBehaviour:
   robo_state: {fileID: 0}
   maxDist: 15
   dynCoeff: 0.4
+  heightOffset: 0.04
   centerOfMass: {x: 0, y: 0, z: 0}
   yaw: {fileID: 1444113319048627273}
   pitch: {fileID: 891577611837757158}

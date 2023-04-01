@@ -6,8 +6,9 @@ using Mirror;
 public class BasicController : NetworkBehaviour {
     [HideInInspector] public RoboState robo_state;
     [Header("AutoAim params")]
-    public float maxDist = 15f;        // max distance of auto aim
+    public float maxDist = 15f;      // max distance of auto aim
     public float dynCoeff = 0.4f;    // a 0~1 number describes how fast turret chases the target; 0: no chasing    1: perfectly chasing
+    public float heightOffset;       // to compensate for not aligning of pitch and bullet_start
 
     protected Rigidbody _rigid => robo_state.rigid;
 
@@ -115,6 +116,7 @@ public class BasicController : NetworkBehaviour {
     /** calc gravity effect and correct trajectory
         return false if target is beyond range for given bullet speed and bull_start */
     bool CalcFall(ref Vector3 target, Vector3 bull_start) {
+        // Debug.Log("target: " + target + "\tbullet start: " + bull_start);
         Vector3 r = target - bull_start;
         float y = Vector3.Dot(r, Vector3.up);
         float d = r.magnitude;
@@ -125,11 +127,13 @@ public class BasicController : NetworkBehaviour {
         if (delta < 0)
             return false;
         float t = Mathf.Sqrt((-B - Mathf.Sqrt(delta)) / (2 * A));
+        // Debug.LogFormat("A: {0}, B:{1}, C: {2}, delta: {3}", A, B, C, delta);
         float theta = Mathf.Asin((y + g * t * t / 2) / (spd * t));
         float y_new = Mathf.Sqrt(d * d - y * y) * Mathf.Tan(theta);
+        // Debug.LogFormat("d: {5}, y: {6}, t: {0}, theta: {1}, theta_targ: {2}, y: {3}, y_new: {4}", t, theta, Mathf.Atan(y / Mathf.Sqrt(d * d - y * y)), y, y_new, d, y);
         Debug.DrawLine(bull_start, target, Color.yellow);
-        target[1] += y_new - y;
-        // Debug.DrawLine(bull_start, target, Color.green);
+        target[1] += y_new - y + heightOffset;
+        Debug.DrawLine(bull_start, target, Color.green);
         return true;
     }
 
