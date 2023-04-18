@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ArmorController : MonoBehaviour {
-    public static List<ArmorController> vis_armors_red = new List<ArmorController>();
-    public static List<ArmorController> vis_armors_blue = new List<ArmorController>();
+    public static List<ArmorController> vis_armors_red;
+    public static List<ArmorController> vis_armors_blue;
     public bool en = true;          // whether this armor is enabled (to be target of auto-aim, to take hit)
     public GameObject[] light_bars;
     [Header("inward normal vector(local)")]
@@ -17,6 +17,8 @@ public class ArmorController : MonoBehaviour {
 
     void Awake() {
         bs = GetComponentInParent<BasicState>();
+        vis_armors_blue = new List<ArmorController>();
+        vis_armors_red = new List<ArmorController>();
     }
 
     void Start() {
