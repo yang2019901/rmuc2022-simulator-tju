@@ -261,6 +261,10 @@ public class DroneController : BasicController {
             Debug.Log("already attacking");
             return;
         }
+        if (robo_state.armor_color == ArmorColor.Red)
+            BattleField.singleton.money_red -= 300;
+        else
+            BattleField.singleton.money_blue -= 300;
         wpn.bullnum = 400;
         last_atk = t_bat;
     }

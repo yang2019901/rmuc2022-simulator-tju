@@ -243,7 +243,8 @@ public class RoboState : BasicState {
             ac.SetLight(false);
         yield return new WaitForSeconds(interval);
         foreach (ArmorController ac in acs)
-            ac.SetLight(true);
+            /* set armors light according to robot's survival */
+            ac.SetLight(this.survival);
     }
 
 

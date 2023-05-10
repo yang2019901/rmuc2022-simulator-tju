@@ -26,7 +26,8 @@ public class TowerState : BasicState {
             ac.SetLight(false);
         yield return new WaitForSeconds(interval);
         foreach (ArmorController ac in acs)
-            ac.SetLight(true);
+            /* set armors light according to tower's survival */
+            ac.SetLight(this.survival);
     }
 
 
