@@ -51,15 +51,6 @@ public class RoboController : BasicController {
     }
 
 
-    public override void OnStopClient() {
-        base.OnStopClient();
-        if (hasAuthority) {
-            Camera.main.transform.parent = null;
-            Cursor.lockState = CursorLockMode.None;
-        }
-    }
-
-
     Transform virt_yaw;
     void Awake() {
         robo_state = GetComponent<RoboState>();
@@ -77,7 +68,6 @@ public class RoboController : BasicController {
         _rigid.centerOfMass = centerOfMass;
 
         if (hasAuthority) {
-            Cursor.lockState = CursorLockMode.Locked;
             BattleField.singleton.robo_local = this.robo_state;
             /* set dropdown of chassis and turret in preference_ui of bat_ui */
             BattleField.singleton.bat_ui.SetRoboPrefDrop(interactable: true);

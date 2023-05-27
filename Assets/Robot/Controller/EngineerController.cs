@@ -54,15 +54,6 @@ public class EngineerController : BasicController {
     }
 
 
-    public override void OnStopClient() {
-        base.OnStopClient();
-        if (hasAuthority) {
-            Camera.main.transform.parent = null;
-            Cursor.lockState = CursorLockMode.None;
-        }
-    }
-
-
     void Awake() {
         robo_state = GetComponent<RoboState>();
         cm = GetComponentInChildren<CatchMine>();
@@ -72,7 +63,6 @@ public class EngineerController : BasicController {
     void Start() {
         /* even if no authority, external reference should be inited */
         _rigid.centerOfMass = centerOfMass;
-        Cursor.lockState = CursorLockMode.Locked;
         yaw_ang = _rigid.transform.localEulerAngles.y;
 
         if (hasAuthority) {

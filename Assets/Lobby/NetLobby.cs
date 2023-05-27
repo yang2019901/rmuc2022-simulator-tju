@@ -11,7 +11,7 @@ namespace LobbyUI {
         public bool owning_ava;   // whether taking a robot
         public string ava_tag;   // name of robot taken by the player, must be one of mainmenu.robo_names;
         public bool ready;          // whether ready to start after taking robot
-        PlayerSync(int connId, string player_name, bool owning_ava, string ava_tag, bool ready) {
+        public PlayerSync(int connId, string player_name, bool owning_ava, string ava_tag, bool ready) {
             this.connId = connId;
             this.player_name = player_name;
             this.owning_ava = owning_ava;
@@ -28,8 +28,8 @@ namespace LobbyUI {
     public class NetLobby : NetworkBehaviour {
         public const string NULLAVA = null;
         BattleNetworkManager net_man => BattleNetworkManager.singleton;
-        [HideInInspector]
-        public int uid;     // unique identifier for each client
+        // [HideInInspector]
+        public static int uid;     // unique identifier for each client
 
 
         /** Tip: nested struct declaration => Netlobby.AvatarMessage instead of AvatarMessage.
@@ -84,6 +84,12 @@ namespace LobbyUI {
         public MainMenu mainmenu;
         /// </summary>
 
+        /* to display the content of this.playersyncs[0] */
+        public PlayerSync ps_debug = new PlayerSync(-1, "", false, "", false);
+        void Update() {
+            if (this.playerSyncs.Count > 0)
+                ps_debug = this.playerSyncs[0];
+        }
 
         [Server]
         public void OnPlayerLeave(NetworkConnectionToClient conn) {
@@ -104,6 +110,8 @@ namespace LobbyUI {
         */
         [Server]
         public void OnRecAvaOwnMes(NetworkConnectionToClient conn, AvaOwnMessage mes) {
+            // Debug.Log("receive avatar own message");
+            // Debug.Log("net_lob.playersync.count: " + this.playerSyncs.Count);
             bool is_avatar_taken = (-1 != playerSyncs.FindIndex(i => i.owning_ava && i.ava_tag == mes.robot_s));
             if (is_avatar_taken)
                 Debug.Log("server: the robot is taken!");
@@ -163,6 +171,7 @@ namespace LobbyUI {
                 @newval: newly-added object (PlayerSync) 
                 @index: newval's index in synclist
             */
+            // Debug.LogFormat("operation: {0}\told playersync.ava_tag: {1}\tnew playersync.ava_tag:{2}", op.ToString(), oldval.ava_tag, newval.ava_tag);
             /* step 1: reset old avatar */
             if (oldval.ava_tag != null) {
                 int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag == oldval.ava_tag);
@@ -173,7 +182,7 @@ namespace LobbyUI {
                 int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag == newval.ava_tag);
                 mainmenu.avatars[avaIdx].SetRoboTab(newval);
             }
-            int syncIdx = this.playerSyncs.FindIndex(p => p.connId == this.uid);
+            int syncIdx = this.playerSyncs.FindIndex(p => p.connId == NetLobby.uid);
             if (syncIdx != -1) {
                 mainmenu.owning_ava = playerSyncs[syncIdx].owning_ava;
                 mainmenu.ava_ready = playerSyncs[syncIdx].ready;
@@ -186,7 +195,7 @@ namespace LobbyUI {
         [Client]
         public void OnRecCliIdMes(ClientIdMessage mes) {
             // Debug.Log("receive server-assign connId: " + mes.connId_onserver);
-            this.uid = mes.connId_onserver;
+            NetLobby.uid = mes.connId_onserver;
         }
 
         // call all clients to play SceneTrans Anim 
@@ -195,7 +204,7 @@ namespace LobbyUI {
         IEnumerator MyServerChangeScene() {
             NetworkServer.SendToAll<SceneTransMessage>(new SceneTransMessage(true));
             yield return new WaitForSeconds(5);
-            Debug.Log("net_man starts to change scene");
+            // Debug.Log("net_man starts to change scene");
             net_man.ServerChangeScene(net_man.scn_field);
             yield break;
         }
@@ -206,34 +215,45 @@ namespace LobbyUI {
             // has to call mainmenu disable it instead of calling it once in server PC
             mainmenu.DisableAllMenus();
             if (mes.trans) {
-                Debug.Log("OnRecScnTransMes");
+                // Debug.Log("OnRecScnTransMes");
                 SceneTransit.singleton.StartTransit();
-                Debug.Log("StartTransit");
+                // Debug.Log("StartTransit");
             }
         }
 
-        public override void OnStartClient() {
-            base.OnStartClient();
-
+        [Client]
+        public void RegisterPlayerSync() {
             /* when first joining, 1. send fake AvaMes to register
-                2. init AvaTabs as playerSyncs */
+                2. init RoboTabs by playerSyncs that pulled from server PC */
             AvaOwnMessage fake_ava_mes = new AvaOwnMessage(NULLAVA, mainmenu.input_info.text);
             NetworkClient.Send<AvaOwnMessage>(fake_ava_mes);
+        }
+
+
+
+        public override void OnStartClient() {
+            base.OnStartClient();
+            this.playerSyncs.Callback += OnPlayerSyncChanged;
+            if (NetworkServer.active)
+                this.playerSyncs.AddRange(net_man.playerSyncs);
+            /* `playerSyncs` may be updated before OnPlayerSyncsChanged is added to Callback
+                Therefore, it's needed to manually update robotabs */
             foreach (PlayerSync tmp in playerSyncs) {
                 /* all clients has a corresponding PlayerSync, 
                     yet it's possible that not every client owns avatar */
-                if (tmp.owning_ava) {
-                    int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag == tmp.ava_tag);
-                    mainmenu.avatars[avaIdx].SetRoboTab(tmp);
-                }
+                if (!tmp.owning_ava)
+                    continue;
+                int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag == tmp.ava_tag);
+                mainmenu.avatars[avaIdx].SetRoboTab(tmp);
             }
             /* first client is owner */
             this.owner_uid = this.playerSyncs[0].connId;
         }
 
+
         public override void OnStopClient() {
             base.OnStopClient();
-
+            this.playerSyncs.Callback -= OnPlayerSyncChanged;
             /* update owner id */
             if (this.playerSyncs.Count > 0)
                 this.owner_uid = this.playerSyncs[0].connId;

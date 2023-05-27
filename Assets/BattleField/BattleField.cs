@@ -20,7 +20,8 @@ public class BattleField : MonoBehaviour {
     public const int width = 16;
     public const int height = 4;
     public bool had_first_blood;
-    public bool started_game;
+    public bool started_game { get; private set; }
+    public bool ended_game { get; private set; }
 
     /// <summary>
     /// External reference
@@ -66,7 +67,7 @@ public class BattleField : MonoBehaviour {
 
     void Update() {
         t_bat += Time.deltaTime;
-        if (this.GetBattleTime() > 420f || !base_blue.survival || !base_red.survival)
+        if (this.GetBattleTime() > 1f || !base_blue.survival || !base_red.survival)
             this.EndGame();
     }
 
@@ -79,6 +80,7 @@ public class BattleField : MonoBehaviour {
         this.money_blue_max = 0;
         this.had_first_blood = false;
         this.started_game = false;
+        this.ended_game = false;
     }
 
 
@@ -113,9 +115,12 @@ public class BattleField : MonoBehaviour {
     [Header("draw-redwin-bluewin")]
     [SerializeField] Animator[] anims_win;
     public void EndGame() {
+        if (this.ended_game)
+            return;
+
         int rlt = 0; // 0: draw; 1: red win; 2: blue win
         int[] blood_diff = new int[3] {outpost_red.currblood - outpost_blue.currblood,
-            0, // TODO: add guard state and put guard blood difference here
+            guard_red.currblood - guard_blue.currblood, // TODO: add guard state and put guard blood difference here
             base_red.currblood - base_blue.currblood};
         for (int i = 0; i < blood_diff.Length; i++) {
             if (blood_diff[i] != 0) {
@@ -128,9 +133,20 @@ public class BattleField : MonoBehaviour {
             anims_win[rlt].gameObject.SetActive(true);
         }
 
-        ////////////////////////////////////////////////// 
-        // TODO: start another round or return to lobby //
-        ////////////////////////////////////////////////// 
+        net_man.StartCoroutine(EndGameTrans());
+        this.ended_game = true;
+    }
+
+
+    BattleNetworkManager net_man => BattleNetworkManager.singleton;
+    IEnumerator EndGameTrans() {
+        // wait for a while such that `anims_win` ends playing
+        yield return new WaitForSeconds(1);
+        SceneTransit.singleton.StartTransit();
+        // wait for a while such that SceneTransit.singleton ends playing
+        yield return new WaitForSeconds(1);
+        // server PC change scene to `scn_lobby`
+        net_man.ServerChangeScene(net_man.scn_lobby);
     }
 
 

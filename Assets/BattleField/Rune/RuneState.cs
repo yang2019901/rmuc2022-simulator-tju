@@ -158,7 +158,7 @@ public class RuneState : BasicState {
     public void Push(RuneSync rune_sync) {
         rune_center.GetComponent<Renderer>().sharedMaterial = rune_sync.center_light ?
             _light : AssetManager.singleton.light_off;
-        for (int i = 0; i < blades.Count; i++) {
+        for (int i = 0; i < Mathf.Min(blades.Count, rune_sync.blades_light.Length); i++) {
             blades[i].SetBladeLight(rune_sync.blades_light[i]);
         }
         this.idx_target = rune_sync.idx_target;

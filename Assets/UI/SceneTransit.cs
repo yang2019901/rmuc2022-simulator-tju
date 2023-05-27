@@ -31,7 +31,7 @@ public class SceneTransit : MonoBehaviour {
     IEnumerator DispTips() {
         while (true) {
             txt_tip.text = "Tips: " + s_tips[Random.Range(0, s_tips.Length)];
-            Debug.Log("tip content: " + txt_tip.text);
+            // Debug.Log("tip content: " + txt_tip.text);
             yield return new WaitForSeconds(2.5f);
         }
     }

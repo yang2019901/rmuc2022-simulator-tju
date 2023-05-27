@@ -45,14 +45,6 @@ public class DroneController : BasicController {
     }
 
 
-    public override void OnStopClient() {
-        base.OnStopClient();
-        if (hasAuthority) {
-            Camera.main.transform.parent = null;
-            Cursor.lockState = CursorLockMode.None;
-        }
-    }
-
     Transform virt_yaw;
     void Awake() {
         robo_state = GetComponent<RoboState>();
@@ -70,7 +62,6 @@ public class DroneController : BasicController {
         _rigid.centerOfMass = centerOfMass;
 
         if (hasAuthority) {
-            Cursor.lockState = CursorLockMode.Locked;
             BattleField.singleton.robo_local = this.robo_state;
             BattleField.singleton.bat_ui.robo_prof.SetActive(false);
             BattleField.singleton.bat_ui.drone_prof.SetActive(true);
@@ -100,10 +91,10 @@ public class DroneController : BasicController {
     public override void FixedUpdate() {
         base.FixedUpdate();
 
-        if(!BattleField.singleton.started_game)
+        if (!BattleField.singleton.started_game)
             return;
         PaddleSpin();
-        if (!hasAuthority) 
+        if (!hasAuthority)
             return;
 
         if (robo_state.survival) {
@@ -220,11 +211,11 @@ public class DroneController : BasicController {
     protected override void AimAt(Vector3 target) {
         Vector3 d = target - pitch.transform.position;
         float d_pitch = BasicController.SignedAngleOnPlane(bullet_start.forward, d, pitch.transform.right);
-        float d_yaw =BasicController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
+        float d_yaw = BasicController.SignedAngleOnPlane(bullet_start.forward, d, virt_yaw.transform.up);
 
         d_pitch = dynCoeff * d_pitch;
         d_yaw = dynCoeff * d_yaw;
-        
+
         d_pitch = Mathf.Clamp(pitch_ang + d_pitch, -pitch_max, -pitch_min) - Mathf.Clamp(pitch_ang, -pitch_max, -pitch_min);
         virt_yaw.transform.Rotate(virt_yaw.transform.up, d_yaw, Space.World);
         pitch.transform.Rotate(pitch.transform.right, d_pitch, Space.World);

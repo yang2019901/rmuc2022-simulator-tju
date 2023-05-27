@@ -37,9 +37,9 @@ public class BattleNetworkManager : NetworkManager {
         base.OnStartServer();
         if (net_lob == null)
             return;
-        NetworkServer.RegisterHandler<NetLobby.AvaOwnMessage>(net_lob.OnRecAvaOwnMes);
-        NetworkServer.RegisterHandler<NetLobby.AvaReadyMessage>(net_lob.OnRecAvaReadyMes);
-        NetworkServer.RegisterHandler<NetLobby.StartGameMessage>(net_lob.OnRecStartGameMes);
+        NetworkServer.RegisterHandler<NetLobby.AvaOwnMessage>(OnRecAvaOwnMesWrapUp);
+        NetworkServer.RegisterHandler<NetLobby.AvaReadyMessage>(OnRecAvaReadyMesWrapUp);
+        NetworkServer.RegisterHandler<NetLobby.StartGameMessage>(OnRecStartGameMesWrapUp);
         /* clear playerSyncs, otherwise, previous items are there */
         net_lob.playerSyncs.Reset();
     }
@@ -47,6 +47,7 @@ public class BattleNetworkManager : NetworkManager {
 
     public override void OnStopServer() {
         base.OnStopServer();
+        this.playerSyncs.Clear();
         Debug.Log("server: stop server");
     }
 
@@ -64,9 +65,16 @@ public class BattleNetworkManager : NetworkManager {
     /* called on server when a client is disconnected */
     public override void OnServerDisconnect(NetworkConnectionToClient conn) {
         base.OnServerDisconnect(conn);
-        Debug.Log("Hey, there! A client disconnects. ConnId: " + conn.connectionId);
+        Debug.Log("Hey, there! A client disconnects with player destroyed. ConnId: " + conn.connectionId);
+        NetworkServer.DestroyPlayerForConnection(conn);
+        NetworkServer.RemoveConnection(conn.connectionId);
         if (isScnLobby())
             net_lob.OnPlayerLeave(conn);
+        else if (isScnField()) {
+            int idx = this.playerSyncs.FindIndex(i => i.connId == conn.connectionId);
+            if (idx != -1)
+                this.playerSyncs.RemoveAt(idx);
+        }
     }
 
 
@@ -95,9 +103,10 @@ public class BattleNetworkManager : NetworkManager {
         if (mainmenu == null || net_lob == null)
             return;
         mainmenu.SetPlayerLobby();
-        net_lob.playerSyncs.Callback += net_lob.OnPlayerSyncChanged;
-        NetworkClient.RegisterHandler<NetLobby.ClientIdMessage>(net_lob.OnRecCliIdMes);
-        NetworkClient.RegisterHandler<NetLobby.SceneTransMessage>(net_lob.OnRecScnTransMes);
+        // net_lob.playerSyncs.Callback += OnPlayerSyncChangedWrapUp;
+        net_lob.RegisterPlayerSync();
+        NetworkClient.RegisterHandler<NetLobby.ClientIdMessage>(OnRecCliIdMesWrapUp);
+        NetworkClient.RegisterHandler<NetLobby.SceneTransMessage>(OnRecScnTransMesWrapUp);
         // Debug.Log("register handler in net_man");
     }
 
@@ -111,7 +120,7 @@ public class BattleNetworkManager : NetworkManager {
         if (NetworkClient.isConnected) {
             // clear what OnClientConnect() has done:
             if (isScnLobby()) {
-                net_lob.playerSyncs.Callback -= net_lob.OnPlayerSyncChanged;
+                // net_lob.playerSyncs.Callback -= OnPlayerSyncChangedWrapUp;
                 mainmenu.SetPlayerMode();
             } else if (isScnField()) {
                 SceneManager.LoadScene(scn_lobby);
@@ -121,15 +130,29 @@ public class BattleNetworkManager : NetworkManager {
             // call mainmenu to do finishing touches 
             mainmenu.OnCancelJoin();
         }
+        this.playerSyncs.Clear();
     }
 
 
-    // since battlenetworkmanager is singleton that won't be destroyed when scene changes 
+    // since BattleNetworkManager singleton won't be destroyed when scene changes 
     // but this.net_lob and this.mainmenu will be destroyed
-    // so every time new scene is loaded, singleton will find the new net_lob and mainmenu
+    // so every time new scene is loaded, singleton should find net_lob and mainmenu that is newly added
     void OnSceneLoaded(Scene scn, LoadSceneMode mode) {
         this.net_lob = FindObjectOfType<NetLobby>(includeInactive: true);
         this.mainmenu = FindObjectOfType<MainMenu>(includeInactive: true);
     }
 
+
+    // Wrap-up function for handler and callback:
+    // net_lob will be destroyed together with Lobby Scene. RegisterHandler(net_lob.xxx) is illegal when switch back to 
+    // Lobby because `net_lob` is different and the former one that is registered in handler is gone. However, 
+    // `BattleNetworkManager.singleton` is static and marked as `DontDestroyOnLoad`. Therefore, wrap up `net_lob.xxx` by `singleton`
+    void OnRecCliIdMesWrapUp(NetLobby.ClientIdMessage mes) => net_lob.OnRecCliIdMes(mes);
+    void OnRecScnTransMesWrapUp(NetLobby.SceneTransMessage mes) => net_lob.OnRecScnTransMes(mes);
+    void OnRecAvaOwnMesWrapUp(NetworkConnectionToClient conn, NetLobby.AvaOwnMessage mes)
+        => net_lob.OnRecAvaOwnMes(conn, mes);
+    void OnRecAvaReadyMesWrapUp(NetworkConnectionToClient conn, NetLobby.AvaReadyMessage mes)
+        => net_lob.OnRecAvaReadyMes(conn, mes);
+    void OnRecStartGameMesWrapUp(NetworkConnectionToClient conn, NetLobby.StartGameMessage mes)
+        => net_lob.OnRecStartGameMes(conn, mes);
 }

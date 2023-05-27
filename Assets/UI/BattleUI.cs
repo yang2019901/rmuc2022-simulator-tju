@@ -61,6 +61,7 @@ namespace RMUC_UI {
 
 
         void Start() {
+            Cursor.lockState = CursorLockMode.Locked;
             SetRoboPrefDrop(interactable: false);
             /* init imgs_buf */
             for (int i = 0; i < indic_buf.Length; i++)
@@ -84,6 +85,11 @@ namespace RMUC_UI {
                 this.pref_ui.SetActive(!this.pref_ui.activeSelf);
                 Cursor.lockState = this.pref_ui.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
             }
+        }
+
+
+        void OnDestroy() {
+            Cursor.lockState = CursorLockMode.None;
         }
 
 
@@ -269,7 +275,7 @@ namespace RMUC_UI {
         }
         IEnumerator ReturnLobbyTrans() {
             SceneTransit.singleton.StartTransit();
-            NetworkManager net_man = GameObject.FindObjectOfType<NetworkManager>();
+            NetworkManager net_man = NetworkManager.singleton; // GameObject.FindObjectOfType<NetworkManager>();
             yield return new WaitForSeconds(5);
             // load of scene will finish automatically in OnStopClient(), 
             // and dedicated server needn't switch back to lobby ui if it stops

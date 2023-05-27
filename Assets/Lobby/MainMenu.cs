@@ -38,12 +38,14 @@ namespace LobbyUI {
 
 
         void Start() {
-            /* set first menu to be player info menu */
-            SetPlayerInfo();
             /* set default player name as computer name */
             input_info.text = System.Environment.GetEnvironmentVariable("ComputerName");
             input_addr.text = "localhost";
-
+            /* set first menu to be player info menu */
+            if (!NetworkClient.active && !NetworkServer.active)
+                SetPlayerInfo();
+            else
+                SetPlayerLobby();
             AssetManager.singleton.PlayClipAround(AssetManager.singleton.prepare, true, 0.3f);
         }
 
@@ -167,7 +169,7 @@ namespace LobbyUI {
             NetLobby.AvaOwnMessage mes = new NetLobby.AvaOwnMessage(
                 this.ava_tags[idx], this.input_info.text);
             /* judge whether user click his avatar. If so, give up taking that avatar */
-            PlayerSync ps = net_lob.playerSyncs.Find(i => i.connId == net_lob.uid);
+            PlayerSync ps = net_lob.playerSyncs.Find(i => i.connId == NetLobby.uid);
             if (ps.owning_ava && ps.ava_tag == this.ava_tags[idx])
                 mes.robot_s = NetLobby.NULLAVA;
             NetworkClient.Send<NetLobby.AvaOwnMessage>(mes);
@@ -177,7 +179,7 @@ namespace LobbyUI {
         public void InvReady() {
             if (!owning_ava)
                 return;
-            if (net_lob.owner_uid == net_lob.uid) {
+            if (net_lob.owner_uid == NetLobby.uid) {
                 // start the game
                 NetworkClient.Send<NetLobby.StartGameMessage>(new NetLobby.StartGameMessage(true));
             } else {
@@ -202,12 +204,14 @@ namespace LobbyUI {
 
 
         public void SetButtonReady() {
-            btn_ready.SetActive(this.owning_ava || net_lob.owner_uid == net_lob.uid);
+            // if (btn_ready == null)
+            //     return;
+            btn_ready.SetActive(this.owning_ava || net_lob.owner_uid == NetLobby.uid);
 
             TMP_Text btn_txt = btn_ready.GetComponentInChildren<TMP_Text>();
             /* Note: owner can start game any time he wants 
                 Therefore, he has button text of <start game> instead of <ready>*/
-            if (net_lob.owner_uid == net_lob.uid) {
+            if (net_lob.owner_uid == NetLobby.uid) {
                 btn_txt.text = "<color=#28DD00><Start Game></color>";
             } else {
                 btn_txt.text = this.ava_ready ? "<color=#DCDD00><Cancel Ready></color>" // yellow text
