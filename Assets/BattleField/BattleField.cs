@@ -67,7 +67,7 @@ public class BattleField : MonoBehaviour {
 
     void Update() {
         t_bat += Time.deltaTime;
-        if (this.GetBattleTime() > 1f || !base_blue.survival || !base_red.survival)
+        if (this.GetBattleTime() > 420f || !base_blue.survival || !base_red.survival)
             this.EndGame();
     }
 
@@ -141,10 +141,10 @@ public class BattleField : MonoBehaviour {
     BattleNetworkManager net_man => BattleNetworkManager.singleton;
     IEnumerator EndGameTrans() {
         // wait for a while such that `anims_win` ends playing
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(10);
         SceneTransit.singleton.StartTransit();
         // wait for a while such that SceneTransit.singleton ends playing
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5);
         // server PC change scene to `scn_lobby`
         net_man.ServerChangeScene(net_man.scn_lobby);
     }

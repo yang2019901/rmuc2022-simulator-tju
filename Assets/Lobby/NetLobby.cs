@@ -84,12 +84,12 @@ namespace LobbyUI {
         public MainMenu mainmenu;
         /// </summary>
 
-        /* to display the content of this.playersyncs[0] */
-        public PlayerSync ps_debug = new PlayerSync(-1, "", false, "", false);
-        void Update() {
-            if (this.playerSyncs.Count > 0)
-                ps_debug = this.playerSyncs[0];
-        }
+        // /* to display the content of this.playersyncs[0] */
+        // public PlayerSync ps_debug = new PlayerSync(-1, "", false, "", false);
+        // void Update() {
+        //     if (this.playerSyncs.Count > 1)
+        //         ps_debug = this.playerSyncs[1];
+        // }
 
         [Server]
         public void OnPlayerLeave(NetworkConnectionToClient conn) {
@@ -101,7 +101,7 @@ namespace LobbyUI {
                 playerSyncs.RemoveAt(syncIdx);
         }
 
-        /* OnApplyAvatar():
+        /* OnRecAvaOwnMes():
             1. registers the PlayerSync when a client PC first applys avatar
             2. ensures that any registered client only has one corresponding PlayerSync
            Therefore, Inspite of real take-avatar mes, you can send fake mes:
@@ -159,7 +159,8 @@ namespace LobbyUI {
         [Server]
         public void OnRecStartGameMes(NetworkConnectionToClient conn, StartGameMessage mes) {
             if (mes.start) {
-                net_man.playerSyncs = new List<PlayerSync>(this.playerSyncs);
+                net_man.playerSyncs.Clear();
+                net_man.playerSyncs.AddRange(this.playerSyncs);
                 net_man.StartCoroutine(MyServerChangeScene());
             }
         }
@@ -204,7 +205,7 @@ namespace LobbyUI {
         IEnumerator MyServerChangeScene() {
             NetworkServer.SendToAll<SceneTransMessage>(new SceneTransMessage(true));
             yield return new WaitForSeconds(5);
-            // Debug.Log("net_man starts to change scene");
+            Debug.Log("net_man starts to change scene");
             net_man.ServerChangeScene(net_man.scn_field);
             yield break;
         }
@@ -236,6 +237,7 @@ namespace LobbyUI {
             this.playerSyncs.Callback += OnPlayerSyncChanged;
             if (NetworkServer.active)
                 this.playerSyncs.AddRange(net_man.playerSyncs);
+
             /* `playerSyncs` may be updated before OnPlayerSyncsChanged is added to Callback
                 Therefore, it's needed to manually update robotabs */
             foreach (PlayerSync tmp in playerSyncs) {
@@ -243,9 +245,15 @@ namespace LobbyUI {
                     yet it's possible that not every client owns avatar */
                 if (!tmp.owning_ava)
                     continue;
+                if (tmp.connId == NetLobby.uid) {
+                    mainmenu.owning_ava = true;
+                    mainmenu.ava_ready = tmp.ready;
+                }
                 int avaIdx = mainmenu.ava_tags.FindIndex(tag => tag == tmp.ava_tag);
                 mainmenu.avatars[avaIdx].SetRoboTab(tmp);
             }
+            mainmenu.SetButtonReady();
+
             /* first client is owner */
             this.owner_uid = this.playerSyncs[0].connId;
         }
@@ -254,9 +262,6 @@ namespace LobbyUI {
         public override void OnStopClient() {
             base.OnStopClient();
             this.playerSyncs.Callback -= OnPlayerSyncChanged;
-            /* update owner id */
-            if (this.playerSyncs.Count > 0)
-                this.owner_uid = this.playerSyncs[0].connId;
         }
 
     }

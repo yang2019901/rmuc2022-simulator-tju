@@ -65,9 +65,6 @@ public class BattleNetworkManager : NetworkManager {
     /* called on server when a client is disconnected */
     public override void OnServerDisconnect(NetworkConnectionToClient conn) {
         base.OnServerDisconnect(conn);
-        Debug.Log("Hey, there! A client disconnects with player destroyed. ConnId: " + conn.connectionId);
-        NetworkServer.DestroyPlayerForConnection(conn);
-        NetworkServer.RemoveConnection(conn.connectionId);
         if (isScnLobby())
             net_lob.OnPlayerLeave(conn);
         else if (isScnField()) {

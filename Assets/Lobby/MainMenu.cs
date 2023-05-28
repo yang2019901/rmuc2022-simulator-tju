@@ -160,7 +160,7 @@ namespace LobbyUI {
         /// </summary>
 
         /// <summary> Lobby Behaviour
-        /** under the hood : button click -> TakeAvatar --mes--> (server PC) OnApplyAvatar
+        /** under the hood : button click -> TakeAvatar --mes--> (server PC) OnRecAvaOwnMes
             @player_sync: tells which tab is clicked
          */
         public void TakeAvatar(RoboTab player_sync) {
@@ -177,12 +177,10 @@ namespace LobbyUI {
 
 
         public void InvReady() {
-            if (!owning_ava)
-                return;
             if (net_lob.owner_uid == NetLobby.uid) {
                 // start the game
                 NetworkClient.Send<NetLobby.StartGameMessage>(new NetLobby.StartGameMessage(true));
-            } else {
+            } else if (owning_ava) {
                 NetLobby.AvaReadyMessage mes = new NetLobby.AvaReadyMessage();
                 mes.ready = !this.ava_ready;
                 NetworkClient.Send<NetLobby.AvaReadyMessage>(mes);
@@ -204,8 +202,6 @@ namespace LobbyUI {
 
 
         public void SetButtonReady() {
-            // if (btn_ready == null)
-            //     return;
             btn_ready.SetActive(this.owning_ava || net_lob.owner_uid == NetLobby.uid);
 
             TMP_Text btn_txt = btn_ready.GetComponentInChildren<TMP_Text>();
