@@ -189,14 +189,13 @@ namespace LobbyUI {
 
 
         public void LeaveLobby() {
-            Debug.Log("networkclient.connection.connectionId: " + NetworkClient.connection.connectionId);
             if (NetworkServer.active && NetworkClient.active)
                 net_man.StopHost();
             else if (NetworkClient.active)
                 net_man.StopClient();
             else if (NetworkServer.active)
                 net_man.StopServer();
-            // OnClientDisconnect will take care of loading scene
+            // OnStopClient will take care of loading scene
             SetPlayerOpt();
         }
 

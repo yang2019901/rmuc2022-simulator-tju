@@ -222,21 +222,18 @@ namespace LobbyUI {
             }
         }
 
-        [Client]
-        public void RegisterPlayerSync() {
-            /* when first joining, 1. send fake AvaMes to register
-                2. init RoboTabs by playerSyncs that pulled from server PC */
-            AvaOwnMessage fake_ava_mes = new AvaOwnMessage(NULLAVA, mainmenu.input_info.text);
-            NetworkClient.Send<AvaOwnMessage>(fake_ava_mes);
-        }
 
+        public override void OnStartServer() {
+            base.OnStartServer();
+            this.playerSyncs.Clear();
+            this.playerSyncs.AddRange(net_man.playerSyncs);
+        }
 
 
         public override void OnStartClient() {
             base.OnStartClient();
+
             this.playerSyncs.Callback += OnPlayerSyncChanged;
-            if (NetworkServer.active)
-                this.playerSyncs.AddRange(net_man.playerSyncs);
 
             /* `playerSyncs` may be updated before OnPlayerSyncsChanged is added to Callback
                 Therefore, it's needed to manually update robotabs */

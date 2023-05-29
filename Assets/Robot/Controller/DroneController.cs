@@ -36,7 +36,7 @@ public class DroneController : BasicController {
     /// </summary>
     public override void OnStartClient() {
         base.OnStartClient();
-        if (hasAuthority) {
+        if (isOwned) {
             Transform tmp = Camera.main.transform;
             tmp.parent = view;
             tmp.localEulerAngles = Vector3.zero;
@@ -61,22 +61,22 @@ public class DroneController : BasicController {
         /* even if no authority, external reference should be inited */
         _rigid.centerOfMass = centerOfMass;
 
-        if (hasAuthority) {
+        if (isOwned) {
             BattleField.singleton.robo_local = this.robo_state;
             BattleField.singleton.bat_ui.robo_prof.SetActive(false);
             BattleField.singleton.bat_ui.drone_prof.SetActive(true);
         }
         if (unowned) {
             // Debug.Log("disable client auth of unowned robot");
-            foreach (var tmp in GetComponents<NetworkTransformChild>()) {
-                tmp.clientAuthority = false;
+            foreach (var tmp in GetComponents<NetworkTransform>()) {
+                tmp.syncDirection = SyncDirection.ServerToClient;
             }
         }
     }
 
 
     void Update() {
-        if (!hasAuthority || !BattleField.singleton.started_game)
+        if (!isOwned || !BattleField.singleton.started_game)
             return;
 
         if (robo_state.survival) {
@@ -94,7 +94,7 @@ public class DroneController : BasicController {
         if (!BattleField.singleton.started_game)
             return;
         PaddleSpin();
-        if (!hasAuthority)
+        if (!isOwned)
             return;
 
         if (robo_state.survival) {

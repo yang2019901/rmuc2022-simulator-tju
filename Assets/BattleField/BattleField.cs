@@ -67,7 +67,7 @@ public class BattleField : MonoBehaviour {
 
     void Update() {
         t_bat += Time.deltaTime;
-        if (this.GetBattleTime() > 420f || !base_blue.survival || !base_red.survival)
+        if (this.GetBattleTime() > 1f || !base_blue.survival || !base_red.survival)
             this.EndGame();
     }
 
@@ -141,10 +141,10 @@ public class BattleField : MonoBehaviour {
     BattleNetworkManager net_man => BattleNetworkManager.singleton;
     IEnumerator EndGameTrans() {
         // wait for a while such that `anims_win` ends playing
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(1);
         SceneTransit.singleton.StartTransit();
         // wait for a while such that SceneTransit.singleton ends playing
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         // server PC change scene to `scn_lobby`
         net_man.ServerChangeScene(net_man.scn_lobby);
     }
@@ -157,11 +157,9 @@ public class BattleField : MonoBehaviour {
     public RoboState GetRobot(string robot_s) {
         RoboState tmp;
 #if UNITY_EDITOR
-        Debug.Log("GetRobot() in BattleField: in unity editor");
         tmp = GameObject.Find(robot_s).GetComponent<RoboState>();
 #elif UNITY_STANDALONE
-            Debug.Log("GetRobot() in BattleField: in standalone");
-            tmp = this.robo_all.Find(i => i.name == robot_s);
+        tmp = this.robo_all.Find(i => i.name == robot_s);
 #endif
         return tmp;
     }

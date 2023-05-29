@@ -45,7 +45,7 @@ public class EngineerController : BasicController {
     /// </summary>
     public override void OnStartClient() {
         base.OnStartClient();
-        if (hasAuthority) {
+        if (isOwned) {
             Transform tmp = Camera.main.transform;
             tmp.parent = robo_cam;
             tmp.localEulerAngles = Vector3.zero;
@@ -65,14 +65,14 @@ public class EngineerController : BasicController {
         _rigid.centerOfMass = centerOfMass;
         yaw_ang = _rigid.transform.localEulerAngles.y;
 
-        if (hasAuthority) {
+        if (isOwned) {
             BattleField.singleton.robo_local = this.robo_state;
         }
     }
 
 
     void Update() {
-        if (!hasAuthority)
+        if (!isOwned)
             return;
 
         if (robo_state.survival) {

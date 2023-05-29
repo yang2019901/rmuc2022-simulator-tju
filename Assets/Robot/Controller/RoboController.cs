@@ -42,7 +42,7 @@ public class RoboController : BasicController {
     /// </summary>
     public override void OnStartClient() {
         base.OnStartClient();
-        if (hasAuthority) {
+        if (isOwned) {
             Transform tmp = Camera.main.transform;
             tmp.parent = view;
             tmp.localEulerAngles = Vector3.zero;
@@ -67,7 +67,7 @@ public class RoboController : BasicController {
         /* even if no authority, external reference should be inited */
         _rigid.centerOfMass = centerOfMass;
 
-        if (hasAuthority) {
+        if (isOwned) {
             BattleField.singleton.robo_local = this.robo_state;
             /* set dropdown of chassis and turret in preference_ui of bat_ui */
             BattleField.singleton.bat_ui.SetRoboPrefDrop(interactable: true);
@@ -82,9 +82,8 @@ public class RoboController : BasicController {
             }
         } else if (unowned) {
             // Debug.Log("disable client auth of unowned robot");
-            // NetworkTransformBase is the base of both NetworkTransform and NetworkTransformChild
-            foreach (var tmp in GetComponents<NetworkTransformBase>()) {
-                tmp.clientAuthority = false;
+            foreach (var tmp in GetComponents<NetworkTransform>()) {
+                tmp.syncDirection = SyncDirection.ServerToClient;
             }
         }
     }
@@ -92,7 +91,7 @@ public class RoboController : BasicController {
 
 
     void Update() {
-        if (!hasAuthority && !(isGuard && NetworkServer.active)) {
+        if (!isOwned && !(isGuard && NetworkServer.active)) {
             return;
         }
 

@@ -15,7 +15,7 @@ public class BattleNetworkManager : NetworkManager {
     [Scene]
     public string scn_lobby;
     /* used to transfer data when scene loads */
-    public List<PlayerSync> playerSyncs = new List<PlayerSync>();
+    public List<PlayerSync> playerSyncs;
 
 
     public override void Awake() {
@@ -26,6 +26,14 @@ public class BattleNetworkManager : NetworkManager {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+
+    bool last_cli_connected;
+    public override void Update() {
+        base.Update();
+        last_cli_connected = NetworkClient.isConnected;
+    }
+
+
     bool ScnCmp(string scn_runtime, string scn_asset) {
         return scn_asset.Contains(scn_runtime);
     }
@@ -35,22 +43,20 @@ public class BattleNetworkManager : NetworkManager {
 
     public override void OnStartServer() {
         base.OnStartServer();
-        if (net_lob == null)
-            return;
+
+        /* clear playerSyncs, otherwise, previous items are there */
+        this.playerSyncs = new List<PlayerSync>();
+
         NetworkServer.RegisterHandler<NetLobby.AvaOwnMessage>(OnRecAvaOwnMesWrapUp);
         NetworkServer.RegisterHandler<NetLobby.AvaReadyMessage>(OnRecAvaReadyMesWrapUp);
         NetworkServer.RegisterHandler<NetLobby.StartGameMessage>(OnRecStartGameMesWrapUp);
-        /* clear playerSyncs, otherwise, previous items are there */
-        net_lob.playerSyncs.Reset();
     }
-
 
     public override void OnStopServer() {
         base.OnStopServer();
-        this.playerSyncs.Clear();
-        Debug.Log("server: stop server");
+        if (mainmenu != null)
+            mainmenu.SetPlayerMode();
     }
-
 
     /* called on server when a client is connected to server */
     public override void OnServerConnect(NetworkConnectionToClient conn) {
@@ -94,17 +100,17 @@ public class BattleNetworkManager : NetworkManager {
     }
 
 
-
     public override void OnClientConnect() {
         base.OnClientConnect();
         if (mainmenu == null || net_lob == null)
             return;
         mainmenu.SetPlayerLobby();
-        // net_lob.playerSyncs.Callback += OnPlayerSyncChangedWrapUp;
-        net_lob.RegisterPlayerSync();
         NetworkClient.RegisterHandler<NetLobby.ClientIdMessage>(OnRecCliIdMesWrapUp);
         NetworkClient.RegisterHandler<NetLobby.SceneTransMessage>(OnRecScnTransMesWrapUp);
-        // Debug.Log("register handler in net_man");
+
+        /* when first joining, 1. send fake AvaMes to register
+            2. init RoboTabs by playerSyncs that pulled from server PC */
+        NetworkClient.Send<NetLobby.AvaOwnMessage>(new NetLobby.AvaOwnMessage(NetLobby.NULLAVA, mainmenu.input_info.text));
     }
 
 
@@ -113,21 +119,20 @@ public class BattleNetworkManager : NetworkManager {
         base.OnStopClient();
         if (NetworkClient.localPlayer != null)
             Destroy(NetworkClient.localPlayer.gameObject);
-        Debug.Log("client PC: stop client; connected: " + NetworkClient.isConnected);
-        if (NetworkClient.isConnected) {
+
+        if (last_cli_connected) {
             // clear what OnClientConnect() has done:
-            if (isScnLobby()) {
-                // net_lob.playerSyncs.Callback -= OnPlayerSyncChangedWrapUp;
-                mainmenu.SetPlayerMode();
-            } else if (isScnField()) {
+            if (isScnField())
                 SceneManager.LoadScene(scn_lobby);
-            }
+            else if (isScnLobby())
+                mainmenu.SetPlayerMode();
         } else {
             // mainmenu's attempting to connect but fail
             // call mainmenu to do finishing touches 
             mainmenu.OnCancelJoin();
         }
-        this.playerSyncs.Clear();
+
+        Debug.Log("client PC: stop client");
     }
 
 
