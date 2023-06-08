@@ -8,7 +8,8 @@ public class BasicController : NetworkBehaviour {
     [Header("AutoAim params")]
     public float maxDist = 15f;      // max distance of auto aim
     public float dynCoeff = 0.4f;    // a 0~1 number describes how fast turret chases the target; 0: no chasing    1: perfectly chasing
-    public float heightOffset;       // to compensate for not aligning of pitch and bullet_start
+    public float lowpassCoef = 0.8f;
+    public float heightOffset = 0;       // to compensate for not aligning of pitch and bullet_start
 
     protected Rigidbody _rigid => robo_state.rigid;
 
@@ -21,6 +22,13 @@ public class BasicController : NetworkBehaviour {
     }
 
 
+    Vector3 vel_filt;
+    Vector3 LowPassFilter(Vector3 vel, float alpha=0.8f) {
+        vel_filt =  alpha * vel_filt + (1 - alpha) * vel;
+        return vel_filt;
+    }
+
+
     Vector3 vel_targ;
     Vector3 last_pos;
     // Note: MUST called in FixedUpdate(), otherwise, the vel_targ has a random error with inaccuracy of about 30%
@@ -30,6 +38,9 @@ public class BasicController : NetworkBehaviour {
         vel_targ = (target.transform.position - last_pos) / Time.fixedDeltaTime;
         if (vel_targ.magnitude > 10)    // too fast => illegal velocity when target switching
             vel_targ = Vector3.zero;
+        // Get derivative of target position will amplify the noise. The case is especially bad 
+        // when target's position is synchronized by NetworkTransform. Therefore, low-pass filter is needed.
+        vel_targ = LowPassFilter(vel_targ, lowpassCoef);
         // Debug.Log("target velocity: " + vel_targ.magnitude);
         last_pos = target.transform.position;
     }
@@ -38,7 +49,6 @@ public class BasicController : NetworkBehaviour {
     public virtual void FixedUpdate() {
         CalcTargVel();
     }
-
 
 
     List<ArmorController> target_armors;
@@ -66,7 +76,7 @@ public class BasicController : NetworkBehaviour {
             // judge whether armor's facing turret
             Vector3 v1 = ac.transform.position - bull_start.position;
             Vector3 v2 = ac.transform.TransformVector(ac.norm_in);
-            if (v2.magnitude < 1e-3 || Vector3.Angle(v1, v2) >= 50)
+            if (v2.magnitude < 1e-3 || Vector3.Angle(v1, v2) >= 90)
                 continue;
 
             float ang = Vector3.Angle(ac.transform.position - bull_start.position, bull_start.forward);

@@ -67,7 +67,7 @@ public class BattleField : MonoBehaviour {
 
     void Update() {
         t_bat += Time.deltaTime;
-        if (this.GetBattleTime() > 1f || !base_blue.survival || !base_red.survival)
+        if (this.GetBattleTime() > 420f || !base_blue.survival || !base_red.survival)
             this.EndGame();
     }
 
@@ -102,7 +102,11 @@ public class BattleField : MonoBehaviour {
             if (rc != null) {
                 /* when game starts, dropdowns become non-interactable and captions of dropdowns in pref_ui submit */
                 bat_ui.SetRoboPrefDrop(false);
-                rc.CmdUserPref(rc.gameObject.name, bat_ui.drop_chas.captionText.text, bat_ui.drop_turr.captionText.text);
+                string pref_chas = bat_ui.drop_chas.captionText.text;
+                string pref_turr = bat_ui.drop_turr.captionText.text;
+                robo_local.GetUserPref(pref_chas, pref_turr);
+                robo_local.Configure();
+                rc.CmdUserPref(rc.gameObject.name, pref_chas, pref_turr);
             }
         }
         AssetManager.singleton.PlayClipAround(AssetManager.singleton.gamebg, true, 0.3f);
@@ -141,10 +145,10 @@ public class BattleField : MonoBehaviour {
     BattleNetworkManager net_man => BattleNetworkManager.singleton;
     IEnumerator EndGameTrans() {
         // wait for a while such that `anims_win` ends playing
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(10);
         SceneTransit.singleton.StartTransit();
         // wait for a while such that SceneTransit.singleton ends playing
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5);
         // server PC change scene to `scn_lobby`
         net_man.ServerChangeScene(net_man.scn_lobby);
     }

@@ -152,8 +152,10 @@ public class RoboController : BasicController {
         else if (_rigid.transform.position.z > 1.2f)
             move_guard_dir = -1;
         // Debug.Log(_rigid.velocity.magnitude);
-        if (Time.time - last_t > 2)
+        if (Time.time - last_t > 2) {
             vel_guard_targ = Random.Range(1, 3);
+            last_t = Time.time;
+        }
         return;
     }
 
