@@ -212,6 +212,8 @@ public class RoboState : BasicState {
 
     protected ArmorController[] acs;
     public override void TakeDamage(GameObject hitter, GameObject armor_hit, GameObject bullet) {
+        if (!NetworkServer.active)
+            return;
         /* Requirement: make sure that small bullet's name contains "17mm" && big bullet's contains "42mm" */
         int damage = bullet.name.Contains("17mm") ? 10 : 100;
         damage = Mathf.RoundToInt(damage * (hitter.GetComponent<RoboState>().B_atk + 1)
@@ -231,10 +233,11 @@ public class RoboState : BasicState {
             this.killer = hitter;
             Die();
             BattleField.singleton.Kill(hitter, this.gameObject);
-        } else
-            StartCoroutine("ArmorsBlink", 0.1f);
+        } 
+        // else
+        //    StartCoroutine(ArmorsBlink(0.1f));
 
-        SetBloodBars();
+        // SetBloodBars();
     }
 
 

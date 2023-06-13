@@ -191,18 +191,20 @@ public class BattleField : MonoBehaviour {
         if (hittee.GetComponent<BaseState>() != null)
             EndGame();
 
-        BaseState bs;
-        GuardState gs;
+        BaseState bs = hittee.GetComponent<BasicState>().armor_color == ArmorColor.Blue ? base_blue : base_red;
+        GuardState gs = hittee.GetComponent<BasicState>().armor_color == ArmorColor.Blue ? guard_blue : guard_red;
         /* a team's outpost is lost and its base becomes vulnerable */
         if (hittee.GetComponent<OutpostState>() != null) {
-            bs = hittee == outpost_blue.gameObject ? base_blue : base_red;
-            gs = hittee == outpost_blue.gameObject ? guard_blue : guard_red;
-            bs.GetComponent<Base>().OpenShells(true);
+            gs.invul = false;
+            gs.SetInvulLight(false);
             bs.invul = false;
             bs.SetInvulLight(false);
             bs.shield = 500;
-            gs.invul = false;
-            gs.SetInvulLight(false);
+        }
+
+        if (hittee.GetComponent<GuardState>() != null) {
+            bs.GetComponent<Base>().OpenShells(true);
+            bs.shield = 0;
         }
 
         gs = hittee.GetComponent<GuardState>();
@@ -212,9 +214,9 @@ public class BattleField : MonoBehaviour {
         }
 
         RoboState rs1 = hitter.GetComponent<RoboState>();
-        BasicState rs2;
+        BasicState rs2 = hitter.GetComponent<BasicState>();
         AudioClip ac = null;
-        if (hittee.TryGetComponent<BasicState>(out rs2)) {
+        if (rs2 != null) {
             // teammate's killed
             if (rs2.armor_color == robo_local.armor_color) {
                 if (rs2 == robo_local) {

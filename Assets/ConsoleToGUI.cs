@@ -20,7 +20,6 @@ public class ConsoleToGUI : MonoBehaviour {
             string d;
 #if UNITY_EDITOR
             d = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop) + "/YOUR_LOGS";
-
 #elif UNITY_STANDALONE
             d = Application.dataPath + "/YOUR_LOGS";
 #endif

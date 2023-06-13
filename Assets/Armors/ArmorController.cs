@@ -33,13 +33,6 @@ public class ArmorController : MonoBehaviour {
     }
 
 
-//     void Update() {
-// #if UNITY_EDITOR
-//         Debug.DrawRay(transform.position, transform.TransformVector(norm_in));
-// #endif
-//     }
-
-
     /** Since I'd not like add rigidbody to armors, OnCollisionEnter shouldn't be defined in 
         this class */
     public void TakeHit(Collision collision, GameObject bullet) {

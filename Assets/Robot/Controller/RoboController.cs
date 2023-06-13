@@ -202,7 +202,7 @@ public class RoboController : BasicController {
                 wheelColliders[i].motorTorque = 0;
                 wheelColliders[i].brakeTorque = 10;
             }
-            Debug.Log("braking");
+            // Debug.Log("braking");
             currcap += torque_avail * Time.deltaTime;
             return;
         } else  // remove previous brake torque
@@ -371,7 +371,7 @@ public class RoboController : BasicController {
 
 
     void GuardShoot() {
-        if (targ_avail && Time.time - last_fire > 0.1f) {
+        if (targ_avail && Time.time - last_fire > 0.3f) {
             ShootBull(bullet_start.position, robo_state.bullspd * bullet_start.forward + _rigid.velocity);
             last_fire = Time.time;
         }

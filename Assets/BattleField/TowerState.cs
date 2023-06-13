@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class TowerState : BasicState {
     /// <summary>
@@ -50,6 +51,8 @@ public class TowerState : BasicState {
 
 
     public override void TakeDamage(GameObject hitter, GameObject armor_hit, GameObject bullet) {
+        if (!NetworkServer.active)
+            return;
         /* Requirement: make sure that small bullet's name contains "17mm" && big bullet's contains "42mm" */
         int damage;
         if (armor_hit.name.ToLower().Contains("triangle")) {
@@ -69,10 +72,11 @@ public class TowerState : BasicState {
             this.killer = hitter;
             Die();
             BattleField.singleton.Kill(hitter, this.gameObject);
-        } else
-            StartCoroutine(this.ArmorsBlink(0.1f));
+        }
+        // else
+        //     StartCoroutine(this.ArmorsBlink(0.1f));
 
-        SetBloodBars();
+        // SetBloodBars();
     }
 
 
