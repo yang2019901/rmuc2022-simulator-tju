@@ -66,7 +66,6 @@ public class RoboState : BasicState {
             Debug.Log(string.Format("{0} reborns", this.gameObject.name));
             foreach (ArmorController ac in acs)
                 ac.Enable();
-            SetBloodBars();
         }
         if (this.currblood != robo_sync.currblood || this.maxblood != robo_sync.maxblood) {
             this.currblood = robo_sync.currblood;
@@ -74,8 +73,8 @@ public class RoboState : BasicState {
             SetBloodBars();
             if (robo_sync.bat_stat == BatStat.Dead)
                 Die();
-            else
-                StartCoroutine(this.ArmorsBlink(0.1f));
+            // else
+            //     StartCoroutine(this.ArmorsBlink(0.1f));
         }
         this.survival = robo_sync.bat_stat != BatStat.Dead;
         return;
@@ -212,8 +211,8 @@ public class RoboState : BasicState {
 
     protected ArmorController[] acs;
     public override void TakeDamage(GameObject hitter, GameObject armor_hit, GameObject bullet) {
-        if (!NetworkServer.active)
-            return;
+        // if (!NetworkServer.active)
+        //     return;
         /* Requirement: make sure that small bullet's name contains "17mm" && big bullet's contains "42mm" */
         int damage = bullet.name.Contains("17mm") ? 10 : 100;
         damage = Mathf.RoundToInt(damage * (hitter.GetComponent<RoboState>().B_atk + 1)
@@ -234,8 +233,8 @@ public class RoboState : BasicState {
             Die();
             BattleField.singleton.Kill(hitter, this.gameObject);
         } 
-        // else
-        //    StartCoroutine(ArmorsBlink(0.1f));
+        else
+           StartCoroutine(ArmorsBlink(0.1f));
 
         // SetBloodBars();
     }

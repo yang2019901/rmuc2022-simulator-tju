@@ -30,13 +30,10 @@ public class OutpostState : TowerState {
             if (!outpost_sync.survival)
                 foreach (ArmorController ac in acs)
                     ac.Disable();
-            else
-                StartCoroutine(this.ArmorsBlink(0.1f));
+            // else
+            //     StartCoroutine(this.ArmorsBlink(0.1f));
         }
-        // use RpcKill now because client PC has no info about hitter
-        // if (this.survival && !outpost_sync.survival) {
-        //     BattleField.singleton.Kill(BattleField.singleton.gameObject, this.gameObject);
-        // }
+
         /* update local survival. Otherwise, negedge of survival won't be detected */
         this.survival = outpost_sync.survival;
         this.GetComponent<Outpost>().armors_outpost.localEulerAngles = outpost_sync.rot;

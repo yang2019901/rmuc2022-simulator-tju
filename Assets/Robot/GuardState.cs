@@ -59,4 +59,9 @@ public class GuardState : RoboState {
             foreach (ArmorController ac in this.acs)
                 ac.SetLight(true);
     }
+
+    public override void TakeDamage(GameObject hitter, GameObject armor_hit, GameObject bullet) {
+        if (!this.invul)
+            base.TakeDamage(hitter, armor_hit, bullet);
+    }
 }

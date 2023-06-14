@@ -47,6 +47,7 @@ namespace LobbyUI {
             else
                 SetPlayerLobby();
             AssetManager.singleton.PlayClipAround(AssetManager.singleton.prepare, true, 0.3f);
+            Application.targetFrameRate = 120;
         }
 
 

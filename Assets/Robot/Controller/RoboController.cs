@@ -383,7 +383,7 @@ public class RoboController : BasicController {
     void Shoot() {
         if (!BattleField.singleton.started_game)
             return;
-            
+
         if (isGuard) {
             GuardShoot();
             return;

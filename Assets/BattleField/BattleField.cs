@@ -159,12 +159,11 @@ public class BattleField : MonoBehaviour {
 
 
     public RoboState GetRobot(string robot_s) {
-        RoboState tmp;
-#if UNITY_EDITOR
-        tmp = GameObject.Find(robot_s).GetComponent<RoboState>();
-#elif UNITY_STANDALONE
-        tmp = this.robo_all.Find(i => i.name == robot_s);
-#endif
+        RoboState tmp = this.robo_all.Find(i => i.name == robot_s);
+        if (tmp == null) {
+            // Debug.Log(robot_s + " : " + GameObject.Find(robot_s));
+            tmp = GameObject.Find(robot_s).GetComponent<RoboState>();
+        }
         return tmp;
     }
 

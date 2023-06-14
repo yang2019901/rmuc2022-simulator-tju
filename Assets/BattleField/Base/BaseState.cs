@@ -67,8 +67,8 @@ public class BaseState : TowerState {
             if (!base_sync.survival)
                 foreach (ArmorController ac in acs)
                     ac.Disable();
-            else
-                StartCoroutine(this.ArmorsBlink(0.1f));
+            // else
+            //     StartCoroutine(this.ArmorsBlink(0.1f));
         }
         if (this.invul && !base_sync.invul)
             SetInvulLight(false);
