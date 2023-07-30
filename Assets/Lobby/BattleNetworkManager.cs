@@ -62,6 +62,10 @@ public class BattleNetworkManager : NetworkManager {
     public override void OnServerConnect(NetworkConnectionToClient conn) {
         base.OnServerConnect(conn);
         Debug.Log("Hey, there! A client connects. ConnId: " + conn.connectionId);
+        if (!net_lob.allow_join) {
+            conn.Disconnect();
+            return;
+        }
         if (isScnLobby()) {
             conn.Send<NetLobby.ClientIdMessage>(new NetLobby.ClientIdMessage(conn.connectionId));
         }

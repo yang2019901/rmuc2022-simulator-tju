@@ -57,7 +57,7 @@ public class BasicController : NetworkBehaviour {
     protected ArmorController last_target;
     public bool AutoAim(Transform bull_start, bool runeMode) {
         // light cone
-        float minang_th = 45;
+        float minang_th = 30;
         float minang = 360;
         if (runeMode) {
             RuneState rs = robo_state.armor_color == ArmorColor.Red ? BattleField.singleton.rune.rune_state_red
@@ -76,7 +76,7 @@ public class BasicController : NetworkBehaviour {
             // judge whether armor's facing turret
             Vector3 v1 = ac.transform.position - bull_start.position;
             Vector3 v2 = ac.transform.TransformVector(ac.norm_in);
-            if (v2.magnitude < 1e-3 || Vector3.Angle(v1, v2) >= 90)
+            if (v2.magnitude < 1e-3 || Vector3.Angle(v1, v2) >= 75)
                 continue;
 
             float ang = Vector3.Angle(ac.transform.position - bull_start.position, bull_start.forward);

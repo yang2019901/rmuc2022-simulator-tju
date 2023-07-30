@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6983841003469523021}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -54,35 +54,39 @@ MonoBehaviour:
   f_weapon: {fileID: 4900000, guid: 8a8cc27267bb0b84a81855c8adfd13b7, type: 3}
   f_experience: {fileID: 4900000, guid: 1954706f30d3c014897a29abbede1ae6, type: 3}
   Speaker: {fileID: 6983841004723753676}
-  _17mm: {fileID: 8300000, guid: bfddc19d46f993a4caef8c81da348ecb, type: 3}
-  _42mm: {fileID: 8300000, guid: 31e1f05eb420356449ef7713c2859214, type: 3}
-  hit_17mm: {fileID: 8300000, guid: 0a043816bfb343c4986d208239a46f2a, type: 3}
-  hit_42mm: {fileID: 8300000, guid: cf7b895ca2839414cabeba242c01c3df, type: 3}
-  prepare: {fileID: 8300000, guid: e0166d947759c4f40a9c5a77666a8cda, type: 3}
-  checking: {fileID: 8300000, guid: 9b554f673c322b544bd3890e69bc2880, type: 3}
-  cntdown: {fileID: 8300000, guid: 6188a90725e76fb4ea1d8fa0859a995e, type: 3}
-  gamebg: {fileID: 8300000, guid: bae5a6722d8271948a0c1c115903f6da, type: 3}
-  gamefin: {fileID: 8300000, guid: e6af0fb251f8d5b4a85355bd0d3b1eab, type: 3}
-  ally_die: {fileID: 8300000, guid: 8fd96b9d28f82454bab039bd829537b5, type: 3}
-  self_die: {fileID: 8300000, guid: 1139ddabd31e1334e8c3cba3b5f7d50c, type: 3}
-  frst_bld: {fileID: 8300000, guid: 01c3640223a163e40b7e07c167b14d5c, type: 3}
+  _17mm: {fileID: 8300000, guid: b385cdff677de3f4ab8ad9decf7c5a0f, type: 3}
+  _42mm: {fileID: 8300000, guid: 4582a228a48dd7349a51e2800bc31f48, type: 3}
+  hit_17mm: {fileID: 8300000, guid: e75898c9aab969f47bee1a53f5806632, type: 3}
+  hit_42mm: {fileID: 8300000, guid: e526cf9a69157c245a4f24e0d4622470, type: 3}
+  prepare: {fileID: 8300000, guid: c2d62394f45b1db41bd577cda9b5b180, type: 3}
+  checking: {fileID: 8300000, guid: 20de69629437e7046a24da372a82a7b4, type: 3}
+  cntdown: {fileID: 8300000, guid: be97c45cebdd76e47b04e3465a2f5a62, type: 3}
+  gamebg: {fileID: 8300000, guid: c3ccabe698a166c45b8390aaebfe9482, type: 3}
+  gamefin: {fileID: 8300000, guid: 7062340886599f54aaeecdd46ef09e76, type: 3}
+  ally_die: {fileID: 8300000, guid: 8d6857162e4e5954da38faef93e2d505, type: 3}
+  self_die: {fileID: 8300000, guid: 59c6b4e2e98ea904fbc26173861577d8, type: 3}
+  frst_bld: {fileID: 8300000, guid: 30776eede50eca149865e589f7aea11e, type: 3}
   kill:
   - {fileID: 8300000, guid: e2500ccc15fbbe14d8248337eb5fcd04, type: 3}
   - {fileID: 8300000, guid: 591dd3e279161544e91cfbbbfe065f67, type: 3}
   - {fileID: 8300000, guid: 2468a34bce8a5184a80a390ae6ec4d75, type: 3}
   - {fileID: 8300000, guid: 10170a5b90c882e4591fe2f7dd9957bd, type: 3}
   - {fileID: 8300000, guid: d109e55acf95d8f4b99261628d9063c7, type: 3}
-  ace: {fileID: 8300000, guid: 0f7b47560b514cd409e0873a44f42be5, type: 3}
-  base_warn: {fileID: 8300000, guid: 1176caa5f601dd3409ca69306a1dc425, type: 3}
-  base_opn: {fileID: 8300000, guid: 91b82012d0cd4544a9f020e73cb458b9, type: 3}
-  base_unshd: {fileID: 8300000, guid: b31ac079c60ff7649bc99301027a0a0f, type: 3}
-  base_lost: {fileID: 8300000, guid: 7a0989cdde4147e438c310be48b6eb32, type: 3}
-  rune_activ: {fileID: 8300000, guid: 13147822b54bd8642b79a0aa8a018620, type: 3}
-  victory: {fileID: 8300000, guid: eb865313043b8cd4b803f01ead27013d, type: 3}
-  lv_up: {fileID: 8300000, guid: e01cdd437d766594d999b182f3cde85e, type: 3}
-  robo_die: {fileID: 8300000, guid: e2863820279664f4b991fc70b936af96, type: 3}
-  ilnd_taken: {fileID: 8300000, guid: 3a089fd3b2ce01f4b942278939224646, type: 3}
-  buff_taken: {fileID: 8300000, guid: 507c1e3c8d84c154cae94afc02e5acf4, type: 3}
+  ace: {fileID: 8300000, guid: dcf6a964a37ef5342aed42cc1521aea4, type: 3}
+  base_warn: {fileID: 8300000, guid: 2809f13ee5695fb47b11c98c4305feae, type: 3}
+  base_opn: {fileID: 8300000, guid: 5539ab1d3ec7e054a82bd9e733ef8fdf, type: 3}
+  base_unshd: {fileID: 8300000, guid: 95a7c610a5216154ba025b266897d1ac, type: 3}
+  base_lost: {fileID: 8300000, guid: 7cd66f8e550948d4692e1c7c65a69536, type: 3}
+  rune_activ: {fileID: 8300000, guid: ab21c3d2f2889164fb31458175cd0704, type: 3}
+  victory: {fileID: 8300000, guid: 7741b7aead5cc794b8813a4b5affaa7d, type: 3}
+  lv_up: {fileID: 8300000, guid: ad2dc7aa0dc32d54097887444029d9e9, type: 3}
+  robo_die: {fileID: 8300000, guid: 5b9bb1f2f5ce7ed479b8a572a88d7062, type: 3}
+  ilnd_taken: {fileID: 8300000, guid: 2daa01bc0e21a08418f57e56cc5200e2, type: 3}
+  buff_taken: {fileID: 8300000, guid: 1aa02bb3304ebb549a1e44507f2d167a, type: 3}
+  img_atk: []
+  img_dfc: []
+  img_rev: []
+  img_cldn: []
 --- !u!1 &6983841004723753676
 GameObject:
   m_ObjectHideFlags: 0

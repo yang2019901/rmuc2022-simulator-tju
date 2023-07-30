@@ -55,6 +55,8 @@ public class BattleField : MonoBehaviour {
         robo_all.AddRange(robo_blue);
 
         team_all.AddRange(robo_all);
+        team_all.Add(guard_red);
+        team_all.Add(guard_blue);
         team_all.Add(outpost_red);
         team_all.Add(outpost_blue);
     }

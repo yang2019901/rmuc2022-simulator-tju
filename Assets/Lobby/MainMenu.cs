@@ -90,7 +90,7 @@ namespace LobbyUI {
         }
 
 
-        /* do some end job */
+        /* do some finishing job */
         public void OnCancelJoin() {
             input_addr.interactable = true;
             btn_join.interactable = true;
