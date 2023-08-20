@@ -1,15 +1,3 @@
-# *
-# !Assets/**/
-# !Assets/
-# !*.cs
-# !*.json
-# !*.prefab
-# !*.meta
-# !.gitignore
-# !*.md
-# Assets/Mirror
-# Assets/ParrelSync
-# Assets/ScriptTemplates
 /*
 !Assets/
 !Packages/
