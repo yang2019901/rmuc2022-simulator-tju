@@ -82,7 +82,7 @@ Every time you start simulator, the default is the name of your computer.
 
 Click the name region (on the left of index if red clan, on the right of index if blue clan) to select the robot. When selected, the non-lobbyowner's `Start Game` is displayed as `Cancel Ready`, which is used to inform the lobbyowner whether you are ready, but does not affect the `Start Game` execution (this is to prevent malicious not-starting-game).
 
-<img src="README.assets\select_robot-16907021896092.png" alt="select_robot" style="zoom:67%;" />
+<img src="README.assets\select_robot.png" alt="select_robot" style="zoom:67%;" />
 
 ### 3.4 Battlefield
 
