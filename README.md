@@ -86,7 +86,7 @@ server PC和client PC的网络带宽建议不小于1Mb/s，网速占用的理论
 
 点击兵种旁边的按钮（红方阵营在序号左侧，蓝方阵营在序号右侧），即可选择该兵种；选中后，非房主的`Start Game`位置显示为`Cancel Ready`，用于告知房主 本机是否准备好，但不会影响`Start Game`的执行（这是为了防止恶意影响比赛开始）
 
-<img src="README.assets\select_robot-16907021896092.png" alt="select_robot" style="zoom:67%;" />
+<img src="README.assets\select_robot.png" alt="select_robot" style="zoom:67%;" />
 
 ### 3.4 比赛场地
 
