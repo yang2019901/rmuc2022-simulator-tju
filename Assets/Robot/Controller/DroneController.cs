@@ -290,8 +290,9 @@ public class DroneController : BasicController {
             // Debug.Log("no bullet");
             return;
         }
-        bullet.transform.position = pos;
-        bullet.GetComponent<Rigidbody>().velocity = vel;
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        rb.velocity = vel;
+        rb.position = pos;
         bullet.GetComponent<Bullet>().hitter = this.gameObject;
     }
 }

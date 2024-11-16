@@ -50,7 +50,7 @@ public class BulletPool : MonoBehaviour {
             tmp = smallbullet_idle[0];
             smallbullet_idle.RemoveAt(0);
         } else
-            tmp = (GameObject)Instantiate(smallbullet_t);
+            tmp = Instantiate(smallbullet_t);
         tmp.SetActive(true);
         smallbullet_busy.Add(tmp);
         // NetworkServer.Spawn(tmp);
@@ -72,27 +72,28 @@ public class BulletPool : MonoBehaviour {
 
     /* Decide bullet type by its name */
     public void RemoveBullet(GameObject bullet) {
+        bool is_small = bullet.name.Contains("17mm");
+
         if (BattleField.singleton.OnField(bullet)) {
             /* Due to the need of visual effect, bullet will not be recycled
                however, component<rigidbody> will be removed to avoid unnecessary calculation */
             Destroy(bullet.GetComponent<Rigidbody>());
             Destroy(bullet.GetComponent<Bullet>());
             Destroy(bullet.GetComponent<Collider>());
-            // Destroy(bullet.GetComponent<NetworkTransform>());
-            // Destroy(bullet.GetComponent<NetworkIdentity>());
+            if (is_small)
+                smallbullet_busy.Remove(bullet);
+            else
+                bigbullet_busy.Remove(bullet);
             return;
         }
-        // NetworkServer.UnSpawn(bullet);
-        if (bullet.name.Contains("17mm")) {
+        bullet.SetActive(false);
+        if (is_small) {
             smallbullet_busy.Remove(bullet);
-            bullet.SetActive(false);
             smallbullet_idle.Add(bullet);
-        } else if (bullet.name.Contains("42mm")) {
+        } else {
             bigbullet_busy.Remove(bullet);
-            bullet.SetActive(false);
             bigbullet_idle.Add(bullet);
-        } else
-            Debug.Log("Bullet.cs: wrong bullet name");
+        }
         return;
     }
 }

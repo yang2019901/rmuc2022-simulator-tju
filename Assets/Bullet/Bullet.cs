@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour {
     }
 
     IEnumerator RemoveBullet() {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(8);
         BulletPool.singleton.RemoveBullet(this.gameObject);
     }
 

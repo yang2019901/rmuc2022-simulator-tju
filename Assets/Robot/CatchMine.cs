@@ -16,8 +16,8 @@ public class CatchMine : MonoBehaviour {
 
     void Update() {
         if (mine_holding != null) {
-            mine_holding.transform.position = transform.position;
-            mine_holding.transform.eulerAngles = transform.eulerAngles;
+            mine_holding.rotation = transform.rotation;
+            mine_holding.position = transform.position;
             mine_holding.velocity = Vector3.zero;
         }
     }
