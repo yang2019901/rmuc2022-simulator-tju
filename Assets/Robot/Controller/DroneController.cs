@@ -245,7 +245,8 @@ public class DroneController : BasicController {
     [Command]
     public void CmdAttack() {
         /* double check in server PC */
-        if (money_team < 300) {
+        int money_req = 0;
+        if (money_team < money_req) {
             Debug.Log("insufficient money to call drone attack");
             return;
         } else if (t_bat - last_atk < 30) {
@@ -253,9 +254,9 @@ public class DroneController : BasicController {
             return;
         }
         if (robo_state.armor_color == ArmorColor.Red)
-            BattleField.singleton.money_red -= 300;
+            BattleField.singleton.money_red -= money_req;
         else
-            BattleField.singleton.money_blue -= 300;
+            BattleField.singleton.money_blue -= money_req;
         wpn.bullnum = 400;
         last_atk = t_bat;
     }
@@ -291,8 +292,8 @@ public class DroneController : BasicController {
             return;
         }
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.velocity = vel;
         rb.position = pos;
+        rb.velocity = vel;
         bullet.GetComponent<Bullet>().hitter = this.gameObject;
     }
 }

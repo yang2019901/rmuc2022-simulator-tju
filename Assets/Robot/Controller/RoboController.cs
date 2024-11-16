@@ -411,8 +411,8 @@ public class RoboController : BasicController {
             return;
         }
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.velocity = vel;
         rb.position = pos;
+        rb.velocity = vel;
         bullet.GetComponent<Bullet>().hitter = this.gameObject;
     }
 }
