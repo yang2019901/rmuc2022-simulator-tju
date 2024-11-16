@@ -65,7 +65,7 @@ namespace RMUC_UI {
                 return;
             killers.Add(killer);
             killees.Add(killee);
-        // Debug.Log("current mes in queue: " + killers.Count);
+            // Debug.Log("current mes in queue: " + killers.Count);
         }
 
 

@@ -189,8 +189,10 @@ public class BattleField : MonoBehaviour {
             return;
 
         /* a team's base is lost and game ends */
-        if (hittee.GetComponent<BaseState>() != null)
+        if (hittee.GetComponent<BaseState>() != null) {
             EndGame();
+            return;
+        }
 
         BaseState bs = hittee.GetComponent<BasicState>().armor_color == ArmorColor.Blue ? base_blue : base_red;
         GuardState gs = hittee.GetComponent<BasicState>().armor_color == ArmorColor.Blue ? guard_blue : guard_red;
@@ -202,14 +204,9 @@ public class BattleField : MonoBehaviour {
             bs.SetInvulLight(false);
             bs.shield = 500;
         }
-
+        /* a team's guard is lost and its base opens shells */
         if (hittee.GetComponent<GuardState>() != null) {
             bs.GetComponent<Base>().OpenShells(true);
-            bs.shield = 0;
-        }
-
-        gs = hittee.GetComponent<GuardState>();
-        if (gs != null) {
             bs = gs.armor_color == ArmorColor.Red ? base_red : base_blue;
             bs.shield = 0;
         }

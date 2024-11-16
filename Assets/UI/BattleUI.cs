@@ -66,7 +66,9 @@ namespace RMUC_UI {
             /* init imgs_buf */
             for (int i = 0; i < indic_buf.Length; i++)
                 indic_buf[i] = -1;
+
             SetFPS(4);
+            SetVolume(100);
         }
 
 

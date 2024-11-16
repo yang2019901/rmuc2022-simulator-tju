@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 /* store and indicate game settings; however, some variables control the game, changing which will cause changing of game as well */
@@ -8,12 +9,13 @@ public class GameSetting : MonoBehaviour {
 
     [Header("indicate the game")]
     public float volume;    // voice volume: range from 0 to 1
+    [ReadOnly]
     public int fps;
     
 
     [Header("control the game")]
-    public bool show_enemy;
-    public int prepare_sec;    // how long will game start after scene switched
+    public bool show_enemy = false;
+    public int prepare_sec = 10;    // how long will game start after scene switched
 
     
     void Awake() {
@@ -23,9 +25,6 @@ public class GameSetting : MonoBehaviour {
             DontDestroyOnLoad(this);
         } else
             Destroy(this.gameObject);
-        
-        show_enemy = false;
-        prepare_sec = 10;
     }
 
 

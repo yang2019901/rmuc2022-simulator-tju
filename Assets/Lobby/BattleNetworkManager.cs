@@ -62,7 +62,7 @@ public class BattleNetworkManager : NetworkManager {
     public override void OnServerConnect(NetworkConnectionToClient conn) {
         base.OnServerConnect(conn);
         Debug.Log("Hey, there! A client connects. ConnId: " + conn.connectionId);
-        if (!net_lob.allow_join) {
+        if (net_lob != null && !net_lob.allow_join) {
             conn.Disconnect();
             return;
         }
@@ -87,9 +87,9 @@ public class BattleNetworkManager : NetworkManager {
 
     public override void OnServerSceneChanged(string sceneName) {
         base.OnServerSceneChanged(sceneName);
-        // Debug.Log(sceneName + " has been loaded");
+        Debug.Log(sceneName + " has been loaded");
         if (isScnField()) {
-            string log = "";
+            string log = "Player <=> Robot: \n";
             /* BattleField having been loaded, assign robot instance to avatar owner */
             foreach (RoboState robot in BattleField.singleton.robo_all) {
                 int syncIdx = playerSyncs.FindIndex(i => i.ava_tag == robot.name);
@@ -99,7 +99,7 @@ public class BattleNetworkManager : NetworkManager {
                 robot.GetComponent<NetworkIdentity>().AssignClientAuthority(connToClient);
                 log += playerSyncs[syncIdx].player_name + " takes " + robot.name + "\n";
             }
-            // Debug.Log(log);
+            Debug.Log(log);
         }
     }
 
