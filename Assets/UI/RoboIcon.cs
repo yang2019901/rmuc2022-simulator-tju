@@ -48,6 +48,19 @@ namespace RMUC_UI {
             SetIconPos();
         }
 
+        float x => robo_conn.transform.position.x;
+        float z => robo_conn.transform.position.z;
+        List<float> X = new List<float>();
+        List<float> Z = new List<float>();
+        Vector2 vel;
+        void FixedUpdate() {
+            X.Add(x); Z.Add(z);
+            if (X.Count < 5)
+                return;
+            vel = new Vector2(X[4] - X[0], Z[4] - Z[0]) / (4 * Time.fixedDeltaTime);
+            X.RemoveAt(0); Z.RemoveAt(0);
+        }
+
 
         void SetColor(ArmorColor armor_color) {
             this.armor_color = armor_color;
@@ -58,7 +71,6 @@ namespace RMUC_UI {
 
 
         void SetArrow() {
-            Vector2 vel = new Vector2(robo_conn.rigid.velocity.x, robo_conn.rigid.velocity.z);
             if (vel.magnitude < 0.1f) {
                 arrow.SetActive(false);
                 return;
