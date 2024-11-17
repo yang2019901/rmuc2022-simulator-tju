@@ -50,5 +50,13 @@ public class MyMenuTools {
         }
         Debug.Log("所有Active物体：顶点数:" + verts + "_三角面数:" + tris);
     }
+
+    [MenuItem("MyTools/PrintObjectAxes")]
+    static void PrintAxes() {
+        GameObject[] gameObjects = Selection.gameObjects;
+        foreach (GameObject obj in gameObjects) {
+            Debug.Log("选中物体(" + obj.name +  ")的坐标轴: \n\tx axis: " + obj.transform.right + "\n\ty axis: " + obj.transform.up + "\n\tz axis: " + obj.transform.forward);
+        }
+    }
 }
 #endif

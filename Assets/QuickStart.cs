@@ -25,8 +25,10 @@ public class QuickStart : MonoBehaviour {
             rs.maxblood = 1000;
             rs.currblood = 1000;
             rs.bullspd = 20;
-            wpn.bullnum = 100;
-            wpn.currheat = 0;
+            if (wpn != null) {
+                wpn.bullnum = 100;
+                wpn.currheat = 0;
+            }
             BattleField.singleton.money_red = 1000;
             BattleField.singleton.money_red_max = 1000;
             BattleField.singleton.money_blue = 1000;

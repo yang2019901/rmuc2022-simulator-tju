@@ -9,14 +9,14 @@ public class GameSetting : MonoBehaviour {
 
     [Header("indicate the game")]
     public float volume;    // voice volume: range from 0 to 1
-    [ReadOnly]
     public int fps;
     
 
     [Header("control the game")]
+    [Tooltip("if minimap will show enemy's position")]
     public bool show_enemy = false;
-    public int prepare_sec = 10;    // how long will game start after scene switched
-
+    [Tooltip("how long will game start after scene switched")]
+    public int prepare_sec = 10;
     
     void Awake() {
         if (singleton == null) {

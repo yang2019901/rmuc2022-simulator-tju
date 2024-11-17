@@ -14,8 +14,8 @@ public class Traverse : MonoBehaviour {
         foreach (Transform child in allchildren) {
             // AddMC(child);
             // ResetConvex(child);
-            // DeleteMC(child);
-            ReplaceMaterial(child, mat);
+            DeleteMC(child);
+            // ReplaceMaterial(child, mat);
             // DeleteNI(child);
             // ReplaceMesh(child);
         }
@@ -38,7 +38,7 @@ public class Traverse : MonoBehaviour {
 
     void DeleteMC(Transform child) {
         MeshCollider mc = child.gameObject.GetComponent<MeshCollider>();
-        if (mc != null) {
+        if (mc != null && child.name.ToLower().Contains("socket")) {
             DestroyImmediate(mc);
             Debug.Log("Delete Mesh Collider: " + child.name);
         }

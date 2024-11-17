@@ -241,11 +241,11 @@ public class DroneController : BasicController {
         float ratio = (t_bat - last_atk) / 30;
         bat_ui.img_droneTimer.fillAmount = ratio > 1 ? 0 : 1 - ratio;
     }
+    const int money_req = 300;
     /* get ammunition supply at reborn spot */
     [Command]
     public void CmdAttack() {
         /* double check in server PC */
-        int money_req = 0;
         if (money_team < money_req) {
             Debug.Log("insufficient money to call drone attack");
             return;
